@@ -1,31 +1,21 @@
-use dotenv::dotenv;
-use std::collections::HashMap;
+mod config;
+mod kis_api;
+
+use kis_api::approval_key::get_websocket_key;
+use std::error::Error;
 
 #[tokio::main]
-async fn query(_app_key : &String, _app_secret : &String) {
-    let url = "https://openapivts.koreainvestment.com:29443/oauth2/Approval";
+async fn main() -> Result<(), Box<dyn Error>> {
+    // .env 파일에서 환경 변수 로드
+    config::init();
+    let config = config::get();
 
-    let mut body = HashMap::new();
-    body.insert("grant_type", "client_credentials");
-    body.insert("appkey", _app_key);
-    body.insert("secretkey", _app_secret);
+    // 웹소켓 접속키 발급
+    let websocket_key = get_websocket_key(&config.app_key, &config.app_secret).await?;
+    
+    println!("웹소켓 접속키: {}", websocket_key);
 
-    let client = reqwest::Client::new();
-    let response = client
-        .post(url)
-        .json(&body)
-        .send()
-        .await;
+    // TODO: 이후 웹소켓 연결 로직 구현...
 
-    let response_body = response.unwrap().text().await;
-    println!("{:?}", response_body);
-}
-
-fn main() {
-    dotenv().ok();
-
-    let app_key = std::env::var("VTS_APP_KEY").unwrap();
-    let app_secret = std::env::var("VTS_APP_SECRET").unwrap();
-
-    query(&app_key, &app_secret);
+    Ok(())
 }
