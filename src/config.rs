@@ -1,9 +1,10 @@
-// use dotenv::dotenv;
-use dotenv::from_filename;
 use std::env;
 use std::sync::Once;
 
-// 전역 변수 초기화를 위한 Once 객체
+const SERVICE_TYPE_KIS: &str = "KIS";
+const SERVICE_TYPE_VTS: &str = "VTS";
+
+// Once instance for initializing gloabl variable
 static mut INSTANCE: Option<Config> = None;
 static INIT: Once = Once::new();
 
@@ -15,12 +16,26 @@ pub struct Config {
 }
 
 pub fn init() {
-    // 한번만 초기화
+    // Ensure the initialize will be performed only once
     INIT.call_once(|| {
-        // dotenv().ok();
-        from_filename(".env.test").ok();
+
+        // The "vts_mock_disabled" feature determines whether to use KIS (production) or VTS (test) configuration
+        let (service_type, envfile) = if cfg!(feature = "vts_mock_disabled") {
+            (SERVICE_TYPE_KIS, ".env")
+        } else {
+            (SERVICE_TYPE_VTS, ".env.test")
+        };
+
+        println!("!!! CAUTION !!!");
+        println!(" - Configuration set: [{}]", service_type);
         
-        // 안전한 블록에서 INSTANCE 초기화
+        match dotenv::from_filename(envfile) {
+            Ok(_) => println!(" - Environment variables loaded successfully from ({})", envfile),
+            Err(e) => eprintln!(" - Failed to load environment variables: {}", e),
+        }
+        println!("-------------------------------------------------------------------------");
+
+        // Initialize INSTANCE in safe block
         unsafe {
             INSTANCE = Some(Config {
                 app_key:    env::var("APP_KEY").expect("APP_KEY must be set"),
