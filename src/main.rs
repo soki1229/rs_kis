@@ -2,10 +2,13 @@ mod config;
 mod websockets;
 use websockets::connect_websocket;
 use std::error::Error;
+mod logger;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    println!("=============================== RUSTy KIS ===============================");
+    logger::init_logging();
+
+    println!("========================================================= RUSTy KIS =========================================================");
     
     // .env 파일에서 환경 변수 로드
     config::init();
@@ -21,7 +24,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     tokio::signal::ctrl_c().await.expect("Failed to listen for Ctrl+C");
 
     println!("\nReceived Ctrl+C, shutting down gracefully.");    
-    println!("=========================================================================");
+    println!("=============================================================================================================================");
 
     Ok(())
 }

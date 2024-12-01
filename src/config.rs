@@ -1,5 +1,6 @@
 use std::env;
 use std::sync::Once;
+use log::{warn, error};
 
 const SERVICE_TYPE_KIS: &str = "KIS";
 const SERVICE_TYPE_VTS: &str = "VTS";
@@ -26,14 +27,14 @@ pub fn init() {
             (SERVICE_TYPE_VTS, ".env.test")
         };
 
-        println!("!!! CAUTION !!!");
-        println!(" - Configuration set: [{}]", service_type);
+        warn!("!!! CAUTION !!!");
+        warn!(" - Configuration set: [{}]", service_type);
         
         match dotenv::from_filename(envfile) {
-            Ok(_) => println!(" - Environment variables loaded successfully from ({})", envfile),
-            Err(e) => eprintln!(" - Failed to load environment variables: {}", e),
+            Ok(_) => warn!(" - Environment variables loaded successfully from ({})", envfile),
+            Err(e) => error!(" - Failed to load environment variables: {}", e),
         }
-        println!("-------------------------------------------------------------------------");
+        warn!("-----------------------------------------------------------------");
 
         // Initialize INSTANCE in safe block
         unsafe {

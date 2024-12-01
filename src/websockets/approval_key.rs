@@ -1,6 +1,7 @@
 use reqwest::header::{HeaderMap, HeaderValue, CONTENT_TYPE};
 use serde::{Deserialize, Serialize};
 use std::error::Error;
+use log::info;
 
 use crate::config;
 
@@ -32,7 +33,7 @@ pub(crate) async fn get_websocket_key() -> Result<String, Box<dyn Error>> {
         .json()
         .await?;
 
-        println!("[WebSocket] Allocated approval_key: {}", response.approval_key);
+        info!("Allocated approval_key: {}", response.approval_key);
 
     Ok(response.approval_key)
 }
