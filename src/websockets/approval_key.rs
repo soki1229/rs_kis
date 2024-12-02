@@ -10,7 +10,7 @@ struct ApprovalResponse {
     approval_key: String,
 }
 
-pub(crate) async fn get_websocket_key() -> Result<String, Box<dyn Error>> {
+pub async fn get_websocket_key() -> Result<String, Box<dyn Error>> {
     let config = config::get();
 
     let client  = reqwest::Client::new();
