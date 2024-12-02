@@ -6,13 +6,18 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+aes = "0.8.4"
+base64 = "0.22.1"
+cbc = "0.1.2"
 chrono = "0.4.38"
+cipher = "0.4.4"
 dotenv = "0.15.0"
 env_logger = "0.11.5"
 futures = "0.3.31"
 futures-util = "0.3.31"
 http = "1.1.0"
 log = "0.4.22"
+rayon = "1.10.0"
 reqwest = { version = "0.12.9", features = ["json"] }
 serde = { version = "1.0.215", features = ["derive"] }
 serde_json = "1.0.132"
