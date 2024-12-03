@@ -1,10 +1,8 @@
 use serde::Deserialize;
 use std::str::FromStr;
 
-// use super::*;
-
 #[derive(Deserialize)]
-pub struct Message {
+pub struct Response {
     #[serde(default)]
     pub header: Header,
     #[serde(default)]
@@ -39,7 +37,7 @@ pub struct Output {
     pub key:    String,
 }
 
-impl TryFrom<&str> for Message {
+impl TryFrom<&str> for Response {
     type Error = serde_json::Error;
 
     fn try_from(s: &str) -> Result<Self, Self::Error> {
@@ -49,9 +47,18 @@ impl TryFrom<&str> for Message {
 
 #[derive(Debug)]
 pub enum TransactionId {
-    LiveCostOverseas,
-    PingPong,
-    Other(String),
+    // Session Liveness
+    PINGPONG,
+    // 실시가 체결가(해외)
+    HDFSCNT0(String),
+    // 실시간 호가(미국)
+    HDFSASP0(String),
+    // 실시간 호가(아시아)
+    HDFSASP1(String),
+    // 실시간 체결 통보(해외)
+    H0GSCNI0(String),
+    // 미지정
+    UnKnown,
 }
 
 impl FromStr for TransactionId {
@@ -59,9 +66,12 @@ impl FromStr for TransactionId {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         Ok(match s {
-            "HDFSCNT0" => TransactionId::LiveCostOverseas,
-            "PINGPONG" => TransactionId::PingPong,
-            _ => TransactionId::Other(s.to_string()),
+            "PINGPONG" => TransactionId::PINGPONG,
+            "HDFSCNT0" => TransactionId::HDFSCNT0("실시가 체결가(해외)".to_string()),
+            "HDFSASP0" => TransactionId::HDFSASP0("실시간 호가(미국)".to_string()),
+            "HDFSASP1" => TransactionId::HDFSASP1("실시간 호가(아시아)".to_string()),
+            "H0GSCNI0" => TransactionId::H0GSCNI0("실시간 체결 통보(해외)".to_string()),
+            _ => TransactionId::UnKnown,
         })
     }
 }
