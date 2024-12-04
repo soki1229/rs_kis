@@ -1,49 +1,7 @@
-use serde::Deserialize;
+pub mod request;
+pub mod response;
+
 use std::str::FromStr;
-
-#[derive(Deserialize)]
-pub struct Response {
-    #[serde(default)]
-    pub header: Header,
-    #[serde(default)]
-    pub body:   Body,
-}
-
-#[derive(Default, Deserialize)]
-pub struct Header {
-    #[serde(default)]
-    pub tr_id:      String,
-    #[serde(default)]
-    pub datetime:   String,
-}
-
-#[derive(Default, Deserialize)]
-pub struct Body {
-    #[serde(default)]
-    pub rt_cd:  String,
-    #[serde(default)]
-    pub msg_cd: String,
-    #[serde(default)]
-    pub msg1:   String,
-    #[serde(default)]
-    pub output: Output,
-}
-
-#[derive(Default, Deserialize)]
-pub struct Output {
-    #[serde(default)]
-    pub iv:     String,
-    #[serde(default)]
-    pub key:    String,
-}
-
-impl TryFrom<&str> for Response {
-    type Error = serde_json::Error;
-
-    fn try_from(s: &str) -> Result<Self, Self::Error> {
-        serde_json::from_str(s)
-    }
-}
 
 #[derive(Debug)]
 pub enum TransactionId {
