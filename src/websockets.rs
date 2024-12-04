@@ -1,24 +1,38 @@
-use crate::config;
-mod approval_key;
-use approval_key::get_websocket_key;
-// mod crypto;
-// use crypto::aes_cbc_base64_dec;
+use std::sync::Mutex;
 
 use futures::{SinkExt, StreamExt};
-use tokio::net::TcpStream;
-use tokio::sync::mpsc;
-use tokio::time::{sleep, Duration};
-use tokio_tungstenite::{connect_async, MaybeTlsStream, WebSocketStream};
-use tokio_tungstenite::tungstenite::{client::IntoClientRequest, protocol::Message as WsMessage};
-use thiserror::Error;
-use log::{info, error};
-
-mod message;
-use message::TransactionId;
-use message::{request, response};
-
+use futures_util::stream::{SplitSink, SplitStream};
 use lazy_static::lazy_static;
-use std::sync::Mutex;
+use log::{error, info, warn};
+use thiserror::Error;
+use tokio::{
+    net::TcpStream,
+    sync::mpsc,
+    time::{sleep, Duration},
+};
+use tokio_tungstenite::{
+    connect_async,
+    tungstenite::{
+        client::IntoClientRequest,
+        protocol::Message as WsMessage,
+        Error as WsError,
+    },
+    MaybeTlsStream,
+    WebSocketStream,
+};
+
+use crate::config;
+use self::{
+    approval_key::get_websocket_key,
+    message::{TransactionId, request, response},
+};
+
+mod approval_key;
+mod message;
+
+// Commented out modules
+// mod crypto;
+// use crypto::aes_cbc_base64_dec;
 
 lazy_static! {
     static ref GLOBAL_TX: Mutex<Option<mpsc::Sender<WsMessage>>> = Mutex::new(None);
@@ -27,7 +41,7 @@ lazy_static! {
 #[derive(Error, Debug)]
 pub enum WebSocketError {
     #[error("WebSocket connection error: {0}")]
-    ConnectionError(#[from] tokio_tungstenite::tungstenite::Error),
+    ConnectionError(#[from] WsError),
     #[error("JSON parsing error: {0}")]
     JsonError(#[from] serde_json::Error),
     #[error("Approval key error: {0}")]
@@ -52,106 +66,106 @@ pub async fn connect_websocket() -> Result<(), WebSocketError> {
 }
 
 async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>, approval_key: &str) -> Result<(), WebSocketError> {
-    let (mut write, mut read) = ws_stream.split();
-    let (tx, mut rx) = mpsc::channel::<WsMessage>(100);
+    let (write, read) = ws_stream.split();
+    let (tx, rx) = mpsc::channel::<WsMessage>(100);
 
     // Set the global sender
     {
         let mut global_tx = GLOBAL_TX.lock().unwrap();
         *global_tx = Some(tx.clone());
     }
-
-    // Spawn a task to handle sending messages
-    let send_task = tokio::spawn(async move {
-        while let Some(message) = rx.recv().await {
-            if let Err(e) = write.send(message).await {
-                error!("Error sending message: {}", e);
-                return;
-            }
-        }
-    });
-
-    subscribe_transaction("AAPL", true, approval_key).await?;
     
-    // Main loop for receiving messages
-    let receive_result = async {
-        while let Some(msg) = read.next().await {
-            match msg {
-                Ok(msg) => handle_message(msg).await?,
-                Err(e) => {
-                    error!("Error while receiving message: {}", e);
-                    return Err(WebSocketError::from(e));
-                }
-            }
-        }
-        Ok(())
-    }.await;
+    // Spawn the send task
+    let send_task = tokio::spawn(handle_send_task(write, rx));
+    
+    // TODO: need to handle event; Handling requested subscription.
+    subscribe_transaction("AAPL", true, approval_key).await?;
+
+    // Handle receiving messages (main loop)
+    let receive_result = handle_receive_task(read).await;
 
     // Clean up
     send_task.abort();
+
     if let Err(e) = receive_result {
         error!("WebSocket error: {}", e);
     }
     info!("WebSocket connection closed");
 
+    // Clear global sender when done
+    {
+        let mut global_tx = GLOBAL_TX.lock().unwrap();
+        *global_tx = None;
+    }
+    
     Ok(())
 }
 
-async fn handle_message(message: WsMessage) -> Result<(), WebSocketError> {
-    match message {
-        WsMessage::Text(text) => {
-            if serde_json::from_str::<serde_json::Value>(&text).is_ok() {
-                on_received_json(&text).await?;
-            } else {
-                on_received_text(&text).await?;
+async fn handle_send_task(mut write: SplitSink<WebSocketStream<MaybeTlsStream<TcpStream>>, WsMessage>, mut rx: mpsc::Receiver<WsMessage>) {
+    while let Some(message) = rx.recv().await {
+        let mut retry_count = 0;
+        let max_retries = 5;
+        let mut backoff_duration = Duration::from_millis(100);
+
+        loop {
+            match write.send(message.clone()).await {
+                Ok(_) => break, // Successfully sent, exit retry loop
+                Err(e) => match e {
+                    WsError::Io(ref err) if err.kind() == std::io::ErrorKind::WouldBlock => {
+                        if retry_count >= max_retries {
+                            error!("Max retries reached for sending message");
+                            break;
+                        }
+                        warn!("Send buffer full, applying backpressure (attempt {})", retry_count + 1);
+                        sleep(backoff_duration).await;
+                        backoff_duration *= 2; // Exponential backoff
+                        retry_count += 1;
+                    },
+                    _ => {
+                        error!("Error sending message: {}", e);
+                        return; // Exit on other errors
+                    }
+                }
             }
-        },
-        WsMessage::Binary(bin) => {
-            info!("Received binary message: {:?}", bin);
-        }
-        WsMessage::Ping(payload) => {
-            info!("Received ping with payload: {:?}", payload);
-        }
-        WsMessage::Pong(payload) => {
-            info!("Received pong with payload: {:?}", payload);
-        }
-        WsMessage::Frame(frame) => {
-            info!("Received frame: {:?}", frame);
-        }
-        WsMessage::Close(_) => {
-            info!("Connection closed by server.");
         }
     }
-    Ok(())
 }
 
-async fn subscribe_transaction(symbol: &str, subscribe: bool, approval_key: &str) -> Result<(), WebSocketError> {
-    // Example for subscribing real-time stock price of 'Apple: DNASAAPL'
-    // Create your message payload
-    let request = request::Message {
-        header: request::Header {
-            approval_key:   String::from(approval_key),
-            custtype:       String::from("P"),
-            tr_type:        String::from(if subscribe {"1"} else {"2"}),
-            content_type:   String::from("utf-8"),
-        },
-        body: request::Body {
-            input: request::Input {
-                tr_id:      String::from("HDFSCNT0"),
-                tr_key:     String::from("DNAS") + symbol,
+async fn handle_receive_task(mut read: SplitStream<WebSocketStream<MaybeTlsStream<TcpStream>>>) -> Result<(), WebSocketError> {
+    while let Some(msg) = read.next().await {
+        match msg {
+            Ok(msg) => {
+                match msg {
+                    WsMessage::Text(text) => {
+                        if serde_json::from_str::<serde_json::Value>(&text).is_ok() {
+                            on_received_json(&text).await?;
+                        } else {
+                            on_received_text(&text).await?;
+                        }
+                    },
+                    WsMessage::Binary(bin) => {
+                        info!("Received binary message: {:?}", bin);
+                    }
+                    WsMessage::Ping(payload) => {
+                        info!("Received ping with payload: {:?}", payload);
+                    }
+                    WsMessage::Pong(payload) => {
+                        info!("Received pong with payload: {:?}", payload);
+                    }
+                    WsMessage::Frame(frame) => {
+                        info!("Received frame: {:?}", frame);
+                    }
+                    WsMessage::Close(_) => {
+                        info!("Connection closed by server.");
+                    }
+                }
             },
-        },
-    };
-    
-    let tx = {
-        let global_tx = GLOBAL_TX.lock().unwrap();
-        global_tx.as_ref().cloned().ok_or(WebSocketError::SendError("SenderNotInitialized".to_string()))?
-    };
-
-    tx.send(WsMessage::Text(serde_json::to_string_pretty(&request).unwrap())).await.map_err(|e| WebSocketError::SendError(e.to_string()))?;
-
-    // Send Subscribe request: *Should be sent if the session wasn't created yet.
-
+            Err(e) => {
+                error!("Error while receiving message: {}", e);
+                return Err(WebSocketError::from(e));
+            }
+        }
+    }
     Ok(())
 }
 
@@ -198,8 +212,6 @@ static GLOBAL_ARRAY: [&str; 26] = ["실시간종목코드", "종목코드", "수
 
 fn stocks_call_overseas(data_cnt: i32, data: &str) {
     info!("============================================");
-    // let menulist = "실시간종목코드|종목코드|수수점자리수|현지영업일자|현지일자|현지시간|한국일자|한국시간|시가|고가|저가|현재가|대비구분|전일대비|등락율|매수호가|매도호가|매수잔량|매도잔량|체결량|거래량|거래대금|매도체결량|매수체결량|체결강도|시장구분";
-    // let menustr: Vec<&str> = menulist.split('|').collect();
     let pvalue: Vec<&str> = data.split('^').collect();
 
     for cnt in 0..data_cnt {
@@ -212,10 +224,8 @@ fn stocks_call_overseas(data_cnt: i32, data: &str) {
 
 fn stocks_purchase_overseas(data_cnt: i32, data: &str) {
     info!("============================================");
-    // let menulist = "실시간종목코드|종목코드|수수점자리수|현지영업일자|현지일자|현지시간|한국일자|한국시간|시가|고가|저가|현재가|대비구분|전일대비|등락율|매수호가|매도호가|매수잔량|매도잔량|체결량|거래량|거래대금|매도체결량|매수체결량|체결강도|시장구분";
-    // let menustr: Vec<&str> = menulist.split('|').collect();
     let pvalue: Vec<&str> = data.split('^').collect();
-
+    
     for cnt in 0..data_cnt {
         info!("### [{} / {}]", cnt + 1, data_cnt);
         for (menu, value) in GLOBAL_ARRAY.iter().zip(pvalue.iter().skip((cnt as usize) * GLOBAL_ARRAY.len())) {
@@ -266,6 +276,36 @@ async fn on_received_json(message: &str) -> Result<(), WebSocketError> {
             info!("===============================");
         }
     }
+
+    Ok(())
+}
+
+async fn subscribe_transaction(symbol: &str, subscribe: bool, approval_key: &str) -> Result<(), WebSocketError> {
+    // Example for subscribing real-time stock price of 'Apple: DNASAAPL'
+    // Create your message payload
+    let request = request::Message {
+        header: request::Header {
+            approval_key:   String::from(approval_key),
+            custtype:       String::from("P"),
+            tr_type:        String::from(if subscribe {"1"} else {"2"}),
+            content_type:   String::from("utf-8"),
+        },
+        body: request::Body {
+            input: request::Input {
+                tr_id:      String::from("HDFSCNT0"),
+                tr_key:     String::from("DNAS") + symbol,
+            },
+        },
+    };
+    
+    let tx = {
+        let global_tx = GLOBAL_TX.lock().unwrap();
+        global_tx.as_ref().cloned().ok_or(WebSocketError::SendError("SenderNotInitialized".to_string()))?
+    };
+
+    tx.send(WsMessage::Text(serde_json::to_string_pretty(&request).unwrap())).await.map_err(|e| WebSocketError::SendError(e.to_string()))?;
+
+    // Send Subscribe request: *Should be sent if the session wasn't created yet.
 
     Ok(())
 }
