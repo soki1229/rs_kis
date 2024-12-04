@@ -13,6 +13,17 @@ use tokio_tungstenite::tungstenite::{client::IntoClientRequest, protocol::Messag
 use thiserror::Error;
 use log::{info, error};
 
+mod message;
+use message::TransactionId;
+use message::{request, response};
+
+use lazy_static::lazy_static;
+use std::sync::Mutex;
+
+lazy_static! {
+    static ref GLOBAL_TX: Mutex<Option<mpsc::Sender<WsMessage>>> = Mutex::new(None);
+}
+
 #[derive(Error, Debug)]
 pub enum WebSocketError {
     #[error("WebSocket connection error: {0}")]
@@ -25,14 +36,12 @@ pub enum WebSocketError {
     SendError(String)
 }
 
-pub(crate) async fn connect_websocket() -> Result<(), WebSocketError> {    
+pub async fn connect_websocket() -> Result<(), WebSocketError> {    
     loop {
+        // Send REST message for granting 'approval_key'
         let approval_key = get_websocket_key().await.map_err(|e| WebSocketError::ApprovalKeyError(e.to_string()))?;
         
-        let request = config::get().ws_url.to_owned().into_client_request()?;
-
-        let (ws_stream, _) = connect_async(request).await?;
-
+        let (ws_stream, _) = connect_async(config::get().ws_url.to_owned().into_client_request()?).await?;
         info!("Handshaking successfully completed");
         
         if let Err(e) = handle_websocket(ws_stream, &approval_key).await {
@@ -42,13 +51,16 @@ pub(crate) async fn connect_websocket() -> Result<(), WebSocketError> {
     }
 }
 
-mod message;
-use message::{Response, TransactionId};
-
 async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>, approval_key: &str) -> Result<(), WebSocketError> {
     let (mut write, mut read) = ws_stream.split();
     let (tx, mut rx) = mpsc::channel::<WsMessage>(100);
-    
+
+    // Set the global sender
+    {
+        let mut global_tx = GLOBAL_TX.lock().unwrap();
+        *global_tx = Some(tx.clone());
+    }
+
     // Spawn a task to handle sending messages
     let send_task = tokio::spawn(async move {
         while let Some(message) = rx.recv().await {
@@ -58,17 +70,14 @@ async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>,
             }
         }
     });
-    
-    // Clone tx for use in the loop
-    let tx_clone = tx.clone();
-    
-    subscribe_stock_price(tx_clone.clone(), approval_key).await?;
+
+    subscribe_transaction("AAPL", true, approval_key).await?;
     
     // Main loop for receiving messages
     let receive_result = async {
         while let Some(msg) = read.next().await {
             match msg {
-                Ok(msg) => handle_message(msg, tx_clone.clone()).await?,
+                Ok(msg) => handle_message(msg).await?,
                 Err(e) => {
                     error!("Error while receiving message: {}", e);
                     return Err(WebSocketError::from(e));
@@ -88,17 +97,11 @@ async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>,
     Ok(())
 }
 
-async fn handle_message(message: WsMessage, tx: mpsc::Sender<WsMessage>) -> Result<(), WebSocketError> {
+async fn handle_message(message: WsMessage) -> Result<(), WebSocketError> {
     match message {
         WsMessage::Text(text) => {
-            if let Ok(parsed_message) = serde_json::from_str::<Response>(&text) {
-                match parsed_message.header.tr_id.parse() {
-                    Ok(TransactionId::PINGPONG) => {
-                        tx.send(WsMessage::Pong(text.into_bytes())).await.map_err(|e| WebSocketError::SendError(e.to_string()))?;
-                    },
-                    Ok(tr_id) => on_received_json(tr_id, &text)?,
-                    Err(_) => on_received_json(TransactionId::UnKnown, &text)?,
-                }
+            if serde_json::from_str::<serde_json::Value>(&text).is_ok() {
+                on_received_json(&text).await?;
             } else {
                 on_received_text(&text).await?;
             }
@@ -122,31 +125,39 @@ async fn handle_message(message: WsMessage, tx: mpsc::Sender<WsMessage>) -> Resu
     Ok(())
 }
 
-async fn subscribe_stock_price(tx: mpsc::Sender<WsMessage>, approval_key: &str) -> Result<(), WebSocketError> {
+async fn subscribe_transaction(symbol: &str, subscribe: bool, approval_key: &str) -> Result<(), WebSocketError> {
     // Example for subscribing real-time stock price of 'Apple: DNASAAPL'
     // Create your message payload
-    let message_payload = serde_json::json!({
-        "header": {
-            "approval_key": approval_key,
-            "custtype": "P",
-            "tr_type": "1",
-            "content-type": "utf-8"
+    let request = request::Message {
+        header: request::Header {
+            approval_key:   String::from(approval_key),
+            custtype:       String::from("P"),
+            tr_type:        String::from(if subscribe {"1"} else {"2"}),
+            content_type:   String::from("utf-8"),
         },
-        "body": {
-            "input": {
-                "tr_id": "HDFSCNT0",
-                "tr_key": "DNASAAPL"
-            }
-        }
-    });
+        body: request::Body {
+            input: request::Input {
+                tr_id:      String::from("HDFSCNT0"),
+                tr_key:     String::from("DNAS") + symbol,
+            },
+        },
+    };
+    
+    let tx = {
+        let global_tx = GLOBAL_TX.lock().unwrap();
+        global_tx.as_ref().cloned().ok_or(WebSocketError::SendError("SenderNotInitialized".to_string()))?
+    };
+
+    tx.send(WsMessage::Text(serde_json::to_string_pretty(&request).unwrap())).await.map_err(|e| WebSocketError::SendError(e.to_string()))?;
 
     // Send Subscribe request: *Should be sent if the session wasn't created yet.
-    tx.send(WsMessage::Text(message_payload.to_string())).await.map_err(|e| WebSocketError::SendError(e.to_string()))?;
 
     Ok(())
 }
 
 async fn on_received_text(message: &str) -> Result<(), WebSocketError> {
+    // info!("on_received_text: {}", &message);
+
     if message.starts_with('0') {
         let recvstr: Vec<&str> = message.split('|').collect();
         let trid0 = recvstr[1];
@@ -213,30 +224,48 @@ fn stocks_purchase_overseas(data_cnt: i32, data: &str) {
     }
 }
 
-fn on_received_json(tr_id: TransactionId, message: &str) -> Result<(), WebSocketError> {
-    match tr_id {
-        // 실시가 체결가(해외)
-        TransactionId::HDFSCNT0(s) => {
-            info!("tr_id: {} \n{}", s, message);
-        }
-        // 실시간 호가(미국)
-        TransactionId::HDFSASP0(s) => {
-            info!("tr_id: {} \n{}", s, message);
+async fn on_received_json(message: &str) -> Result<(), WebSocketError> {
+    let response = serde_json::from_str::<response::Message>(&message)?;
+    match response.header.tr_id.parse() {
+        Ok(TransactionId::PINGPONG) => {
+            let tx = {
+                let global_tx = GLOBAL_TX.lock().unwrap();
+                global_tx.as_ref().cloned().ok_or(WebSocketError::SendError("SenderNotInitialized".to_string()))?
+            };
+        
+            tx.send(WsMessage::Pong(message.into())).await.map_err(|e| WebSocketError::SendError(e.to_string()))?;
+            info!("PINGPONG!");
         },
-        // 실시간 호가(아시아)
-        TransactionId::HDFSASP1(s) => {
-            info!("tr_id: {} \n{}", s, message);
-        },
-        // 실시간 체결 통보(해외)
-        TransactionId::H0GSCNI0(s) => {
-            info!("tr_id: {} \n{}", s, message);
-        },
-        // 미지정
+        // // 실시가 체결가(해외)
+        // Ok(TransactionId::HDFSCNT0(s)) => {
+        // }
+        // // 실시간 호가(미국)
+        // Ok(TransactionId::HDFSASP0(s)) => {
+        // },
+        // // 실시간 호가(아시아)
+        // Ok(TransactionId::HDFSASP1(s)) => {
+        // },
+        // // 실시간 체결 통보(해외)
+        // Ok(TransactionId::H0GSCNI0(s)) => {
+        // },
         _ => {
-            info!("Received json: {}", message);
+            // TODO: parse aes iv and key for future usage
+            info!("===============================");
+            info!("[header]");
+            info!("  - tr_id: {}", response.header.tr_id);
+            info!("  - tr_key: {}", response.header.tr_key);
+            info!("  - encrypt: {}", response.header.encrypt);
+            info!("  - datetime: {}", response.header.datetime);
+            info!("[body]");
+            info!("  - rt_cd: {}", response.body.rt_cd);
+            info!("  - msg_cd: {}", response.body.msg_cd);
+            info!("  - msg1: {}", response.body.msg1);
+            info!("    [output]");
+            info!("     - iv : {}", response.body.output.iv);
+            info!("     - key : {}", response.body.output.key);
+            info!("===============================");
         }
     }
-    //TODO: parse aes iv and key for future usage 
 
     Ok(())
 }
