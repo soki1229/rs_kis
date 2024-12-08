@@ -29,13 +29,12 @@ pub fn init() {
         } else {
             (SERVICE_TYPE_VTS, ENV_FILE_VTS)
         };
-
-        warn!("!!! CAUTION !!!");
-        warn!(" - Configuration set: [{}]", service_type);
         
+        warn!("-----------------------------------------------------------------");
+        warn!("| * Configured: [{}]", service_type);
         match dotenv::from_filename(envfile) {
-            Ok(_) => warn!(" - Environment variables loaded successfully from ({})", envfile),
-            Err(e) => error!(" - Failed to load environment variables: {}", e),
+            Ok(_) => warn!("| * Environment variables loaded successfully from ({})", envfile),
+            Err(e) => error!("| * Failed to load environment variables: {}", e),
         }
         warn!("-----------------------------------------------------------------");
 

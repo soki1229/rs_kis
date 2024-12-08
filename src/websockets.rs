@@ -24,13 +24,16 @@ use tokio_tungstenite::{
 
 
 use crate::{
-    api,
+    api::Api,
     environment,
-    error::{RestfulError, WebSocketError},
+    error::WebSocketError as Error,
 };
 
 mod message;
 use self::message::{TransactionId, request, response};
+
+mod analyzer;
+use analyzer::*;
 
 // Commented out modules
 // mod crypto;
@@ -40,25 +43,22 @@ lazy_static! {
     static ref GLOBAL_TX: Mutex<Option<mpsc::Sender<WsMessage>>> = Mutex::new(None);
 }
 
-use std::sync::Arc;
-
-pub async fn connect_websocket() -> Result<(), WebSocketError> {
-    let (client, config) = api::initialize();
+pub async fn connect_websocket() -> Result<(), Error> {
+    let mut api = Api::new(&environment::get().domain_restful);
+    // Send REST message for granting 'approval_key', 'access_token'
+    api.initialize_oauth_certifiaction().await?;
     loop {
-        // Send REST message for granting 'approval_key'
-        let approval_key = api::issue_websocket_access_key(Arc::clone(&client), Arc::clone(&config)).await.map_err(|e| RestfulError::ApprovalKeyError(e.to_string()))?;
-
         let (ws_stream, _) = connect_async(environment::get().domain_socket.to_owned().into_client_request()?).await?;
-        info!("Handshaking successfully completed");
+        info!("[ Handshaking ] WebSocket Connected.");
         
-        if let Err(e) = handle_websocket(ws_stream, &approval_key).await {
+        if let Err(e) = handle_websocket(ws_stream, &api.socket_key).await {
             error!("WebSocket error: {}. Reconnecting...", e);
             sleep(Duration::from_secs(5)).await;  // Add delay before reconnecting
         }
     }
 }
 
-async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>, approval_key: &str) -> Result<(), WebSocketError> {
+async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>, approval_key: &str) -> Result<(), Error> {
     let (write, read) = ws_stream.split();
     let (tx, rx) = mpsc::channel::<WsMessage>(100);
 
@@ -87,7 +87,7 @@ async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>,
 
     // Clear global sender when done
     {
-        let mut global_tx = GLOBAL_TX.lock().unwrap();
+        let mut global_tx: std::sync::MutexGuard<'_, Option<mpsc::Sender<WsMessage>>> = GLOBAL_TX.lock().unwrap();
         *global_tx = None;
     }
     
@@ -124,7 +124,9 @@ async fn handle_send_task(mut write: SplitSink<WebSocketStream<MaybeTlsStream<Tc
     }
 }
 
-async fn handle_receive_task(mut read: SplitStream<WebSocketStream<MaybeTlsStream<TcpStream>>>) -> Result<(), WebSocketError> {
+async fn handle_receive_task(mut read: SplitStream<WebSocketStream<MaybeTlsStream<TcpStream>>>) -> Result<(), Error> {
+    let mut analyzer = StockAnalyzer::new(10);
+
     while let Some(msg) = read.next().await {
         match msg {
             Ok(msg) => {
@@ -133,7 +135,7 @@ async fn handle_receive_task(mut read: SplitStream<WebSocketStream<MaybeTlsStrea
                         if serde_json::from_str::<serde_json::Value>(&text).is_ok() {
                             on_received_json(&text).await?;
                         } else {
-                            on_received_text(&text).await?;
+                            on_received_text(&text,  &mut analyzer).await?;
                         }
                     },
                     WsMessage::Binary(bin) => {
@@ -155,14 +157,14 @@ async fn handle_receive_task(mut read: SplitStream<WebSocketStream<MaybeTlsStrea
             },
             Err(e) => {
                 error!("Error while receiving message: {}", e);
-                return Err(WebSocketError::from(e));
+                return Err(Error::from(e));
             }
         }
     }
     Ok(())
 }
 
-async fn on_received_text(message: &str) -> Result<(), WebSocketError> {
+async fn on_received_text(message: &str, analyzer: &mut analyzer::StockAnalyzer) -> Result<(), Error> {
     // info!("on_received_text: {}", &message);
 
     if message.starts_with('0') {
@@ -178,7 +180,7 @@ async fn on_received_text(message: &str) -> Result<(), WebSocketError> {
             },
             "HDFSCNT0" => {
                 info!("#### 해외주식체결 ####");
-                stocks_purchase_overseas(data_cnt, recvstr[3]);
+                stocks_purchase_overseas(data_cnt, recvstr[3], analyzer);
                 sleep(Duration::from_millis(500)).await;
             },
             _ => {}
@@ -207,6 +209,7 @@ fn stocks_call_overseas(data_cnt: i32, data: &str) {
     info!("===================================================================");
     let pvalue: Vec<&str> = data.split('^').collect();
 
+    // ifo!("{} : {}({})", data[1], data_cnt[11], data_cnt[14]);
     for cnt in 0..data_cnt {
         info!("### [{} / {}]", cnt + 1, data_cnt);
         for (menu, value) in GLOBAL_ARRAY.iter().zip(pvalue.iter().skip((cnt as usize) * GLOBAL_ARRAY.len())) {
@@ -215,28 +218,42 @@ fn stocks_call_overseas(data_cnt: i32, data: &str) {
     }
 }
 
-fn stocks_purchase_overseas(data_cnt: i32, data: &str) {
-    info!("===================================================================");
+fn stocks_purchase_overseas(data_cnt: i32, data: &str, analyzer: &mut analyzer::StockAnalyzer) {
+    info!("============================================");
     let pvalue: Vec<&str> = data.split('^').collect();
     
-    for cnt in 0..data_cnt {
-        info!("### [{} / {}]", cnt + 1, data_cnt);
-        for (menu, value) in GLOBAL_ARRAY.iter().zip(pvalue.iter().skip((cnt as usize) * GLOBAL_ARRAY.len())) {
-            info!("{:<13}\t[{}]", menu, value);
-        }
-    }
+    let stock_data = analyzer::StockData {
+        종목코드:   pvalue[1].to_string(),
+        현재가:     pvalue[11].parse().unwrap(),
+        매수잔량:   pvalue[17].parse().unwrap(),
+        매도잔량:   pvalue[18].parse().unwrap(),
+        거래량:     pvalue[20].parse().unwrap(),
+        매수체결량: pvalue[23].parse().unwrap(),
+        매도체결량: pvalue[22].parse().unwrap(),
+    };
+
+    analyzer.add_data(stock_data);
+
+    info!("{}", analyzer.analyze());
+
+    // for cnt in 0..data_cnt {
+    //     info!("### [{} / {}]", cnt + 1, data_cnt);
+    //     for (menu, value) in GLOBAL_ARRAY.iter().zip(pvalue.iter().skip((cnt as usize) * GLOBAL_ARRAY.len())) {
+    //         info!("{:<13}\t[{}]", menu, value);
+    //     }
+    // }
 }
 
-async fn on_received_json(message: &str) -> Result<(), WebSocketError> {
+async fn on_received_json(message: &str) -> Result<(), Error> {
     let response = serde_json::from_str::<response::Message>(&message)?;
     match response.header.tr_id.parse() {
         Ok(TransactionId::PINGPONG) => {
-            let tx = {
+            let tx: mpsc::Sender<WsMessage> = {
                 let global_tx = GLOBAL_TX.lock().unwrap();
-                global_tx.as_ref().cloned().ok_or(WebSocketError::SendError("SenderNotInitialized".to_string()))?
+                global_tx.as_ref().cloned().ok_or(Error::SendError("SenderNotInitialized".to_string()))?
             };
         
-            tx.send(WsMessage::Pong(message.into())).await.map_err(|e| WebSocketError::SendError(e.to_string()))?;
+            tx.send(WsMessage::Pong(message.into())).await.map_err(|e| Error::SendError(e.to_string()))?;
             info!("PINGPONG!");
         },
         // // 실시가 체결가(해외)
@@ -273,7 +290,7 @@ async fn on_received_json(message: &str) -> Result<(), WebSocketError> {
     Ok(())
 }
 
-async fn subscribe_transaction(symbol: &str, subscribe: bool, approval_key: &str) -> Result<(), WebSocketError> {
+async fn subscribe_transaction(symbol: &str, subscribe: bool, approval_key: &str) -> Result<(), Error> {
     // Example for subscribing real-time stock price of 'Apple: DNASAAPL'
     // Create your message payload
     let request = request::Message {
@@ -293,10 +310,10 @@ async fn subscribe_transaction(symbol: &str, subscribe: bool, approval_key: &str
     
     let tx = {
         let global_tx = GLOBAL_TX.lock().unwrap();
-        global_tx.as_ref().cloned().ok_or(WebSocketError::SendError("SenderNotInitialized".to_string()))?
+        global_tx.as_ref().cloned().ok_or(Error::SendError("SenderNotInitialized".to_string()))?
     };
 
-    tx.send(WsMessage::Text(serde_json::to_string_pretty(&request).unwrap())).await.map_err(|e| WebSocketError::SendError(e.to_string()))?;
+    tx.send(WsMessage::Text(serde_json::to_string_pretty(&request).unwrap())).await.map_err(|e| Error::SendError(e.to_string()))?;
 
     // Send Subscribe request: *Should be sent if the session wasn't created yet.
 
