@@ -4,12 +4,13 @@ use futures::{SinkExt, StreamExt};
 use futures_util::stream::{SplitSink, SplitStream};
 use lazy_static::lazy_static;
 use log::{error, info, warn};
-use thiserror::Error;
+
 use tokio::{
     net::TcpStream,
     sync::mpsc,
     time::{sleep, Duration},
 };
+
 use tokio_tungstenite::{
     connect_async,
     tungstenite::{
@@ -21,14 +22,15 @@ use tokio_tungstenite::{
     WebSocketStream,
 };
 
-use crate::config;
-use self::{
-    approval_key::get_websocket_key,
-    message::{TransactionId, request, response},
+
+use crate::{
+    api,
+    environment,
+    error::{RestfulError, WebSocketError},
 };
 
-mod approval_key;
 mod message;
+use self::message::{TransactionId, request, response};
 
 // Commented out modules
 // mod crypto;
@@ -38,24 +40,15 @@ lazy_static! {
     static ref GLOBAL_TX: Mutex<Option<mpsc::Sender<WsMessage>>> = Mutex::new(None);
 }
 
-#[derive(Error, Debug)]
-pub enum WebSocketError {
-    #[error("WebSocket connection error: {0}")]
-    ConnectionError(#[from] WsError),
-    #[error("JSON parsing error: {0}")]
-    JsonError(#[from] serde_json::Error),
-    #[error("Approval key error: {0}")]
-    ApprovalKeyError(String),
-    #[error("Error sending message: {0}")]
-    SendError(String)
-}
+use std::sync::Arc;
 
-pub async fn connect_websocket() -> Result<(), WebSocketError> {    
+pub async fn connect_websocket() -> Result<(), WebSocketError> {
+    let (client, config) = api::initialize();
     loop {
         // Send REST message for granting 'approval_key'
-        let approval_key = get_websocket_key().await.map_err(|e| WebSocketError::ApprovalKeyError(e.to_string()))?;
-        
-        let (ws_stream, _) = connect_async(config::get().ws_url.to_owned().into_client_request()?).await?;
+        let approval_key = api::issue_websocket_access_key(Arc::clone(&client), Arc::clone(&config)).await.map_err(|e| RestfulError::ApprovalKeyError(e.to_string()))?;
+
+        let (ws_stream, _) = connect_async(environment::get().domain_socket.to_owned().into_client_request()?).await?;
         info!("Handshaking successfully completed");
         
         if let Err(e) = handle_websocket(ws_stream, &approval_key).await {
@@ -211,7 +204,7 @@ async fn on_received_text(message: &str) -> Result<(), WebSocketError> {
 static GLOBAL_ARRAY: [&str; 26] = ["실시간종목코드", "종목코드", "수수점자리수", "현지영업일자", "현지일자", "현지시간", "한국일자", "한국시간", "시가", "고가", "저가", "현재가", "대비구분", "전일대비", "등락율", "매수호가", "매도호가", "매수잔량", "매도잔량", "체결량", "거래량", "거래대금", "매도체결량", "매수체결량", "체결강도", "시장구분"];
 
 fn stocks_call_overseas(data_cnt: i32, data: &str) {
-    info!("============================================");
+    info!("===================================================================");
     let pvalue: Vec<&str> = data.split('^').collect();
 
     for cnt in 0..data_cnt {
@@ -223,7 +216,7 @@ fn stocks_call_overseas(data_cnt: i32, data: &str) {
 }
 
 fn stocks_purchase_overseas(data_cnt: i32, data: &str) {
-    info!("============================================");
+    info!("===================================================================");
     let pvalue: Vec<&str> = data.split('^').collect();
     
     for cnt in 0..data_cnt {
@@ -260,20 +253,20 @@ async fn on_received_json(message: &str) -> Result<(), WebSocketError> {
         // },
         _ => {
             // TODO: parse aes iv and key for future usage
-            info!("===============================");
-            info!("[header]");
-            info!("  - tr_id: {}", response.header.tr_id);
-            info!("  - tr_key: {}", response.header.tr_key);
-            info!("  - encrypt: {}", response.header.encrypt);
-            info!("  - datetime: {}", response.header.datetime);
-            info!("[body]");
-            info!("  - rt_cd: {}", response.body.rt_cd);
-            info!("  - msg_cd: {}", response.body.msg_cd);
-            info!("  - msg1: {}", response.body.msg1);
-            info!("    [output]");
-            info!("     - iv : {}", response.body.output.iv);
-            info!("     - key : {}", response.body.output.key);
-            info!("===============================");
+            info!("===================================================");
+            info!("<header>");
+            info!(" tr_id: {}", response.header.tr_id);
+            info!(" tr_key: {}", response.header.tr_key);
+            info!(" encrypt: {}", response.header.encrypt);
+            info!(" datetime: {}", response.header.datetime);
+            info!("<body>");
+            info!(" rt_cd: {}", response.body.rt_cd);
+            info!(" msg_cd: {}", response.body.msg_cd);
+            info!(" msg1: {}", response.body.msg1);
+            info!("  <output>");
+            info!("   iv : {}", response.body.output.iv);
+            info!("   key : {}", response.body.output.key);
+            info!("===================================================");
         }
     }
 

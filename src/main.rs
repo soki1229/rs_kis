@@ -1,8 +1,10 @@
-mod config;
+mod environment;
 mod websockets;
 use websockets::connect_websocket;
-use std::error::Error;
+mod api;
 mod logger;
+use std::error::Error;
+mod error;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
@@ -11,7 +13,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     println!("========================================================= RUSTy KIS =========================================================");
     
     // .env 파일에서 환경 변수 로드
-    config::init();
+    environment::init();
     
     // 웹소켓 연결
     tokio::spawn(async move {
