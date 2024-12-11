@@ -1,11 +1,10 @@
 use ::http::header::{HeaderMap, HeaderName, HeaderValue};
-use reqwest::{Client, Method};
+use reqwest::{Client, Method, Response};
 use crate::environment;
 use crate::api::{Config, http};
 use crate::error::RestfulError as Error;
-use log::{info, error};
 
-pub async fn current_transaction_price(client: &Client, config: &Config, access_token: &str) -> Result<String, Error> {
+pub async fn current_transaction_price(client: &Client, config: &Config, access_token: &str) -> Result<Response, Error> {
     let env = environment::get();
     
     let mut headers = HeaderMap::new();
@@ -31,15 +30,16 @@ pub async fn current_transaction_price(client: &Client, config: &Config, access_
         Some(query_data),
     ).await?;
 
-    let response_data = response.text().await?;
+    Ok(response)
+    // let response_data = response.text().await?;
 
-    // let approval_response: Response = response.json().await?;
+    // // let approval_response: Response = response.json().await?;
     
-    if response_data.is_empty() {
-        error!("Received empty approval key");
-        Err(Error::MissingApprovalKey)
-    } else {
-        info!("response_data: [{}]", response_data);
-        Ok(response_data)
-    }
+    // if response_data.is_empty() {
+    //     error!("Received empty approval key");
+    //     Err(Error::MissingApprovalKey)
+    // } else {
+    //     info!("response_data: [{}]", response_data);
+    //     Ok(response_data)
+    // }
 }

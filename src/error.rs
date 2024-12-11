@@ -23,8 +23,6 @@ pub enum RestfulError {
     HttpError { status: reqwest::StatusCode, body: String },
     #[error("Max retries exceeded")]
     MaxRetriesExceeded,
-    #[error("Approval key not found in response")]
-    MissingApprovalKey,
-    #[error("Approval key error: {0}")]
-    ApprovalKeyError(String),
+    #[error("IO error: {0}")]
+    IoError(#[from] std::io::Error),
 }

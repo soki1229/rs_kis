@@ -1,7 +1,8 @@
 use std::time::Duration;
-use reqwest::Client;
+use oauth_certification::TokenInfo;
+use reqwest::{Client, Response};
 use crate::error::RestfulError as Error;
-
+use log::{info, warn, error};
 
 mod oauth_certification;
 mod overseas_stock_price;
@@ -19,7 +20,7 @@ pub struct Api {
     client: Client,
     config: Config,
     pub socket_key: String,
-    pub api_token: String,
+    pub token_info: TokenInfo,
 }
 
 impl Api {
@@ -32,27 +33,103 @@ impl Api {
                 max_retries: 3,
             },
             socket_key: String::new(),
-            api_token: String::new(),
+            token_info: TokenInfo::new(),
         }
     }
 
     pub async fn initialize_oauth_certifiaction(&mut self) -> Result<(), Error> {
-        self.socket_key = self.issue_oauth_websocket().await?;
-        //TODO: check if valid api_token already exists
-        self.api_token = self.issue_oauth_api().await?;
+        self.update_oauth_websocket().await;
+        self.update_oauth_api().await;
 
         Ok(())
     }
 
-    async fn issue_oauth_websocket(&self) -> Result<String, Error> {
-        oauth_certification::issue_oauth_websocket(&self.client, &self.config).await
-    }
-        
-    async fn issue_oauth_api(&self) -> Result<String, Error> {
-        oauth_certification::issue_oauth_api(&self.client, &self.config).await
+    async fn update_oauth_websocket(&mut self) {
+        self.socket_key = match oauth_certification::issue_oauth_websocket(&self.client, &self.config).await {
+            Ok(response) => response.approval_key,
+            _ => String::new(),
+        }
     }
 
-    pub async fn current_transaction_price(&self) -> Result<String, Error> {
-        overseas_stock_price::current_transaction_price(&self.client, &self.config, &self.api_token).await
+    async fn update_oauth_api(&mut self) {
+        if !self.is_token_alive().await {
+            self.token_info = self.issue_new_token().await;
+        }
     }
+
+    async fn is_token_alive(&mut self) -> bool {
+        // Step 1. Check construct variable
+        if !self.token_info.is_token_expired() {
+            return true;
+        }
+        // Step 2. Check local file
+        match load_token_from_file("~/.soki1229/kis_api/access_token") {
+            Ok(Some(token_info)) => {
+                if !token_info.is_token_expired() {
+                    self.token_info = token_info;
+                    true
+                } else {
+                    warn!("access_token expired.");
+                    false
+                }
+            },
+            _ => {
+                warn!("unable to access file.");
+                false
+            }
+        }
+    }
+
+    async fn issue_new_token(&self) -> TokenInfo {
+        match oauth_certification::issue_oauth_api(&self.client, &self.config).await {
+            Ok(response) => {
+                info!("New access_token granted.");
+                match save_token_to_file(&response, "~/.soki1229/kis_api/access_token") {
+                    Ok(_) => info!("Archived access_token."),
+                    Err(e) => error!("Failed to archive: {:?}", e),
+                };
+                response
+            },
+            Err(e) => {
+                error!("Failed to initialize OAuth certification: {:?}", e);
+                TokenInfo::new()
+            }
+        }
+    }
+
+    pub async fn request(&mut self) -> Result<Response, Error> {
+        self.update_oauth_api().await;
+        overseas_stock_price::current_transaction_price(&self.client, &self.config, &self.token_info.get_token()).await
+    }
+}
+
+use std::fs::{self, File};
+use std::io::{Read, Write};
+use std::path::PathBuf;
+use shellexpand;
+
+fn save_token_to_file(token_info: &TokenInfo, file_path: &str) -> std::io::Result<()> {
+    let expanded_path = shellexpand::tilde(file_path).into_owned();
+    let path = PathBuf::from(&expanded_path);
+
+    if let Some(parent) = path.parent() {
+        fs::create_dir_all(parent)?;
+    }
+
+    let json = serde_json::to_string(token_info)?;
+    let mut file = File::create(&expanded_path)?;
+    file.write_all(json.as_bytes())?;
+    Ok(())
+}
+
+fn load_token_from_file(file_path: &str) -> std::io::Result<Option<TokenInfo>> {
+    let expanded_path = shellexpand::tilde(file_path);
+    let mut file = match File::open(expanded_path.as_ref()) {
+        Ok(file) => file,
+        Err(_) => return Ok(None),
+    };
+    let mut contents = String::new();
+    file.read_to_string(&mut contents)?;
+    let token_info: TokenInfo = serde_json::from_str(&contents)?;
+    Ok(Some(token_info))
 }
