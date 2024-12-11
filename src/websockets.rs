@@ -3,7 +3,7 @@ use std::sync::Mutex;
 use futures::{SinkExt, StreamExt};
 use futures_util::stream::{SplitSink, SplitStream};
 use lazy_static::lazy_static;
-use log::{error, info, warn};
+use log::{error, info, debug, warn};
 
 use tokio::{
     net::TcpStream,
@@ -51,14 +51,14 @@ pub async fn connect_websocket() -> Result<(), Error> {
         let (ws_stream, _) = connect_async(environment::get().domain_socket.to_owned().into_client_request()?).await?;
         info!("[ Handshaking ] WebSocket Connected.");
         
-        if let Err(e) = handle_websocket(ws_stream, &api.socket_key).await {
+        if let Err(e) = handle_websocket(ws_stream, &api).await {
             error!("WebSocket error: {}. Reconnecting...", e);
             sleep(Duration::from_secs(5)).await;  // Add delay before reconnecting
         }
     }
 }
 
-async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>, approval_key: &str) -> Result<(), Error> {
+async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>, api: &Api) -> Result<(), Error> {
     let (write, read) = ws_stream.split();
     let (tx, rx) = mpsc::channel::<WsMessage>(100);
 
@@ -72,7 +72,8 @@ async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>,
     let send_task = tokio::spawn(handle_send_task(write, rx));
     
     // TODO: need to handle event; Handling requested subscription.
-    subscribe_transaction("AAPL", true, approval_key).await?;
+    subscribe_transaction("NVDA", true, &api.socket_key).await?;
+    subscribe_transaction("LRCX", true, &api.socket_key).await?;
 
     // Handle receiving messages (main loop)
     let receive_result = handle_receive_task(read).await;
@@ -254,7 +255,7 @@ async fn on_received_json(message: &str) -> Result<(), Error> {
             };
         
             tx.send(WsMessage::Pong(message.into())).await.map_err(|e| Error::SendError(e.to_string()))?;
-            info!("PINGPONG!");
+            debug!("ping-pong");
         },
         // // 실시가 체결가(해외)
         // Ok(TransactionId::HDFSCNT0(s)) => {
