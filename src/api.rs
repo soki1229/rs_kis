@@ -52,36 +52,19 @@ impl Api {
     }
 
     async fn update_oauth_api(&mut self) {
-        if !self.is_token_alive().await {
-            self.token_info = self.issue_new_token().await;
+        if let Ok(Some(token_info)) = load_token_from_file("~/.soki1229/kis_api/access_token") {
+            self.token_info = token_info;
         }
+
+        if self.token_info.is_expired() {
+            self.issue_new_token().await;
+        }
+
+        self.token_info.update();
     }
 
-    async fn is_token_alive(&mut self) -> bool {
-        // Step 1. Check construct variable
-        if !self.token_info.is_token_expired() {
-            return true;
-        }
-        // Step 2. Check local file
-        match load_token_from_file("~/.soki1229/kis_api/access_token") {
-            Ok(Some(token_info)) => {
-                if !token_info.is_token_expired() {
-                    self.token_info = token_info;
-                    true
-                } else {
-                    warn!("access_token expired.");
-                    false
-                }
-            },
-            _ => {
-                warn!("unable to access file.");
-                false
-            }
-        }
-    }
-
-    async fn issue_new_token(&self) -> TokenInfo {
-        match oauth_certification::issue_oauth_api(&self.client, &self.config).await {
+    async fn issue_new_token(&mut self) {
+        self.token_info = match oauth_certification::issue_oauth_api(&self.client, &self.config).await {
             Ok(response) => {
                 info!("New access_token granted.");
                 match save_token_to_file(&response, "~/.soki1229/kis_api/access_token") {

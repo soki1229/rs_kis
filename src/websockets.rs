@@ -72,8 +72,8 @@ async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>,
     let send_task = tokio::spawn(handle_send_task(write, rx));
     
     // TODO: need to handle event; Handling requested subscription.
-    subscribe_transaction("NVDA", true, &api.socket_key).await?;
-    subscribe_transaction("LRCX", true, &api.socket_key).await?;
+    // subscribe_transaction("NVDA", true, &api.socket_key).await?;
+    // subscribe_transaction("LRCX", true, &api.socket_key).await?;
 
     // Handle receiving messages (main loop)
     let receive_result = handle_receive_task(read).await;
