@@ -1,10 +1,11 @@
 use ::http::header::{HeaderMap, HeaderName, HeaderValue};
 use reqwest::{Client, Method, Response};
 use crate::environment;
-use crate::api::{Config, http};
+use crate::core::http;
+
 use crate::error::KisClientError as Error;
 
-pub async fn current_transaction_price(client: &Client, config: &Config, access_token: &str, symbol: &str) -> Result<Response, Error> {
+pub async fn current_transaction_price(client: &Client, config: &http::Config, access_token: &str, symbol: &str) -> Result<Response, Error> {
     let env = environment::get();
     
     let mut headers = HeaderMap::new();

@@ -1,10 +1,9 @@
 use thiserror::Error;
-use tokio_tungstenite::tungstenite::Error as WsError;
 
 #[derive(Error, Debug)]
 pub enum KisClientError {
     #[error("WebSocket connection error: {0}")]
-    ConnectionError(#[from] WsError),
+    ConnectionError(#[from] tokio_tungstenite::tungstenite::Error),
     #[error("JSON parsing error: {0}")]
     JsonError(#[from] serde_json::Error),
     #[error("Error sending message: {0}")]
