@@ -17,6 +17,7 @@ pub struct Config {
     pub app_secret: String,
     pub domain_socket: String,
     pub domain_restful: String,
+    pub account_num: String,
 }
 
 pub fn init() {
@@ -45,6 +46,7 @@ pub fn init() {
                 app_secret: env::var("APP_SECRET").expect("APP_SECRET must be set"),
                 domain_socket: env::var("WS_URL").expect("WS_URL must be set"),
                 domain_restful: env::var("REST_URL").expect("REST_URL must be set"),
+                account_num: env::var("ACCOUNT_NUM").expect("ACCOUNT_NUM must be set"),
             });
         }
     });

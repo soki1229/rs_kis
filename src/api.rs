@@ -5,7 +5,7 @@ use crate::error::RestfulError as Error;
 use log::{info, warn, error};
 
 mod oauth_certification;
-mod overseas_stock_price;
+mod overseas;
 
 mod http;
 
@@ -19,6 +19,7 @@ pub struct Config {
 pub struct Api {
     client: Client,
     config: Config,
+    account_num: String,
     pub socket_key: String,
     pub token_info: TokenInfo,
 }
@@ -32,6 +33,7 @@ impl Api {
                 default_timeout: Duration::from_secs(30),
                 max_retries: 3,
             },
+            account_num: String::new(),
             socket_key: String::new(),
             token_info: TokenInfo::new(),
         }
@@ -43,6 +45,11 @@ impl Api {
 
         Ok(())
     }
+
+    pub fn set_account_num(&mut self, account_num: &str) {
+        self.account_num = account_num.to_string();
+    }
+
 
     async fn update_oauth_websocket(&mut self) {
         self.socket_key = match oauth_certification::issue_oauth_websocket(&self.client, &self.config).await {
@@ -80,9 +87,14 @@ impl Api {
         }
     }
 
-    pub async fn request(&mut self) -> Result<Response, Error> {
+    pub async fn check_deposit(&mut self) -> Result<Response, Error> {
         self.update_oauth_api().await;
-        overseas_stock_price::current_transaction_price(&self.client, &self.config, &self.token_info.get_token()).await
+        overseas::order_deposit::check_deposit(&self.client, &self.config, &self.token_info, &self.account_num).await
+    }
+
+    pub async fn current_transaction_price(&mut self, symbol: &str) -> Result<Response, Error> {
+        self.update_oauth_api().await;
+        overseas::stock_price::current_transaction_price(&self.client, &self.config, &self.token_info.get_token(), symbol).await
     }
 }
 
