@@ -3,6 +3,7 @@ use reqwest::{Client, Method, Url, header::HeaderMap};
 use serde_json::Value;
 use log::{debug, error};
 use crate::api::Config;
+use crate::error::KisClientError as Error;
 use crate::error;
 
 pub async fn execute_api_call(
@@ -13,7 +14,7 @@ pub async fn execute_api_call(
     headers: Option<HeaderMap>,
     body_data: Option<Value>,
     query_data: Option<Vec<(&str, &str)>>
-) -> Result<reqwest::Response, error::RestfulError> {
+) -> Result<reqwest::Response, Error> {
     let url = Url::parse(&config.domain)?.join(path)?;
 
     for attempt in 1..=config.max_retries {
@@ -39,16 +40,16 @@ pub async fn execute_api_call(
                     let status = response.status();
                     let body = response.text().await.unwrap_or_else(|_| "Unable to read response body".to_string());
                     error!("HTTP error: {}, body: {}", status, body);
-                    return Err(error::RestfulError::HttpError { status, body });
+                    return Err(Error::HttpError { status, body });
                 }
             },
             Err(e) if attempt <= config.max_retries => {
                 error!("Request failed (attempt {}): {}", attempt, e);
                 tokio::time::sleep(Duration::from_secs(2u64.pow(attempt))).await;
             },
-            Err(e) => return Err(error::RestfulError::RequestError(e)),
+            Err(e) => return Err(Error::RequestError(e)),
         }
     }
     
-    Err(error::RestfulError::MaxRetriesExceeded)
+    Err(Error::MaxRetriesExceeded)
 }

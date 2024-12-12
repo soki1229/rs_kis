@@ -3,7 +3,7 @@ use reqwest::{Client, Method, Response};
 use crate::api::oauth_certification::TokenInfo;
 use crate::environment;
 use crate::api::{Config, http};
-use crate::error::RestfulError as Error;
+use crate::error::KisClientError as Error;
 use log::debug;
 
 pub async fn check_deposit(client: &Client, config: &Config, token_info: &TokenInfo, account_num: &String) -> Result<Response, Error> {
