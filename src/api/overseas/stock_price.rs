@@ -4,7 +4,7 @@ use crate::environment;
 use crate::api::{Config, http};
 use crate::error::RestfulError as Error;
 
-pub async fn current_transaction_price(client: &Client, config: &Config, access_token: &str) -> Result<Response, Error> {
+pub async fn current_transaction_price(client: &Client, config: &Config, access_token: &str, symbol: &str) -> Result<Response, Error> {
     let env = environment::get();
     
     let mut headers = HeaderMap::new();
@@ -17,7 +17,7 @@ pub async fn current_transaction_price(client: &Client, config: &Config, access_
     let query_data = vec![
         ("AUTH", ""),
         ("EXCD", "NAS"),
-        ("SYMB", "TSLA"),
+        ("SYMB", symbol),
     ];
 
     let response = http::execute_api_call(
@@ -31,15 +31,4 @@ pub async fn current_transaction_price(client: &Client, config: &Config, access_
     ).await?;
 
     Ok(response)
-    // let response_data = response.text().await?;
-
-    // // let approval_response: Response = response.json().await?;
-    
-    // if response_data.is_empty() {
-    //     error!("Received empty approval key");
-    //     Err(Error::MissingApprovalKey)
-    // } else {
-    //     info!("response_data: [{}]", response_data);
-    //     Ok(response_data)
-    // }
 }
