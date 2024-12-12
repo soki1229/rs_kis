@@ -44,9 +44,16 @@ lazy_static! {
 }
 
 pub async fn connect_websocket() -> Result<(), Error> {
-    let mut api = Api::new(&environment::get().domain_restful);
-    // Send REST message for granting 'approval_key', 'access_token'
+    let env_config = environment::get();
+    let mut api = Api::new(&env_config.domain_restful);
     api.initialize_oauth_certifiaction().await?;
+    api.set_account_num(&env_config.account_num);
+
+    if let Ok(response) = api.check_deposit().await{
+        let parsed = response.text().await.unwrap();
+        info!("{}", parsed);
+    }
+
     loop {
         let (ws_stream, _) = connect_async(environment::get().domain_socket.to_owned().into_client_request()?).await?;
         info!("[ Handshaking ] WebSocket Connected.");

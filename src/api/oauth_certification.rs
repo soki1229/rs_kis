@@ -72,8 +72,8 @@ impl TokenInfo {
         }
     }
 
-    pub fn get_token(&self) -> String {
-        self.access_token.clone()
+    pub fn get_token(&self) -> &String {
+        &self.access_token
     }
 
     pub fn get_expires_in(&self) -> String {
