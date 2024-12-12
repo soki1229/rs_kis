@@ -2,7 +2,7 @@ use ::http::header::{HeaderMap, HeaderName, HeaderValue};
 use reqwest::{Client, Method, Response};
 use crate::environment;
 use crate::api::{Config, http};
-use crate::error::RestfulError as Error;
+use crate::error::KisClientError as Error;
 
 pub async fn current_transaction_price(client: &Client, config: &Config, access_token: &str, symbol: &str) -> Result<Response, Error> {
     let env = environment::get();

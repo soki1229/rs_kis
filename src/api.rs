@@ -1,7 +1,9 @@
 use std::time::Duration;
 use oauth_certification::TokenInfo;
 use reqwest::{Client, Response};
-use crate::error::RestfulError as Error;
+use crate::error::KisClientError as Error;
+use crate::websockets;
+use crate::core::file_io;
 use log::{info, warn, error};
 
 mod oauth_certification;
@@ -25,7 +27,7 @@ pub struct Api {
 }
 
 impl Api {
-    pub fn new(domain: &str) -> Self {
+    pub fn new(account_num: &str, domain: &str) -> Self {
         Self {
             client: Client::new(),
             config: Config {
@@ -33,34 +35,16 @@ impl Api {
                 default_timeout: Duration::from_secs(30),
                 max_retries: 3,
             },
-            account_num: String::new(),
+            account_num: String::from(account_num),
             socket_key: String::new(),
             token_info: TokenInfo::new(),
         }
     }
 
-    pub async fn initialize_oauth_certifiaction(&mut self) -> Result<(), Error> {
-        self.update_oauth_websocket().await;
-        self.update_oauth_api().await;
-
-        Ok(())
-    }
-
-    pub fn set_account_num(&mut self, account_num: &str) {
-        self.account_num = account_num.to_string();
-    }
-
-
-    async fn update_oauth_websocket(&mut self) {
-        self.socket_key = match oauth_certification::issue_oauth_websocket(&self.client, &self.config).await {
-            Ok(response) => response.approval_key,
-            _ => String::new(),
-        }
-    }
-
+    // REST API
     async fn update_oauth_api(&mut self) {
-        if let Ok(Some(token_info)) = load_token_from_file("~/.soki1229/kis_api/access_token") {
-            self.token_info = token_info;
+        if let Ok(Some(json_string)) = file_io::load_token_from_file("~/.soki1229/kis_api/access_token") {
+            self.token_info = serde_json::from_str(&json_string).unwrap();
         }
 
         if self.token_info.is_expired() {
@@ -74,7 +58,7 @@ impl Api {
         self.token_info = match oauth_certification::issue_oauth_api(&self.client, &self.config).await {
             Ok(response) => {
                 info!("New access_token granted.");
-                match save_token_to_file(&response, "~/.soki1229/kis_api/access_token") {
+                match file_io::save_token_to_file(&serde_json::to_string(&response).unwrap(), "~/.soki1229/kis_api/access_token") {
                     Ok(_) => info!("Archived access_token."),
                     Err(e) => error!("Failed to archive: {:?}", e),
                 };
@@ -96,35 +80,18 @@ impl Api {
         self.update_oauth_api().await;
         overseas::stock_price::current_transaction_price(&self.client, &self.config, &self.token_info.get_token(), symbol).await
     }
-}
 
-use std::fs::{self, File};
-use std::io::{Read, Write};
-use std::path::PathBuf;
-use shellexpand;
-
-fn save_token_to_file(token_info: &TokenInfo, file_path: &str) -> std::io::Result<()> {
-    let expanded_path = shellexpand::tilde(file_path).into_owned();
-    let path = PathBuf::from(&expanded_path);
-
-    if let Some(parent) = path.parent() {
-        fs::create_dir_all(parent)?;
+    // WebSockets API
+    async fn update_oauth_websocket(&mut self) {
+        self.socket_key = match oauth_certification::issue_oauth_websocket(&self.client, &self.config).await {
+            Ok(response) => response.approval_key,
+            _ => String::new(),
+        }
     }
 
-    let json = serde_json::to_string(token_info)?;
-    let mut file = File::create(&expanded_path)?;
-    file.write_all(json.as_bytes())?;
-    Ok(())
-}
+    pub async fn subscribe_transaction(&mut self, symbol: &str, subscribe: bool) -> Result<(), Error> {
+        self.update_oauth_websocket().await;
+        websockets::subscribe_transaction(symbol, subscribe, &self.socket_key).await
+    }
 
-fn load_token_from_file(file_path: &str) -> std::io::Result<Option<TokenInfo>> {
-    let expanded_path = shellexpand::tilde(file_path);
-    let mut file = match File::open(expanded_path.as_ref()) {
-        Ok(file) => file,
-        Err(_) => return Ok(None),
-    };
-    let mut contents = String::new();
-    file.read_to_string(&mut contents)?;
-    let token_info: TokenInfo = serde_json::from_str(&contents)?;
-    Ok(Some(token_info))
 }

@@ -2,7 +2,7 @@ use chrono::{DateTime, Duration, NaiveDateTime, TimeZone, Utc};
 use reqwest::{Client, Method};
 use crate::environment;
 use crate::api::{Config, http};
-use crate::error::RestfulError as Error;
+use crate::error::KisClientError as Error;
 use serde::{Serialize, Deserialize};
 use log::{info, debug, error};
 
