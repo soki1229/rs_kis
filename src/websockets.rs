@@ -26,14 +26,13 @@ use tokio_tungstenite::{
 use crate::{
     api::Api,
     environment,
-    error::WebSocketError as Error,
+    error::KisClientError as Error,
 };
 
 mod message;
 use self::message::{TransactionId, request, response};
 
-mod analyzer;
-use analyzer::*;
+use crate::extentions::analyzer;
 
 // Commented out modules
 // mod crypto;
@@ -45,27 +44,25 @@ lazy_static! {
 
 pub async fn connect_websocket() -> Result<(), Error> {
     let env_config = environment::get();
-    let mut api = Api::new(&env_config.domain_restful);
-    api.initialize_oauth_certifiaction().await?;
-    api.set_account_num(&env_config.account_num);
-
-    if let Ok(response) = api.check_deposit().await{
-        let parsed = response.text().await.unwrap();
-        info!("{}", parsed);
-    }
+    
+    let mut api = Api::new(&env_config.account_num, &env_config.domain_restful);
+    // if let Ok(response) = api.check_deposit().await{
+    //     let parsed = response.text().await.unwrap();
+    //     info!("{}", parsed);
+    // }
 
     loop {
         let (ws_stream, _) = connect_async(environment::get().domain_socket.to_owned().into_client_request()?).await?;
-        info!("[ Handshaking ] WebSocket Connected.");
+        info!("Connection Created.");
         
-        if let Err(e) = handle_websocket(ws_stream, &api).await {
+        if let Err(e) = handle_websocket(ws_stream, &mut api).await {
             error!("WebSocket error: {}. Reconnecting...", e);
             sleep(Duration::from_secs(5)).await;  // Add delay before reconnecting
         }
     }
 }
 
-async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>, api: &Api) -> Result<(), Error> {
+async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>, api: &mut Api) -> Result<(), Error> {
     let (write, read) = ws_stream.split();
     let (tx, rx) = mpsc::channel::<WsMessage>(100);
 
@@ -79,8 +76,8 @@ async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>,
     let send_task = tokio::spawn(handle_send_task(write, rx));
     
     // TODO: need to handle event; Handling requested subscription.
-    // subscribe_transaction("NVDA", true, &api.socket_key).await?;
-    // subscribe_transaction("LRCX", true, &api.socket_key).await?;
+    api.subscribe_transaction("NVDA", true).await?;
+    // api.subscribe_transaction("LRCX", true).await?;
 
     // Handle receiving messages (main loop)
     let receive_result = handle_receive_task(read).await;
@@ -133,7 +130,7 @@ async fn handle_send_task(mut write: SplitSink<WebSocketStream<MaybeTlsStream<Tc
 }
 
 async fn handle_receive_task(mut read: SplitStream<WebSocketStream<MaybeTlsStream<TcpStream>>>) -> Result<(), Error> {
-    let mut analyzer = StockAnalyzer::new(10);
+    let mut analyzer = analyzer::StockAnalyzer::new(50);
 
     while let Some(msg) = read.next().await {
         match msg {
@@ -298,7 +295,7 @@ async fn on_received_json(message: &str) -> Result<(), Error> {
     Ok(())
 }
 
-async fn subscribe_transaction(symbol: &str, subscribe: bool, approval_key: &str) -> Result<(), Error> {
+pub async fn subscribe_transaction(symbol: &str, subscribe: bool, approval_key: &str) -> Result<(), Error> {
     // Example for subscribing real-time stock price of 'Apple: DNASAAPL'
     // Create your message payload
     let request = request::Message {
