@@ -24,7 +24,7 @@ use tokio_tungstenite::{
 
 
 use crate::{
-    api::Api,
+    client::KisClient,
     environment,
     error::KisClientError as Error,
 };
@@ -42,27 +42,7 @@ lazy_static! {
     static ref GLOBAL_TX: Mutex<Option<mpsc::Sender<WsMessage>>> = Mutex::new(None);
 }
 
-pub async fn connect_websocket() -> Result<(), Error> {
-    let env_config = environment::get();
-    
-    let mut api = Api::new(&env_config.account_num, &env_config.domain_restful);
-    // if let Ok(response) = api.check_deposit().await{
-    //     let parsed = response.text().await.unwrap();
-    //     info!("{}", parsed);
-    // }
-
-    loop {
-        let (ws_stream, _) = connect_async(environment::get().domain_socket.to_owned().into_client_request()?).await?;
-        info!("Connection Created.");
-        
-        if let Err(e) = handle_websocket(ws_stream, &mut api).await {
-            error!("WebSocket error: {}. Reconnecting...", e);
-            sleep(Duration::from_secs(5)).await;  // Add delay before reconnecting
-        }
-    }
-}
-
-async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>, api: &mut Api) -> Result<(), Error> {
+pub async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>) -> Result<(), Error> {
     let (write, read) = ws_stream.split();
     let (tx, rx) = mpsc::channel::<WsMessage>(100);
 
@@ -75,10 +55,6 @@ async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>,
     // Spawn the send task
     let send_task = tokio::spawn(handle_send_task(write, rx));
     
-    // TODO: need to handle event; Handling requested subscription.
-    api.subscribe_transaction("NVDA", true).await?;
-    // api.subscribe_transaction("LRCX", true).await?;
-
     // Handle receiving messages (main loop)
     let receive_result = handle_receive_task(read).await;
 

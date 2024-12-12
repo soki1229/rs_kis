@@ -2,9 +2,24 @@ use std::time::Duration;
 use reqwest::{Client, Method, Url, header::HeaderMap};
 use serde_json::Value;
 use log::{debug, error};
-use crate::api::Config;
 use crate::error::KisClientError as Error;
-use crate::error;
+
+#[derive(Clone, Debug, Default)]
+pub struct Config {
+    domain: String,
+    default_timeout: Duration,
+    max_retries: u32,
+}
+
+impl Config {
+    pub fn new() -> Self {
+        Self {
+            domain: String::from("https://openapi.koreainvestment.com:9443"),
+            default_timeout:  Duration::from_secs(30),
+            max_retries: 3,
+        }
+    }
+}
 
 pub async fn execute_api_call(
     client: &Client,
