@@ -92,10 +92,16 @@ impl StockAnalyzer {
 
     fn calculate_order_imbalance(&self) -> f64 {
         let latest = self.data_window.back().unwrap();
-        (latest.매수잔량 as f64 - latest.매도잔량 as f64) / (latest.매수잔량 as f64 + latest.매도잔량 as f64)
+        (latest.매수잔량 as f64 - latest.매도잔량 as f64)
+            / (latest.매수잔량 as f64 + latest.매도잔량 as f64)
     }
 
-    fn predict_movement(&self, buying_pressure: f64, volume_trend: &str, order_imbalance: f64) -> &str {
+    fn predict_movement(
+        &self,
+        buying_pressure: f64,
+        volume_trend: &str,
+        order_imbalance: f64,
+    ) -> &str {
         if buying_pressure > 0.55 && volume_trend == "증가" && order_imbalance > 0.1 {
             "강한 상승 가능성"
         } else if buying_pressure < 0.45 && volume_trend == "증가" && order_imbalance < -0.1 {

@@ -1,6 +1,6 @@
 use chrono::{DateTime, Duration, NaiveDateTime, TimeZone, Utc};
+use log::{error, info};
 use serde::{Deserialize, Serialize};
-use log::{info, error};
 
 #[derive(Serialize, Deserialize)]
 pub struct TokenInfo {
@@ -25,7 +25,6 @@ impl TokenInfo {
     }
 
     pub fn get_expires_in(&self) -> String {
-        
         let hours = self.expires_in / 3600;
         let minutes = (self.expires_in % 3600) / 60;
         let seconds = self.expires_in % 60;
@@ -40,10 +39,16 @@ impl TokenInfo {
         }
 
         // Attempt to parse the expiration time
-        let naive_dt: NaiveDateTime = match NaiveDateTime::parse_from_str(&self.access_token_token_expired, "%Y-%m-%d %H:%M:%S") {
+        let naive_dt: NaiveDateTime = match NaiveDateTime::parse_from_str(
+            &self.access_token_token_expired,
+            "%Y-%m-%d %H:%M:%S",
+        ) {
             Ok(dt) => dt,
             Err(_) => {
-                error!("Failed to parse access_token_token_expired: {}", self.access_token_token_expired);
+                error!(
+                    "Failed to parse access_token_token_expired: {}",
+                    self.access_token_token_expired
+                );
                 return true; // Assume expired if parsing fails
             }
         };
@@ -60,8 +65,9 @@ impl TokenInfo {
 
     pub fn update(&mut self) {
         // Attempt to parse the expiration time
-        let naive_dt = NaiveDateTime::parse_from_str(&self.access_token_token_expired, "%Y-%m-%d %H:%M:%S")
-            .expect("Failed to parse access_token_token_expired");
+        let naive_dt =
+            NaiveDateTime::parse_from_str(&self.access_token_token_expired, "%Y-%m-%d %H:%M:%S")
+                .expect("Failed to parse access_token_token_expired");
 
         // Convert NaiveDateTime to DateTime<Utc>
         let expiry_time: DateTime<Utc> = Utc.from_utc_datetime(&naive_dt);

@@ -1,20 +1,44 @@
-use ::http::header::{HeaderMap, HeaderName, HeaderValue};
-use reqwest::{Client, Method, Response};
-use crate::types::TokenInfo;
-use crate::environment;
 use crate::core::http;
+use crate::environment;
 use crate::error::KisClientError as Error;
-use log::info;
+use crate::types::TokenInfo;
+use ::http::header::{HeaderMap, HeaderName, HeaderValue};
 use log::debug;
+use log::info;
+use reqwest::{Client, Method, Response};
 
-pub async fn check_deposit(client: &Client, config: &http::Config, token_info: &TokenInfo, account_num: &String) -> Result<Response, Error> {
+pub async fn check_deposit(
+    client: &Client,
+    config: &http::Config,
+    token_info: &TokenInfo,
+    account_num: &String,
+) -> Result<Response, Error> {
     let env = environment::get();
     let mut headers = HeaderMap::new();
-    headers.insert(HeaderName::from_static("authorization"), HeaderValue::from_str(&format!("Bearer {}", token_info.get_token())).unwrap());
-    headers.insert(HeaderName::from_static("appkey"), HeaderValue::from_static(&env.app_key));
-    headers.insert(HeaderName::from_static("appsecret"), HeaderValue::from_static(&env.app_secret));
-    headers.insert(HeaderName::from_static("tr_id"), HeaderValue::from_static(if cfg!(feature = "vts_mock_disabled"){"TTTS3012R"}else{"VTTS3012R"}));
-    headers.insert(HeaderName::from_static("tr_cont"), HeaderValue::from_static(""));
+    headers.insert(
+        HeaderName::from_static("authorization"),
+        HeaderValue::from_str(&format!("Bearer {}", token_info.get_token())).unwrap(),
+    );
+    headers.insert(
+        HeaderName::from_static("appkey"),
+        HeaderValue::from_static(&env.app_key),
+    );
+    headers.insert(
+        HeaderName::from_static("appsecret"),
+        HeaderValue::from_static(&env.app_secret),
+    );
+    headers.insert(
+        HeaderName::from_static("tr_id"),
+        HeaderValue::from_static(if cfg!(feature = "vts_mock_disabled") {
+            "TTTS3012R"
+        } else {
+            "VTTS3012R"
+        }),
+    );
+    headers.insert(
+        HeaderName::from_static("tr_cont"),
+        HeaderValue::from_static(""),
+    );
 
     let (a_num, a_type) = account_num.split_once('-').unwrap();
     let query_data = vec![
@@ -34,7 +58,8 @@ pub async fn check_deposit(client: &Client, config: &http::Config, token_info: &
         Some(headers),
         None,
         Some(query_data),
-    ).await?;
+    )
+    .await?;
 
     Ok(response)
 }

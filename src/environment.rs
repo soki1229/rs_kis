@@ -1,6 +1,6 @@
+use log::{error, warn};
 use std::env;
 use std::sync::Once;
-use log::{warn, error};
 
 const SERVICE_TYPE_KIS: &str = "KIS";
 const SERVICE_TYPE_VTS: &str = "VTS";
@@ -23,18 +23,20 @@ pub struct Config {
 pub fn init() {
     // Ensure the initialize will be performed only once
     CONFIG.call_once(|| {
-
         // The "vts_mock_disabled" feature determines whether to use KIS (production) or VTS (test) configuration
         let (service_type, envfile) = if cfg!(feature = "vts_mock_disabled") {
             (SERVICE_TYPE_KIS, ENV_FILE_KIS)
         } else {
             (SERVICE_TYPE_VTS, ENV_FILE_VTS)
         };
-        
+
         warn!("-----------------------------------------------------------------");
         warn!("| * Configured: [{}]", service_type);
         match dotenv::from_filename(envfile) {
-            Ok(_) => warn!("| * Environment variables loaded successfully from ({})", envfile),
+            Ok(_) => warn!(
+                "| * Environment variables loaded successfully from ({})",
+                envfile
+            ),
             Err(e) => error!("| * Failed to load environment variables: {}", e),
         }
         warn!("-----------------------------------------------------------------");
@@ -53,7 +55,5 @@ pub fn init() {
 }
 
 pub fn get() -> &'static Config {
-    unsafe {
-        INSTANCE.as_ref().expect("Config not initialized")
-    }
+    unsafe { INSTANCE.as_ref().expect("Config not initialized") }
 }

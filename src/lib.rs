@@ -1,11 +1,11 @@
-mod error;
-mod environment;
-mod websockets;
-mod logger;
 mod api;
-mod core;
-mod types;
 mod client;
+mod core;
+mod environment;
+mod error;
 mod extentions;
+mod logger;
+mod types;
+mod websockets;
 
 pub use client::KisClient;

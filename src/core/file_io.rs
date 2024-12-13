@@ -1,7 +1,7 @@
+use shellexpand;
 use std::fs::{self, File};
 use std::io::{Read, Write};
 use std::path::PathBuf;
-use shellexpand;
 
 pub fn save_token_to_file(json: &String, file_path: &str) -> std::io::Result<()> {
     let expanded_path = shellexpand::tilde(file_path).into_owned();

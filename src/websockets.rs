@@ -3,7 +3,7 @@ use std::sync::Mutex;
 use futures::{SinkExt, StreamExt};
 use futures_util::stream::{SplitSink, SplitStream};
 use lazy_static::lazy_static;
-use log::{error, info, debug, warn};
+use log::{debug, error, info, warn};
 
 use tokio::{
     net::TcpStream,
@@ -13,24 +13,14 @@ use tokio::{
 
 use tokio_tungstenite::{
     connect_async,
-    tungstenite::{
-        client::IntoClientRequest,
-        protocol::Message as WsMessage,
-        Error as WsError,
-    },
-    MaybeTlsStream,
-    WebSocketStream,
+    tungstenite::{client::IntoClientRequest, protocol::Message as WsMessage, Error as WsError},
+    MaybeTlsStream, WebSocketStream,
 };
 
-
-use crate::{
-    client::KisClient,
-    environment,
-    error::KisClientError as Error,
-};
+use crate::{client::KisClient, environment, error::KisClientError as Error};
 
 mod message;
-use self::message::{TransactionId, request, response};
+use self::message::{request, response, TransactionId};
 
 use crate::extentions::analyzer;
 
@@ -42,7 +32,9 @@ lazy_static! {
     static ref GLOBAL_TX: Mutex<Option<mpsc::Sender<WsMessage>>> = Mutex::new(None);
 }
 
-pub async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>) -> Result<(), Error> {
+pub async fn handle_websocket(
+    ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>,
+) -> Result<(), Error> {
     let (write, read) = ws_stream.split();
     let (tx, rx) = mpsc::channel::<WsMessage>(100);
 
@@ -51,10 +43,10 @@ pub async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStrea
         let mut global_tx = GLOBAL_TX.lock().unwrap();
         *global_tx = Some(tx.clone());
     }
-    
+
     // Spawn the send task
     let send_task = tokio::spawn(handle_send_task(write, rx));
-    
+
     // Handle receiving messages (main loop)
     let receive_result = handle_receive_task(read).await;
 
@@ -68,14 +60,18 @@ pub async fn handle_websocket(ws_stream: WebSocketStream<MaybeTlsStream<TcpStrea
 
     // Clear global sender when done
     {
-        let mut global_tx: std::sync::MutexGuard<'_, Option<mpsc::Sender<WsMessage>>> = GLOBAL_TX.lock().unwrap();
+        let mut global_tx: std::sync::MutexGuard<'_, Option<mpsc::Sender<WsMessage>>> =
+            GLOBAL_TX.lock().unwrap();
         *global_tx = None;
     }
-    
+
     Ok(())
 }
 
-async fn handle_send_task(mut write: SplitSink<WebSocketStream<MaybeTlsStream<TcpStream>>, WsMessage>, mut rx: mpsc::Receiver<WsMessage>) {
+async fn handle_send_task(
+    mut write: SplitSink<WebSocketStream<MaybeTlsStream<TcpStream>>, WsMessage>,
+    mut rx: mpsc::Receiver<WsMessage>,
+) {
     while let Some(message) = rx.recv().await {
         let mut retry_count = 0;
         let max_retries = 5;
@@ -90,50 +86,53 @@ async fn handle_send_task(mut write: SplitSink<WebSocketStream<MaybeTlsStream<Tc
                             error!("Max retries reached for sending message");
                             break;
                         }
-                        warn!("Send buffer full, applying backpressure (attempt {})", retry_count + 1);
+                        warn!(
+                            "Send buffer full, applying backpressure (attempt {})",
+                            retry_count + 1
+                        );
                         sleep(backoff_duration).await;
                         backoff_duration *= 2; // Exponential backoff
                         retry_count += 1;
-                    },
+                    }
                     _ => {
                         error!("Error sending message: {}", e);
                         return; // Exit on other errors
                     }
-                }
+                },
             }
         }
     }
 }
 
-async fn handle_receive_task(mut read: SplitStream<WebSocketStream<MaybeTlsStream<TcpStream>>>) -> Result<(), Error> {
+async fn handle_receive_task(
+    mut read: SplitStream<WebSocketStream<MaybeTlsStream<TcpStream>>>,
+) -> Result<(), Error> {
     let mut analyzer = analyzer::StockAnalyzer::new(50);
 
     while let Some(msg) = read.next().await {
         match msg {
-            Ok(msg) => {
-                match msg {
-                    WsMessage::Text(text) => {
-                        if serde_json::from_str::<serde_json::Value>(&text).is_ok() {
-                            on_received_json(&text).await?;
-                        } else {
-                            on_received_text(&text,  &mut analyzer).await?;
-                        }
-                    },
-                    WsMessage::Binary(bin) => {
-                        info!("Received binary message: {:?}", bin);
+            Ok(msg) => match msg {
+                WsMessage::Text(text) => {
+                    if serde_json::from_str::<serde_json::Value>(&text).is_ok() {
+                        on_received_json(&text).await?;
+                    } else {
+                        on_received_text(&text, &mut analyzer).await?;
                     }
-                    WsMessage::Ping(payload) => {
-                        info!("Received ping with payload: {:?}", payload);
-                    }
-                    WsMessage::Pong(payload) => {
-                        info!("Received pong with payload: {:?}", payload);
-                    }
-                    WsMessage::Frame(frame) => {
-                        info!("Received frame: {:?}", frame);
-                    }
-                    WsMessage::Close(_) => {
-                        info!("Connection closed by server.");
-                    }
+                }
+                WsMessage::Binary(bin) => {
+                    info!("Received binary message: {:?}", bin);
+                }
+                WsMessage::Ping(payload) => {
+                    info!("Received ping with payload: {:?}", payload);
+                }
+                WsMessage::Pong(payload) => {
+                    info!("Received pong with payload: {:?}", payload);
+                }
+                WsMessage::Frame(frame) => {
+                    info!("Received frame: {:?}", frame);
+                }
+                WsMessage::Close(_) => {
+                    info!("Connection closed by server.");
                 }
             },
             Err(e) => {
@@ -145,7 +144,10 @@ async fn handle_receive_task(mut read: SplitStream<WebSocketStream<MaybeTlsStrea
     Ok(())
 }
 
-async fn on_received_text(message: &str, analyzer: &mut analyzer::StockAnalyzer) -> Result<(), Error> {
+async fn on_received_text(
+    message: &str,
+    analyzer: &mut analyzer::StockAnalyzer,
+) -> Result<(), Error> {
     // info!("on_received_text: {}", &message);
 
     if message.starts_with('0') {
@@ -154,16 +156,16 @@ async fn on_received_text(message: &str, analyzer: &mut analyzer::StockAnalyzer)
         let data_cnt = recvstr[2].parse::<i32>().unwrap();
 
         match trid0 {
-            "HDFSASP0"|"HDFSASP1" => {
+            "HDFSASP0" | "HDFSASP1" => {
                 info!("#### 해외주식호가 ####");
                 stocks_call_overseas(data_cnt, recvstr[3]);
                 sleep(Duration::from_millis(500)).await;
-            },
+            }
             "HDFSCNT0" => {
                 info!("#### 해외주식체결 ####");
                 stocks_purchase_overseas(data_cnt, recvstr[3], analyzer);
                 sleep(Duration::from_millis(500)).await;
-            },
+            }
             _ => {}
         }
     } else if message.starts_with('1') {
@@ -173,18 +175,45 @@ async fn on_received_text(message: &str, analyzer: &mut analyzer::StockAnalyzer)
         match trid0 {
             "H0STCNI0" | "H0STCNI9" => {
                 //stocksigningnotice_domestic(recvstr[3], aes_key, aes_iv);
-            },
+            }
             "H0GSCNI0" | "H0GSCNI9" => {
                 //stocksigningnotice_overseas(recvstr[3], aes_key, aes_iv);
-            },
+            }
             _ => {}
         }
     }
-    
+
     Ok(())
 }
 
-static GLOBAL_ARRAY: [&str; 26] = ["실시간종목코드", "종목코드", "수수점자리수", "현지영업일자", "현지일자", "현지시간", "한국일자", "한국시간", "시가", "고가", "저가", "현재가", "대비구분", "전일대비", "등락율", "매수호가", "매도호가", "매수잔량", "매도잔량", "체결량", "거래량", "거래대금", "매도체결량", "매수체결량", "체결강도", "시장구분"];
+static GLOBAL_ARRAY: [&str; 26] = [
+    "실시간종목코드",
+    "종목코드",
+    "수수점자리수",
+    "현지영업일자",
+    "현지일자",
+    "현지시간",
+    "한국일자",
+    "한국시간",
+    "시가",
+    "고가",
+    "저가",
+    "현재가",
+    "대비구분",
+    "전일대비",
+    "등락율",
+    "매수호가",
+    "매도호가",
+    "매수잔량",
+    "매도잔량",
+    "체결량",
+    "거래량",
+    "거래대금",
+    "매도체결량",
+    "매수체결량",
+    "체결강도",
+    "시장구분",
+];
 
 fn stocks_call_overseas(data_cnt: i32, data: &str) {
     info!("===================================================================");
@@ -193,7 +222,10 @@ fn stocks_call_overseas(data_cnt: i32, data: &str) {
     // ifo!("{} : {}({})", data[1], data_cnt[11], data_cnt[14]);
     for cnt in 0..data_cnt {
         info!("### [{} / {}]", cnt + 1, data_cnt);
-        for (menu, value) in GLOBAL_ARRAY.iter().zip(pvalue.iter().skip((cnt as usize) * GLOBAL_ARRAY.len())) {
+        for (menu, value) in GLOBAL_ARRAY
+            .iter()
+            .zip(pvalue.iter().skip((cnt as usize) * GLOBAL_ARRAY.len()))
+        {
             info!("{:<13}\t[{}]", menu, value);
         }
     }
@@ -202,13 +234,13 @@ fn stocks_call_overseas(data_cnt: i32, data: &str) {
 fn stocks_purchase_overseas(data_cnt: i32, data: &str, analyzer: &mut analyzer::StockAnalyzer) {
     info!("============================================");
     let pvalue: Vec<&str> = data.split('^').collect();
-    
+
     let stock_data = analyzer::StockData {
-        종목코드:   pvalue[1].to_string(),
-        현재가:     pvalue[11].parse().unwrap(),
-        매수잔량:   pvalue[17].parse().unwrap(),
-        매도잔량:   pvalue[18].parse().unwrap(),
-        거래량:     pvalue[20].parse().unwrap(),
+        종목코드: pvalue[1].to_string(),
+        현재가: pvalue[11].parse().unwrap(),
+        매수잔량: pvalue[17].parse().unwrap(),
+        매도잔량: pvalue[18].parse().unwrap(),
+        거래량: pvalue[20].parse().unwrap(),
         매수체결량: pvalue[23].parse().unwrap(),
         매도체결량: pvalue[22].parse().unwrap(),
     };
@@ -231,12 +263,17 @@ async fn on_received_json(message: &str) -> Result<(), Error> {
         Ok(TransactionId::PINGPONG) => {
             let tx: mpsc::Sender<WsMessage> = {
                 let global_tx = GLOBAL_TX.lock().unwrap();
-                global_tx.as_ref().cloned().ok_or(Error::SendError("SenderNotInitialized".to_string()))?
+                global_tx
+                    .as_ref()
+                    .cloned()
+                    .ok_or(Error::SendError("SenderNotInitialized".to_string()))?
             };
-        
-            tx.send(WsMessage::Pong(message.into())).await.map_err(|e| Error::SendError(e.to_string()))?;
+
+            tx.send(WsMessage::Pong(message.into()))
+                .await
+                .map_err(|e| Error::SendError(e.to_string()))?;
             debug!("ping-pong");
-        },
+        }
         // // 실시가 체결가(해외)
         // Ok(TransactionId::HDFSCNT0(s)) => {
         // }
@@ -271,30 +308,41 @@ async fn on_received_json(message: &str) -> Result<(), Error> {
     Ok(())
 }
 
-pub async fn subscribe_transaction(symbol: &str, subscribe: bool, approval_key: &str) -> Result<(), Error> {
+pub async fn subscribe_transaction(
+    symbol: &str,
+    subscribe: bool,
+    approval_key: &str,
+) -> Result<(), Error> {
     // Example for subscribing real-time stock price of 'Apple: DNASAAPL'
     // Create your message payload
     let request = request::Message {
         header: request::Header {
-            approval_key:   String::from(approval_key),
-            custtype:       String::from("P"),
-            tr_type:        String::from(if subscribe {"1"} else {"2"}),
-            content_type:   String::from("utf-8"),
+            approval_key: String::from(approval_key),
+            custtype: String::from("P"),
+            tr_type: String::from(if subscribe { "1" } else { "2" }),
+            content_type: String::from("utf-8"),
         },
         body: request::Body {
             input: request::Input {
-                tr_id:      String::from("HDFSCNT0"),
-                tr_key:     String::from("DNAS") + symbol,
+                tr_id: String::from("HDFSCNT0"),
+                tr_key: String::from("DNAS") + symbol,
             },
         },
     };
-    
+
     let tx = {
         let global_tx = GLOBAL_TX.lock().unwrap();
-        global_tx.as_ref().cloned().ok_or(Error::SendError("SenderNotInitialized".to_string()))?
+        global_tx
+            .as_ref()
+            .cloned()
+            .ok_or(Error::SendError("SenderNotInitialized".to_string()))?
     };
 
-    tx.send(WsMessage::Text(serde_json::to_string_pretty(&request).unwrap())).await.map_err(|e| Error::SendError(e.to_string()))?;
+    tx.send(WsMessage::Text(
+        serde_json::to_string_pretty(&request).unwrap(),
+    ))
+    .await
+    .map_err(|e| Error::SendError(e.to_string()))?;
 
     // Send Subscribe request: *Should be sent if the session wasn't created yet.
 

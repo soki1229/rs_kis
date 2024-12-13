@@ -13,7 +13,10 @@ pub enum KisClientError {
     #[error("Request error: {0}")]
     RequestError(#[from] reqwest::Error),
     #[error("HTTP error: {status}, body: {body}")]
-    HttpError { status: reqwest::StatusCode, body: String },
+    HttpError {
+        status: reqwest::StatusCode,
+        body: String,
+    },
     #[error("Max retries exceeded")]
     MaxRetriesExceeded,
     #[error("IO error: {0}")]
