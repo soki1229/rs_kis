@@ -4,16 +4,17 @@ use futures::{SinkExt, StreamExt};
 use futures_util::stream::{SplitSink, SplitStream};
 use lazy_static::lazy_static;
 use log::{debug, error, info, warn};
-
 use tokio::{
     net::TcpStream,
     sync::mpsc,
     time::{sleep, Duration},
 };
 
+// use tokio_tungstenite::tungstenite::Message;
+
 use tokio_tungstenite::{
     connect_async,
-    tungstenite::{client::IntoClientRequest, protocol::Message as WsMessage, Error as WsError},
+    tungstenite::{self, client::IntoClientRequest, Error as WsError, Message},
     MaybeTlsStream, WebSocketStream,
 };
 
@@ -28,49 +29,176 @@ use crate::extentions::analyzer;
 // mod crypto;
 // use crypto::aes_cbc_base64_dec;
 
+// struct KisSocket {
+//     websocket_handle: Option<tokio::task::JoinHandle<()>>,
+//     stream: WebSocketStream<MaybeTlsStream<TcpStream>>,
+// }
+use std::sync::Arc;
+
+type Callback = Arc<dyn Fn(Message, mpsc::Sender<Message>) + Send + Sync + 'static>;
+
+pub struct KisSocket {
+    tx: mpsc::Sender<Message>,
+    callback: Callback,
+}
+
+impl KisSocket {
+    pub fn new(
+        url: String,
+        callback: impl Fn(Message, mpsc::Sender<Message>) + Send + Sync + 'static,
+    ) -> Self {
+        let (tx, rx) = mpsc::channel(100);
+        let callback = Arc::new(callback);
+        let kis_socket = Self {
+            tx: tx.clone(),
+            callback: callback.clone(),
+        };
+
+        tokio::spawn(Self::run_websocket(rx, url, tx.clone(), callback));
+
+        kis_socket
+    }
+
+    async fn run_websocket(
+        mut rx: mpsc::Receiver<Message>,
+        url: String,
+        tx: mpsc::Sender<Message>,
+        callback: Callback,
+    ) {
+        loop {
+            match connect_async(&url).await {
+                Ok((ws_stream, _)) => {
+                    info!("WebSocket connection established.");
+                    if let Err(e) = Self::handle_websocket(ws_stream, &mut rx, &tx, &callback).await
+                    {
+                        warn!("WebSocket error: {}. Reconnecting...", e);
+                    }
+                }
+                Err(e) => error!("Failed to connect: {}. Retrying...", e),
+            }
+            tokio::time::sleep(std::time::Duration::from_secs(5)).await;
+        }
+    }
+
+    async fn handle_websocket(
+        ws_stream: WebSocketStream<tokio_tungstenite::MaybeTlsStream<TcpStream>>,
+        rx: &mut mpsc::Receiver<Message>,
+        tx: &mpsc::Sender<Message>,
+        callback: &Callback,
+    ) -> Result<(), Box<dyn std::error::Error>> {
+        let (mut write, mut read) = ws_stream.split();
+
+        loop {
+            tokio::select! {
+                Some(msg) = rx.recv() => {
+                    if let Err(e) = write.send(msg).await {
+                        error!("Error sending message: {}", e);
+                        break;
+                    }
+                },
+                Some(result) = read.next() => match result {
+                    Ok(msg) => (callback)(msg, tx.clone()),
+                    Err(e) => {
+                        error!("Error receiving message: {}", e);
+                        break;
+                    }
+                },
+                else => {
+                    error!("WebSocket connection closed unexpectedly");
+                    break;
+                }
+            }
+        }
+        Ok(())
+    }
+
+    pub async fn send_message(
+        &self,
+        message: Message,
+    ) -> Result<(), mpsc::error::SendError<Message>> {
+        self.tx.send(message).await
+    }
+}
+// impl KisSocket {
+//     pub fn new() -> Self {
+//         Self {
+//             websocket_handle: Some(Self::create_connection()),
+
+//         }
+//     }
+
+//     fn create_connection() -> tokio::task::JoinHandle<()> {
+//         tokio::task::spawn(async move {
+//             loop {
+//                 match tokio_tungstenite::connect_async(
+//                     "ws://ops.koreainvestment.com:21000"
+//                         .to_owned()
+//                         .into_client_request()
+//                         .unwrap(),
+//                 )
+//                 .await
+//                 {
+//                     Ok((ws_stream, _)) => {
+//                         info!("WebSocket connection established.");
+
+//                         if let Err(e) = handle_websocket(ws_stream).await {
+//                             error!("WebSocket error: {}. Reconnecting...", e);
+//                         }
+//                     }
+//                     Err(e) => {
+//                         error!("Failed to connect to WebSocket: {}. Retrying...", e);
+//                     }
+//                 }
+
+//                 tokio::time::sleep(std::time::Duration::from_secs(5)).await;
+//             }
+//         })
+//     }
+// }
+
 lazy_static! {
-    static ref GLOBAL_TX: Mutex<Option<mpsc::Sender<WsMessage>>> = Mutex::new(None);
+    static ref GLOBAL_TX: Mutex<Option<mpsc::Sender<Message>>> = Mutex::new(None);
 }
 
-pub async fn handle_websocket(
-    ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>,
-) -> Result<(), Error> {
-    let (write, read) = ws_stream.split();
-    let (tx, rx) = mpsc::channel::<WsMessage>(100);
+// pub async fn handle_websocket(
+//     ws_stream: WebSocketStream<MaybeTlsStream<TcpStream>>,
+// ) -> Result<(), Error> {
+//     let (write, read) = ws_stream.split();
+//     let (tx, rx) = mpsc::channel::<WebSocketMessage>(100);
 
-    // Set the global sender
-    {
-        let mut global_tx = GLOBAL_TX.lock().unwrap();
-        *global_tx = Some(tx.clone());
-    }
+//     // Set the global sender
+//     {
+//         let mut global_tx = GLOBAL_TX.lock().unwrap();
+//         *global_tx = Some(tx.clone());
+//     }
 
-    // Spawn the send task
-    let send_task = tokio::spawn(handle_send_task(write, rx));
+//     // Spawn the send task
+//     let send_task = tokio::spawn(handle_send_task(write, rx));
 
-    // Handle receiving messages (main loop)
-    let receive_result = handle_receive_task(read).await;
+//     // Handle receiving messages (main loop)
+//     let receive_result: Result<(), Error> = handle_receive_task(read).await;
 
-    // Clean up
-    send_task.abort();
+//     // Clean up
+//     send_task.abort();
 
-    if let Err(e) = receive_result {
-        error!("WebSocket error: {}", e);
-    }
-    info!("WebSocket connection closed");
+//     if let Err(e) = receive_result {
+//         error!("WebSocket error: {}", e);
+//     }
+//     info!("WebSocket connection closed");
 
-    // Clear global sender when done
-    {
-        let mut global_tx: std::sync::MutexGuard<'_, Option<mpsc::Sender<WsMessage>>> =
-            GLOBAL_TX.lock().unwrap();
-        *global_tx = None;
-    }
+//     // Clear global sender when done
+//     {
+//         let mut global_tx: std::sync::MutexGuard<'_, Option<mpsc::Sender<WebSocketMessage>>> =
+//             GLOBAL_TX.lock().unwrap();
+//         *global_tx = None;
+//     }
 
-    Ok(())
-}
+//     Ok(())
+// }
 
 async fn handle_send_task(
-    mut write: SplitSink<WebSocketStream<MaybeTlsStream<TcpStream>>, WsMessage>,
-    mut rx: mpsc::Receiver<WsMessage>,
+    mut write: SplitSink<WebSocketStream<MaybeTlsStream<TcpStream>>, Message>,
+    mut rx: mpsc::Receiver<Message>,
 ) {
     while let Some(message) = rx.recv().await {
         let mut retry_count = 0;
@@ -104,45 +232,45 @@ async fn handle_send_task(
     }
 }
 
-async fn handle_receive_task(
-    mut read: SplitStream<WebSocketStream<MaybeTlsStream<TcpStream>>>,
-) -> Result<(), Error> {
-    let mut analyzer = analyzer::StockAnalyzer::new(50);
+// async fn handle_receive_task(
+//     mut read: SplitStream<WebSocketStream<MaybeTlsStream<TcpStream>>>,
+// ) -> Result<(), Error> {
+//     let mut analyzer = analyzer::StockAnalyzer::new(50);
 
-    while let Some(msg) = read.next().await {
-        match msg {
-            Ok(msg) => match msg {
-                WsMessage::Text(text) => {
-                    if serde_json::from_str::<serde_json::Value>(&text).is_ok() {
-                        on_received_json(&text).await?;
-                    } else {
-                        on_received_text(&text, &mut analyzer).await?;
-                    }
-                }
-                WsMessage::Binary(bin) => {
-                    info!("Received binary message: {:?}", bin);
-                }
-                WsMessage::Ping(payload) => {
-                    info!("Received ping with payload: {:?}", payload);
-                }
-                WsMessage::Pong(payload) => {
-                    info!("Received pong with payload: {:?}", payload);
-                }
-                WsMessage::Frame(frame) => {
-                    info!("Received frame: {:?}", frame);
-                }
-                WsMessage::Close(_) => {
-                    info!("Connection closed by server.");
-                }
-            },
-            Err(e) => {
-                error!("Error while receiving message: {}", e);
-                return Err(Error::from(e));
-            }
-        }
-    }
-    Ok(())
-}
+//     while let Some(msg) = read.next().await {
+//         match msg {
+//             Ok(msg) => match msg {
+//                 WebSocketMessage::Text(text) => {
+//                     if serde_json::from_str::<serde_json::Value>(&text).is_ok() {
+//                         on_received_json(&text).await?;
+//                     } else {
+//                         on_received_text(&text, &mut analyzer).await?;
+//                     }
+//                 }
+//                 WebSocketMessage::Binary(bin) => {
+//                     info!("Received binary message: {:?}", bin);
+//                 }
+//                 WebSocketMessage::Ping(payload) => {
+//                     info!("Received ping with payload: {:?}", payload);
+//                 }
+//                 WebSocketMessage::Pong(payload) => {
+//                     info!("Received pong with payload: {:?}", payload);
+//                 }
+//                 WebSocketMessage::Frame(frame) => {
+//                     info!("Received frame: {:?}", frame);
+//                 }
+//                 WebSocketMessage::Close(_) => {
+//                     info!("Connection closed by server.");
+//                 }
+//             },
+//             Err(e) => {
+//                 error!("Error while receiving message: {}", e);
+//                 return Err(Error::from(e));
+//             }
+//         }
+//     }
+//     Ok(())
+// }
 
 async fn on_received_text(
     message: &str,
@@ -261,7 +389,7 @@ async fn on_received_json(message: &str) -> Result<(), Error> {
     let response = serde_json::from_str::<response::Message>(&message)?;
     match response.header.tr_id.parse() {
         Ok(TransactionId::PINGPONG) => {
-            let tx: mpsc::Sender<WsMessage> = {
+            let tx: mpsc::Sender<Message> = {
                 let global_tx = GLOBAL_TX.lock().unwrap();
                 global_tx
                     .as_ref()
@@ -269,7 +397,7 @@ async fn on_received_json(message: &str) -> Result<(), Error> {
                     .ok_or(Error::SendError("SenderNotInitialized".to_string()))?
             };
 
-            tx.send(WsMessage::Pong(message.into()))
+            tx.send(Message::Pong(message.into()))
                 .await
                 .map_err(|e| Error::SendError(e.to_string()))?;
             debug!("ping-pong");
@@ -338,7 +466,7 @@ pub async fn subscribe_transaction(
             .ok_or(Error::SendError("SenderNotInitialized".to_string()))?
     };
 
-    tx.send(WsMessage::Text(
+    tx.send(Message::Text(
         serde_json::to_string_pretty(&request).unwrap(),
     ))
     .await

@@ -3,7 +3,8 @@ use crate::core::http::Config;
 use crate::error::KisClientError as Error;
 use crate::{api, types, websockets};
 
-use tokio_tungstenite::tungstenite::client::IntoClientRequest;
+use tokio::sync::mpsc;
+use tokio_tungstenite::tungstenite::{client::IntoClientRequest, Message};
 use types::TokenInfo;
 
 use log::{error, info};
@@ -18,8 +19,9 @@ pub struct KisClient {
     client: reqwest::Client,
     config: Config,
     is_mock: bool,
-    websocket_handle: Option<tokio::task::JoinHandle<()>>,
+    websocket_manager: Option<Arc<Mutex<websockets::KisSocket>>>,
 }
+use std::sync::{Arc, Mutex};
 
 impl KisClient {
     pub fn new(app_key: String, app_secret: String, account_num: String) -> Self {
@@ -32,7 +34,7 @@ impl KisClient {
             client: Client::new(),
             config: Config::new(),
             is_mock: false,
-            websocket_handle: None,
+            websocket_manager: None,
         }
     }
 
@@ -41,38 +43,88 @@ impl KisClient {
         self
     }
 
-    pub fn run(mut self) -> Self {
-        self.websocket_handle = Some(self.connect_websocket());
+    pub fn connect(mut self) -> Self {
+        // TODO: is_mock validation
+        let url = "ws://ops.koreainvestment.com:21000";
+        self.websocket_manager = Some(Arc::new(Mutex::new(websockets::KisSocket::new(
+            String::from(url),
+            Self::on_websocket_callback,
+        ))));
         self
     }
 
-    fn connect_websocket(&self) -> tokio::task::JoinHandle<()> {
-        tokio::task::spawn(async move {
-            loop {
-                match tokio_tungstenite::connect_async(
-                    "ws://ops.koreainvestment.com:21000"
-                        .to_owned()
-                        .into_client_request()
-                        .unwrap(),
-                )
-                .await
-                {
-                    Ok((ws_stream, _)) => {
-                        info!("WebSocket connection established.");
+    // pub async fn disconnect(self) {
+    //     if let Some(handle) = self.websocket_handle {
+    //         handle.abort();
 
-                        if let Err(e) = websockets::handle_websocket(ws_stream).await {
-                            error!("WebSocket error: {}. Reconnecting...", e);
-                        }
-                    }
-                    Err(e) => {
-                        error!("Failed to connect to WebSocket: {}. Retrying...", e);
-                    }
-                }
+    //         match handle.await {
+    //             Ok(_) => info!("Task completed successfully"),
+    //             Err(e) => {
+    //                 if e.is_cancelled() {
+    //                     info!("Task was aborted");
+    //                 } else {
+    //                     info!("Task failed with error: {:?}", e);
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
-                tokio::time::sleep(std::time::Duration::from_secs(5)).await;
+    fn on_websocket_callback(msg: Message, sender: mpsc::Sender<Message>) {
+        match msg {
+            Message::Text(text) => {
+                info!("received text message: {:?}", text);
+                // if serde_json::from_str::<serde_json::Value>(&text).is_ok() {
+                //     on_received_json(&text).await?;
+                // } else {
+                //     on_received_text(&text, &mut analyzer).await?;
+                // }
             }
-        })
+            Message::Binary(bin) => {
+                info!("Received binary message: {:?}", bin);
+            }
+            Message::Ping(payload) => {
+                info!("Received ping with payload: {:?}", payload);
+            }
+            Message::Pong(payload) => {
+                info!("Received pong with payload: {:?}", payload);
+            }
+            Message::Frame(frame) => {
+                info!("Received frame: {:?}", frame);
+            }
+            Message::Close(_) => {
+                info!("Connection closed by server.");
+            }
+        }
     }
+
+    // fn connect_websocket(&self) -> tokio::task::JoinHandle<()> {
+    //     tokio::task::spawn(async move {
+    //         loop {
+    //             match tokio_tungstenite::connect_async(
+    //                 "ws://ops.koreainvestment.com:21000"
+    //                     .to_owned()
+    //                     .into_client_request()
+    //                     .unwrap(),
+    //             )
+    //             .await
+    //             {
+    //                 Ok((ws_stream, _)) => {
+    //                     info!("WebSocket connection established.");
+
+    //                     if let Err(e) = websockets::handle_websocket(ws_stream).await {
+    //                         error!("WebSocket error: {}. Reconnecting...", e);
+    //                     }
+    //                 }
+    //                 Err(e) => {
+    //                     error!("Failed to connect to WebSocket: {}. Retrying...", e);
+    //                 }
+    //             }
+
+    //             tokio::time::sleep(std::time::Duration::from_secs(5)).await;
+    //         }
+    //     })
+    // }
 
     async fn update_oauth_api(&mut self) {
         if let Ok(Some(json_string)) =
@@ -153,6 +205,8 @@ impl KisClient {
 
 #[cfg(test)]
 mod tests {
+    use tokio_tungstenite::tungstenite::connect;
+
     use super::*;
     use crate::environment;
     use crate::logger;
@@ -170,22 +224,22 @@ mod tests {
             String::from(&env_var.app_secret),
             String::from(&env_var.account_num),
         )
-        // .mock()
-        .run();
+        // .mock();
+        .connect();
 
         // TODO: need to handle event; Handling requested subscription.
 
-        // if let Ok(response) = client.check_deposit().await{
+        // if let Ok(response) = client.check_deposit().await {
         //     let parsed = response.text().await.unwrap();
         //     info!("{}", parsed);
         // } else {
         //     info!("check_depsit returned err");
         // }
 
-        client
-            .subscribe_transaction("NVDA", true)
-            .await
-            .expect("Error: NVDA");
+        // client
+        //     .subscribe_transaction("NVDA", true)
+        //     .await
+        //     .expect("Error: NVDA");
 
         // Keep the main function running to see the logs
         tokio::signal::ctrl_c()
