@@ -53,6 +53,12 @@ impl KisClient {
         self
     }
 
+    pub async fn disconnect(&self) {
+        if let Some(websocket_manager) = &self.websocket_manager {
+            websocket_manager.lock().unwrap().disconnect().await;
+        }
+    }
+
     // pub async fn disconnect(self) {
     //     if let Some(handle) = self.websocket_handle {
     //         handle.abort();
@@ -219,7 +225,7 @@ mod tests {
         environment::init();
         let env_var = environment::get();
 
-        let mut client = KisClient::new(
+        let client = KisClient::new(
             String::from(&env_var.app_key),
             String::from(&env_var.app_secret),
             String::from(&env_var.account_num),
@@ -227,6 +233,7 @@ mod tests {
         // .mock();
         .connect();
 
+        client.disconnect().await;
         // TODO: need to handle event; Handling requested subscription.
 
         // if let Ok(response) = client.check_deposit().await {

@@ -14,7 +14,12 @@ use tokio::{
 
 use tokio_tungstenite::{
     connect_async,
-    tungstenite::{self, client::IntoClientRequest, Error as WsError, Message},
+    tungstenite::{
+        self,
+        client::IntoClientRequest,
+        protocol::{frame::coding::CloseCode, CloseFrame},
+        Error as WsError, Message,
+    },
     MaybeTlsStream, WebSocketStream,
 };
 
@@ -57,6 +62,17 @@ impl KisSocket {
         tokio::spawn(Self::run_websocket(rx, url, tx.clone(), callback));
 
         kis_socket
+    }
+
+    pub async fn disconnect(&self) {
+        match self.tx.send(Message::Close(None)).await {
+            Ok(_) => {
+                info!("requested disconnection.")
+            }
+            Err(_) => {
+                info!("Failed to send.")
+            }
+        };
     }
 
     async fn run_websocket(
