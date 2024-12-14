@@ -21,4 +21,6 @@ pub enum KisClientError {
     MaxRetriesExceeded,
     #[error("IO error: {0}")]
     IoError(#[from] std::io::Error),
+    #[error("Failed to parse date: {0}")]
+    DateParseError(#[from] chrono::ParseError),
 }

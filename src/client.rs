@@ -1,21 +1,18 @@
 use crate::core::file_io;
 use crate::core::http::Config;
+use crate::credentials::{AccessToken, CredentialProvider, Credentials};
 use crate::error::KisClientError as Error;
-use crate::{api, types, websockets};
+use crate::{api, websockets};
 
+use futures::future::OrElse;
 use tokio::sync::mpsc;
 use tokio_tungstenite::tungstenite::{client::IntoClientRequest, Message};
-use types::TokenInfo;
 
 use log::{error, info};
 use reqwest::{Client, Response};
 
 pub struct KisClient {
-    app_key: String,
-    app_secret: String,
-    account_num: String,
-    socket_key: String,
-    token_info: TokenInfo,
+    credentials: Credentials,
     client: reqwest::Client,
     config: Config,
     is_mock: bool,
@@ -26,11 +23,7 @@ use std::sync::{Arc, Mutex};
 impl KisClient {
     pub fn new(app_key: String, app_secret: String, account_num: String) -> Self {
         Self {
-            app_key,
-            app_secret,
-            account_num,
-            socket_key: String::new(),
-            token_info: TokenInfo::new(),
+            credentials: Credentials::new(app_key, app_secret, account_num),
             client: Client::new(),
             config: Config::new(),
             is_mock: false,
@@ -132,39 +125,49 @@ impl KisClient {
     //     })
     // }
 
-    async fn update_oauth_api(&mut self) {
+    async fn update_oauth_api(&mut self) -> Result<(), Box<dyn std::error::Error>> {
         if let Ok(Some(json_string)) =
             file_io::load_token_from_file("~/.soki1229/kis_api/access_token")
         {
-            self.token_info = serde_json::from_str(&json_string).unwrap();
+            *self.credentials.access_token_mut() = serde_json::from_str(&json_string)
+                .map_err(|e| format!("Failed to parse token JSON: {}", e))?;
         }
 
-        if self.token_info.is_expired() {
-            self.issue_new_token().await;
+        if self.credentials.access_token_mut().is_expired()? {
+            self.issue_new_token().await?;
+        } else {
+            self.credentials.access_token_mut().update()?;
         }
 
-        self.token_info.update();
+        Ok(())
     }
 
-    async fn issue_new_token(&mut self) {
-        self.token_info =
-            match api::oauth_certification::issue_oauth_api(&self.client, &self.config).await {
-                Ok(response) => {
-                    info!("New access_token granted.");
-                    match file_io::save_token_to_file(
-                        &serde_json::to_string(&response).unwrap(),
-                        "~/.soki1229/kis_api/access_token",
-                    ) {
-                        Ok(_) => info!("Archived access_token."),
-                        Err(e) => error!("Failed to archive: {:?}", e),
-                    };
-                    response
+    async fn issue_new_token(&mut self) -> Result<(), Box<dyn std::error::Error>> {
+        match api::oauth_certification::issue_oauth_api(&self.client, &self.config).await {
+            Ok(response) => {
+                info!("New access_token granted.");
+
+                // Serialize the response to JSON
+                let json_string = serde_json::to_string(&response)
+                    .map_err(|e| format!("Failed to serialize token: {}", e))?;
+
+                // Save the token to file
+                match file_io::save_token_to_file(&json_string, "~/.soki1229/kis_api/access_token")
+                {
+                    Ok(_) => info!("Archived access_token."),
+                    Err(e) => error!("Failed to archive: {:?}", e),
                 }
-                Err(e) => {
-                    error!("Failed to initialize OAuth certification: {:?}", e);
-                    TokenInfo::new()
-                }
+
+                // Update the credentials
+                *self.credentials.access_token_mut() = response;
+
+                Ok(())
             }
+            Err(e) => {
+                error!("Failed to initialize OAuth certification: {:?}", e);
+                Err(Box::new(e))
+            }
+        }
     }
 
     pub async fn check_deposit(&mut self) -> Result<Response, Error> {
@@ -172,8 +175,8 @@ impl KisClient {
         api::overseas::order_deposit::check_deposit(
             &self.client,
             &self.config,
-            &self.token_info,
-            &self.account_num,
+            &self.credentials.token(),
+            &self.credentials.account_num(),
         )
         .await
     }
@@ -183,7 +186,7 @@ impl KisClient {
         api::overseas::stock_price::current_transaction_price(
             &self.client,
             &self.config,
-            &self.token_info.get_token(),
+            &self.credentials.token(),
             symbol,
         )
         .await
@@ -191,7 +194,7 @@ impl KisClient {
 
     // WebSockets API
     async fn update_oauth_websocket(&mut self) {
-        self.socket_key =
+        *self.credentials.approval_key_mut() =
             match api::oauth_certification::issue_oauth_websocket(&self.client, &self.config).await
             {
                 Ok(response) => response.approval_key,
@@ -205,7 +208,8 @@ impl KisClient {
         subscribe: bool,
     ) -> Result<(), Error> {
         self.update_oauth_websocket().await;
-        websockets::subscribe_transaction(symbol, subscribe, &self.socket_key).await
+        websockets::subscribe_transaction(symbol, subscribe, &self.credentials.approval_key_mut())
+            .await
     }
 }
 
@@ -225,23 +229,23 @@ mod tests {
         environment::init();
         let env_var = environment::get();
 
-        let client = KisClient::new(
+        let mut client = KisClient::new(
             String::from(&env_var.app_key),
             String::from(&env_var.app_secret),
             String::from(&env_var.account_num),
         )
-        // .mock();
+        // .mock()
         .connect();
 
-        client.disconnect().await;
+        // client.disconnect().await;
         // TODO: need to handle event; Handling requested subscription.
 
-        // if let Ok(response) = client.check_deposit().await {
-        //     let parsed = response.text().await.unwrap();
-        //     info!("{}", parsed);
-        // } else {
-        //     info!("check_depsit returned err");
-        // }
+        if let Ok(response) = client.check_deposit().await {
+            let parsed = response.text().await.unwrap();
+            info!("{}", parsed);
+        } else {
+            info!("check_depsit returned err");
+        }
 
         // client
         //     .subscribe_transaction("NVDA", true)

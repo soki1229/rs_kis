@@ -1,4 +1,5 @@
 use crate::core::http;
+use crate::credentials::AccessToken;
 use crate::environment;
 use crate::error::KisClientError as Error;
 use chrono::{DateTime, Duration, NaiveDateTime, TimeZone, Utc};
@@ -6,8 +7,6 @@ use log::{debug, error, info};
 use reqwest::{Client, Method};
 use serde::{Deserialize, Serialize};
 
-use crate::types;
-use types::TokenInfo;
 
 #[derive(Serialize, Debug)]
 struct Request {
@@ -61,7 +60,7 @@ pub fn current_time() -> DateTime<Utc> {
     Utc::now() + Duration::hours(9)
 }
 
-pub async fn issue_oauth_api(client: &Client, config: &http::Config) -> Result<TokenInfo, Error> {
+pub async fn issue_oauth_api(client: &Client, config: &http::Config) -> Result<AccessToken, Error> {
     let env = environment::get();
 
     let body_data = serde_json::json!({
@@ -81,7 +80,7 @@ pub async fn issue_oauth_api(client: &Client, config: &http::Config) -> Result<T
     )
     .await?;
 
-    let approval_response: TokenInfo = response.json().await?;
+    let approval_response: AccessToken = response.json().await?;
 
     Ok(approval_response)
 

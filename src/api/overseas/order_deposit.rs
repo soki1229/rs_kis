@@ -1,7 +1,6 @@
 use crate::core::http;
 use crate::environment;
 use crate::error::KisClientError as Error;
-use crate::types::TokenInfo;
 use ::http::header::{HeaderMap, HeaderName, HeaderValue};
 use log::debug;
 use log::info;
@@ -10,14 +9,14 @@ use reqwest::{Client, Method, Response};
 pub async fn check_deposit(
     client: &Client,
     config: &http::Config,
-    token_info: &TokenInfo,
-    account_num: &String,
+    access_token: &str,
+    account_num: &str,
 ) -> Result<Response, Error> {
     let env = environment::get();
     let mut headers = HeaderMap::new();
     headers.insert(
         HeaderName::from_static("authorization"),
-        HeaderValue::from_str(&format!("Bearer {}", token_info.get_token())).unwrap(),
+        HeaderValue::from_str(&format!("Bearer {}", access_token)).unwrap(),
     );
     headers.insert(
         HeaderName::from_static("appkey"),
