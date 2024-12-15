@@ -58,10 +58,6 @@ pub async fn issue_oauth_websocket(
     // }
 }
 
-pub fn current_time() -> DateTime<Utc> {
-    Utc::now() + Duration::hours(9)
-}
-
 pub async fn issue_oauth_api(
     client: &Client,
     config: &Configurations,

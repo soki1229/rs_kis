@@ -1,6 +1,7 @@
 use std::time::Duration;
 
 pub trait ConfigurationProvider {
+    fn trade_type(&self) -> &str;
     fn http_endpoint(&self) -> &str;
     fn socket_endpoint(&self) -> &str;
     fn time_out(&self) -> Duration;
@@ -8,6 +9,10 @@ pub trait ConfigurationProvider {
 }
 
 impl ConfigurationProvider for Configurations {
+    fn trade_type(&self) -> &str {
+        &self.presets.trade_type
+    }
+
     fn http_endpoint(&self) -> &str {
         &self.presets.http_endpoint
     }
@@ -48,6 +53,7 @@ impl Configurations {
 
 #[derive(Clone, Debug, Default)]
 struct Presets {
+    trade_type: &'static str,
     http_endpoint: &'static str,
     socket_endpoint: &'static str,
 }
@@ -55,6 +61,7 @@ struct Presets {
 impl Presets {
     fn new() -> Self {
         Self {
+            trade_type: "rts",
             http_endpoint: "https://openapi.koreainvestment.com:9443",
             socket_endpoint: "ws://ops.koreainvestment.com:21000",
         }
@@ -62,7 +69,8 @@ impl Presets {
 
     fn mock() -> Self {
         Self {
-            http_endpoint: "https://openapi.koreainvestment.com:29443",
+            trade_type: "vts",
+            http_endpoint: "https://openapivts.koreainvestment.com:29443",
             socket_endpoint: "ws://ops.koreainvestment.com:31000",
         }
     }

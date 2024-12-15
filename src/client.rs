@@ -1,4 +1,4 @@
-use crate::configurations::Configurations;
+use crate::configurations::{ConfigurationProvider, Configurations};
 use crate::core::file_io;
 use crate::credentials::{AccessToken, CredentialProvider, Credentials};
 use crate::error::KisClientError;
@@ -11,6 +11,18 @@ use tokio_tungstenite::tungstenite::{client::IntoClientRequest, Message};
 
 use log::{error, info};
 use reqwest::{Client, Response};
+
+static ACCESS_TOKEN_PATH: &str = "~/.soki1229/kis_api/access_token";
+
+trait ClientProvider {
+    fn local_access_token(&self) -> String;
+}
+
+impl ClientProvider for KisClient {
+    fn local_access_token(&self) -> String {
+        format!("{}_{}", ACCESS_TOKEN_PATH, self.configuration.trade_type())
+    }
+}
 
 pub struct KisClient {
     client: reqwest::Client,
@@ -80,9 +92,7 @@ impl KisClient {
     }
 
     async fn update_oauth_api(&mut self) -> Result<(), Box<dyn Error>> {
-        if let Ok(Some(json_string)) =
-            file_io::load_token_from_file("~/.soki1229/kis_api/access_token")
-        {
+        if let Ok(Some(json_string)) = file_io::load_token_from_file(&self.local_access_token()) {
             *self.credential.access_token_mut() = serde_json::from_str(&json_string)
                 .map_err(|e| format!("Failed to parse token JSON: {}", e))?;
         }
@@ -112,8 +122,7 @@ impl KisClient {
                     .map_err(|e| format!("Failed to serialize token: {}", e))?;
 
                 // Save the token to file
-                match file_io::save_token_to_file(&json_string, "~/.soki1229/kis_api/access_token")
-                {
+                match file_io::save_token_to_file(&json_string, &self.local_access_token()) {
                     Ok(_) => info!("Archived access_token."),
                     Err(e) => error!("Failed to archive: {:?}", e),
                 }
@@ -182,23 +191,22 @@ impl KisClient {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::logger;
 
     #[tokio::test]
     async fn test_kis() {
-        logger::init_logging();
+        env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("info")).init();
         info!("========================================================= rs_KIS =========================================================");
 
-        let app_key = "YOUR_APP_KEY";
-        let app_secret = "YOUR_APP_SECRET";
-        let account_num = "YOUR_ACCOUNT_NUMBER";
+        let app_key = "";
+        let app_secret = "";
+        let account_num = "";
 
         let mut client = KisClient::new(
             String::from(app_key),
             String::from(app_secret),
             String::from(account_num),
         )
-        // .mock()
+        .mock()
         .create_connection();
 
         // client.disconnect().await;

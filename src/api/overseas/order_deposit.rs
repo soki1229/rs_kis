@@ -32,6 +32,7 @@ pub async fn check_deposit(
     headers.insert(
         HeaderName::from_static("tr_id"),
         HeaderValue::from_static("TTTS3012R"),
+        // HeaderValue::from_static("VTTS3012R"),
     );
     headers.insert(
         HeaderName::from_static("tr_cont"),
@@ -42,7 +43,7 @@ pub async fn check_deposit(
     let query_data = vec![
         ("CANO", a_num),
         ("ACNT_PRDT_CD", a_type),
-        ("OVRS_EXCG_CD", "NAS"),
+        ("OVRS_EXCG_CD", "NASD"),
         ("TR_CRCY_CD", "USD"),
         ("CTX_AREA_FK200", ""),
         ("CTX_AREA_NK200", ""),
