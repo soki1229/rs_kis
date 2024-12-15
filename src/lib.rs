@@ -1,8 +1,8 @@
 mod api;
 mod client;
+mod configurations;
 mod core;
 mod credentials;
-mod environment;
 mod error;
 mod extentions;
 mod logger;

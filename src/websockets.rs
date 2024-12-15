@@ -23,7 +23,7 @@ use tokio_tungstenite::{
     MaybeTlsStream, WebSocketStream,
 };
 
-use crate::{client::KisClient, environment, error::KisClientError as Error};
+use crate::{client::KisClient, error::KisClientError as Error};
 
 mod message;
 use self::message::{request, response, TransactionId};

@@ -1,5 +1,6 @@
+use crate::configurations::Configurations;
 use crate::core::http;
-use crate::environment;
+use crate::credentials::{CredentialProvider, Credentials};
 use ::http::header::{HeaderMap, HeaderName, HeaderValue};
 use reqwest::{Client, Method, Response};
 
@@ -7,24 +8,26 @@ use crate::error::KisClientError as Error;
 
 pub async fn current_transaction_price(
     client: &Client,
-    config: &http::Config,
-    access_token: &str,
+    config: &Configurations,
+    credential: &Credentials,
     symbol: &str,
 ) -> Result<Response, Error> {
-    let env = environment::get();
+    let token = credential.token().to_string();
+    let app_key = credential.app_key().to_string();
+    let app_secret = credential.app_secret().to_string();
 
     let mut headers = HeaderMap::new();
     headers.insert(
         HeaderName::from_static("authorization"),
-        HeaderValue::from_str(&format!("Bearer {}", access_token)).unwrap(),
+        HeaderValue::from_str(&format!("Bearer {}", token)).unwrap(),
     );
     headers.insert(
         HeaderName::from_static("appkey"),
-        HeaderValue::from_static(&env.app_key),
+        HeaderValue::from_str(&app_key).unwrap(),
     );
     headers.insert(
         HeaderName::from_static("appsecret"),
-        HeaderValue::from_static(&env.app_secret),
+        HeaderValue::from_str(&app_secret).unwrap(),
     );
     headers.insert(
         HeaderName::from_static("custtype"),

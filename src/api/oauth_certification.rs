@@ -1,12 +1,12 @@
+use crate::configurations::Configurations;
 use crate::core::http;
 use crate::credentials::AccessToken;
-use crate::environment;
+use crate::credentials::{CredentialProvider, Credentials};
 use crate::error::KisClientError as Error;
 use chrono::{DateTime, Duration, NaiveDateTime, TimeZone, Utc};
 use log::{debug, error, info};
 use reqwest::{Client, Method};
 use serde::{Deserialize, Serialize};
-
 
 #[derive(Serialize, Debug)]
 struct Request {
@@ -22,14 +22,16 @@ pub struct KeyResponse {
 
 pub async fn issue_oauth_websocket(
     client: &Client,
-    config: &http::Config,
+    config: &Configurations,
+    credential: &Credentials,
 ) -> Result<KeyResponse, Error> {
-    let env = environment::get();
+    let app_key = credential.app_key().to_string();
+    let app_secret = credential.app_secret().to_string();
 
     let body_data = serde_json::json!({
         "grant_type": "client_credentials",
-        "appkey": &env.app_key,
-        "secretkey": &env.app_secret,
+        "appkey": &app_key,
+        "secretkey": &app_secret,
     });
 
     let response = http::execute_api_call(
@@ -60,13 +62,18 @@ pub fn current_time() -> DateTime<Utc> {
     Utc::now() + Duration::hours(9)
 }
 
-pub async fn issue_oauth_api(client: &Client, config: &http::Config) -> Result<AccessToken, Error> {
-    let env = environment::get();
+pub async fn issue_oauth_api(
+    client: &Client,
+    config: &Configurations,
+    credential: &Credentials,
+) -> Result<AccessToken, Error> {
+    let app_key = credential.app_key().to_string();
+    let app_secret = credential.app_secret().to_string();
 
     let body_data = serde_json::json!({
         "grant_type": "client_credentials",
-        "appkey": &env.app_key,
-        "appsecret": &env.app_secret,
+        "appkey": &app_key,
+        "appsecret": &app_secret,
     });
 
     let response = http::execute_api_call(
