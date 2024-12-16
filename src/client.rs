@@ -28,6 +28,7 @@ pub struct KisClient {
     client: reqwest::Client,
     credential: Credentials,
     configuration: Configurations,
+    callback: Option<Box<dyn Fn(&str) + Send + Sync>>,
     websocket_manager: Option<Arc<Mutex<websockets::KisSocket>>>,
 }
 use std::sync::{Arc, Mutex};
@@ -38,6 +39,7 @@ impl KisClient {
             client: Client::new(),
             credential: Credentials::new(app_key, app_secret, account_num),
             configuration: Configurations::new(),
+            callback: None,
             websocket_manager: None,
         }
     }
@@ -47,14 +49,30 @@ impl KisClient {
         self
     }
 
+    pub fn callback<F>(mut self, callback: F) -> Self
+    where
+        F: Fn(&str) + Send + Sync + 'static,
+    {
+        self.callback = Some(Box::new(callback));
+        self
+    }
+
     pub fn create_connection(mut self) -> Self {
         // TODO: is_mock validation
-        let url = "ws://ops.koreainvestment.com:21000";
         self.websocket_manager = Some(Arc::new(Mutex::new(websockets::KisSocket::new(
-            String::from(url),
+            String::from(self.configuration.socket_endpoint()),
             Self::on_websocket_callback,
         ))));
         self
+    }
+
+    // Method to call the callback
+    async fn call_callback(&self, message: Result<Response, KisClientError>) {
+        if let Some(ref callback) = self.callback {
+            if let Ok(rsp) = message {
+                callback(&rsp.text().await.unwrap());
+            };
+        }
     }
 
     pub async fn disconnect(&mut self) {
@@ -91,29 +109,27 @@ impl KisClient {
         }
     }
 
-    async fn update_oauth_api(&mut self) -> Result<(), Box<dyn Error>> {
+    async fn update_oauth_api(&mut self) -> Result<(), KisClientError> {
         if let Ok(Some(json_string)) = file_io::load_token_from_file(&self.local_access_token()) {
-            *self.credential.access_token_mut() = serde_json::from_str(&json_string)
-                .map_err(|e| format!("Failed to parse token JSON: {}", e))?;
+            *self.credential.access_token_mut() = serde_json::from_str(&json_string)?;
         }
 
-        if self.credential.access_token_mut().is_expired()? {
-            self.issue_new_token().await?;
+        if let Ok(true) = self.credential.access_token_mut().is_expired() {
+            self.issue_new_token().await
         } else {
-            self.credential.access_token_mut().update()?;
+            self.credential.access_token_mut().update()
         }
-
-        Ok(())
     }
 
-    async fn issue_new_token(&mut self) -> Result<(), Box<dyn Error>> {
-        match api::oauth_certification::issue_oauth_api(
+    async fn issue_new_token(&mut self) -> Result<(), KisClientError> {
+        let result = api::oauth_certification::issue_oauth_api(
             &self.client,
             &self.configuration,
             &self.credential,
         )
-        .await
-        {
+        .await;
+
+        match result {
             Ok(response) => {
                 info!("New access_token granted.");
 
@@ -132,35 +148,39 @@ impl KisClient {
 
                 Ok(())
             }
-            Err(e) => {
-                error!("Failed to initialize OAuth certification: {:?}", e);
-                Err(Box::new(e))
-            }
+            Err(e) => Err(e),
         }
     }
 
-    pub async fn check_deposit(&mut self) -> Result<Response, KisClientError> {
-        self.update_oauth_api().await;
-        api::overseas::order_deposit::check_deposit(
+    pub async fn check_deposit(&mut self) {
+        if let Err(e) = self.update_oauth_api().await {
+            info!("Failed updating access_token: {}", e);
+        }
+
+        let result = api::overseas::order_deposit::check_deposit(
             &self.client,
             &self.configuration,
             &self.credential,
         )
-        .await
+        .await;
+
+        self.call_callback(result).await;
     }
 
-    pub async fn current_transaction_price(
-        &mut self,
-        symbol: &str,
-    ) -> Result<Response, KisClientError> {
-        self.update_oauth_api().await;
-        api::overseas::stock_price::current_transaction_price(
+    pub async fn current_transaction_price(&mut self, symbol: &str) {
+        if let Err(e) = self.update_oauth_api().await {
+            info!("Failed updating access_token: {}", e);
+        }
+
+        let result = api::overseas::stock_price::current_transaction_price(
             &self.client,
             &self.configuration,
             &self.credential,
             symbol,
         )
-        .await
+        .await;
+
+        self.call_callback(result).await;
     }
 
     // WebSockets API
@@ -206,18 +226,14 @@ mod tests {
             String::from(app_secret),
             String::from(account_num),
         )
-        .mock()
+        // .mock()
+        .callback(|message| info!("Received message: {}", message))
         .create_connection();
 
         // client.disconnect().await;
         // TODO: need to handle event; Handling requested subscription.
 
-        if let Ok(response) = client.check_deposit().await {
-            let parsed = response.text().await.unwrap();
-            info!("{}", parsed);
-        } else {
-            info!("check_depsit returned err");
-        }
+        client.check_deposit().await;
 
         // client
         //     .subscribe_transaction("NVDA", true)

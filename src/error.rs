@@ -1,3 +1,4 @@
+use reqwest::StatusCode;
 use thiserror::Error;
 
 #[derive(Error, Debug)]
@@ -13,14 +14,17 @@ pub enum KisClientError {
     #[error("Request error: {0}")]
     RequestError(#[from] reqwest::Error),
     #[error("HTTP error: {status}, body: {body}")]
-    HttpError {
-        status: reqwest::StatusCode,
-        body: String,
-    },
+    HttpError { status: StatusCode, body: String },
     #[error("Max retries exceeded")]
     MaxRetriesExceeded,
     #[error("IO error: {0}")]
     IoError(#[from] std::io::Error),
     #[error("Failed to parse date: {0}")]
     DateParseError(#[from] chrono::ParseError),
+}
+
+impl From<String> for KisClientError {
+    fn from(msg: String) -> Self {
+        Self::SendError(msg)
+    }
 }

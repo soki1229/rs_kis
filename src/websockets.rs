@@ -44,7 +44,6 @@ type Callback = Arc<dyn Fn(Message, mpsc::Sender<Message>) + Send + Sync + 'stat
 
 pub struct KisSocket {
     tx: mpsc::Sender<Message>,
-    callback: Callback,
 }
 
 impl KisSocket {
@@ -53,15 +52,10 @@ impl KisSocket {
         callback: impl Fn(Message, mpsc::Sender<Message>) + Send + Sync + 'static,
     ) -> Self {
         let (tx, rx) = mpsc::channel(100);
-        let callback = Arc::new(callback);
-        let kis_socket = Self {
-            tx: tx.clone(),
-            callback: callback.clone(),
-        };
 
-        tokio::spawn(Self::run_websocket(rx, url, tx.clone(), callback));
+        tokio::spawn(Self::run_websocket(url, tx.clone(), rx, Arc::new(callback)));
 
-        kis_socket
+        Self { tx: tx.clone() }
     }
 
     pub async fn disconnect(&self) {
@@ -76,9 +70,9 @@ impl KisSocket {
     }
 
     async fn run_websocket(
-        mut rx: mpsc::Receiver<Message>,
         url: String,
         tx: mpsc::Sender<Message>,
+        mut rx: mpsc::Receiver<Message>,
         callback: Callback,
     ) {
         loop {
