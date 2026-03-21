@@ -1,3 +1,4 @@
+pub mod analysis;
 pub mod deposit;
 pub mod inquiry;
 pub mod order;
