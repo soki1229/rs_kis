@@ -14,7 +14,7 @@ pub enum BotEvent {
 mod tests {
     use super::*;
     use rust_decimal_macros::dec;
-    use crate::types::{AlertLevel, FillInfo, OrderResult, PnLReport, Position, Side};
+    use crate::types::{AlertLevel, OrderResult, PnLReport, Side};
     use chrono::NaiveDate;
 
     fn sample_order_result() -> OrderResult {
