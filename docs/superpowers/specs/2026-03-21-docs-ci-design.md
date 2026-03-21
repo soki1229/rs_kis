@@ -185,7 +185,7 @@ VTS 모의투자 환경 사용 권장 (`from_env_vts()`).
 let config = KisConfig::builder()
     .app_key("...")
     .app_secret("...")
-    .account("XXXXXXXX-XX")
+    .account_num("XXXXXXXX-XX")
     .mock(false)
     .build()?;
 ```
