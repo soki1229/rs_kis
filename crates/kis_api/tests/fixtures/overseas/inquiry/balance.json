@@ -1,0 +1,34 @@
+{
+  "rt_cd": "0",
+  "msg_cd": "APBK0013",
+  "msg1": "조회가 완료되었습니다.",
+  "ctx_area_fk200": "",
+  "ctx_area_nk200": "",
+  "output1": [
+    {
+      "PDNO": "AAPL",
+      "PRDT_NAME": "애플",
+      "OVRS_EXCG_CD": "NASD",
+      "OVRS_CBLC_QTY": "10",
+      "PCHS_AVG_PRIC": "175.3200",
+      "OVRS_STCK_EVLU_AMT": "1780.50",
+      "FRCR_EVLU_PFLS_AMT": "47.30",
+      "EVLU_PFLS_RT": "2.70"
+    },
+    {
+      "PDNO": "TSLA",
+      "PRDT_NAME": "테슬라",
+      "OVRS_EXCG_CD": "NASD",
+      "OVRS_CBLC_QTY": "5",
+      "PCHS_AVG_PRIC": "220.0000",
+      "OVRS_STCK_EVLU_AMT": "1085.00",
+      "FRCR_EVLU_PFLS_AMT": "-15.00",
+      "EVLU_PFLS_RT": "-1.36"
+    }
+  ],
+  "output2": {
+    "FRCR_PCHS_AMT1": "2853.20",
+    "OVRS_RLZT_PFLS_AMT": "0.00",
+    "OVRS_TOT_PFLS": "32.30"
+  }
+}
