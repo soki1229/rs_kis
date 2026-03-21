@@ -1,0 +1,7 @@
+{
+  "rt_cd": "0", "msg_cd": "KIOK0000", "msg1": "정상처리 되었습니다.",
+  "output": [
+    { "EXCD": "NAS", "SYMB": "NVDA", "DNAM": "NVIDIA CORP", "LAST": "875.40", "DIFF": "43.20", "RATE": "5.19", "TVOL": "48320100", "TAMT": "42281127840", "MKTC": "2154000000000" },
+    { "EXCD": "NAS", "SYMB": "AMD", "DNAM": "ADVANCED MICRO DEVICES", "LAST": "182.30", "DIFF": "8.10", "RATE": "4.65", "TVOL": "31200400", "TAMT": "5687812920", "MKTC": "294000000000" }
+  ]
+}
