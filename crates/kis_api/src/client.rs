@@ -10,7 +10,6 @@ use crate::traits::{KisApi, KisEventSource};
 
 struct Inner {
     config: KisConfig,
-    #[allow(dead_code)] // Plan 3a에서 REST 엔드포인트 추가 시 사용
     token_manager: TokenManager,
     http: Client,
 }
@@ -35,7 +34,6 @@ impl KisClient {
     }
 
     /// 현재 유효한 액세스 토큰 반환 (내부 헬퍼)
-    #[allow(dead_code)] // Plan 3a에서 REST 엔드포인트 추가 시 사용
     pub(crate) async fn token(&self) -> Result<String, KisError> {
         self.inner.token_manager.token().await
     }
@@ -48,6 +46,18 @@ impl KisClient {
     /// KisConfig 참조 (내부 헬퍼)
     pub(crate) fn config(&self) -> &KisConfig {
         &self.inner.config
+    }
+
+    /// 해외주식 주문
+    pub async fn place_order(&self, req: crate::PlaceOrderRequest) -> Result<crate::PlaceOrderResponse, KisError> {
+        let token = self.token().await?;
+        crate::rest::overseas::order::place::place_order(self.http(), self.config(), &token, req).await
+    }
+
+    /// 해외주식 정정/취소 주문
+    pub async fn cancel_order(&self, req: crate::CancelOrderRequest) -> Result<crate::CancelOrderResponse, KisError> {
+        let token = self.token().await?;
+        crate::rest::overseas::order::cancel::cancel_order(self.http(), self.config(), &token, req).await
     }
 }
 

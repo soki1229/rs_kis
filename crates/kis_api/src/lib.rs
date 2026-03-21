@@ -15,3 +15,5 @@ pub use event::{KisEvent, TransactionData, QuoteData, OrderConfirmData};
 pub use stream::{KisStream, EventReceiver, SubscriptionKind};
 pub use traits::{KisApi, KisEventSource};
 pub use rest::overseas::types::{Exchange, OrderSide, OrderType};
+pub use rest::overseas::order::place::{PlaceOrderRequest, PlaceOrderResponse};
+pub use rest::overseas::order::cancel::{CancelKind, CancelOrderRequest, CancelOrderResponse};
