@@ -1,113 +1,167 @@
 # rs_kis
 
-rs_kis is a Rust library for interacting with the Korea Investment & Securities (KIS) API. It aims to provide a convenient way to access various financial data and perform trading operations through the KIS platform.
+[![fmt](https://github.com/soki1229/rs_kis/actions/workflows/fmt.yml/badge.svg)](https://github.com/soki1229/rs_kis/actions/workflows/fmt.yml)
+[![lint](https://github.com/soki1229/rs_kis/actions/workflows/lint.yml/badge.svg)](https://github.com/soki1229/rs_kis/actions/workflows/lint.yml)
+[![test](https://github.com/soki1229/rs_kis/actions/workflows/test.yml/badge.svg)](https://github.com/soki1229/rs_kis/actions/workflows/test.yml)
 
-**IMPORTANT: This project is currently under active development and is not fully implemented. Many features are NOT SUPPORTED YET.**
+KIS(한국투자증권) OpenAPI Rust 비공식 라이브러리. Cargo workspace 기반으로 구성되어 있으며, `crates/kis_api`가 핵심 라이브러리 크레이트다.
 
-## Current Status
+**주요 기능:**
+- 해외주식 주문/취소 (나스닥, NYSE, 아멕스, 도쿄, 홍콩, 상해, 심천, 하노이, 호치민)
+- 계좌 잔고, 미체결, 체결내역, 기간손익
+- 현재가, 호가, 차트 (일봉/분봉)
+- 종목 검색, 뉴스, 배당, 국가별 휴장일
+- 시세분석: 등락률/거래량/시총 순위, 체결강도, 신고/신저가
+- WebSocket 실시간 체결가 · 호가
 
-This library is in its early stages of development. The following features are planned but not yet fully implemented:
+> **Note:** 이 크레이트는 crates.io에 게재되지 않습니다. `path` 또는 `git` 의존성으로만 사용 가능합니다.
+> ```toml
+> [dependencies]
+> kis_api = { path = "crates/kis_api" }
+> ```
 
-- Authentication with the KIS API
-- Real-time stock price information
-- Order placement and management
-- Account balance and portfolio information
-- Historical price data retrieval
+---
 
-Please check the project's issues and pull requests for the most up-to-date information on development progress.
+## Setup
 
-## Installation
+`.env.example`을 복사해 `.env`로 저장하고 값을 채운다:
 
-Add this to your `Cargo.toml`:
-
-```toml
-[dependencies]
-rs_kis = "0.1.0"
+```bash
+cp .env.example .env
 ```
+
+최소 필수 항목 3개:
+
+```
+APP_KEY=...
+APP_SECRET=...
+ACCOUNT_NUM=XXXXXXXX-XX
+```
+
+나머지 변수(`REST_URL`, `WS_URL`, `TOKEN_CACHE_PATH` 등)와 VTS 모의투자 설정은 `.env.example` 참고.
+
+---
 
 ## Usage
 
-**NOTE: The following example is for illustration purposes only. Most functionalities are NOT SUPPORTED YET.**
+### 주문 / 계좌
 
 ```rust
-use rs_kis::KisClient;
+use kis_api::{
+    KisClient, KisConfig, Exchange, OrderSide, OrderType, PlaceOrderRequest,
+};
+use rust_decimal_macros::dec;
 
 #[tokio::main]
-async fn main() {
-    let client = KisClient::new("your_app_key", "your_app_secret", "your_account_number");
-    
-    // Authenticate (NOT SUPPORTED YET)
-    client.authenticate().await.unwrap();
-    
-    // Get real-time stock price (NOT SUPPORTED YET)
-    let price = client.get_stock_price("005930").await.unwrap();
-    println!("Current price of Samsung Electronics: {}", price);
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let config = KisConfig::from_env()?;
+    let client = KisClient::new(config);
+
+    // 나스닥 AAPL 1주 시장가 매수
+    let order = client.place_order(PlaceOrderRequest {
+        symbol: "AAPL".to_string(),
+        exchange: Exchange::NASD,
+        side: OrderSide::Buy,
+        order_type: OrderType::Market,
+        qty: dec!(1),
+        price: None,
+    }).await?;
+    println!("주문번호: {}", order.order_org_no);
+
+    // 계좌 잔고 조회
+    let balance = client.balance().await?;
+    println!("평가손익: {}", balance.summary.total_pnl);
+
+    Ok(())
 }
 ```
 
-## Configuration
+### 시세
 
-Before using the library, you will need to set up your KIS API credentials. You can obtain these from the KIS developer portal. Detailed instructions on how to configure the library will be provided as development progresses.
+```rust
+use kis_api::{KisClient, KisConfig, Exchange, DailyChartRequest, ChartPeriod};
 
-## Contributing
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let config = KisConfig::from_env()?;
+    let client = KisClient::new(config);
 
-Contributions are welcome! As this project is in its early stages, there are many opportunities to contribute. Please feel free to submit issues, feature requests, or pull requests.
+    // 현재가
+    let price = client.price("AAPL", &Exchange::NASD).await?;
+    println!("현재가: {} ({}%)", price.last, price.rate);
 
-## License
+    // 일봉 20개
+    let bars = client.daily_chart(DailyChartRequest {
+        symbol: "AAPL".to_string(),
+        exchange: Exchange::NASD,
+        period: ChartPeriod::Daily,
+        adj_price: true,
+    }).await?;
+    for bar in bars.iter().take(3) {
+        println!("{}: O={} H={} L={} C={}", bar.date, bar.open, bar.high, bar.low, bar.close);
+    }
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+    Ok(())
+}
+```
+
+### 시세분석
+
+```rust
+use kis_api::{KisClient, KisConfig, Exchange, RankingRequest, RankingSort};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let config = KisConfig::from_env()?;
+    let client = KisClient::new(config);
+
+    // 나스닥 등락률 상위 10개
+    // sort: ChangeRate(등락률) / Volume(거래량) / MarketCap(시총)
+    let ranking = client.price_ranking(RankingRequest {
+        exchange: Exchange::NASD,
+        sort: RankingSort::ChangeRate,
+        count: 10,
+    }).await?;
+    for item in &ranking {
+        println!("{} {}: {}%", item.exchange, item.symbol, item.rate);
+    }
+
+    Ok(())
+}
+```
+
+### WebSocket 실시간
+
+```rust
+use kis_api::{KisClient, KisConfig, KisApi, KisEvent, KisError, SubscriptionKind};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let config = KisConfig::from_env()?;
+    let client = KisClient::new(config);
+
+    // stream()은 KisApi trait method — use kis_api::KisApi 필요
+    let stream = client.stream().await?;
+    stream.subscribe("AAPL", SubscriptionKind::Price).await?;
+
+    let mut rx = stream.receiver();
+    loop {
+        match rx.recv().await {
+            Ok(KisEvent::Transaction(d)) => println!("체결: {} @ {}", d.symbol, d.price),
+            Ok(KisEvent::Quote(d))       => println!("호가: {} ask={}", d.symbol, d.ask_price),
+            Err(KisError::StreamClosed)  => break,
+            Err(KisError::Lagged(n))     => eprintln!("{}개 이벤트 유실", n),
+            _ => {}
+        }
+    }
+    Ok(())
+}
+```
+
+→ 전체 API 목록 및 상세 설명: [docs/usage.md](docs/usage.md)
+
+---
 
 ## Disclaimer
 
-This library is not officially associated with Korea Investment & Securities. It is an independent project in early development stages. Use at your own risk.
-
-## Roadmap
-
-### Phase 1: Initial Setup and Authentication
-- [x] Set up project structure and initial dependencies
-- [x] Implement user authentication with KIS API
-- [x] Obtain access tokens for API calls
-
-### Phase 2: Core Features Implementation
-- [ ] **Account Management**
-  - Implement functionality to retrieve account balance and details.
-  - Support for multiple account management.
-
-- [ ] **Stock Trading Operations**
-  - Implement order placement (buy/sell) for domestic stocks.
-  - Implement order modification and cancellation.
-  - Add functionality to check order status.
-
-- [ ] **Market Data Retrieval**
-  - Implement real-time stock price retrieval using WebSocket.
-  - Support for historical price data retrieval.
-  - Implement functionality to check available buying power.
-
-### Phase 3: Advanced Features
-- [ ] **Portfolio Management**
-  - Implement portfolio overview and performance tracking.
-  - Add features to analyze historical performance.
-
-- [ ] **Notifications and Alerts**
-  - Implement a notification system for trade confirmations and market alerts.
-  
-- [x] **WebSocket Integration**
-  - Establish a WebSocket connection for real-time updates on stock prices and trading activity.
-
-### Phase 4: Testing and Documentation
-- [ ] Comprehensive testing of all implemented features.
-- [ ] Create detailed documentation for API usage.
-- [ ] Provide examples and sample code for common use cases.
-
-### Phase 5: Community Feedback and Iteration
-- [ ] Gather feedback from users on implemented features.
-- [ ] Prioritize feature requests and improvements based on user input.
-- [ ] Regularly update the library based on KIS API changes.
-
-### Future Considerations
-- Explore integration with additional financial services or APIs.
-- Consider implementing a GUI or web interface for easier interaction with the library.
-
-**Note:** The roadmap is subject to change as development progresses. Please check the repository regularly for updates on feature implementation and project status. Your contributions, feedback, and suggestions are welcome!
-
-Please note that this roadmap is subject to change as the project evolves.
+이 라이브러리는 한국투자증권(KIS)의 공식 프로젝트가 아닙니다. 개인이 제작한 비공식 클라이언트이며, 실제 거래에 사용 시 발생하는 모든 손실에 대한 책임은 사용자 본인에게 있습니다.
