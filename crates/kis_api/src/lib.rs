@@ -25,3 +25,5 @@ pub use rest::overseas::quote::orderbook::{OrderbookLevel, OrderbookResponse};
 pub use rest::overseas::quote::chart::{ChartPeriod, DailyChartRequest, MinuteChartRequest, CandleBar, MinuteBar};
 pub use rest::overseas::quote::search::{SearchResult, SymbolInfo};
 pub use rest::overseas::quote::corporate::{NewsItem, DividendItem, Holiday};
+pub use rest::overseas::analysis::ranking::{RankingItem, RankingRequest, RankingSort, VolumeSurgeItem};
+pub use rest::overseas::analysis::market::{HighLowKind, MarketCapItem, NewHighLowItem, TradeTurnoverItem, VolumePowerItem};

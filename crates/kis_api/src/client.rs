@@ -6,6 +6,7 @@ use async_trait::async_trait;
 use crate::{KisConfig, KisError, KisStream};
 use crate::auth::TokenManager;
 use crate::rest::http::fetch_approval_key;
+use crate::rest::overseas::analysis::{market, ranking};
 use crate::rest::overseas::inquiry::{balance, orders, profit};
 use crate::rest::overseas::quote;
 use crate::traits::{KisApi, KisEventSource};
@@ -144,6 +145,48 @@ impl KisClient {
     pub async fn holidays(&self, country: &str) -> Result<Vec<crate::Holiday>, KisError> {
         let token = self.token().await?;
         quote::corporate::holidays(self.http(), self.config(), &token, country).await
+    }
+
+    /// 해외주식 등락률 순위 조회
+    pub async fn price_ranking(&self, req: crate::RankingRequest) -> Result<Vec<crate::RankingItem>, KisError> {
+        let token = self.token().await?;
+        ranking::price_ranking(self.http(), self.config(), &token, req).await
+    }
+
+    /// 해외주식 거래량 순위 조회
+    pub async fn volume_ranking(&self, exchange: &crate::Exchange, count: u32) -> Result<Vec<crate::RankingItem>, KisError> {
+        let token = self.token().await?;
+        ranking::volume_ranking(self.http(), self.config(), &token, exchange, count).await
+    }
+
+    /// 해외주식 거래량 급증 순위 조회
+    pub async fn volume_surge(&self, exchange: &crate::Exchange, count: u32) -> Result<Vec<crate::VolumeSurgeItem>, KisError> {
+        let token = self.token().await?;
+        ranking::volume_surge(self.http(), self.config(), &token, exchange, count).await
+    }
+
+    /// 해외주식 체결강도 조회
+    pub async fn volume_power(&self, symbol: &str, exchange: &crate::Exchange) -> Result<Vec<crate::VolumePowerItem>, KisError> {
+        let token = self.token().await?;
+        market::volume_power(self.http(), self.config(), &token, symbol, exchange).await
+    }
+
+    /// 해외주식 신고가/신저가 순위 조회
+    pub async fn new_highlow(&self, exchange: &crate::Exchange, kind: &crate::HighLowKind, count: u32) -> Result<Vec<crate::NewHighLowItem>, KisError> {
+        let token = self.token().await?;
+        market::new_highlow(self.http(), self.config(), &token, exchange, kind, count).await
+    }
+
+    /// 해외주식 시가총액 순위 조회
+    pub async fn market_cap(&self, exchange: &crate::Exchange, count: u32) -> Result<Vec<crate::MarketCapItem>, KisError> {
+        let token = self.token().await?;
+        market::market_cap(self.http(), self.config(), &token, exchange, count).await
+    }
+
+    /// 해외주식 거래회전율 순위 조회
+    pub async fn trade_turnover(&self, exchange: &crate::Exchange, count: u32) -> Result<Vec<crate::TradeTurnoverItem>, KisError> {
+        let token = self.token().await?;
+        market::trade_turnover(self.http(), self.config(), &token, exchange, count).await
     }
 }
 
