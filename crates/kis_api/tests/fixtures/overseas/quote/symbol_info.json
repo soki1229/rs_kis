@@ -1,0 +1,14 @@
+{
+  "rt_cd": "0",
+  "msg_cd": "KIOK0000",
+  "msg1": "정상처리 되었습니다.",
+  "output": {
+    "pdno": "AAPL",
+    "prdt_eng_name": "APPLE INC",
+    "natn_kor_name": "미국",
+    "ovrs_excg_cd": "NASD",
+    "lstg_stck_num": "15441000000",
+    "perx": "28.50",
+    "pbrx": "46.20"
+  }
+}
