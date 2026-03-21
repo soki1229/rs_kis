@@ -94,7 +94,7 @@ impl KisStream {
         let (ws_write, ws_read) = ws_stream.split();
         *self.inner.ws_tx.lock().await = Some(ws_write);
 
-        let inner_clone = self.inner.clone();
+        let _inner_clone = self.inner.clone();
         let tx_clone = tx.clone();
 
         tokio::spawn(async move {
@@ -123,15 +123,7 @@ impl KisStream {
                     }
                 }
             }
-            // 연결 종료 시 StreamClosed 전파
-            let _ = tx_clone.send(KisEvent::Transaction(crate::TransactionData {
-                symbol: "__CLOSED__".into(),
-                price: rust_decimal::Decimal::ZERO,
-                qty: rust_decimal::Decimal::ZERO,
-                time: crate::auth::current_kst(),
-                is_buy: false,
-            }));
-            drop(inner_clone);
+            // tx_clone이 drop되면 수신측에서 RecvError::Closed → KisError::StreamClosed
         });
 
         Ok(())

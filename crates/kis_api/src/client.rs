@@ -10,6 +10,7 @@ use crate::traits::{KisApi, KisEventSource};
 
 struct Inner {
     config: KisConfig,
+    #[allow(dead_code)] // Plan 3a에서 REST 엔드포인트 추가 시 사용
     token_manager: TokenManager,
     http: Client,
 }
@@ -34,6 +35,7 @@ impl KisClient {
     }
 
     /// 현재 유효한 액세스 토큰 반환 (내부 헬퍼)
+    #[allow(dead_code)] // Plan 3a에서 REST 엔드포인트 추가 시 사용
     pub(crate) async fn token(&self) -> Result<String, KisError> {
         self.inner.token_manager.token().await
     }
