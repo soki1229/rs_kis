@@ -6,6 +6,7 @@ use async_trait::async_trait;
 use crate::{KisConfig, KisError, KisStream};
 use crate::auth::TokenManager;
 use crate::rest::http::fetch_approval_key;
+use crate::rest::overseas::inquiry::{balance, orders, profit};
 use crate::traits::{KisApi, KisEventSource};
 
 struct Inner {
@@ -58,6 +59,36 @@ impl KisClient {
     pub async fn cancel_order(&self, req: crate::CancelOrderRequest) -> Result<crate::CancelOrderResponse, KisError> {
         let token = self.token().await?;
         crate::rest::overseas::order::cancel::cancel_order(self.http(), self.config(), &token, req).await
+    }
+
+    /// 해외주식 잔고 조회
+    pub async fn balance(&self) -> Result<crate::BalanceResponse, KisError> {
+        let token = self.token().await?;
+        balance::balance(self.http(), self.config(), &token).await
+    }
+
+    /// 해외주식 미체결 조회
+    pub async fn unfilled_orders(&self) -> Result<Vec<crate::UnfilledOrder>, KisError> {
+        let token = self.token().await?;
+        orders::unfilled_orders(self.http(), self.config(), &token).await
+    }
+
+    /// 해외주식 체결내역 조회
+    pub async fn order_history(&self, req: crate::OrderHistoryRequest) -> Result<Vec<crate::OrderHistoryItem>, KisError> {
+        let token = self.token().await?;
+        orders::order_history(self.http(), self.config(), &token, req).await
+    }
+
+    /// 해외주식 기간손익 조회
+    pub async fn period_profit(&self, req: crate::PeriodProfitRequest) -> Result<crate::PeriodProfitResponse, KisError> {
+        let token = self.token().await?;
+        profit::period_profit(self.http(), self.config(), &token, req).await
+    }
+
+    /// 해외주식 매수가능금액 조회
+    pub async fn buyable_amount(&self, req: crate::BuyableAmountRequest) -> Result<crate::BuyableAmountResponse, KisError> {
+        let token = self.token().await?;
+        profit::buyable_amount(self.http(), self.config(), &token, req).await
     }
 }
 

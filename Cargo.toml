@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "crates/kis_api",
+    "crates/domain",
     "crates/bot",
     "crates/server",
 ]
