@@ -785,10 +785,11 @@ mod tests {
     #[tokio::test]
     async fn subscribe_and_unsubscribe() {
         let stream = make_stream();
-        stream.subscribe("NVDA").await.unwrap();
-        stream.subscribe("AAPL").await.unwrap();
+        // SubscriptionKind 파라미터 포함 (Plan 3b 스펙에서 확정)
+        stream.subscribe("NVDA", SubscriptionKind::Price).await.unwrap();
+        stream.subscribe("AAPL", SubscriptionKind::Price).await.unwrap();
         assert!(stream.subscriptions().await.contains("NVDA"));
-        stream.unsubscribe("NVDA").await.unwrap();
+        stream.unsubscribe("NVDA", SubscriptionKind::Price).await.unwrap();
         assert!(!stream.subscriptions().await.contains("NVDA"));
         assert!(stream.subscriptions().await.contains("AAPL"));
     }
@@ -876,13 +877,17 @@ impl KisStream {
         EventReceiver::new(self.inner.tx.subscribe())
     }
 
-    pub async fn subscribe(&self, symbol: &str) -> Result<(), KisError> {
-        self.inner.subscriptions.lock().await.insert(symbol.to_string());
+    // SubscriptionKind: Price(HDFSCNT0) | Orderbook(HDFSASP0/1) — Plan 3b에서 정의
+    // 이 시그니처는 Plan 3b 스펙과 일치하도록 kind 파라미터 포함
+    pub async fn subscribe(&self, symbol: &str, kind: SubscriptionKind) -> Result<(), KisError> {
+        let key = format!("{}:{:?}", symbol, kind);
+        self.inner.subscriptions.lock().await.insert(key);
         Ok(())
     }
 
-    pub async fn unsubscribe(&self, symbol: &str) -> Result<(), KisError> {
-        self.inner.subscriptions.lock().await.remove(symbol);
+    pub async fn unsubscribe(&self, symbol: &str, kind: SubscriptionKind) -> Result<(), KisError> {
+        let key = format!("{}:{:?}", symbol, kind);
+        self.inner.subscriptions.lock().await.remove(&key);
         Ok(())
     }
 
