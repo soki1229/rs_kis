@@ -1,0 +1,7 @@
+{
+  "rt_cd": "0", "msg_cd": "KIOK0000", "msg1": "정상처리 되었습니다.",
+  "output": [
+    { "EXCD": "NAS", "SYMB": "META", "DNAM": "META PLATFORMS INC", "LAST": "510.70", "DIFF": "22.40", "RATE": "4.59", "TVOL": "28340200", "PRDY_TVOL": "12102300", "TVOL_RATE": "134.17" },
+    { "EXCD": "NAS", "SYMB": "AMZN", "DNAM": "AMAZON.COM INC", "LAST": "185.30", "DIFF": "6.80", "RATE": "3.81", "TVOL": "45028100", "PRDY_TVOL": "21304200", "TVOL_RATE": "111.35" }
+  ]
+}
