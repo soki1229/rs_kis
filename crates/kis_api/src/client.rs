@@ -7,6 +7,7 @@ use crate::{KisConfig, KisError, KisStream};
 use crate::auth::TokenManager;
 use crate::rest::http::fetch_approval_key;
 use crate::rest::overseas::inquiry::{balance, orders, profit};
+use crate::rest::overseas::quote;
 use crate::traits::{KisApi, KisEventSource};
 
 struct Inner {
@@ -89,6 +90,60 @@ impl KisClient {
     pub async fn buyable_amount(&self, req: crate::BuyableAmountRequest) -> Result<crate::BuyableAmountResponse, KisError> {
         let token = self.token().await?;
         profit::buyable_amount(self.http(), self.config(), &token, req).await
+    }
+
+    /// 해외주식 현재가 조회
+    pub async fn price(&self, symbol: &str, exchange: &crate::Exchange) -> Result<crate::PriceResponse, KisError> {
+        let token = self.token().await?;
+        quote::price::price(self.http(), self.config(), &token, symbol, exchange).await
+    }
+
+    /// 해외주식 호가 조회
+    pub async fn orderbook(&self, symbol: &str, exchange: &crate::Exchange) -> Result<crate::OrderbookResponse, KisError> {
+        let token = self.token().await?;
+        quote::orderbook::orderbook(self.http(), self.config(), &token, symbol, exchange).await
+    }
+
+    /// 해외주식 일/주/월봉 조회
+    pub async fn daily_chart(&self, req: crate::DailyChartRequest) -> Result<Vec<crate::CandleBar>, KisError> {
+        let token = self.token().await?;
+        quote::chart::daily_chart(self.http(), self.config(), &token, req).await
+    }
+
+    /// 해외주식 분봉 조회
+    pub async fn minute_chart(&self, req: crate::MinuteChartRequest) -> Result<Vec<crate::MinuteBar>, KisError> {
+        let token = self.token().await?;
+        quote::chart::minute_chart(self.http(), self.config(), &token, req).await
+    }
+
+    /// 해외주식 종목 검색
+    pub async fn search(&self, keyword: &str) -> Result<Vec<crate::SearchResult>, KisError> {
+        let token = self.token().await?;
+        quote::search::search(self.http(), self.config(), &token, keyword).await
+    }
+
+    /// 해외주식 종목 정보 조회
+    pub async fn symbol_info(&self, symbol: &str, exchange: &crate::Exchange) -> Result<crate::SymbolInfo, KisError> {
+        let token = self.token().await?;
+        quote::search::symbol_info(self.http(), self.config(), &token, symbol, exchange).await
+    }
+
+    /// 해외주식 뉴스 조회
+    pub async fn news(&self, symbol: &str) -> Result<Vec<crate::NewsItem>, KisError> {
+        let token = self.token().await?;
+        quote::corporate::news(self.http(), self.config(), &token, symbol).await
+    }
+
+    /// 해외주식 배당 조회
+    pub async fn dividend(&self, symbol: &str, exchange: &crate::Exchange) -> Result<Vec<crate::DividendItem>, KisError> {
+        let token = self.token().await?;
+        quote::corporate::dividend(self.http(), self.config(), &token, symbol, exchange).await
+    }
+
+    /// 해외주식 휴장일 조회
+    pub async fn holidays(&self, country: &str) -> Result<Vec<crate::Holiday>, KisError> {
+        let token = self.token().await?;
+        quote::corporate::holidays(self.http(), self.config(), &token, country).await
     }
 }
 
