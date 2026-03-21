@@ -1,10 +1,10 @@
 [package]
-name = "server"
+name = "kis_server"
 version = "0.1.0"
 edition = "2021"
 
 [[bin]]
-name = "server"
+name = "kis_server"
 path = "src/main.rs"
 
 [dependencies]
