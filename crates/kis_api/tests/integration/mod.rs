@@ -1,3 +1,5 @@
+pub mod order;
+
 /// 통합 테스트 스킵 매크로
 /// `KIS_INTEGRATION_TEST=1` 환경변수가 없으면 테스트를 건너뜁니다.
 #[macro_export]

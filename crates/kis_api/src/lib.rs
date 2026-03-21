@@ -17,3 +17,6 @@ pub use traits::{KisApi, KisEventSource};
 pub use rest::overseas::types::{Exchange, OrderSide, OrderType};
 pub use rest::overseas::order::place::{PlaceOrderRequest, PlaceOrderResponse};
 pub use rest::overseas::order::cancel::{CancelKind, CancelOrderRequest, CancelOrderResponse};
+pub use rest::overseas::inquiry::balance::{BalanceItem, BalanceSummary, BalanceResponse};
+pub use rest::overseas::inquiry::orders::{UnfilledOrder, OrderHistoryItem, OrderHistoryRequest};
+pub use rest::overseas::inquiry::profit::{ProfitItem, ProfitSummary, PeriodProfitRequest, PeriodProfitResponse, BuyableAmountRequest, BuyableAmountResponse};
