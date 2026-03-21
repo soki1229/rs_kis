@@ -1,5 +1,7 @@
 [workspace]
 members = [
     "crates/kis_api",
+    "crates/bot",
+    "crates/server",
 ]
 resolver = "2"
