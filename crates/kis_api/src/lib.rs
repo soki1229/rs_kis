@@ -4,6 +4,7 @@ mod error;
 mod event;
 mod stream;
 mod traits;
+pub mod rest;
 
 pub use auth::TokenManager;
 pub use config::{KisConfig, KisConfigBuilder};
