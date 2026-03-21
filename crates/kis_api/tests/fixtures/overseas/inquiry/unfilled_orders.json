@@ -1,0 +1,19 @@
+{
+  "rt_cd": "0",
+  "msg_cd": "APBK0013",
+  "msg1": "조회가 완료되었습니다.",
+  "output": [
+    {
+      "ODNO": "0000117057",
+      "ORGN_ODNO": "",
+      "PDNO": "AAPL",
+      "PRDT_NAME": "애플",
+      "OVRS_EXCG_CD": "NASD",
+      "SLL_BUY_DVSN_CD": "02",
+      "ORD_QTY": "10",
+      "OVRS_ORD_UNPR": "175.00",
+      "FT_CCLD_QTY": "0",
+      "RMND_QTY": "10"
+    }
+  ]
+}
