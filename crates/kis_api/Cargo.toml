@@ -4,25 +4,33 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+# HTTP
+reqwest = { version = "0.12", features = ["json"] }
+# WebSocket
+tokio-tungstenite = { version = "0.24", features = ["native-tls"] }
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+futures = "0.3"
+futures-util = "0.3"
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# Error handling
+thiserror = "2"
+# Async traits
+async-trait = "0.1"
+# Date/time (KST timezone support)
+chrono = { version = "0.4", features = ["serde"] }
+# Decimal arithmetic (no f64 for prices)
+rust_decimal = { version = "1", features = ["serde-with-str"] }
+rust_decimal_macros = "1"
+# File path expansion (token cache)
+shellexpand = "3"
+# HTTP types
+http = "1"
+# Logging
+log = "0.4"
+# Domain shared types
 domain = { path = "../domain" }
-aes = "0.8.4"
-base64 = "0.22.1"
-cbc = "0.1.2"
-chrono = { version = "0.4.38", features = ["serde"] }
-cipher = "0.4.4"
-dotenv = "0.15.0"
-env_logger = "0.11.5"
-futures = "0.3.31"
-futures-util = "0.3.31"
-http = "1.1.0"
-lazy_static = "1.5.0"
-log = "0.4.22"
-rayon = "1.10.0"
-reqwest = { version = "0.12.9", features = ["json"] }
-serde = { version = "1.0.215", features = ["derive"] }
-serde_json = "1.0.132"
-shellexpand = "3.1.0"
-thiserror = "2.0.3"
-tokio = { version = "1.41.1", features = ["full"] }
-tokio-tungstenite = "0.24.0"
-url = "2.5.4"
+# Cancellation token
+tokio-util = { version = "0.7", features = ["rt"] }

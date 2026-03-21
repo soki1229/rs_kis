@@ -8,8 +8,7 @@ pub enum KisClientError {
     JsonError(#[from] serde_json::Error),
     #[error("Error sending message: {0}")]
     SendError(String),
-    #[error("URL parse error: {0}")]
-    UrlParseError(#[from] url::ParseError),
+    // UrlParseError removed: url crate removed from deps in redesign
     #[error("Request error: {0}")]
     RequestError(#[from] reqwest::Error),
     #[error("HTTP error: {status}, body: {body}")]
