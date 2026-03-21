@@ -1,0 +1,10 @@
+{
+  "rt_cd": "0",
+  "msg_cd": "APBK0013",
+  "msg1": "조회가 완료되었습니다.",
+  "output": {
+    "OVRS_MAX_ORD_PSBL_QTY": "57",
+    "EXCC_RAMT": "10050.30",
+    "FRCR_BUY_PSBL_AMT": "10050.30"
+  }
+}

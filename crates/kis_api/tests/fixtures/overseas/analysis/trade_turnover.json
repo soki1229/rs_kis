@@ -1,0 +1,7 @@
+{
+  "rt_cd": "0", "msg_cd": "KIOK0000", "msg1": "정상처리 되었습니다.",
+  "output": [
+    { "EXCD": "NAS", "SYMB": "GME", "DNAM": "GAMESTOP CORP", "LAST": "12.40", "DIFF": "0.80", "RATE": "6.90", "TVOL": "58204300", "TRNO": "18.43" },
+    { "EXCD": "NAS", "SYMB": "AMC", "DNAM": "AMC ENTERTAINMENT HOLDINGS", "LAST": "4.20", "DIFF": "0.30", "RATE": "7.69", "TVOL": "41023800", "TRNO": "14.22" }
+  ]
+}

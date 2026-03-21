@@ -1,0 +1,7 @@
+{
+  "rt_cd": "0", "msg_cd": "KIOK0000", "msg1": "정상처리 되었습니다.",
+  "output": [
+    { "EXCD": "NAS", "SYMB": "AAPL", "DNAM": "APPLE INC", "LAST": "178.90", "DIFF": "1.30", "RATE": "0.73", "TVOL": "98320100", "MKTC": "2750000000000" },
+    { "EXCD": "NAS", "SYMB": "MSFT", "DNAM": "MICROSOFT CORP", "LAST": "420.80", "DIFF": "12.30", "RATE": "3.01", "TVOL": "22104800", "MKTC": "3120000000000" }
+  ]
+}
