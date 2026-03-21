@@ -1,0 +1,17 @@
+{
+  "rt_cd": "0",
+  "msg_cd": "KIOK0000",
+  "msg1": "정상처리 되었습니다.",
+  "output": [
+    {
+      "bass_dt": "20260101",
+      "wday_dvsn_cd": "7",
+      "dynm_dvsn_name": "New Year's Day"
+    },
+    {
+      "bass_dt": "20260704",
+      "wday_dvsn_cd": "6",
+      "dynm_dvsn_name": "Independence Day"
+    }
+  ]
+}
