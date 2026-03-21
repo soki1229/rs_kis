@@ -1,0 +1,21 @@
+{
+  "rt_cd": "0",
+  "msg_cd": "APBK0013",
+  "msg1": "조회가 완료되었습니다.",
+  "output1": [
+    {
+      "PDNO": "NVDA",
+      "PRDT_NAME": "엔비디아",
+      "OVRS_EXCG_CD": "NASD",
+      "CCLD_QTY": "3",
+      "PCHS_AVG_PRIC": "800.00",
+      "CCLD_UNPR": "950.00",
+      "RLZT_PFLS": "450.00",
+      "PFLS_RT": "18.75"
+    }
+  ],
+  "output2": {
+    "OVRS_RLZT_PFLS_AMT": "450.00",
+    "OVRS_TOT_PFLS": "450.00"
+  }
+}
