@@ -6,7 +6,9 @@ mod stream;
 mod traits;
 pub mod rest;
 
+mod client;
 pub use auth::TokenManager;
+pub use client::KisClient;
 pub use config::{KisConfig, KisConfigBuilder};
 pub use error::KisError;
 pub use event::{KisEvent, TransactionData, QuoteData, OrderConfirmData};

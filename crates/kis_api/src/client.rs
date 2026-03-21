@@ -1,163 +1,101 @@
-use crate::{api, types, websockets};
-use crate::core::file_io;
-use crate::core::http::Config;
-use crate::error::KisClientError as Error;
+use std::sync::Arc;
 
-use tokio_tungstenite::tungstenite::client::IntoClientRequest;
-use types::TokenInfo;
+use reqwest::Client;
+use async_trait::async_trait;
 
-use reqwest::{Client, Response};
-use log::{info, error};
+use crate::{KisConfig, KisError, KisStream};
+use crate::auth::TokenManager;
+use crate::rest::http::fetch_approval_key;
+use crate::traits::{KisApi, KisEventSource};
 
+struct Inner {
+    config: KisConfig,
+    token_manager: TokenManager,
+    http: Client,
+}
+
+/// KIS REST API 클라이언트. `Clone`은 저렴 (`Arc` 복사).
+#[derive(Clone)]
 pub struct KisClient {
-    app_key: String,
-    app_secret: String,
-    account_num: String,
-    socket_key: String,
-    token_info: TokenInfo,
-    client: reqwest::Client,
-    config: Config,
-    is_mock: bool,
-    websocket_handle: Option<tokio::task::JoinHandle<()>>,
+    inner: Arc<Inner>,
 }
 
 impl KisClient {
-    pub fn new(app_key: String, app_secret: String, account_num: String) -> Self {
+    /// 동기 생성자. `KisConfig::builder()` 로 설정 후 생성.
+    pub fn new(config: KisConfig) -> Self {
+        let token_manager = TokenManager::new(config.clone());
         Self {
-            app_key,
-            app_secret,
-            account_num,
-            socket_key: String::new(),
-            token_info: TokenInfo::new(),
-            client: Client::new(),
-            config: Config::new(),
-            is_mock: false,
-            websocket_handle: None,
+            inner: Arc::new(Inner {
+                config,
+                token_manager,
+                http: Client::new(),
+            }),
         }
     }
 
-    pub fn mock(mut self) -> Self {
-        self.is_mock = true;
-        self
+    /// 현재 유효한 액세스 토큰 반환 (내부 헬퍼)
+    pub(crate) async fn token(&self) -> Result<String, KisError> {
+        self.inner.token_manager.token().await
     }
 
-    pub fn run(mut self) -> Self {
-        self.websocket_handle = Some(self.connect_websocket());
-        self
+    /// reqwest Client 참조 (내부 헬퍼)
+    pub(crate) fn http(&self) -> &Client {
+        &self.inner.http
     }
 
-    pub fn connect_websocket(&self) -> tokio::task::JoinHandle<()> {    
-        tokio::task::spawn(async move {
-            loop {
-                match tokio_tungstenite::connect_async("ws://ops.koreainvestment.com:21000".to_owned().into_client_request().unwrap()).await {
-                    Ok((ws_stream, _)) => {
-                        info!("WebSocket connection established.");
-                        
-                        if let Err(e) = websockets::handle_websocket(ws_stream).await {
-                            error!("WebSocket error: {}. Reconnecting...", e);
-                        }
-                    }
-                    Err(e) => {
-                        error!("Failed to connect to WebSocket: {}. Retrying...", e);
-                    }
-                }
-    
-                tokio::time::sleep(std::time::Duration::from_secs(5)).await;
-            }
-        })
+    /// KisConfig 참조 (내부 헬퍼)
+    pub(crate) fn config(&self) -> &KisConfig {
+        &self.inner.config
     }
+}
 
-    async fn update_oauth_api(&mut self) {
-        if let Ok(Some(json_string)) = file_io::load_token_from_file("~/.soki1229/kis_api/access_token") {
-            self.token_info = serde_json::from_str(&json_string).unwrap();
-        }
-
-        if self.token_info.is_expired() {
-            self.issue_new_token().await;
-        }
-
-        self.token_info.update();
+#[async_trait]
+impl KisApi for KisClient {
+    async fn stream(&self) -> Result<KisStream, KisError> {
+        let approval_key = fetch_approval_key(self.http(), self.config()).await?;
+        KisStream::connect(self.config().clone(), approval_key).await
     }
+}
 
-    async fn issue_new_token(&mut self) {
-        self.token_info = match api::oauth_certification::issue_oauth_api(&self.client, &self.config).await {
-            Ok(response) => {
-                info!("New access_token granted.");
-                match file_io::save_token_to_file(&serde_json::to_string(&response).unwrap(), "~/.soki1229/kis_api/access_token") {
-                    Ok(_) => info!("Archived access_token."),
-                    Err(e) => error!("Failed to archive: {:?}", e),
-                };
-                response
-            },
-            Err(e) => {
-                error!("Failed to initialize OAuth certification: {:?}", e);
-                TokenInfo::new()
-            }
-        }
+#[async_trait]
+impl KisEventSource for KisClient {
+    async fn event_stream(&self) -> Result<KisStream, KisError> {
+        self.stream().await
     }
-
-    pub async fn check_deposit(&mut self) -> Result<Response, Error> {
-        self.update_oauth_api().await;
-        api::overseas::order_deposit::check_deposit(&self.client, &self.config, &self.token_info, &self.account_num).await
-    }
-
-    pub async fn current_transaction_price(&mut self, symbol: &str) -> Result<Response, Error> {
-        self.update_oauth_api().await;
-        api::overseas::stock_price::current_transaction_price(&self.client, &self.config, &self.token_info.get_token(), symbol).await
-    }
-
-    // WebSockets API
-    async fn update_oauth_websocket(&mut self) {
-        self.socket_key = match api::oauth_certification::issue_oauth_websocket(&self.client, &self.config).await {
-            Ok(response) => response.approval_key,
-            _ => String::new(),
-        }
-    }
-
-    pub async fn subscribe_transaction(&mut self, symbol: &str, subscribe: bool) -> Result<(), Error> {
-        self.update_oauth_websocket().await;
-        websockets::subscribe_transaction(symbol, subscribe, &self.socket_key).await
-    }
-    
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::environment;
-    use crate::logger;
     use super::*;
 
-    #[tokio::test]
-    async fn test_kis() {
-        logger::init_logging();
-        println!("========================================================= rs_KIS =========================================================");
+    fn make_client() -> KisClient {
+        let config = KisConfig::builder()
+            .app_key("test_key")
+            .app_secret("test_secret")
+            .account_num("12345678-01")
+            .mock(true)
+            .build()
+            .unwrap();
+        KisClient::new(config)
+    }
 
-        environment::init();
-        let env_var = environment::get();
+    #[test]
+    fn client_is_clone() {
+        let c = make_client();
+        let _c2 = c.clone();
+    }
 
-        let mut client = KisClient::new(
-            String::from(&env_var.app_key),
-            String::from(&env_var.app_secret),
-            String::from(&env_var.account_num)
-        )
-        // .mock()
-        .run();
+    fn assert_send_sync<T: Send + Sync>() {}
 
-        // TODO: need to handle event; Handling requested subscription.
+    #[test]
+    fn client_is_send_sync() {
+        assert_send_sync::<KisClient>();
+    }
 
-        // if let Ok(response) = client.check_deposit().await{
-        //     let parsed = response.text().await.unwrap();        
-        //     info!("{}", parsed);
-        // } else {
-        //     info!("check_depsit returned err");
-        // }
-
-        client.subscribe_transaction("NVDA", true).await.expect("Error: NVDA");
-        
-        // Keep the main function running to see the logs
-        tokio::signal::ctrl_c().await.expect("Failed to listen for Ctrl+C");
-
-        println!("\nReceived Ctrl+C, shutting down gracefully.");    
-        println!("==========================================================================================================================");
+    #[test]
+    fn client_implements_kis_api() {
+        fn accepts_kis_api(_: &impl KisApi) {}
+        let c = make_client();
+        accepts_kis_api(&c);
     }
 }
