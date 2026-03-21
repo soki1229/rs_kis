@@ -34,3 +34,7 @@ log = "0.4"
 domain = { path = "../domain" }
 # Cancellation token
 tokio-util = { version = "0.7", features = ["rt"] }
+
+[dev-dependencies]
+dotenvy = "0.15"
+tokio = { version = "1", features = ["full"] }
