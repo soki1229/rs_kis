@@ -4,8 +4,11 @@ pub mod orderbook;
 pub mod price;
 pub mod search;
 
-pub use chart::{ChartPeriod, DailyChartRequest, MinuteChartRequest, CandleBar, MinuteBar, daily_chart, minute_chart};
-pub use corporate::{NewsItem, DividendItem, Holiday, news, dividend, holidays};
-pub use orderbook::{OrderbookLevel, OrderbookResponse, orderbook};
-pub use price::{PriceResponse, price};
-pub use search::{SearchResult, SymbolInfo, search, symbol_info};
+pub use chart::{
+    daily_chart, minute_chart, CandleBar, ChartPeriod, DailyChartRequest, MinuteBar,
+    MinuteChartRequest,
+};
+pub use corporate::{dividend, holidays, news, DividendItem, Holiday, NewsItem};
+pub use orderbook::{orderbook, OrderbookLevel, OrderbookResponse};
+pub use price::{price, PriceResponse};
+pub use search::{search, symbol_info, SearchResult, SymbolInfo};

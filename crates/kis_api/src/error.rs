@@ -53,7 +53,11 @@ mod tests {
         );
         assert_eq!(KisError::StreamClosed.to_string(), "event stream closed");
         assert_eq!(
-            KisError::Api { code: "EGW00123".into(), message: "Unauthorized".into() }.to_string(),
+            KisError::Api {
+                code: "EGW00123".into(),
+                message: "Unauthorized".into()
+            }
+            .to_string(),
             "KIS API error EGW00123: Unauthorized"
         );
     }

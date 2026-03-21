@@ -1,13 +1,14 @@
 use rust_decimal::Decimal;
-use std::str::FromStr;
 use serde_json::Value;
+use std::str::FromStr;
 
-use crate::{KisConfig, KisError};
 use crate::rest::http::{execute, RequestParams};
 use crate::rest::overseas::types::split_account;
+use crate::{KisConfig, KisError};
 
 fn parse_decimal(v: &Value, key: &str) -> Decimal {
-    v[key].as_str()
+    v[key]
+        .as_str()
         .and_then(|s| Decimal::from_str(s).ok())
         .unwrap_or(Decimal::ZERO)
 }
@@ -84,7 +85,8 @@ pub async fn period_profit(
             query: Some(&query),
             body: None,
         },
-    ).await?;
+    )
+    .await?;
 
     let items = resp["output1"]
         .as_array()
@@ -140,7 +142,8 @@ pub async fn buyable_amount(
             query: Some(&query),
             body: None,
         },
-    ).await?;
+    )
+    .await?;
 
     let out = &resp["output"];
     Ok(BuyableAmountResponse {
@@ -159,16 +162,21 @@ mod tests {
         let json = include_str!("../../../../tests/fixtures/overseas/inquiry/period_profit.json");
         let v: Value = serde_json::from_str(json).unwrap();
 
-        let items: Vec<ProfitItem> = v["output1"].as_array().unwrap().iter().map(|item| ProfitItem {
-            symbol: item["PDNO"].as_str().unwrap().to_string(),
-            name: item["PRDT_NAME"].as_str().unwrap().to_string(),
-            exchange: item["OVRS_EXCG_CD"].as_str().unwrap().to_string(),
-            filled_qty: parse_decimal(item, "CCLD_QTY"),
-            avg_buy_price: parse_decimal(item, "PCHS_AVG_PRIC"),
-            filled_price: parse_decimal(item, "CCLD_UNPR"),
-            realized_pnl: parse_decimal(item, "RLZT_PFLS"),
-            pnl_rate: parse_decimal(item, "PFLS_RT"),
-        }).collect();
+        let items: Vec<ProfitItem> = v["output1"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|item| ProfitItem {
+                symbol: item["PDNO"].as_str().unwrap().to_string(),
+                name: item["PRDT_NAME"].as_str().unwrap().to_string(),
+                exchange: item["OVRS_EXCG_CD"].as_str().unwrap().to_string(),
+                filled_qty: parse_decimal(item, "CCLD_QTY"),
+                avg_buy_price: parse_decimal(item, "PCHS_AVG_PRIC"),
+                filled_price: parse_decimal(item, "CCLD_UNPR"),
+                realized_pnl: parse_decimal(item, "RLZT_PFLS"),
+                pnl_rate: parse_decimal(item, "PFLS_RT"),
+            })
+            .collect();
 
         assert_eq!(items.len(), 1);
         assert_eq!(items[0].symbol, "NVDA");

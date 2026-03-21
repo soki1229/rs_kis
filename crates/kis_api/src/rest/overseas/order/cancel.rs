@@ -3,7 +3,7 @@ use rust_decimal::Decimal;
 use serde_json::Value;
 
 use crate::rest::http::{execute, RequestParams};
-use crate::rest::overseas::types::{Exchange, cancel_tr_id, split_account};
+use crate::rest::overseas::types::{cancel_tr_id, split_account, Exchange};
 use crate::{KisConfig, KisError};
 
 /// 정정/취소 구분
@@ -16,7 +16,7 @@ pub enum CancelKind {
 impl CancelKind {
     pub fn to_dvsn_cd(&self) -> &'static str {
         match self {
-            CancelKind::Amend  => "01",
+            CancelKind::Amend => "01",
             CancelKind::Cancel => "02",
         }
     }
@@ -51,7 +51,8 @@ pub async fn cancel_order(
     let tr_id = cancel_tr_id(&req.exchange, config.mock);
     let (cano, acnt_prdt_cd) = split_account(&config.account_num);
 
-    let price_str = req.price
+    let price_str = req
+        .price
         .map(|p| p.to_string())
         .unwrap_or_else(|| "0".to_string());
 
@@ -108,7 +109,11 @@ fn parse_cancel_order_response(v: &Value) -> Result<CancelOrderResponse, KisErro
             message: "ORD_TMD missing".into(),
         })?
         .to_string();
-    Ok(CancelOrderResponse { order_date, order_org_no, order_time })
+    Ok(CancelOrderResponse {
+        order_date,
+        order_org_no,
+        order_time,
+    })
 }
 
 #[cfg(test)]

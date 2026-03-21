@@ -97,7 +97,9 @@ impl TokenManager {
             "appsecret": cfg.app_secret,
         });
 
-        let resp = self.inner.http
+        let resp = self
+            .inner
+            .http
             .post(&url)
             .json(&body)
             .send()
@@ -105,7 +107,10 @@ impl TokenManager {
             .map_err(KisError::Network)?;
 
         if !resp.status().is_success() {
-            return Err(KisError::Auth(format!("token fetch failed: {}", resp.status())));
+            return Err(KisError::Auth(format!(
+                "token fetch failed: {}",
+                resp.status()
+            )));
         }
 
         let tr: TokenResponse = resp.json().await.map_err(KisError::Network)?;
@@ -131,13 +136,17 @@ impl TokenManager {
     }
 
     async fn load_from_file(&self, path: &PathBuf) -> Result<TokenCache, KisError> {
-        let data = tokio::fs::read_to_string(path).await.map_err(KisError::Io)?;
+        let data = tokio::fs::read_to_string(path)
+            .await
+            .map_err(KisError::Io)?;
         serde_json::from_str(&data).map_err(KisError::Parse)
     }
 
     async fn save_to_file(&self, path: &PathBuf, token: &TokenCache) -> Result<(), KisError> {
         if let Some(parent) = path.parent() {
-            tokio::fs::create_dir_all(parent).await.map_err(KisError::Io)?;
+            tokio::fs::create_dir_all(parent)
+                .await
+                .map_err(KisError::Io)?;
         }
         let data = serde_json::to_string_pretty(token).map_err(KisError::Parse)?;
         tokio::fs::write(path, data).await.map_err(KisError::Io)
@@ -157,7 +166,9 @@ mod tests {
     #[test]
     fn token_manager_is_clone() {
         let config = KisConfig::builder()
-            .app_key("k").app_secret("s").account_num("a")
+            .app_key("k")
+            .app_secret("s")
+            .account_num("a")
             .build()
             .unwrap();
         let tm = TokenManager::new(config);

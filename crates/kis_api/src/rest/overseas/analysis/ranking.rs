@@ -1,11 +1,11 @@
 use reqwest::Method;
 use rust_decimal::Decimal;
+use serde_json::{json, Value};
 use std::str::FromStr;
-use serde_json::{Value, json};
 
-use crate::{KisConfig, KisError};
 use crate::rest::http::{execute, RequestParams};
 use crate::rest::overseas::types::Exchange;
+use crate::{KisConfig, KisError};
 
 /// 순위 정렬 기준
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -236,8 +236,8 @@ mod tests {
             env!("CARGO_MANIFEST_DIR"),
             name
         );
-        let text = std::fs::read_to_string(&path)
-            .unwrap_or_else(|_| panic!("fixture not found: {path}"));
+        let text =
+            std::fs::read_to_string(&path).unwrap_or_else(|_| panic!("fixture not found: {path}"));
         serde_json::from_str(&text).unwrap()
     }
 

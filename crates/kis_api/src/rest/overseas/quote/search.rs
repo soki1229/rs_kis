@@ -1,11 +1,11 @@
 use reqwest::Method;
 use rust_decimal::Decimal;
+use serde_json::{json, Value};
 use std::str::FromStr;
-use serde_json::{Value, json};
 
-use crate::{KisConfig, KisError};
 use crate::rest::http::{execute, RequestParams};
 use crate::rest::overseas::types::Exchange;
+use crate::{KisConfig, KisError};
 
 /// 종목 검색 결과
 #[derive(Debug, Clone)]
@@ -72,12 +72,15 @@ pub async fn search(
         message: "output is not an array".to_string(),
     })?;
 
-    Ok(arr.iter().map(|item| SearchResult {
-        symbol: item["pdno"].as_str().unwrap_or("").to_string(),
-        name: item["prdt_eng_name"].as_str().unwrap_or("").to_string(),
-        country: item["natn_kor_name"].as_str().unwrap_or("").to_string(),
-        exchange: item["ovrs_excg_cd"].as_str().unwrap_or("").to_string(),
-    }).collect())
+    Ok(arr
+        .iter()
+        .map(|item| SearchResult {
+            symbol: item["pdno"].as_str().unwrap_or("").to_string(),
+            name: item["prdt_eng_name"].as_str().unwrap_or("").to_string(),
+            country: item["natn_kor_name"].as_str().unwrap_or("").to_string(),
+            exchange: item["ovrs_excg_cd"].as_str().unwrap_or("").to_string(),
+        })
+        .collect())
 }
 
 /// 해외주식 종목 정보 조회
@@ -147,12 +150,15 @@ mod tests {
     fn parse_search_response() {
         let v = load_search_fixture();
         let arr = v["output"].as_array().unwrap();
-        let results: Vec<SearchResult> = arr.iter().map(|item| SearchResult {
-            symbol: item["pdno"].as_str().unwrap_or("").to_string(),
-            name: item["prdt_eng_name"].as_str().unwrap_or("").to_string(),
-            country: item["natn_kor_name"].as_str().unwrap_or("").to_string(),
-            exchange: item["ovrs_excg_cd"].as_str().unwrap_or("").to_string(),
-        }).collect();
+        let results: Vec<SearchResult> = arr
+            .iter()
+            .map(|item| SearchResult {
+                symbol: item["pdno"].as_str().unwrap_or("").to_string(),
+                name: item["prdt_eng_name"].as_str().unwrap_or("").to_string(),
+                country: item["natn_kor_name"].as_str().unwrap_or("").to_string(),
+                exchange: item["ovrs_excg_cd"].as_str().unwrap_or("").to_string(),
+            })
+            .collect();
 
         assert_eq!(results.len(), 1);
         assert_eq!(results[0].symbol, "AAPL");

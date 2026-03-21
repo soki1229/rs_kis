@@ -1,13 +1,14 @@
 use rust_decimal::Decimal;
-use std::str::FromStr;
 use serde_json::Value;
+use std::str::FromStr;
 
-use crate::{KisConfig, KisError};
 use crate::rest::http::{execute, RequestParams};
 use crate::rest::overseas::types::split_account;
+use crate::{KisConfig, KisError};
 
 fn parse_decimal(v: &Value, key: &str) -> Decimal {
-    v[key].as_str()
+    v[key]
+        .as_str()
         .and_then(|s| Decimal::from_str(s).ok())
         .unwrap_or(Decimal::ZERO)
 }
@@ -39,7 +40,11 @@ pub async fn balance(
     config: &KisConfig,
     token: &str,
 ) -> Result<BalanceResponse, KisError> {
-    let tr_id = if config.mock { "VTTS3012R" } else { "TTTS3012R" };
+    let tr_id = if config.mock {
+        "VTTS3012R"
+    } else {
+        "TTTS3012R"
+    };
     let (cano, acnt_prdt_cd) = split_account(&config.account_num);
 
     let query = serde_json::json!({
@@ -62,7 +67,8 @@ pub async fn balance(
             query: Some(&query),
             body: None,
         },
-    ).await?;
+    )
+    .await?;
 
     let items = resp["output1"]
         .as_array()
@@ -99,16 +105,21 @@ mod tests {
         let json = include_str!("../../../../tests/fixtures/overseas/inquiry/balance.json");
         let v: Value = serde_json::from_str(json).unwrap();
 
-        let items: Vec<BalanceItem> = v["output1"].as_array().unwrap().iter().map(|item| BalanceItem {
-            symbol: item["PDNO"].as_str().unwrap().to_string(),
-            name: item["PRDT_NAME"].as_str().unwrap().to_string(),
-            exchange: item["OVRS_EXCG_CD"].as_str().unwrap().to_string(),
-            qty: parse_decimal(item, "OVRS_CBLC_QTY"),
-            avg_price: parse_decimal(item, "PCHS_AVG_PRIC"),
-            eval_amount: parse_decimal(item, "OVRS_STCK_EVLU_AMT"),
-            unrealized_pnl: parse_decimal(item, "FRCR_EVLU_PFLS_AMT"),
-            pnl_rate: parse_decimal(item, "EVLU_PFLS_RT"),
-        }).collect();
+        let items: Vec<BalanceItem> = v["output1"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|item| BalanceItem {
+                symbol: item["PDNO"].as_str().unwrap().to_string(),
+                name: item["PRDT_NAME"].as_str().unwrap().to_string(),
+                exchange: item["OVRS_EXCG_CD"].as_str().unwrap().to_string(),
+                qty: parse_decimal(item, "OVRS_CBLC_QTY"),
+                avg_price: parse_decimal(item, "PCHS_AVG_PRIC"),
+                eval_amount: parse_decimal(item, "OVRS_STCK_EVLU_AMT"),
+                unrealized_pnl: parse_decimal(item, "FRCR_EVLU_PFLS_AMT"),
+                pnl_rate: parse_decimal(item, "EVLU_PFLS_RT"),
+            })
+            .collect();
 
         assert_eq!(items.len(), 2);
         assert_eq!(items[0].symbol, "AAPL");

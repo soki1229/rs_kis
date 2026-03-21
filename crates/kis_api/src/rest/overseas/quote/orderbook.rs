@@ -1,11 +1,11 @@
 use reqwest::Method;
 use rust_decimal::Decimal;
+use serde_json::{json, Value};
 use std::str::FromStr;
-use serde_json::{Value, json};
 
-use crate::{KisConfig, KisError};
 use crate::rest::http::{execute, RequestParams};
 use crate::rest::overseas::types::Exchange;
+use crate::{KisConfig, KisError};
 
 /// 호가 단계
 #[derive(Debug, Clone)]
@@ -83,7 +83,11 @@ pub async fn orderbook(
         });
     }
 
-    Ok(OrderbookResponse { symbol: symbol_str, last, levels })
+    Ok(OrderbookResponse {
+        symbol: symbol_str,
+        last,
+        levels,
+    })
 }
 
 #[cfg(test)]

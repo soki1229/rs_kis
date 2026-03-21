@@ -3,7 +3,15 @@ use std::fmt;
 /// 해외 거래소 코드
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Exchange {
-    NASD, NYSE, AMEX, SEHK, SHAA, SZAA, TKSE, HASE, VNSE,
+    NASD,
+    NYSE,
+    AMEX,
+    SEHK,
+    SHAA,
+    SZAA,
+    TKSE,
+    HASE,
+    VNSE,
     Other(String),
 }
 
@@ -37,7 +45,7 @@ impl From<&str> for Exchange {
             "TKSE" => Exchange::TKSE,
             "HASE" => Exchange::HASE,
             "VNSE" => Exchange::VNSE,
-            other  => Exchange::Other(other.to_string()),
+            other => Exchange::Other(other.to_string()),
         }
     }
 }
@@ -75,7 +83,7 @@ pub enum OrderSide {
 impl fmt::Display for OrderSide {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            OrderSide::Buy  => write!(f, "Buy"),
+            OrderSide::Buy => write!(f, "Buy"),
             OrderSide::Sell => write!(f, "Sell"),
         }
     }
@@ -94,11 +102,11 @@ pub enum OrderType {
 impl OrderType {
     pub fn to_ord_dvsn(&self) -> &str {
         match self {
-            OrderType::Market      => "01",
-            OrderType::Limit       => "00",
-            OrderType::LimitAon    => "32",
+            OrderType::Market => "01",
+            OrderType::Limit => "00",
+            OrderType::LimitAon => "32",
             OrderType::MarketClose => "34",
-            OrderType::Other(s)    => s.as_str(),
+            OrderType::Other(s) => s.as_str(),
         }
     }
 }
@@ -118,30 +126,30 @@ pub fn split_account(account: &str) -> (&str, &str) {
 /// 주문 TR ID 반환
 pub fn order_tr_id(exchange: &Exchange, side: &OrderSide, mock: bool) -> &'static str {
     match (exchange, side, mock) {
-        (Exchange::NASD | Exchange::NYSE | Exchange::AMEX, OrderSide::Buy,  false) => "TTTT1002U",
-        (Exchange::NASD | Exchange::NYSE | Exchange::AMEX, OrderSide::Buy,  true)  => "VTTT1002U",
+        (Exchange::NASD | Exchange::NYSE | Exchange::AMEX, OrderSide::Buy, false) => "TTTT1002U",
+        (Exchange::NASD | Exchange::NYSE | Exchange::AMEX, OrderSide::Buy, true) => "VTTT1002U",
         (Exchange::NASD | Exchange::NYSE | Exchange::AMEX, OrderSide::Sell, false) => "TTTT1006U",
-        (Exchange::NASD | Exchange::NYSE | Exchange::AMEX, OrderSide::Sell, true)  => "VTTT1006U",
-        (Exchange::SEHK, OrderSide::Buy,  false) => "TTTS1002U",
-        (Exchange::SEHK, OrderSide::Buy,  true)  => "VTTS1002U",
+        (Exchange::NASD | Exchange::NYSE | Exchange::AMEX, OrderSide::Sell, true) => "VTTT1006U",
+        (Exchange::SEHK, OrderSide::Buy, false) => "TTTS1002U",
+        (Exchange::SEHK, OrderSide::Buy, true) => "VTTS1002U",
         (Exchange::SEHK, OrderSide::Sell, false) => "TTTS1001U",
-        (Exchange::SEHK, OrderSide::Sell, true)  => "VTTS1001U",
-        (Exchange::SHAA, OrderSide::Buy,  false) => "TTTS0202U",
-        (Exchange::SHAA, OrderSide::Buy,  true)  => "VTTS0202U",
+        (Exchange::SEHK, OrderSide::Sell, true) => "VTTS1001U",
+        (Exchange::SHAA, OrderSide::Buy, false) => "TTTS0202U",
+        (Exchange::SHAA, OrderSide::Buy, true) => "VTTS0202U",
         (Exchange::SHAA, OrderSide::Sell, false) => "TTTS1005U",
-        (Exchange::SHAA, OrderSide::Sell, true)  => "VTTS1005U",
-        (Exchange::SZAA, OrderSide::Buy,  false) => "TTTS0305U",
-        (Exchange::SZAA, OrderSide::Buy,  true)  => "VTTS0305U",
+        (Exchange::SHAA, OrderSide::Sell, true) => "VTTS1005U",
+        (Exchange::SZAA, OrderSide::Buy, false) => "TTTS0305U",
+        (Exchange::SZAA, OrderSide::Buy, true) => "VTTS0305U",
         (Exchange::SZAA, OrderSide::Sell, false) => "TTTS0304U",
-        (Exchange::SZAA, OrderSide::Sell, true)  => "VTTS0304U",
-        (Exchange::TKSE, OrderSide::Buy,  false) => "TTTS0308U",
-        (Exchange::TKSE, OrderSide::Buy,  true)  => "VTTS0308U",
+        (Exchange::SZAA, OrderSide::Sell, true) => "VTTS0304U",
+        (Exchange::TKSE, OrderSide::Buy, false) => "TTTS0308U",
+        (Exchange::TKSE, OrderSide::Buy, true) => "VTTS0308U",
         (Exchange::TKSE, OrderSide::Sell, false) => "TTTS0307U",
-        (Exchange::TKSE, OrderSide::Sell, true)  => "VTTS0307U",
-        (Exchange::HASE | Exchange::VNSE, OrderSide::Buy,  false) => "TTTS0311U",
-        (Exchange::HASE | Exchange::VNSE, OrderSide::Buy,  true)  => "VTTS0311U",
+        (Exchange::TKSE, OrderSide::Sell, true) => "VTTS0307U",
+        (Exchange::HASE | Exchange::VNSE, OrderSide::Buy, false) => "TTTS0311U",
+        (Exchange::HASE | Exchange::VNSE, OrderSide::Buy, true) => "VTTS0311U",
         (Exchange::HASE | Exchange::VNSE, OrderSide::Sell, false) => "TTTS0310U",
-        (Exchange::HASE | Exchange::VNSE, OrderSide::Sell, true)  => "VTTS0310U",
+        (Exchange::HASE | Exchange::VNSE, OrderSide::Sell, true) => "VTTS0310U",
         _ => "",
     }
 }
@@ -150,9 +158,9 @@ pub fn order_tr_id(exchange: &Exchange, side: &OrderSide, mock: bool) -> &'stati
 pub fn cancel_tr_id(exchange: &Exchange, mock: bool) -> &'static str {
     match (exchange, mock) {
         (Exchange::NASD | Exchange::NYSE | Exchange::AMEX, false) => "TTTT1004U",
-        (Exchange::NASD | Exchange::NYSE | Exchange::AMEX, true)  => "VTTT1004U",
+        (Exchange::NASD | Exchange::NYSE | Exchange::AMEX, true) => "VTTT1004U",
         (_, false) => "TTTS1003U",
-        (_, true)  => "VTTS1003U",
+        (_, true) => "VTTS1003U",
     }
 }
 
@@ -194,34 +202,58 @@ mod tests {
 
     #[test]
     fn order_tr_id_nasd_buy_real() {
-        assert_eq!(order_tr_id(&Exchange::NASD, &OrderSide::Buy, false), "TTTT1002U");
+        assert_eq!(
+            order_tr_id(&Exchange::NASD, &OrderSide::Buy, false),
+            "TTTT1002U"
+        );
     }
 
     #[test]
     fn order_tr_id_nasd_buy_vts() {
-        assert_eq!(order_tr_id(&Exchange::NASD, &OrderSide::Buy, true), "VTTT1002U");
+        assert_eq!(
+            order_tr_id(&Exchange::NASD, &OrderSide::Buy, true),
+            "VTTT1002U"
+        );
     }
 
     #[test]
     fn order_tr_id_nasd_sell_real() {
-        assert_eq!(order_tr_id(&Exchange::NASD, &OrderSide::Sell, false), "TTTT1006U");
+        assert_eq!(
+            order_tr_id(&Exchange::NASD, &OrderSide::Sell, false),
+            "TTTT1006U"
+        );
     }
 
     #[test]
     fn order_tr_id_nasd_sell_vts() {
-        assert_eq!(order_tr_id(&Exchange::NASD, &OrderSide::Sell, true), "VTTT1006U");
+        assert_eq!(
+            order_tr_id(&Exchange::NASD, &OrderSide::Sell, true),
+            "VTTT1006U"
+        );
     }
 
     #[test]
     fn order_tr_id_sehk() {
-        assert_eq!(order_tr_id(&Exchange::SEHK, &OrderSide::Buy,  false), "TTTS1002U");
-        assert_eq!(order_tr_id(&Exchange::SEHK, &OrderSide::Sell, false), "TTTS1001U");
-        assert_eq!(order_tr_id(&Exchange::SEHK, &OrderSide::Buy,  true),  "VTTS1002U");
+        assert_eq!(
+            order_tr_id(&Exchange::SEHK, &OrderSide::Buy, false),
+            "TTTS1002U"
+        );
+        assert_eq!(
+            order_tr_id(&Exchange::SEHK, &OrderSide::Sell, false),
+            "TTTS1001U"
+        );
+        assert_eq!(
+            order_tr_id(&Exchange::SEHK, &OrderSide::Buy, true),
+            "VTTS1002U"
+        );
     }
 
     #[test]
     fn order_tr_id_other_returns_empty() {
-        assert_eq!(order_tr_id(&Exchange::Other("XLON".to_string()), &OrderSide::Buy, false), "");
+        assert_eq!(
+            order_tr_id(&Exchange::Other("XLON".to_string()), &OrderSide::Buy, false),
+            ""
+        );
     }
 
     #[test]
@@ -239,7 +271,7 @@ mod tests {
     #[test]
     fn cancel_tr_id_non_us() {
         assert_eq!(cancel_tr_id(&Exchange::SEHK, false), "TTTS1003U");
-        assert_eq!(cancel_tr_id(&Exchange::SEHK, true),  "VTTS1003U");
+        assert_eq!(cancel_tr_id(&Exchange::SEHK, true), "VTTS1003U");
         assert_eq!(cancel_tr_id(&Exchange::TKSE, false), "TTTS1003U");
     }
 

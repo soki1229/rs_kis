@@ -3,7 +3,7 @@ use rust_decimal::Decimal;
 use serde_json::Value;
 
 use crate::rest::http::{execute, RequestParams};
-use crate::rest::overseas::types::{Exchange, OrderSide, OrderType, order_tr_id, split_account};
+use crate::rest::overseas::types::{order_tr_id, split_account, Exchange, OrderSide, OrderType};
 use crate::{KisConfig, KisError};
 
 /// 해외주식 주문 요청
@@ -48,7 +48,11 @@ fn parse_place_order_response(v: &Value) -> Result<PlaceOrderResponse, KisError>
             message: "ORD_TMD missing".into(),
         })?
         .to_string();
-    Ok(PlaceOrderResponse { order_date, order_org_no, order_time })
+    Ok(PlaceOrderResponse {
+        order_date,
+        order_org_no,
+        order_time,
+    })
 }
 
 /// 해외주식 주문 실행
@@ -61,7 +65,8 @@ pub async fn place_order(
     let tr_id = order_tr_id(&req.exchange, &req.side, config.mock);
     let (cano, acnt_prdt_cd) = split_account(&config.account_num);
 
-    let price_str = req.price
+    let price_str = req
+        .price
         .map(|p| p.to_string())
         .unwrap_or_else(|| "0".to_string());
 

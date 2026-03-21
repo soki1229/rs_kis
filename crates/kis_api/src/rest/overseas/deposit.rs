@@ -1,8 +1,8 @@
 use rust_decimal::Decimal;
 use serde::Deserialize;
 
-use crate::{KisConfig, KisError};
 use crate::rest::http::{execute, RequestParams};
+use crate::{KisConfig, KisError};
 
 /// 예수금 상세 현황 응답
 #[derive(Debug, Deserialize)]
@@ -31,7 +31,11 @@ pub async fn check_deposit(
         "INQR_DVSN_2": ""
     });
 
-    let tr_id = if config.mock { "VTTS3012R" } else { "TTTS3012R" };
+    let tr_id = if config.mock {
+        "VTTS3012R"
+    } else {
+        "TTTS3012R"
+    };
 
     execute(
         http,

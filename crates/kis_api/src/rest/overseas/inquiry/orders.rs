@@ -1,13 +1,14 @@
 use rust_decimal::Decimal;
-use std::str::FromStr;
 use serde_json::Value;
+use std::str::FromStr;
 
-use crate::{KisConfig, KisError};
 use crate::rest::http::{execute, RequestParams};
 use crate::rest::overseas::types::split_account;
+use crate::{KisConfig, KisError};
 
 fn parse_decimal(v: &Value, key: &str) -> Decimal {
-    v[key].as_str()
+    v[key]
+        .as_str()
         .and_then(|s| Decimal::from_str(s).ok())
         .unwrap_or(Decimal::ZERO)
 }
@@ -72,7 +73,8 @@ pub async fn unfilled_orders(
             query: Some(&query),
             body: None,
         },
-    ).await?;
+    )
+    .await?;
 
     let orders = resp["output"]
         .as_array()
@@ -101,7 +103,11 @@ pub async fn order_history(
     token: &str,
     req: OrderHistoryRequest,
 ) -> Result<Vec<OrderHistoryItem>, KisError> {
-    let tr_id = if config.mock { "VTTS3035R" } else { "TTTS3035R" };
+    let tr_id = if config.mock {
+        "VTTS3035R"
+    } else {
+        "TTTS3035R"
+    };
     let (cano, acnt_prdt_cd) = split_account(&config.account_num);
 
     let query = serde_json::json!({
@@ -130,7 +136,8 @@ pub async fn order_history(
             query: Some(&query),
             body: None,
         },
-    ).await?;
+    )
+    .await?;
 
     let items = resp["output"]
         .as_array()
@@ -161,18 +168,23 @@ mod tests {
         let json = include_str!("../../../../tests/fixtures/overseas/inquiry/unfilled_orders.json");
         let v: Value = serde_json::from_str(json).unwrap();
 
-        let orders: Vec<UnfilledOrder> = v["output"].as_array().unwrap().iter().map(|item| UnfilledOrder {
-            order_no: item["ODNO"].as_str().unwrap().to_string(),
-            orig_order_no: item["ORGN_ODNO"].as_str().unwrap_or("").to_string(),
-            symbol: item["PDNO"].as_str().unwrap().to_string(),
-            name: item["PRDT_NAME"].as_str().unwrap().to_string(),
-            exchange: item["OVRS_EXCG_CD"].as_str().unwrap().to_string(),
-            side_cd: item["SLL_BUY_DVSN_CD"].as_str().unwrap().to_string(),
-            qty: parse_decimal(item, "ORD_QTY"),
-            price: parse_decimal(item, "OVRS_ORD_UNPR"),
-            filled_qty: parse_decimal(item, "FT_CCLD_QTY"),
-            remaining_qty: parse_decimal(item, "RMND_QTY"),
-        }).collect();
+        let orders: Vec<UnfilledOrder> = v["output"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|item| UnfilledOrder {
+                order_no: item["ODNO"].as_str().unwrap().to_string(),
+                orig_order_no: item["ORGN_ODNO"].as_str().unwrap_or("").to_string(),
+                symbol: item["PDNO"].as_str().unwrap().to_string(),
+                name: item["PRDT_NAME"].as_str().unwrap().to_string(),
+                exchange: item["OVRS_EXCG_CD"].as_str().unwrap().to_string(),
+                side_cd: item["SLL_BUY_DVSN_CD"].as_str().unwrap().to_string(),
+                qty: parse_decimal(item, "ORD_QTY"),
+                price: parse_decimal(item, "OVRS_ORD_UNPR"),
+                filled_qty: parse_decimal(item, "FT_CCLD_QTY"),
+                remaining_qty: parse_decimal(item, "RMND_QTY"),
+            })
+            .collect();
 
         assert_eq!(orders.len(), 1);
         assert_eq!(orders[0].order_no, "0000117057");
@@ -189,17 +201,22 @@ mod tests {
         let json = include_str!("../../../../tests/fixtures/overseas/inquiry/order_history.json");
         let v: Value = serde_json::from_str(json).unwrap();
 
-        let items: Vec<OrderHistoryItem> = v["output"].as_array().unwrap().iter().map(|item| OrderHistoryItem {
-            order_no: item["ODNO"].as_str().unwrap().to_string(),
-            symbol: item["PDNO"].as_str().unwrap().to_string(),
-            name: item["PRDT_NAME"].as_str().unwrap().to_string(),
-            side_cd: item["SLL_BUY_DVSN_CD"].as_str().unwrap().to_string(),
-            qty: parse_decimal(item, "ORD_QTY"),
-            filled_qty: parse_decimal(item, "CCLD_QTY"),
-            filled_price: parse_decimal(item, "CCLD_UNPR"),
-            filled_date: item["CCLD_DT"].as_str().unwrap().to_string(),
-            filled_time: item["CCLD_TM"].as_str().unwrap().to_string(),
-        }).collect();
+        let items: Vec<OrderHistoryItem> = v["output"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|item| OrderHistoryItem {
+                order_no: item["ODNO"].as_str().unwrap().to_string(),
+                symbol: item["PDNO"].as_str().unwrap().to_string(),
+                name: item["PRDT_NAME"].as_str().unwrap().to_string(),
+                side_cd: item["SLL_BUY_DVSN_CD"].as_str().unwrap().to_string(),
+                qty: parse_decimal(item, "ORD_QTY"),
+                filled_qty: parse_decimal(item, "CCLD_QTY"),
+                filled_price: parse_decimal(item, "CCLD_UNPR"),
+                filled_date: item["CCLD_DT"].as_str().unwrap().to_string(),
+                filled_time: item["CCLD_TM"].as_str().unwrap().to_string(),
+            })
+            .collect();
 
         assert_eq!(items.len(), 1);
         assert_eq!(items[0].order_no, "0000117001");

@@ -1,5 +1,5 @@
-use rust_decimal::Decimal;
 use crate::types::OrderRequest;
+use rust_decimal::Decimal;
 
 #[derive(Debug, Clone)]
 pub enum BotCommand {
@@ -15,8 +15,8 @@ pub enum BotCommand {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use rust_decimal_macros::dec;
     use crate::types::{OrderRequest, Side};
+    use rust_decimal_macros::dec;
 
     #[test]
     fn bot_command_is_clone() {

@@ -1,16 +1,16 @@
 use reqwest::Method;
 use rust_decimal::Decimal;
+use serde_json::{json, Value};
 use std::str::FromStr;
-use serde_json::{Value, json};
 
-use crate::{KisConfig, KisError};
 use crate::rest::http::{execute, RequestParams};
 use crate::rest::overseas::types::Exchange;
+use crate::{KisConfig, KisError};
 
 /// 일봉/주봉/월봉 캔들
 #[derive(Debug, Clone)]
 pub struct CandleBar {
-    pub date: String,    // YYYYMMDD
+    pub date: String, // YYYYMMDD
     pub open: Decimal,
     pub high: Decimal,
     pub low: Decimal,
@@ -21,8 +21,8 @@ pub struct CandleBar {
 /// 분봉 캔들
 #[derive(Debug, Clone)]
 pub struct MinuteBar {
-    pub date: String,   // YYYYMMDD
-    pub time: String,   // HHmmss
+    pub date: String, // YYYYMMDD
+    pub time: String, // HHmmss
     pub open: Decimal,
     pub high: Decimal,
     pub low: Decimal,
@@ -33,16 +33,16 @@ pub struct MinuteBar {
 /// 일/주/월봉 조회 주기
 #[derive(Debug, Clone)]
 pub enum ChartPeriod {
-    Daily,    // "0"
-    Weekly,   // "1"
-    Monthly,  // "2"
+    Daily,   // "0"
+    Weekly,  // "1"
+    Monthly, // "2"
 }
 
 impl ChartPeriod {
     pub fn as_code(&self) -> &str {
         match self {
-            ChartPeriod::Daily   => "0",
-            ChartPeriod::Weekly  => "1",
+            ChartPeriod::Daily => "0",
+            ChartPeriod::Weekly => "1",
             ChartPeriod::Monthly => "2",
         }
     }
@@ -62,7 +62,7 @@ pub struct DailyChartRequest {
 pub struct MinuteChartRequest {
     pub symbol: String,
     pub exchange: Exchange,
-    pub minutes: u32,   // 1, 5, 10, 30, 60
+    pub minutes: u32, // 1, 5, 10, 30, 60
 }
 
 fn parse_decimal(v: &Value, field: &str) -> Result<Decimal, KisError> {
@@ -112,16 +112,18 @@ pub async fn daily_chart(
         message: "output2 is not an array".to_string(),
     })?;
 
-    arr.iter().map(|item| {
-        Ok(CandleBar {
-            date: item["xymd"].as_str().unwrap_or("").to_string(),
-            open: parse_decimal(item, "open")?,
-            high: parse_decimal(item, "high")?,
-            low: parse_decimal(item, "low")?,
-            close: parse_decimal(item, "clos")?,
-            volume: parse_decimal(item, "tvol")?,
+    arr.iter()
+        .map(|item| {
+            Ok(CandleBar {
+                date: item["xymd"].as_str().unwrap_or("").to_string(),
+                open: parse_decimal(item, "open")?,
+                high: parse_decimal(item, "high")?,
+                low: parse_decimal(item, "low")?,
+                close: parse_decimal(item, "clos")?,
+                volume: parse_decimal(item, "tvol")?,
+            })
         })
-    }).collect()
+        .collect()
 }
 
 /// 해외주식 분봉 조회
@@ -162,17 +164,19 @@ pub async fn minute_chart(
         message: "output2 is not an array".to_string(),
     })?;
 
-    arr.iter().map(|item| {
-        Ok(MinuteBar {
-            date: item["kymd"].as_str().unwrap_or("").to_string(),
-            time: item["khms"].as_str().unwrap_or("").to_string(),
-            open: parse_decimal(item, "open")?,
-            high: parse_decimal(item, "high")?,
-            low: parse_decimal(item, "low")?,
-            close: parse_decimal(item, "last")?,
-            volume: parse_decimal(item, "tvol")?,
+    arr.iter()
+        .map(|item| {
+            Ok(MinuteBar {
+                date: item["kymd"].as_str().unwrap_or("").to_string(),
+                time: item["khms"].as_str().unwrap_or("").to_string(),
+                open: parse_decimal(item, "open")?,
+                high: parse_decimal(item, "high")?,
+                low: parse_decimal(item, "low")?,
+                close: parse_decimal(item, "last")?,
+                volume: parse_decimal(item, "tvol")?,
+            })
         })
-    }).collect()
+        .collect()
 }
 
 #[cfg(test)]
@@ -202,14 +206,17 @@ mod tests {
     fn parse_daily_chart_response() {
         let v = load_daily_fixture();
         let arr = v["output2"].as_array().unwrap();
-        let bars: Vec<CandleBar> = arr.iter().map(|item| CandleBar {
-            date: item["xymd"].as_str().unwrap_or("").to_string(),
-            open: parse_decimal(item, "open").unwrap(),
-            high: parse_decimal(item, "high").unwrap(),
-            low: parse_decimal(item, "low").unwrap(),
-            close: parse_decimal(item, "clos").unwrap(),
-            volume: parse_decimal(item, "tvol").unwrap(),
-        }).collect();
+        let bars: Vec<CandleBar> = arr
+            .iter()
+            .map(|item| CandleBar {
+                date: item["xymd"].as_str().unwrap_or("").to_string(),
+                open: parse_decimal(item, "open").unwrap(),
+                high: parse_decimal(item, "high").unwrap(),
+                low: parse_decimal(item, "low").unwrap(),
+                close: parse_decimal(item, "clos").unwrap(),
+                volume: parse_decimal(item, "tvol").unwrap(),
+            })
+            .collect();
 
         assert_eq!(bars.len(), 2);
         assert_eq!(bars[0].date, "20260321");
@@ -227,15 +234,18 @@ mod tests {
     fn parse_minute_chart_response() {
         let v = load_minute_fixture();
         let arr = v["output2"].as_array().unwrap();
-        let bars: Vec<MinuteBar> = arr.iter().map(|item| MinuteBar {
-            date: item["kymd"].as_str().unwrap_or("").to_string(),
-            time: item["khms"].as_str().unwrap_or("").to_string(),
-            open: parse_decimal(item, "open").unwrap(),
-            high: parse_decimal(item, "high").unwrap(),
-            low: parse_decimal(item, "low").unwrap(),
-            close: parse_decimal(item, "last").unwrap(),
-            volume: parse_decimal(item, "tvol").unwrap(),
-        }).collect();
+        let bars: Vec<MinuteBar> = arr
+            .iter()
+            .map(|item| MinuteBar {
+                date: item["kymd"].as_str().unwrap_or("").to_string(),
+                time: item["khms"].as_str().unwrap_or("").to_string(),
+                open: parse_decimal(item, "open").unwrap(),
+                high: parse_decimal(item, "high").unwrap(),
+                low: parse_decimal(item, "low").unwrap(),
+                close: parse_decimal(item, "last").unwrap(),
+                volume: parse_decimal(item, "tvol").unwrap(),
+            })
+            .collect();
 
         assert_eq!(bars.len(), 1);
         assert_eq!(bars[0].date, "20260321");

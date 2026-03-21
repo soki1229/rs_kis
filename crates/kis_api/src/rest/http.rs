@@ -6,6 +6,7 @@ use crate::{KisConfig, KisError};
 
 /// KIS REST API 응답 공통 래퍼
 #[derive(Debug, serde::Deserialize)]
+#[allow(dead_code)]
 struct KisResponse<T> {
     #[serde(rename = "rt_cd")]
     result_code: String,
@@ -103,10 +104,7 @@ where
 }
 
 /// 승인키(approval key) 발급 — WebSocket 인증에 사용
-pub async fn fetch_approval_key(
-    client: &Client,
-    config: &KisConfig,
-) -> Result<String, KisError> {
+pub async fn fetch_approval_key(client: &Client, config: &KisConfig) -> Result<String, KisError> {
     let url = format!("{}/oauth2/Approval", config.rest_url);
     let body = serde_json::json!({
         "grant_type": "client_credentials",
@@ -122,7 +120,10 @@ pub async fn fetch_approval_key(
         .map_err(KisError::Network)?;
 
     if !resp.status().is_success() {
-        return Err(KisError::Auth(format!("approval key fetch failed: {}", resp.status())));
+        return Err(KisError::Auth(format!(
+            "approval key fetch failed: {}",
+            resp.status()
+        )));
     }
 
     let v: Value = resp.json().await.map_err(KisError::Network)?;
@@ -150,10 +151,7 @@ mod tests {
     #[test]
     fn execute_fn_exists() {
         // 타입 시그니처 컴파일 확인 (실제 호출은 통합 테스트에서)
-        fn assert_execute_signature<T: serde::de::DeserializeOwned>()
-        where
-            T: serde::de::DeserializeOwned,
-        {
+        fn assert_execute_signature<T: serde::de::DeserializeOwned>() {
             let _f = execute::<T>;
             let _ = _f; // suppress unused warning
         }

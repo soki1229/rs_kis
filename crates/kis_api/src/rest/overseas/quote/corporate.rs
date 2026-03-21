@@ -1,11 +1,11 @@
 use reqwest::Method;
 use rust_decimal::Decimal;
+use serde_json::{json, Value};
 use std::str::FromStr;
-use serde_json::{Value, json};
 
-use crate::{KisConfig, KisError};
 use crate::rest::http::{execute, RequestParams};
 use crate::rest::overseas::types::Exchange;
+use crate::{KisConfig, KisError};
 
 /// 뉴스 항목
 #[derive(Debug, Clone)]
@@ -18,7 +18,7 @@ pub struct NewsItem {
 /// 배당 항목
 #[derive(Debug, Clone)]
 pub struct DividendItem {
-    pub record_date: String,  // YYYYMMDD
+    pub record_date: String, // YYYYMMDD
     pub kind: String,
     pub amount: Decimal,
     pub pay_date: String,
@@ -27,8 +27,8 @@ pub struct DividendItem {
 /// 휴장일 항목
 #[derive(Debug, Clone)]
 pub struct Holiday {
-    pub date: String,       // YYYYMMDD
-    pub weekday: String,    // 6=토, 7=일
+    pub date: String,    // YYYYMMDD
+    pub weekday: String, // 6=토, 7=일
     pub name: String,
 }
 
@@ -74,11 +74,17 @@ pub async fn news(
         message: "output is not an array".to_string(),
     })?;
 
-    Ok(arr.iter().map(|item| NewsItem {
-        source: item["news_ofer_entp_cd"].as_str().unwrap_or("").to_string(),
-        datetime: item["news_datm"].as_str().unwrap_or("").to_string(),
-        title: item["hts_pbls_titl_cntt"].as_str().unwrap_or("").to_string(),
-    }).collect())
+    Ok(arr
+        .iter()
+        .map(|item| NewsItem {
+            source: item["news_ofer_entp_cd"].as_str().unwrap_or("").to_string(),
+            datetime: item["news_datm"].as_str().unwrap_or("").to_string(),
+            title: item["hts_pbls_titl_cntt"]
+                .as_str()
+                .unwrap_or("")
+                .to_string(),
+        })
+        .collect())
 }
 
 /// 해외주식 배당 조회
@@ -114,14 +120,16 @@ pub async fn dividend(
         message: "output is not an array".to_string(),
     })?;
 
-    arr.iter().map(|item| {
-        Ok(DividendItem {
-            record_date: item["bass_dt"].as_str().unwrap_or("").to_string(),
-            kind: item["rght_clsf_name"].as_str().unwrap_or("").to_string(),
-            amount: parse_decimal(item, "dvdn_amt")?,
-            pay_date: item["pay_dt"].as_str().unwrap_or("").to_string(),
+    arr.iter()
+        .map(|item| {
+            Ok(DividendItem {
+                record_date: item["bass_dt"].as_str().unwrap_or("").to_string(),
+                kind: item["rght_clsf_name"].as_str().unwrap_or("").to_string(),
+                amount: parse_decimal(item, "dvdn_amt")?,
+                pay_date: item["pay_dt"].as_str().unwrap_or("").to_string(),
+            })
         })
-    }).collect()
+        .collect()
 }
 
 /// 해외주식 휴장일 조회
@@ -156,11 +164,14 @@ pub async fn holidays(
         message: "output is not an array".to_string(),
     })?;
 
-    Ok(arr.iter().map(|item| Holiday {
-        date: item["bass_dt"].as_str().unwrap_or("").to_string(),
-        weekday: item["wday_dvsn_cd"].as_str().unwrap_or("").to_string(),
-        name: item["dynm_dvsn_name"].as_str().unwrap_or("").to_string(),
-    }).collect())
+    Ok(arr
+        .iter()
+        .map(|item| Holiday {
+            date: item["bass_dt"].as_str().unwrap_or("").to_string(),
+            weekday: item["wday_dvsn_cd"].as_str().unwrap_or("").to_string(),
+            name: item["dynm_dvsn_name"].as_str().unwrap_or("").to_string(),
+        })
+        .collect())
 }
 
 #[cfg(test)]
@@ -199,11 +210,17 @@ mod tests {
     fn parse_news_response() {
         let v = load_news_fixture();
         let arr = v["output"].as_array().unwrap();
-        let items: Vec<NewsItem> = arr.iter().map(|item| NewsItem {
-            source: item["news_ofer_entp_cd"].as_str().unwrap_or("").to_string(),
-            datetime: item["news_datm"].as_str().unwrap_or("").to_string(),
-            title: item["hts_pbls_titl_cntt"].as_str().unwrap_or("").to_string(),
-        }).collect();
+        let items: Vec<NewsItem> = arr
+            .iter()
+            .map(|item| NewsItem {
+                source: item["news_ofer_entp_cd"].as_str().unwrap_or("").to_string(),
+                datetime: item["news_datm"].as_str().unwrap_or("").to_string(),
+                title: item["hts_pbls_titl_cntt"]
+                    .as_str()
+                    .unwrap_or("")
+                    .to_string(),
+            })
+            .collect();
 
         assert_eq!(items.len(), 1);
         assert_eq!(items[0].source, "REUTERS");
@@ -215,12 +232,15 @@ mod tests {
     fn parse_dividend_response() {
         let v = load_dividend_fixture();
         let arr = v["output"].as_array().unwrap();
-        let items: Vec<DividendItem> = arr.iter().map(|item| DividendItem {
-            record_date: item["bass_dt"].as_str().unwrap_or("").to_string(),
-            kind: item["rght_clsf_name"].as_str().unwrap_or("").to_string(),
-            amount: parse_decimal(item, "dvdn_amt").unwrap(),
-            pay_date: item["pay_dt"].as_str().unwrap_or("").to_string(),
-        }).collect();
+        let items: Vec<DividendItem> = arr
+            .iter()
+            .map(|item| DividendItem {
+                record_date: item["bass_dt"].as_str().unwrap_or("").to_string(),
+                kind: item["rght_clsf_name"].as_str().unwrap_or("").to_string(),
+                amount: parse_decimal(item, "dvdn_amt").unwrap(),
+                pay_date: item["pay_dt"].as_str().unwrap_or("").to_string(),
+            })
+            .collect();
 
         assert_eq!(items.len(), 1);
         assert_eq!(items[0].record_date, "20260301");
@@ -233,11 +253,14 @@ mod tests {
     fn parse_holidays_response() {
         let v = load_holidays_fixture();
         let arr = v["output"].as_array().unwrap();
-        let items: Vec<Holiday> = arr.iter().map(|item| Holiday {
-            date: item["bass_dt"].as_str().unwrap_or("").to_string(),
-            weekday: item["wday_dvsn_cd"].as_str().unwrap_or("").to_string(),
-            name: item["dynm_dvsn_name"].as_str().unwrap_or("").to_string(),
-        }).collect();
+        let items: Vec<Holiday> = arr
+            .iter()
+            .map(|item| Holiday {
+                date: item["bass_dt"].as_str().unwrap_or("").to_string(),
+                weekday: item["wday_dvsn_cd"].as_str().unwrap_or("").to_string(),
+                name: item["dynm_dvsn_name"].as_str().unwrap_or("").to_string(),
+            })
+            .collect();
 
         assert_eq!(items.len(), 2);
         assert_eq!(items[0].date, "20260101");

@@ -116,9 +116,15 @@ impl KisConfigBuilder {
     }
 
     pub fn build(self) -> Result<KisConfig, crate::KisError> {
-        let app_key = self.app_key.ok_or_else(|| crate::KisError::Auth("app_key required".into()))?;
-        let app_secret = self.app_secret.ok_or_else(|| crate::KisError::Auth("app_secret required".into()))?;
-        let account_num = self.account_num.ok_or_else(|| crate::KisError::Auth("account_num required".into()))?;
+        let app_key = self
+            .app_key
+            .ok_or_else(|| crate::KisError::Auth("app_key required".into()))?;
+        let app_secret = self
+            .app_secret
+            .ok_or_else(|| crate::KisError::Auth("app_secret required".into()))?;
+        let account_num = self
+            .account_num
+            .ok_or_else(|| crate::KisError::Auth("account_num required".into()))?;
 
         let (default_rest, default_ws) = if self.mock {
             (VTS_REST_URL, VTS_WS_URL)
@@ -168,7 +174,9 @@ mod tests {
     #[test]
     fn builder_sets_production_urls_when_not_mock() {
         let cfg = KisConfig::builder()
-            .app_key("k").app_secret("s").account_num("a")
+            .app_key("k")
+            .app_secret("s")
+            .account_num("a")
             .build()
             .unwrap();
         assert!(cfg.rest_url.contains("openapi.koreainvestment.com"));
@@ -178,7 +186,9 @@ mod tests {
     #[test]
     fn builder_allows_url_override() {
         let cfg = KisConfig::builder()
-            .app_key("k").app_secret("s").account_num("a")
+            .app_key("k")
+            .app_secret("s")
+            .account_num("a")
             .rest_url("https://custom.example.com")
             .ws_url("ws://custom.example.com:9999")
             .build()
@@ -203,7 +213,9 @@ mod tests {
         // from_env_inner 직접 호출 시 TOKEN_CACHE_PATH 없으면 None
         // (from_env는 env var 필요하므로 builder 경유 테스트)
         let cfg = KisConfig::builder()
-            .app_key("k").app_secret("s").account_num("a")
+            .app_key("k")
+            .app_secret("s")
+            .account_num("a")
             .build()
             .unwrap();
         // token_cache_path는 기본값(~/.config/kis_api/token.json)으로 설정됨

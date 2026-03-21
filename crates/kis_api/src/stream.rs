@@ -47,12 +47,16 @@ struct StreamInner {
     subscriptions: RwLock<HashMap<SubscriptionKey, ()>>,
     cancel: CancellationToken,
     /// WS writer (shared for sending subscribe/unsubscribe messages)
-    ws_tx: Mutex<Option<futures_util::stream::SplitSink<
-        tokio_tungstenite::WebSocketStream<
-            tokio_tungstenite::MaybeTlsStream<tokio::net::TcpStream>
+    ws_tx: Mutex<
+        Option<
+            futures_util::stream::SplitSink<
+                tokio_tungstenite::WebSocketStream<
+                    tokio_tungstenite::MaybeTlsStream<tokio::net::TcpStream>,
+                >,
+                tokio_tungstenite::tungstenite::Message,
+            >,
         >,
-        tokio_tungstenite::tungstenite::Message
-    >>>,
+    >,
 }
 
 impl KisStream {
@@ -198,7 +202,8 @@ impl KisStream {
 
         let mut guard = self.inner.ws_tx.lock().await;
         if let Some(ref mut writer) = *guard {
-            writer.send(Message::Text(text.into()))
+            writer
+                .send(Message::Text(text))
                 .await
                 .map_err(|e| KisError::WebSocket(e.to_string()))?;
         }

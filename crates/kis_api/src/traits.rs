@@ -1,5 +1,5 @@
-use async_trait::async_trait;
 use crate::{KisError, KisStream};
+use async_trait::async_trait;
 
 /// REST API 클라이언트 마커 트레이트
 /// 실제 메서드는 KisClient impl에서 직접 구현되며,
