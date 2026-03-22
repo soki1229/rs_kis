@@ -421,7 +421,7 @@ mod tests {
     }
 }
 
-#[cfg(test)]
+#[cfg(any(test, feature = "test-utils"))]
 impl KisStream {
     /// 테스트용 (KisStream, broadcast::Sender<KisEvent>) 쌍 반환.
     /// Sender를 통해 테스트 코드에서 직접 이벤트 또는 drop으로 StreamClosed를 주입 가능.
