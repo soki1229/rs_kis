@@ -113,123 +113,19 @@ git commit -m "feat(bot): add all foundation dependencies"
 
 ---
 
-## Task 2: error.rs — BotError
+## Task 2: types.rs — 핵심 도메인 타입 (error.rs보다 먼저 구현)
 
-**Files:**
-- Create: `crates/bot/src/error.rs`
-- Modify: `crates/bot/src/lib.rs`
-
-- [ ] **Step 1: 실패할 테스트 작성 (types 포함 사전 작성)**
-
-`crates/bot/src/lib.rs` 에 추가:
-```rust
-pub mod error;
-```
-
-`crates/bot/src/error.rs` 생성:
-```rust
-// placeholder to make test compile
-```
-
-`crates/bot/tests/test_error.rs`:
-```rust
-use kis_bot::error::BotError;
-
-#[test]
-fn bot_error_is_send_sync() {
-    fn assert_send_sync<T: Send + Sync>() {}
-    assert_send_sync::<BotError>();
-}
-
-#[test]
-fn bot_error_display() {
-    let e = BotError::Config("missing key".to_string());
-    assert!(e.to_string().contains("missing key"));
-}
-```
-
-- [ ] **Step 2: 테스트 실패 확인**
-
-```bash
-cargo test -p kis_bot --test test_error 2>&1 | head -20
-```
-
-Expected: compile error (BotError not defined)
-
-- [ ] **Step 3: BotError 구현**
-
-`crates/bot/src/error.rs`:
-```rust
-use thiserror::Error;
-use crate::types::KillSwitchMode;
-
-#[derive(Debug, Error)]
-pub enum BotError {
-    #[error("Config error: {0}")]
-    Config(String),
-
-    #[error("Database error: {0}")]
-    Db(#[from] sqlx::Error),
-
-    #[error("Database migration error: {0}")]
-    Migration(#[from] sqlx::migrate::MigrateError),
-
-    #[error("KIS API error: {0}")]
-    KisApi(#[from] kis_api::KisError),
-
-    #[error("HTTP error: {0}")]
-    Http(#[from] reqwest::Error),
-
-    #[error("JSON error: {0}")]
-    Json(#[from] serde_json::Error),
-
-    #[error("IO error: {0}")]
-    Io(#[from] std::io::Error),
-
-    #[error("Kill switch active: {mode:?}")]
-    KillSwitchActive { mode: KillSwitchMode },
-
-    #[error("Recovery check failed: {reason}")]
-    RecoveryFailed { reason: String },
-
-    #[error("LLM error: {0}")]
-    Llm(String),
-
-    #[error("Risk guard blocked: {reason}")]
-    RiskBlocked { reason: String },
-}
-```
-
-주의: `KillSwitchMode`는 다음 Task에서 정의할 types.rs를 참조. 이 순서 때문에 먼저 `types.rs`의 `KillSwitchMode`만 정의하고 error.rs가 참조하도록 한다.
-
-- [ ] **Step 4: 테스트 통과 확인**
-
-```bash
-cargo test -p kis_bot --test test_error
-```
-
-Expected: 2 tests pass
-
-- [ ] **Step 5: Commit**
-
-```bash
-git add crates/bot/src/error.rs crates/bot/src/lib.rs crates/bot/tests/test_error.rs
-git commit -m "feat(bot): add BotError with all From impls"
-```
-
----
-
-## Task 3: types.rs — 핵심 도메인 타입
+> **순서 주의:** `error.rs`가 `types::KillSwitchMode`를 참조하므로 `types.rs`를 먼저 구현한다.
 
 **Files:**
 - Create: `crates/bot/src/types.rs`
+- Modify: `crates/bot/src/lib.rs`
 - Create: `crates/bot/tests/test_types.rs`
 
 - [ ] **Step 1: lib.rs에 `pub mod types;` 추가**
 
 `crates/bot/src/lib.rs`:
 ```rust
-pub mod error;
 pub mod types;
 ```
 
@@ -252,7 +148,6 @@ fn market_regime_serde_roundtrip() {
 fn order_state_partially_filled() {
     use rust_decimal_macros::dec;
     let s = OrderState::PartiallyFilled { filled_qty: dec!(1.5) };
-    // Must serialize/deserialize without panic
     let json = serde_json::to_string(&s).unwrap();
     let back: OrderState = serde_json::from_str(&json).unwrap();
     assert!(matches!(back, OrderState::PartiallyFilled { .. }));
@@ -390,6 +285,107 @@ Expected: 4 tests pass
 ```bash
 git add crates/bot/src/types.rs crates/bot/tests/test_types.rs crates/bot/src/lib.rs
 git commit -m "feat(bot): add core domain types (MarketRegime, BotState, OrderState, etc.)"
+```
+
+---
+
+## Task 3: error.rs — BotError
+
+**Files:**
+- Create: `crates/bot/src/error.rs`
+- Modify: `crates/bot/src/lib.rs`
+
+- [ ] **Step 1: lib.rs에 `pub mod error;` 추가**
+
+```rust
+pub mod error;
+pub mod types;
+```
+
+- [ ] **Step 2: 실패할 테스트 작성**
+
+`crates/bot/tests/test_error.rs`:
+```rust
+use kis_bot::error::BotError;
+
+#[test]
+fn bot_error_is_send_sync() {
+    fn assert_send_sync<T: Send + Sync>() {}
+    assert_send_sync::<BotError>();
+}
+
+#[test]
+fn bot_error_display() {
+    let e = BotError::Config("missing key".to_string());
+    assert!(e.to_string().contains("missing key"));
+}
+```
+
+- [ ] **Step 3: 테스트 실패 확인**
+
+```bash
+cargo test -p kis_bot --test test_error 2>&1 | head -20
+```
+
+Expected: compile error (BotError not defined)
+
+- [ ] **Step 4: BotError 구현**
+
+`crates/bot/src/error.rs`:
+```rust
+use thiserror::Error;
+use crate::types::KillSwitchMode;
+
+#[derive(Debug, Error)]
+pub enum BotError {
+    #[error("Config error: {0}")]
+    Config(String),
+
+    #[error("Database error: {0}")]
+    Db(#[from] sqlx::Error),
+
+    #[error("Database migration error: {0}")]
+    Migration(#[from] sqlx::migrate::MigrateError),
+
+    #[error("KIS API error: {0}")]
+    KisApi(#[from] kis_api::KisError),
+
+    #[error("HTTP error: {0}")]
+    Http(#[from] reqwest::Error),
+
+    #[error("JSON error: {0}")]
+    Json(#[from] serde_json::Error),
+
+    #[error("IO error: {0}")]
+    Io(#[from] std::io::Error),
+
+    #[error("Kill switch active: {mode:?}")]
+    KillSwitchActive { mode: KillSwitchMode },
+
+    #[error("Recovery check failed: {reason}")]
+    RecoveryFailed { reason: String },
+
+    #[error("LLM error: {0}")]
+    Llm(String),
+
+    #[error("Risk guard blocked: {reason}")]
+    RiskBlocked { reason: String },
+}
+```
+
+- [ ] **Step 5: 테스트 통과 확인**
+
+```bash
+cargo test -p kis_bot --test test_error
+```
+
+Expected: 2 tests pass
+
+- [ ] **Step 6: Commit**
+
+```bash
+git add crates/bot/src/error.rs crates/bot/src/lib.rs crates/bot/tests/test_error.rs
+git commit -m "feat(bot): add BotError with all From impls"
 ```
 
 ---
