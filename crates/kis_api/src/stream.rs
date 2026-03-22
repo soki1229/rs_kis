@@ -270,8 +270,35 @@ fn parse_transaction(fields: &[&str]) -> Option<KisEvent> {
     Some(KisEvent::Transaction(TransactionData { symbol, price, qty, time, is_buy }))
 }
 
-fn parse_quote(_fields: &[&str]) -> Option<KisEvent> {
-    None
+// ── HDFSASP0/1 필드 인덱스 (KIS 해외 실시간 호가) ──────────────────────────
+const HDFSASP_F_SYMBOL:   usize = 1;
+const HDFSASP_F_TIME:     usize = 2;
+const HDFSASP_F_ASK:      usize = 14;
+const HDFSASP_F_BID:      usize = 15;
+const HDFSASP_F_ASK_QTY:  usize = 16;
+const HDFSASP_F_BID_QTY:  usize = 17;
+
+fn parse_quote(fields: &[&str]) -> Option<KisEvent> {
+    use chrono::{FixedOffset, NaiveTime, TimeZone, Utc};
+    use rust_decimal::Decimal;
+    use std::str::FromStr;
+    use crate::event::QuoteData;
+
+    let symbol    = fields.get(HDFSASP_F_SYMBOL)?.to_string();
+    if symbol.is_empty() { return None; }
+
+    let ask_price = Decimal::from_str(fields.get(HDFSASP_F_ASK)?).ok()?;
+    let bid_price = Decimal::from_str(fields.get(HDFSASP_F_BID)?).ok()?;
+    let ask_qty   = Decimal::from_str(fields.get(HDFSASP_F_ASK_QTY)?).ok()?;
+    let bid_qty   = Decimal::from_str(fields.get(HDFSASP_F_BID_QTY)?).ok()?;
+
+    let hhmmss    = fields.get(HDFSASP_F_TIME)?;
+    let naive_time = NaiveTime::parse_from_str(hhmmss, "%H%M%S").ok()?;
+    let naive_dt  = Utc::now().date_naive().and_time(naive_time);
+    let kst       = FixedOffset::east_opt(9 * 3600)?;
+    let time      = kst.from_local_datetime(&naive_dt).single()?;
+
+    Some(KisEvent::Quote(QuoteData { symbol, ask_price, bid_price, ask_qty, bid_qty, time }))
 }
 
 #[cfg(test)]
@@ -355,5 +382,71 @@ mod tests {
         fields[21] = "1";
         let msg = format!("0|HDFSCNT0|1|{}", fields.join("^"));
         assert!(parse_ws_message(&msg).is_none());
+    }
+
+    #[test]
+    fn parse_hdfsasp0_quote() {
+        let mut fields = vec![""; 30];
+        fields[1]  = "AAPL";
+        fields[2]  = "150000";
+        fields[14] = "191.00";  // ask
+        fields[15] = "190.90";  // bid
+        fields[16] = "100";     // ask_qty
+        fields[17] = "200";     // bid_qty
+        let msg = format!("0|HDFSASP0|1|{}", fields.join("^"));
+
+        let result = parse_ws_message(&msg);
+        assert!(result.is_some());
+        if let Some(KisEvent::Quote(q)) = result {
+            use rust_decimal_macros::dec;
+            assert_eq!(q.symbol, "AAPL");
+            assert_eq!(q.ask_price, dec!(191.00));
+            assert_eq!(q.bid_price, dec!(190.90));
+        } else {
+            panic!("expected Quote event");
+        }
+    }
+
+    #[test]
+    fn parse_hdfsasp1_also_works() {
+        let mut fields = vec![""; 30];
+        fields[1]  = "SONY";
+        fields[2]  = "090000";
+        fields[14] = "10.50";
+        fields[15] = "10.40";
+        fields[16] = "500";
+        fields[17] = "300";
+        let msg = format!("0|HDFSASP1|1|{}", fields.join("^"));
+        assert!(matches!(parse_ws_message(&msg), Some(KisEvent::Quote(_))));
+    }
+}
+
+#[cfg(test)]
+impl KisStream {
+    /// 테스트용 (KisStream, broadcast::Sender<KisEvent>) 쌍 반환.
+    /// Sender를 통해 테스트 코드에서 직접 이벤트 또는 drop으로 StreamClosed를 주입 가능.
+    pub fn test_pair() -> (KisStream, broadcast::Sender<KisEvent>) {
+        let (tx, _) = broadcast::channel(128);
+        let cancel = CancellationToken::new();
+        let stream = KisStream {
+            inner: Arc::new(StreamInner {
+                config: KisConfig {
+                    app_key: "test".into(),
+                    app_secret: "test".into(),
+                    account_num: "00000000-01".into(),
+                    rest_url: "http://localhost".into(),
+                    ws_url: "ws://localhost".into(),
+                    mock: true,
+                    token_cache_path: None,
+                    ws_event_buffer: 128,
+                },
+                approval_key: "test_key".into(),
+                tx: tx.clone(),
+                subscriptions: RwLock::new(HashMap::new()),
+                cancel,
+                ws_tx: Mutex::new(None),
+            }),
+        };
+        (stream, tx)
     }
 }
