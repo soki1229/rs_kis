@@ -30,8 +30,6 @@ shellexpand = "3"
 http = "1"
 # Logging
 log = "0.4"
-# Domain shared types
-domain = { path = "../domain" }
 # Cancellation token
 tokio-util = { version = "0.7", features = ["rt"] }
 
