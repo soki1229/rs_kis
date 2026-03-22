@@ -421,7 +421,9 @@ WebSocket 체결 이벤트를 1차로 처리하되, 30초 간격으로 KIS REST 
 | `Volatile` | 최고가 - (ATR_14 × 1.0) | 좁게 — 빠른 이익 보호 |
 | `Quiet` | 시간 손절만 적용 (Trailing 없음) | 의미있는 움직임 없으므로 생략 |
 
-trailing stop 계산에 사용하는 ATR_14는 현재 레짐 변경 시점에 재계산한다.
+trailing stop 계산에 사용하는 ATR_14는 **레짐 변경이 감지된 직후 다음 1분봉 종가 기준**으로 재산정한다.
+진행 중인 캔들이 아닌 완성된 캔들 종가를 사용해 노이즈를 방지한다.
+재산정된 ATR_14는 해당 포지션의 기존 trailing stop을 즉시 갱신한다.
 
 ---
 
@@ -510,6 +512,9 @@ SQLite 파일 (`~/.local/share/trading_bot/state.db`)에 저장:
 | `BROKER_ORDER_MISSING` | DB `orders`에 `broker_order_id` 없이 `SUBMITTED` 상태인 주문 존재 |
 
 `UNRECONCILED_FILL`은 HARD Kill Switch 없이 DB 상태만 `FULLY_FILLED`로 갱신 후 계속 진행한다 (정상 누락 복구).
+
+**RecoveryCheck 재시도 정책**: `BALANCE_MISMATCH` / `ORPHANED_ORDER` / `BROKER_ORDER_MISSING` 감지 시 즉시 Kill Switch로 진행하지 않고, **5초 간격으로 최대 3회 브로커 API 재조회** 후에도 유지되면 Kill Switch 발동.
+브로커 일시 응답 지연으로 인한 오탐을 방지한다. `UNRECONCILED_FILL`은 재시도 없이 즉시 처리.
 
 ### 재시작 후 자동 거래 재개 조건
 
@@ -736,14 +741,17 @@ kill_switch_path = "~/.local/share/trading_bot/.kill_switch_active"
 
 **알림 메시지 템플릿** (로그 + 향후 Telegram 연동 기준):
 
-| 조건 | 메시지 템플릿 |
-|------|-------------|
-| MDD -10% | `⚠️ MDD reached -10%. Review strategy before next session.` |
-| 30d R < -5R | `⚠️ 30-day cumulative R below -5R. Strategy parameter review recommended.` |
-| LLM 3주 부진 | `⚠️ LLM ENTER win rate underperforming rule-only by 10%p for 3 weeks. Consider raising setup_score_threshold_llm.` |
-| Score 80+ 승률 저조 | `⚠️ Score 80+ win rate below 40% for 2 weeks. Check signal thresholds or feature design.` |
-| 강제 Conservative 전환 | `🔄 Profile switched to Conservative. Reason: {reason}. Cooldown: 3 trading days.` |
-| 레짐 진입 중단 | `🚫 {regime} regime entry suspended for 7 days. Reason: 5 consecutive losses.` |
+| 심각도 | 조건 | 메시지 템플릿 |
+|--------|------|-------------|
+| `WARN` | MDD -10% | `[WARN] MDD reached -10%. Review strategy before next session.` |
+| `WARN` | 30d R < -5R | `[WARN] 30-day cumulative R below -5R. Strategy parameter review recommended.` |
+| `INFO` | LLM 3주 부진 | `[INFO] LLM ENTER win rate underperforming rule-only by 10%p for 3 weeks. Consider raising setup_score_threshold_llm.` |
+| `INFO` | Score 80+ 승률 저조 | `[INFO] Score 80+ win rate below 40% for 2 weeks. Check signal thresholds or feature design.` |
+| `WARN` | 강제 Conservative 전환 | `[WARN] Profile switched to Conservative. Reason: {reason}. Cooldown: 3 trading days.` |
+| `CRITICAL` | Kill Switch 발동 | `[CRITICAL] Kill Switch triggered ({mode}). Reason: {reason}. Manual intervention required.` |
+| `WARN` | 레짐 진입 중단 | `[WARN] {regime} regime entry suspended for 7 days. Reason: 5 consecutive losses.` |
+
+심각도 기준: `INFO` = 정보 전달, 즉각 행동 불필요 / `WARN` = 모니터링 강화 권고 / `CRITICAL` = 즉각 확인 필요.
 
 ### Dry Run 분석 필수 절차
 
