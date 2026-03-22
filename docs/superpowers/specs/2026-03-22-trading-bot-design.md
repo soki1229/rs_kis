@@ -313,6 +313,23 @@ BLOCK 사유 (BLOCK인 경우만): {reason}
 
 최대 배율은 RiskGuard의 `max_position_pct` 한도 내에서만 적용된다.
 
+### 최종 사이즈 계산식 (모든 보정 통합)
+
+```
+base_size    = (account_balance × risk_per_trade) / (ATR_14 × atr_stop_multiplier)
+final_size   = base_size × strength_factor × regime_factor × profile_factor
+capped_size  = min(final_size, account_balance × max_position_pct / entry_price)
+```
+
+| 보정 인자 | 기준 |
+|----------|------|
+| `strength_factor` | 0.75× ~ 1.25× (RuleEngine strength 구간별, 위 테이블 참조) |
+| `regime_factor` | Trending = 1.0, Volatile = 0.5, Quiet = N/A (진입 없음) |
+| `profile_factor` | default = 1.0, conservative = 0.6, aggressive = 1.6 |
+
+보정이 중첩될 때 (예: Volatile 레짐 + Conservative 프로파일) 최소값이 아닌 **곱셈** 적용.
+예: `1.0 × 0.5 × 0.6 = 0.30×` → 기본 사이즈의 30%.
+
 - `risk_per_trade`: `[risk] risk_per_trade` 설정값 (Section 12)
 - `atr_stop_multiplier`: `[risk] atr_stop_multiplier` 설정값 (Section 12)
 
@@ -482,6 +499,17 @@ SQLite 파일 (`~/.local/share/trading_bot/state.db`)에 저장:
 4. 브로커에서 체결 완료됐으나 DB가 `SUBMITTED`인 주문 → `FULLY_FILLED`로 갱신 (WS 이벤트 누락 복구)
 5. `positions` 테이블과 브로커 `balance()` 비교 → ±5% 초과 불일치 시 Kill Switch 발동
 6. 일치 시 정상 기동
+
+**RecoveryCheck 실패 원인 분류** (Kill Switch 발동 시 reason 필드에 기록):
+
+| 코드 | 설명 |
+|------|------|
+| `BALANCE_MISMATCH` | `positions` 내부 총액과 브로커 `balance()` 차이 ±5% 초과 |
+| `ORPHANED_ORDER` | DB에 `SUBMITTED` 상태이나 브로커 `unfilled_orders()`에 존재하지 않음 |
+| `UNRECONCILED_FILL` | DB는 `SUBMITTED`이나 브로커에서 이미 체결 완료 (WS 이벤트 누락) |
+| `BROKER_ORDER_MISSING` | DB `orders`에 `broker_order_id` 없이 `SUBMITTED` 상태인 주문 존재 |
+
+`UNRECONCILED_FILL`은 HARD Kill Switch 없이 DB 상태만 `FULLY_FILLED`로 갱신 후 계속 진행한다 (정상 누락 복구).
 
 ### 재시작 후 자동 거래 재개 조건
 
@@ -705,6 +733,17 @@ kill_switch_path = "~/.local/share/trading_bot/.kill_switch_active"
 
 강제 전환은 즉시 파라미터를 바꾸고 `strategy_stats`에 기록한다.
 알림 전용은 로그 출력만 하며 시스템 행동은 변경하지 않는다.
+
+**알림 메시지 템플릿** (로그 + 향후 Telegram 연동 기준):
+
+| 조건 | 메시지 템플릿 |
+|------|-------------|
+| MDD -10% | `⚠️ MDD reached -10%. Review strategy before next session.` |
+| 30d R < -5R | `⚠️ 30-day cumulative R below -5R. Strategy parameter review recommended.` |
+| LLM 3주 부진 | `⚠️ LLM ENTER win rate underperforming rule-only by 10%p for 3 weeks. Consider raising setup_score_threshold_llm.` |
+| Score 80+ 승률 저조 | `⚠️ Score 80+ win rate below 40% for 2 weeks. Check signal thresholds or feature design.` |
+| 강제 Conservative 전환 | `🔄 Profile switched to Conservative. Reason: {reason}. Cooldown: 3 trading days.` |
+| 레짐 진입 중단 | `🚫 {regime} regime entry suspended for 7 days. Reason: 5 consecutive losses.` |
 
 ### Dry Run 분석 필수 절차
 
