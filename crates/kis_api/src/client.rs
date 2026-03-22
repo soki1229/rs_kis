@@ -8,8 +8,8 @@ use crate::rest::http::fetch_approval_key;
 use crate::rest::overseas::analysis::{market, ranking};
 use crate::rest::overseas::inquiry::{balance, orders, profit};
 use crate::rest::overseas::quote;
-use crate::traits::{KisApi, KisEventSource};
-use crate::{KisConfig, KisError, KisStream};
+use crate::traits::KisApi;
+use crate::{Exchange, Holiday, KisConfig, KisError, KisStream, RankingItem};
 
 struct Inner {
     config: KisConfig,
@@ -263,12 +263,17 @@ impl KisApi for KisClient {
         let approval_key = fetch_approval_key(self.http(), self.config()).await?;
         KisStream::connect(self.config().clone(), approval_key).await
     }
-}
 
-#[async_trait]
-impl KisEventSource for KisClient {
-    async fn event_stream(&self) -> Result<KisStream, KisError> {
-        self.stream().await
+    async fn volume_ranking(
+        &self,
+        exchange: &Exchange,
+        count: u32,
+    ) -> Result<Vec<RankingItem>, KisError> {
+        self.volume_ranking(exchange, count).await
+    }
+
+    async fn holidays(&self, country: &str) -> Result<Vec<Holiday>, KisError> {
+        self.holidays(country).await
     }
 }
 

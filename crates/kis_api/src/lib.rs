@@ -35,4 +35,4 @@ pub use rest::overseas::quote::price::PriceResponse;
 pub use rest::overseas::quote::search::{SearchResult, SymbolInfo};
 pub use rest::overseas::types::{Exchange, OrderSide, OrderType};
 pub use stream::{EventReceiver, KisStream, SubscriptionKind};
-pub use traits::{KisApi, KisEventSource};
+pub use traits::KisApi;
