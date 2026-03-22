@@ -66,6 +66,36 @@ Session Risk Control (횡단 관심사, 전 단계 감시)
 
 상위 조건이 발동 중일 때 하위 조건의 신호는 계산은 하되 실행은 하지 않는다.
 
+### 봇 운영 상태 전이
+
+```
+              [RecoveryCheck]
+              ↙            ↘
+           pass             fail
+            ↓                ↓
+         [Active] ←──────[HardBlocked]
+         /   |  \               ↑
+        /    |   \        HARD KS trigger
+       ↓     ↓    ↓       (10s recheck)
+[EntryPaused] [SoftBlocked] [Suspended]
+  daily_loss   SOFT KS       consecutive_loss
+  / regime     trigger       limit reached
+       ↓           ↓              ↓
+  next day /    kill switch    manual reset
+  regime change  file deleted
+       ↓           ↓              ↓
+            [Active]
+```
+
+| 상태 | 진입 조건 | 탈출 조건 |
+|------|----------|----------|
+| `Active` | 재시작 복구 성공, 수동 재개 | — |
+| `EntryPaused` | 일일 손실 한도, Quiet 레짐 | 다음 거래일 / 레짐 변경 |
+| `SoftBlocked` | SOFT Kill Switch 발동 | kill switch 파일 삭제 + 복구 성공 |
+| `HardBlocked` | HARD Kill Switch 발동 (전 포지션 청산 완료) | 수동 개입 + kill switch 파일 삭제 + 복구 성공 |
+| `Suspended` | 연속 손실 한도 도달 | `session_stats` 연속 손실 수동 초기화 + 복구 성공 |
+| `RecoveryCheck` | 모든 재시작 직후 | 복구 절차 완료 |
+
 ---
 
 ## 1. Market Regime Filter
@@ -111,6 +141,7 @@ Session Risk Control (횡단 관심사, 전 단계 감시)
 Discovery 풀에 추가된 종목은 **2 거래일** 후 자동 만료된다.
 만료된 종목은 재발굴 조건(거래량/등락/뉴스)을 다시 충족해야 재진입한다.
 단, 실적 발표 전후 이벤트 추적 종목은 해당 이벤트가 끝날 때까지 TTL 연장.
+만료 시 `signal_log`에 만료 사유(`2_day_elapsed` / `event_window_ended`)와 종목을 기록한다.
 
 ### Watchlist 역할
 
@@ -463,6 +494,8 @@ SQLite 파일 (`~/.local/share/trading_bot/state.db`)에 저장:
 
 HARD Kill Switch 또는 연속 손실 중단의 경우, 자동 재개를 막는 이유는 운영자가 "왜 멈췄는지"를 반드시 확인하도록 강제하기 위해서다.
 
+**재개 가능 여부 한 줄 판단 기준**: kill switch 파일이 없고, `session_stats` 연속 손실이 한도 미만이며, 복구 절차가 성공하면 자동 재개된다. 셋 중 하나라도 아니면 수동 개입 필요.
+
 ---
 
 ## 10. Graceful Shutdown
@@ -537,6 +570,7 @@ active = "default"   # "default" | "conservative" | "aggressive"
 - 연속 손실 횟수 = 0
 
 쿨다운 미충족 시 복귀 조건이 맞아도 Default 전환을 보류하고 다음 확인 주기(1거래일)에 재평가한다.
+재평가는 장 시작 직전에 자동 실행되며, 매 거래일 반복한다. 조건 충족 시 즉시 Default 전환.
 
 ```toml
 [risk]
@@ -655,18 +689,22 @@ kill_switch_path = "~/.local/share/trading_bot/.kill_switch_active"
 
 이 지표들은 DB `strategy_stats` 테이블에 저장하고, 주기적으로 로그로 출력한다.
 
-### 운영 중단 기준 (자동 + 수동)
+### 경보 vs 강제 전환 분리
 
-아래 기준에 도달하면 전략 재검토가 필요하다.
-**자동 중단** 조건은 Kill Switch와 동일 경로로 처리한다.
+모니터링 조건은 **알림만 발송하는 것**과 **자동으로 행동을 바꾸는 것**을 명확히 구분한다.
 
-| 기준 | 임계값 | 행동 |
-|------|--------|------|
-| 30일 누적 R | < -5R | **수동 재검토 알림** (자동 중단 아님) |
-| 최대 드로다운(MDD) | 계좌 잔고의 -10% 도달 | **수동 재검토 알림** — MDD는 누적 R보다 빠르게 위험 신호를 줌 |
-| 레짐별 연속 손실 | 동일 레짐에서 5연속 손실 | 해당 레짐 진입 일시 중단 (7일) |
-| LLM ENTER 승률 | rule-only보다 10%p 이상 낮게 3주 지속 | `setup_score_threshold_llm` 10점 상향 제안 알림 |
-| Setup Score 80+ 승률 | < 40% (2주 기준) | 전략 파라미터 재검토 알림 |
+| 구분 | 조건 | 임계값 | 행동 |
+|------|------|--------|------|
+| **강제 전환** | 7일 누적 R | < -2R | Default → Conservative 자동 전환 |
+| **강제 전환** | MDD | 계좌의 -5% | Default → Conservative 자동 전환 |
+| **강제 전환** | 레짐 연속 손실 | 동일 레짐 5회 | 해당 레짐 진입 7일 중단 |
+| **알림 전용** | 30일 누적 R | < -5R | 수동 재검토 알림 (자동 중단 없음) |
+| **알림 전용** | MDD | 계좌의 -10% | 수동 재검토 알림 |
+| **알림 전용** | LLM ENTER 승률 | rule-only보다 10%p 이상 낮게 3주 지속 | `setup_score_threshold_llm` 상향 제안 알림 |
+| **알림 전용** | Setup Score 80+ 승률 | < 40% (2주 기준) | 전략 파라미터 재검토 알림 |
+
+강제 전환은 즉시 파라미터를 바꾸고 `strategy_stats`에 기록한다.
+알림 전용은 로그 출력만 하며 시스템 행동은 변경하지 않는다.
 
 ### Dry Run 분석 필수 절차
 
