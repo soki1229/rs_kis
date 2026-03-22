@@ -217,15 +217,60 @@ impl KisStream {
     }
 }
 
-/// KIS WebSocket 텍스트 메시지 파싱 (stub — 실제 파싱은 Plan 3b에서 완성)
+// ── HDFSCNT0 필드 인덱스 (KIS 해외 실시간 체결) ──────────────────────────
+const HDFSCNT0_F_SYMBOL: usize = 1;
+const HDFSCNT0_F_TIME:   usize = 2;  // HHMMSS (KST)
+const HDFSCNT0_F_PRICE:  usize = 11;
+const HDFSCNT0_F_QTY:    usize = 19;
+const HDFSCNT0_F_IS_BUY: usize = 21; // "1"=매수, "2"=매도
+
 fn parse_ws_message(text: &str) -> Option<KisEvent> {
-    // KIS WS 메시지 형식:
-    // - 헤더 응답: JSON ({"header": {...}, "body": {...}})
-    // - 실시간 데이터: 파이프 구분 문자열 "0|HDFSCNT0|001|데이터..."
     if text.starts_with('{') {
-        return None; // 제어 메시지 무시
+        return None; // JSON 제어 메시지
     }
-    // 실제 파싱은 Plan 3b에서 구현. 현재는 None 반환.
+    let parts: Vec<&str> = text.splitn(4, '|').collect();
+    if parts.len() < 4 {
+        return None;
+    }
+    let fields: Vec<&str> = parts[3].split('^').collect();
+    match parts[1] {
+        "HDFSCNT0" => parse_transaction(&fields),
+        "HDFSASP0" | "HDFSASP1" => parse_quote(&fields),
+        _ => None,
+    }
+}
+
+fn parse_transaction(fields: &[&str]) -> Option<KisEvent> {
+    use chrono::{FixedOffset, NaiveTime, TimeZone, Utc};
+    use rust_decimal::Decimal;
+    use std::str::FromStr;
+    use crate::event::TransactionData;
+
+    let symbol = fields.get(HDFSCNT0_F_SYMBOL)?.to_string();
+    if symbol.is_empty() { return None; }
+
+    let price = Decimal::from_str(fields.get(HDFSCNT0_F_PRICE)?).ok()?;
+    let qty   = Decimal::from_str(fields.get(HDFSCNT0_F_QTY)?).ok()?;
+    let is_buy = match *fields.get(HDFSCNT0_F_IS_BUY)? {
+        "1" => true,
+        "2" => false,
+        _   => {
+            log::warn!("HDFSCNT0: unknown is_buy field");
+            return None;
+        }
+    };
+
+    // HHMMSS → DateTime<FixedOffset> (KST UTC+9)
+    let hhmmss = fields.get(HDFSCNT0_F_TIME)?;
+    let naive_time = NaiveTime::parse_from_str(hhmmss, "%H%M%S").ok()?;
+    let naive_dt = Utc::now().date_naive().and_time(naive_time);
+    let kst = FixedOffset::east_opt(9 * 3600)?;
+    let time = kst.from_local_datetime(&naive_dt).single()?;
+
+    Some(KisEvent::Transaction(TransactionData { symbol, price, qty, time, is_buy }))
+}
+
+fn parse_quote(_fields: &[&str]) -> Option<KisEvent> {
     None
 }
 
@@ -257,5 +302,58 @@ mod tests {
     fn event_receiver_type_exists() {
         // EventReceiver가 컴파일되는지 확인 (런타임 생성은 KisStream 필요)
         let _ = std::mem::size_of::<EventReceiver>();
+    }
+
+    #[test]
+    fn parse_hdfscnt0_transaction() {
+        let mut fields = vec![""; 26];
+        fields[1]  = "NVDA";
+        fields[2]  = "143022";   // 14:30:22 KST
+        fields[11] = "134.20";
+        fields[19] = "50";
+        fields[21] = "1";        // 매수
+        let data = fields.join("^");
+        let msg = format!("0|HDFSCNT0|1|{}", data);
+
+        let result = parse_ws_message(&msg);
+        assert!(result.is_some(), "should parse HDFSCNT0");
+        if let Some(KisEvent::Transaction(tx)) = result {
+            use rust_decimal_macros::dec;
+            assert_eq!(tx.symbol, "NVDA");
+            assert_eq!(tx.price, dec!(134.20));
+            assert_eq!(tx.qty, dec!(50));
+            assert!(tx.is_buy);
+        } else {
+            panic!("expected Transaction event");
+        }
+    }
+
+    #[test]
+    fn parse_json_returns_none() {
+        let json = r#"{"header":{"tr_id":"PINGPONG"},"body":{}}"#;
+        assert!(parse_ws_message(json).is_none());
+    }
+
+    #[test]
+    fn parse_unknown_trid_returns_none() {
+        assert!(parse_ws_message("0|UNKNOWN|1|data").is_none());
+    }
+
+    #[test]
+    fn parse_malformed_returns_none() {
+        assert!(parse_ws_message("not|enough").is_none());
+        assert!(parse_ws_message("").is_none());
+    }
+
+    #[test]
+    fn parse_bad_decimal_returns_none() {
+        let mut fields = vec![""; 26];
+        fields[1]  = "NVDA";
+        fields[2]  = "143022";
+        fields[11] = "NOT_A_NUMBER";
+        fields[19] = "50";
+        fields[21] = "1";
+        let msg = format!("0|HDFSCNT0|1|{}", fields.join("^"));
+        assert!(parse_ws_message(&msg).is_none());
     }
 }
