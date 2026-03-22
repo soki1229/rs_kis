@@ -50,6 +50,22 @@ Session Risk Control (횡단 관심사, 전 단계 감시)
 각 단계는 별도 tokio task로 실행되며 채널(mpsc/broadcast)로 통신한다.
 `CancellationToken`으로 전체를 동기화하여 graceful shutdown 보장.
 
+### 제어 규칙 우선순위
+
+여러 조건이 동시에 발생하면 아래 순서로 강한 쪽이 우선 적용된다.
+
+| 우선순위 | 조건 | 행동 |
+|---------|------|------|
+| 1 (최강) | `HARD` Kill Switch | 신규 주문 차단 + 전 포지션 시장가 청산 |
+| 2 | `SOFT` Kill Switch | 신규 주문 차단, 포지션 유지 |
+| 3 | 일일 손실 한도 초과 | 신규 진입 전면 차단, 포지션 관리만 |
+| 4 | 연속 손실 한도 도달 | 봇 자동 중단 (수동 재개) |
+| 5 | 프로파일 자동 전환 | Conservative 파라미터 적용 (진입 가능, 더 엄격한 조건) |
+| 6 | 레짐 제한 (`Volatile`/`Quiet`) | 사이즈 축소 또는 진입 중단 |
+| 7 (최약) | 일반 진입 조건 | Setup Score / Rule strength / LLM verdict 기준 적용 |
+
+상위 조건이 발동 중일 때 하위 조건의 신호는 계산은 하되 실행은 하지 않는다.
+
 ---
 
 ## 1. Market Regime Filter
@@ -89,6 +105,12 @@ Session Risk Control (횡단 관심사, 전 단계 감시)
 
 ### 갱신
 - 이벤트 드리븐 (KIS API 폴링 15분 간격 + Finnhub 실시간)
+
+### Watchlist TTL
+
+Discovery 풀에 추가된 종목은 **2 거래일** 후 자동 만료된다.
+만료된 종목은 재발굴 조건(거래량/등락/뉴스)을 다시 충족해야 재진입한다.
+단, 실적 발표 전후 이벤트 추적 종목은 해당 이벤트가 끝날 때까지 TTL 연장.
 
 ### Watchlist 역할
 
@@ -430,6 +452,17 @@ SQLite 파일 (`~/.local/share/trading_bot/state.db`)에 저장:
 5. `positions` 테이블과 브로커 `balance()` 비교 → ±5% 초과 불일치 시 Kill Switch 발동
 6. 일치 시 정상 기동
 
+### 재시작 후 자동 거래 재개 조건
+
+| 재시작 원인 | 자동 재개 여부 |
+|------------|--------------|
+| 정상 종료 후 재시작 (kill switch 파일 없음) | 복구 절차 성공 시 **자동 재개** |
+| `SOFT` Kill Switch 해제 후 재시작 | 복구 절차 성공 시 **자동 재개** |
+| `HARD` Kill Switch 후 재시작 | kill switch 파일 수동 삭제 후에만 재개 (**수동 확인 필수**) |
+| 연속 손실 한도 도달로 중단 후 재시작 | `session_stats` 연속 손실 횟수 수동 초기화 후 재개 (**수동 확인 필수**) |
+
+HARD Kill Switch 또는 연속 손실 중단의 경우, 자동 재개를 막는 이유는 운영자가 "왜 멈췄는지"를 반드시 확인하도록 강제하기 위해서다.
+
 ---
 
 ## 10. Graceful Shutdown
@@ -497,6 +530,13 @@ active = "default"   # "default" | "conservative" | "aggressive"
 | MDD 10% 도달 또는 연속 손실 한도 도달 | 어떤 프로파일이든 → **거래 일시 중단 + 수동 확인** |
 
 자동 전환 발생 시 `strategy_stats`에 기록하고 로그로 알림을 출력한다.
+
+**복귀 쿨다운 (플래핑 방지)**: Conservative 전환 후 Default 복귀는 아래 조건이 **모두** 충족될 때만 허용한다.
+- Conservative 상태 최소 **3 거래일** 경과
+- 7일 누적 R > +1R
+- 연속 손실 횟수 = 0
+
+쿨다운 미충족 시 복귀 조건이 맞아도 Default 전환을 보류하고 다음 확인 주기(1거래일)에 재평가한다.
 
 ```toml
 [risk]
@@ -610,6 +650,8 @@ kill_switch_path = "~/.local/share/trading_bot/.kill_switch_active"
 | **레짐별 평균 R** | Trending/Volatile/Quiet별 평균 R | 레짐 필터 효과 측정 |
 | **Rule-only vs LLM-assisted 승률** | Score 60~79 경로 vs 80+ 경로 비교 | LLM 임계값 80 타당성 검토 |
 | **일별 최대 드로다운** | 당일 최대 손실 / 최대 이익 | 손실 패턴 이상 감지 |
+| **Setup Score 분포** | 구간별(< 60 / 60~79 / 80+) 일별 신호 수 | 임계값이 너무 높거나 낮은지 판단 |
+| **Rule strength 분포** | 0.55~0.64 / 0.65~0.74 / 0.75~0.84 / 0.85+ 구간별 비율 | 신호 강도 쏠림 감지 |
 
 이 지표들은 DB `strategy_stats` 테이블에 저장하고, 주기적으로 로그로 출력한다.
 
