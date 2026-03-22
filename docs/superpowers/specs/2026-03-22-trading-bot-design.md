@@ -66,7 +66,7 @@ Session Risk Control (횡단 관심사, 전 단계 감시)
 |------|------|---------|
 | `Trending` | 지수 5일선 > 20일선, 거래량 정상 | 진입 허용 |
 | `Volatile` | 당일 지수 등락률 ±1.5% 이상 | 포지션 사이즈 50% 축소, 신규 진입 제한 |
-| `Quiet` | 지수 등락률 ±0.3% 미만, 거래량 저조 | 신규 진입 중단. Watchlist는 유지 (다음 레짐 변화 대비) |
+| `Quiet` | 지수 등락률 ±0.3% 미만, 거래량 저조 | 신규 진입 중단. Watchlist 유지 및 Setup Score 갱신 계속 실행 (다음 레짐 전환 시 즉시 분석 가능하도록) |
 
 ### 갱신 주기
 - 장 시작 시 1회 + 이후 1시간마다 갱신
@@ -89,6 +89,16 @@ Session Risk Control (횡단 관심사, 전 단계 감시)
 
 ### 갱신
 - 이벤트 드리븐 (KIS API 폴링 15분 간격 + Finnhub 실시간)
+
+### Watchlist 역할
+
+Discovery 풀은 레짐에 관계없이 항상 갱신된다. 다만 레짐별로 역할이 다르다:
+
+| 레짐 | Watchlist 역할 |
+|------|---------------|
+| `Trending` | Entry Qualification 진입 대상 (진입 시도) |
+| `Volatile` | Entry Qualification 진입 대상 (사이즈 축소 후 진입 시도) |
+| `Quiet` | **관찰 전용** — Setup Score 갱신 + 뉴스 추적만. 진입 없음. 레짐 전환 시 우선 평가 대상 |
 
 ---
 
@@ -375,6 +385,12 @@ Kill Switch는 발동 강도에 따라 두 가지 모드로 분리한다:
 
 `HARD` 모드는 계좌 상태를 신뢰할 수 없을 때만 발동한다. 정상 장세에서는 `SOFT`를 우선 적용한다.
 
+**HARD 청산 전 1회 재확인 절차**: 잔고/포지션 불일치가 감지되면 즉시 청산하지 않고 10초 대기 후 재조회한다.
+- 불일치가 해소됐으면 → `SOFT` Kill Switch (API 동기화 지연이었음)
+- 불일치가 유지되면 → `HARD` Kill Switch 발동 (실제 이상 확인됨)
+
+이 절차는 KIS API 응답 지연으로 인한 오탐을 방지한다. 미체결 비중 30% 초과는 재확인 없이 즉시 `HARD` 발동한다 (포지션 붕괴 위험이 명확하므로).
+
 Kill Switch 상태는 `[state] kill_switch_path` 경로에 파일 생성으로 영속화 (Section 12 참조).
 파일 내용에는 발동 원인과 모드를 JSON으로 기록한다:
 ```json
@@ -461,12 +477,26 @@ SQLite 파일 (`~/.local/share/trading_bot/state.db`)에 저장:
 
 - **기본형**: 신규 실거래 시작, 검증 단계
 - **보수형**: 계좌 손실 복구 중이거나 고변동성 장세
-- **공격형**: 전략 성과가 검증된 이후, 드라이런 지표 양호 시만 사용
+- **공격형**: 전략 성과가 검증된 이후, 드라이런 지표 양호 시만 사용. **수동 전환만 허용.**
 
 ```toml
 [profile]
 active = "default"   # "default" | "conservative" | "aggressive"
 ```
+
+### 프로파일 자동 전환 규칙
+
+`Aggressive`는 절대 자동 전환되지 않는다 (수동 전환만). `Default ↔ Conservative` 만 자동 전환.
+
+| 조건 | 현재 → 전환 |
+|------|------------|
+| 7일 누적 R < -2R | Default → **Conservative** |
+| MDD 5% 도달 | Default → **Conservative** |
+| 레짐 연속 손실 3회 (Default 상태) | Default → **Conservative** |
+| 7일 누적 R > +1R AND 연속 손실 0 AND Conservative 상태 7일 경과 | Conservative → **Default** (복구 신호) |
+| MDD 10% 도달 또는 연속 손실 한도 도달 | 어떤 프로파일이든 → **거래 일시 중단 + 수동 확인** |
+
+자동 전환 발생 시 `strategy_stats`에 기록하고 로그로 알림을 출력한다.
 
 ```toml
 [risk]
