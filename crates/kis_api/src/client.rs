@@ -9,7 +9,11 @@ use crate::rest::overseas::analysis::{market, ranking};
 use crate::rest::overseas::inquiry::{balance, orders, profit};
 use crate::rest::overseas::quote;
 use crate::traits::KisApi;
-use crate::{Exchange, Holiday, KisConfig, KisError, KisStream, RankingItem};
+use crate::{
+    CancelOrderRequest, CancelOrderResponse, CandleBar, DailyChartRequest, Exchange, Holiday,
+    KisConfig, KisError, KisStream, NewsItem, PlaceOrderRequest, PlaceOrderResponse, RankingItem,
+    UnfilledOrder,
+};
 
 struct Inner {
     config: KisConfig,
@@ -274,6 +278,26 @@ impl KisApi for KisClient {
 
     async fn holidays(&self, country: &str) -> Result<Vec<Holiday>, KisError> {
         self.holidays(country).await
+    }
+
+    async fn place_order(&self, req: PlaceOrderRequest) -> Result<PlaceOrderResponse, KisError> {
+        self.place_order(req).await
+    }
+
+    async fn cancel_order(&self, req: CancelOrderRequest) -> Result<CancelOrderResponse, KisError> {
+        self.cancel_order(req).await
+    }
+
+    async fn daily_chart(&self, req: DailyChartRequest) -> Result<Vec<CandleBar>, KisError> {
+        self.daily_chart(req).await
+    }
+
+    async fn unfilled_orders(&self) -> Result<Vec<UnfilledOrder>, KisError> {
+        self.unfilled_orders().await
+    }
+
+    async fn news(&self, symbol: &str) -> Result<Vec<NewsItem>, KisError> {
+        self.news(symbol).await
     }
 }
 
