@@ -1,4 +1,8 @@
-use crate::{Exchange, Holiday, KisError, KisStream, RankingItem};
+use crate::{
+    CancelOrderRequest, CancelOrderResponse, CandleBar, DailyChartRequest,
+    Exchange, Holiday, KisError, KisStream, NewsItem, PlaceOrderRequest,
+    PlaceOrderResponse, RankingItem, UnfilledOrder,
+};
 use async_trait::async_trait;
 
 /// REST + WebSocket 클라이언트 트레이트 (의존성 역전 / 테스트 모킹용)
@@ -16,6 +20,23 @@ pub trait KisApi: Send + Sync {
 
     /// 해외 공휴일 조회 (country: "USA", "JPN" 등)
     async fn holidays(&self, country: &str) -> Result<Vec<Holiday>, KisError>;
+
+    /// 해외주식 매수/매도 주문 제출
+    async fn place_order(&self, req: PlaceOrderRequest) -> Result<PlaceOrderResponse, KisError>;
+
+    /// 해외주식 주문 정정/취소
+    async fn cancel_order(&self, req: CancelOrderRequest) -> Result<CancelOrderResponse, KisError>;
+
+    /// 해외주식 일/주/월봉 조회 (최대 요청 건수는 API 제한 따름)
+    async fn daily_chart(&self, req: DailyChartRequest) -> Result<Vec<CandleBar>, KisError>;
+
+    /// 설정된 계좌의 미체결 주문 전체 조회.
+    /// KR/US 파이프라인이 각각 별도 KisConfig(별도 계좌)로 KisClient를 생성하므로
+    /// 파라미터 없이 해당 계좌 전체 미체결을 반환한다.
+    async fn unfilled_orders(&self) -> Result<Vec<UnfilledOrder>, KisError>;
+
+    /// 해외주식 뉴스 조회 (`has_news_catalyst` 판단용)
+    async fn news(&self, symbol: &str) -> Result<Vec<NewsItem>, KisError>;
 }
 
 #[cfg(test)]
@@ -25,6 +46,24 @@ mod tests {
     #[test]
     fn kis_api_extended_is_object_safe() {
         // Box<dyn KisApi>가 컴파일되는지 확인 (volume_ranking + holidays 추가 후)
+        let _: Option<Box<dyn KisApi>> = None;
+    }
+
+    #[test]
+    fn kis_api_all_nine_methods_are_object_safe() {
+        // Box<dyn KisApi> still compiles with 9 methods
+        struct MockNine;
+        #[async_trait::async_trait]
+        impl KisApi for MockNine {
+            async fn stream(&self) -> Result<crate::KisStream, crate::KisError> { unimplemented!() }
+            async fn volume_ranking(&self, _: &crate::Exchange, _: u32) -> Result<Vec<crate::RankingItem>, crate::KisError> { Ok(vec![]) }
+            async fn holidays(&self, _: &str) -> Result<Vec<crate::Holiday>, crate::KisError> { Ok(vec![]) }
+            async fn place_order(&self, _: crate::PlaceOrderRequest) -> Result<crate::PlaceOrderResponse, crate::KisError> { unimplemented!() }
+            async fn cancel_order(&self, _: crate::CancelOrderRequest) -> Result<crate::CancelOrderResponse, crate::KisError> { unimplemented!() }
+            async fn daily_chart(&self, _: crate::DailyChartRequest) -> Result<Vec<crate::CandleBar>, crate::KisError> { Ok(vec![]) }
+            async fn unfilled_orders(&self) -> Result<Vec<crate::UnfilledOrder>, crate::KisError> { Ok(vec![]) }
+            async fn news(&self, _: &str) -> Result<Vec<crate::NewsItem>, crate::KisError> { Ok(vec![]) }
+        }
         let _: Option<Box<dyn KisApi>> = None;
     }
 }
