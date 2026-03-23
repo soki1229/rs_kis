@@ -52,6 +52,7 @@ mod tests {
     #[test]
     fn kis_api_all_nine_methods_are_object_safe() {
         // Box<dyn KisApi> still compiles with 9 methods
+        #[allow(dead_code)]
         struct MockNine;
         #[async_trait::async_trait]
         impl KisApi for MockNine {
