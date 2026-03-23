@@ -41,6 +41,9 @@ pub trait KisApi: Send + Sync {
     async fn place_order(&self, req: PlaceOrderRequest) -> Result<PlaceOrderResponse, KisError>;
     async fn cancel_order(&self, req: CancelOrderRequest) -> Result<CancelOrderResponse, KisError>;
     async fn daily_chart(&self, req: DailyChartRequest) -> Result<Vec<CandleBar>, KisError>;
+    /// KIS 계좌는 KisConfig에 단일 계좌번호로 설정된다.
+    /// KR/US 파이프라인이 각각 별도 KisConfig(별도 계좌)로 KisClient를 생성하므로
+    /// 파라미터 없이 설정된 계좌의 미체결 주문 전체를 조회한다.
     async fn unfilled_orders(&self) -> Result<Vec<UnfilledOrder>, KisError>;
     async fn news(&self, symbol: &str) -> Result<Vec<NewsItem>, KisError>;
 }
@@ -72,8 +75,8 @@ async fn place_order(&self, req: PlaceOrderRequest) -> Result<PlaceOrderResponse
 
 ## 5. 파일 변경
 
-- `crates/kis_api/src/traits.rs` — 메서드 4개 추가
-- `crates/kis_api/src/client.rs` — `impl KisApi` 블록에 위임 4개 추가
+- `crates/kis_api/src/traits.rs` — 메서드 5개 추가 (`place_order`, `cancel_order`, `daily_chart`, `unfilled_orders`, `news`)
+- `crates/kis_api/src/client.rs` — `impl KisApi` 블록에 위임 5개 추가
 
 ---
 
@@ -85,6 +88,7 @@ async fn place_order(&self, req: PlaceOrderRequest) -> Result<PlaceOrderResponse
 | `place_order` / `cancel_order` | `crates/kis_api/tests/integration/order.rs` 통합 테스트 (`KIS_INTEGRATION_TEST=1`) |
 | `daily_chart` | 기존 fixture 단위 테스트 확장 |
 | `unfilled_orders` | fixture 단위 테스트 |
+| `news` | fixture 단위 테스트 (응답 파싱 확인) |
 
 ---
 
