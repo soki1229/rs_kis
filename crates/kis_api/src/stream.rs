@@ -219,9 +219,9 @@ impl KisStream {
 
 // ── HDFSCNT0 필드 인덱스 (KIS 해외 실시간 체결) ──────────────────────────
 const HDFSCNT0_F_SYMBOL: usize = 1;
-const HDFSCNT0_F_TIME:   usize = 2;  // HHMMSS (KST)
-const HDFSCNT0_F_PRICE:  usize = 11;
-const HDFSCNT0_F_QTY:    usize = 19;
+const HDFSCNT0_F_TIME: usize = 2; // HHMMSS (KST)
+const HDFSCNT0_F_PRICE: usize = 11;
+const HDFSCNT0_F_QTY: usize = 19;
 const HDFSCNT0_F_IS_BUY: usize = 21; // "1"=매수, "2"=매도
 
 fn parse_ws_message(text: &str) -> Option<KisEvent> {
@@ -241,20 +241,22 @@ fn parse_ws_message(text: &str) -> Option<KisEvent> {
 }
 
 fn parse_transaction(fields: &[&str]) -> Option<KisEvent> {
+    use crate::event::TransactionData;
     use chrono::{FixedOffset, NaiveTime, TimeZone, Utc};
     use rust_decimal::Decimal;
     use std::str::FromStr;
-    use crate::event::TransactionData;
 
     let symbol = fields.get(HDFSCNT0_F_SYMBOL)?.to_string();
-    if symbol.is_empty() { return None; }
+    if symbol.is_empty() {
+        return None;
+    }
 
     let price = Decimal::from_str(fields.get(HDFSCNT0_F_PRICE)?).ok()?;
-    let qty   = Decimal::from_str(fields.get(HDFSCNT0_F_QTY)?).ok()?;
+    let qty = Decimal::from_str(fields.get(HDFSCNT0_F_QTY)?).ok()?;
     let is_buy = match *fields.get(HDFSCNT0_F_IS_BUY)? {
         "1" => true,
         "2" => false,
-        _   => {
+        _ => {
             log::warn!("HDFSCNT0: unknown is_buy field");
             return None;
         }
@@ -267,38 +269,83 @@ fn parse_transaction(fields: &[&str]) -> Option<KisEvent> {
     let kst = FixedOffset::east_opt(9 * 3600)?;
     let time = kst.from_local_datetime(&naive_dt).single()?;
 
-    Some(KisEvent::Transaction(TransactionData { symbol, price, qty, time, is_buy }))
+    Some(KisEvent::Transaction(TransactionData {
+        symbol,
+        price,
+        qty,
+        time,
+        is_buy,
+    }))
 }
 
 // ── HDFSASP0/1 필드 인덱스 (KIS 해외 실시간 호가) ──────────────────────────
-const HDFSASP_F_SYMBOL:   usize = 1;
-const HDFSASP_F_TIME:     usize = 2;
-const HDFSASP_F_ASK:      usize = 14;
-const HDFSASP_F_BID:      usize = 15;
-const HDFSASP_F_ASK_QTY:  usize = 16;
-const HDFSASP_F_BID_QTY:  usize = 17;
+const HDFSASP_F_SYMBOL: usize = 1;
+const HDFSASP_F_TIME: usize = 2;
+const HDFSASP_F_ASK: usize = 14;
+const HDFSASP_F_BID: usize = 15;
+const HDFSASP_F_ASK_QTY: usize = 16;
+const HDFSASP_F_BID_QTY: usize = 17;
 
 fn parse_quote(fields: &[&str]) -> Option<KisEvent> {
+    use crate::event::QuoteData;
     use chrono::{FixedOffset, NaiveTime, TimeZone, Utc};
     use rust_decimal::Decimal;
     use std::str::FromStr;
-    use crate::event::QuoteData;
 
-    let symbol    = fields.get(HDFSASP_F_SYMBOL)?.to_string();
-    if symbol.is_empty() { return None; }
+    let symbol = fields.get(HDFSASP_F_SYMBOL)?.to_string();
+    if symbol.is_empty() {
+        return None;
+    }
 
     let ask_price = Decimal::from_str(fields.get(HDFSASP_F_ASK)?).ok()?;
     let bid_price = Decimal::from_str(fields.get(HDFSASP_F_BID)?).ok()?;
-    let ask_qty   = Decimal::from_str(fields.get(HDFSASP_F_ASK_QTY)?).ok()?;
-    let bid_qty   = Decimal::from_str(fields.get(HDFSASP_F_BID_QTY)?).ok()?;
+    let ask_qty = Decimal::from_str(fields.get(HDFSASP_F_ASK_QTY)?).ok()?;
+    let bid_qty = Decimal::from_str(fields.get(HDFSASP_F_BID_QTY)?).ok()?;
 
-    let hhmmss    = fields.get(HDFSASP_F_TIME)?;
+    let hhmmss = fields.get(HDFSASP_F_TIME)?;
     let naive_time = NaiveTime::parse_from_str(hhmmss, "%H%M%S").ok()?;
-    let naive_dt  = Utc::now().date_naive().and_time(naive_time);
-    let kst       = FixedOffset::east_opt(9 * 3600)?;
-    let time      = kst.from_local_datetime(&naive_dt).single()?;
+    let naive_dt = Utc::now().date_naive().and_time(naive_time);
+    let kst = FixedOffset::east_opt(9 * 3600)?;
+    let time = kst.from_local_datetime(&naive_dt).single()?;
 
-    Some(KisEvent::Quote(QuoteData { symbol, ask_price, bid_price, ask_qty, bid_qty, time }))
+    Some(KisEvent::Quote(QuoteData {
+        symbol,
+        ask_price,
+        bid_price,
+        ask_qty,
+        bid_qty,
+        time,
+    }))
+}
+
+#[cfg(any(test, feature = "test-utils"))]
+impl KisStream {
+    /// 테스트용 (KisStream, broadcast::Sender<KisEvent>) 쌍 반환.
+    /// Sender를 통해 테스트 코드에서 직접 이벤트 또는 drop으로 StreamClosed를 주입 가능.
+    pub fn test_pair() -> (KisStream, broadcast::Sender<KisEvent>) {
+        let (tx, _) = broadcast::channel(128);
+        let cancel = CancellationToken::new();
+        let stream = KisStream {
+            inner: Arc::new(StreamInner {
+                config: KisConfig {
+                    app_key: "test".into(),
+                    app_secret: "test".into(),
+                    account_num: "00000000-01".into(),
+                    rest_url: "http://localhost".into(),
+                    ws_url: "ws://localhost".into(),
+                    mock: true,
+                    token_cache_path: None,
+                    ws_event_buffer: 128,
+                },
+                approval_key: "test_key".into(),
+                tx: tx.clone(),
+                subscriptions: RwLock::new(HashMap::new()),
+                cancel,
+                ws_tx: Mutex::new(None),
+            }),
+        };
+        (stream, tx)
+    }
 }
 
 #[cfg(test)]
@@ -334,11 +381,11 @@ mod tests {
     #[test]
     fn parse_hdfscnt0_transaction() {
         let mut fields = vec![""; 26];
-        fields[1]  = "NVDA";
-        fields[2]  = "143022";   // 14:30:22 KST
+        fields[1] = "NVDA";
+        fields[2] = "143022"; // 14:30:22 KST
         fields[11] = "134.20";
         fields[19] = "50";
-        fields[21] = "1";        // 매수
+        fields[21] = "1"; // 매수
         let data = fields.join("^");
         let msg = format!("0|HDFSCNT0|1|{}", data);
 
@@ -375,8 +422,8 @@ mod tests {
     #[test]
     fn parse_bad_decimal_returns_none() {
         let mut fields = vec![""; 26];
-        fields[1]  = "NVDA";
-        fields[2]  = "143022";
+        fields[1] = "NVDA";
+        fields[2] = "143022";
         fields[11] = "NOT_A_NUMBER";
         fields[19] = "50";
         fields[21] = "1";
@@ -387,12 +434,12 @@ mod tests {
     #[test]
     fn parse_hdfsasp0_quote() {
         let mut fields = vec![""; 30];
-        fields[1]  = "AAPL";
-        fields[2]  = "150000";
-        fields[14] = "191.00";  // ask
-        fields[15] = "190.90";  // bid
-        fields[16] = "100";     // ask_qty
-        fields[17] = "200";     // bid_qty
+        fields[1] = "AAPL";
+        fields[2] = "150000";
+        fields[14] = "191.00"; // ask
+        fields[15] = "190.90"; // bid
+        fields[16] = "100"; // ask_qty
+        fields[17] = "200"; // bid_qty
         let msg = format!("0|HDFSASP0|1|{}", fields.join("^"));
 
         let result = parse_ws_message(&msg);
@@ -410,43 +457,13 @@ mod tests {
     #[test]
     fn parse_hdfsasp1_also_works() {
         let mut fields = vec![""; 30];
-        fields[1]  = "SONY";
-        fields[2]  = "090000";
+        fields[1] = "SONY";
+        fields[2] = "090000";
         fields[14] = "10.50";
         fields[15] = "10.40";
         fields[16] = "500";
         fields[17] = "300";
         let msg = format!("0|HDFSASP1|1|{}", fields.join("^"));
         assert!(matches!(parse_ws_message(&msg), Some(KisEvent::Quote(_))));
-    }
-}
-
-#[cfg(any(test, feature = "test-utils"))]
-impl KisStream {
-    /// 테스트용 (KisStream, broadcast::Sender<KisEvent>) 쌍 반환.
-    /// Sender를 통해 테스트 코드에서 직접 이벤트 또는 drop으로 StreamClosed를 주입 가능.
-    pub fn test_pair() -> (KisStream, broadcast::Sender<KisEvent>) {
-        let (tx, _) = broadcast::channel(128);
-        let cancel = CancellationToken::new();
-        let stream = KisStream {
-            inner: Arc::new(StreamInner {
-                config: KisConfig {
-                    app_key: "test".into(),
-                    app_secret: "test".into(),
-                    account_num: "00000000-01".into(),
-                    rest_url: "http://localhost".into(),
-                    ws_url: "ws://localhost".into(),
-                    mock: true,
-                    token_cache_path: None,
-                    ws_event_buffer: 128,
-                },
-                approval_key: "test_key".into(),
-                tx: tx.clone(),
-                subscriptions: RwLock::new(HashMap::new()),
-                cancel,
-                ws_tx: Mutex::new(None),
-            }),
-        };
-        (stream, tx)
     }
 }
