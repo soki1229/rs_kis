@@ -8,6 +8,10 @@ mod traits;
 
 mod client;
 mod domestic_client;
+#[cfg(any(test, feature = "test-utils"))]
+mod mock_domestic;
+#[cfg(any(test, feature = "test-utils"))]
+pub use mock_domestic::MockDomesticKisApi;
 pub use auth::TokenManager;
 pub use client::KisClient;
 pub use domestic_client::KisDomesticClient;
