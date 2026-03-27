@@ -333,6 +333,7 @@ const H0STCNT0_F_SYMBOL: usize = 0;
 const H0STCNT0_F_TIME: usize = 1; // HHMMSS (KST)
 const H0STCNT0_F_PRICE: usize = 2; // 주식현재가
 const H0STCNT0_F_QTY: usize = 9; // 체결거래량
+const H0STCNT0_F_IS_BUY: usize = 20; // 체결구분: "1"=매수, "2"=매도
 
 fn parse_domestic_transaction(fields: &[&str]) -> Option<KisEvent> {
     use crate::event::TransactionData;
@@ -347,6 +348,7 @@ fn parse_domestic_transaction(fields: &[&str]) -> Option<KisEvent> {
 
     let price = Decimal::from_str(fields.get(H0STCNT0_F_PRICE)?).ok()?;
     let qty = Decimal::from_str(fields.get(H0STCNT0_F_QTY)?).ok()?;
+    let is_buy = fields.get(H0STCNT0_F_IS_BUY).map_or(true, |v| *v == "1");
 
     let hhmmss = fields.get(H0STCNT0_F_TIME)?;
     let naive_time = NaiveTime::parse_from_str(hhmmss, "%H%M%S").ok()?;
@@ -359,7 +361,7 @@ fn parse_domestic_transaction(fields: &[&str]) -> Option<KisEvent> {
         price,
         qty,
         time,
-        is_buy: true, // 국내 체결에는 별도 방향 필드 없음 — 방향 중립
+        is_buy,
     }))
 }
 
@@ -567,6 +569,71 @@ mod tests {
             SubscriptionKind::Orderbook => "HDFSASP0",
             SubscriptionKind::DomesticPrice => "H0STCNT0",
             SubscriptionKind::DomesticOrderbook => "H0STASP0",
+        }
+    }
+
+    #[test]
+    fn parse_h0stcnt0_transaction() {
+        let mut fields = vec![""; 21];
+        fields[0] = "005930"; // 삼성전자
+        fields[1] = "093000"; // 09:30:00 KST
+        fields[2] = "75400";  // 주식현재가
+        fields[9] = "300";    // 체결거래량
+        fields[20] = "1";     // 체결구분: 1=매수
+        let msg = format!("0|H0STCNT0|1|{}", fields.join("^"));
+
+        let result = parse_ws_message(&msg);
+        assert!(result.is_some(), "should parse H0STCNT0");
+        if let Some(KisEvent::Transaction(tx)) = result {
+            use rust_decimal_macros::dec;
+            assert_eq!(tx.symbol, "005930");
+            assert_eq!(tx.price, dec!(75400));
+            assert_eq!(tx.qty, dec!(300));
+            assert!(tx.is_buy);
+        } else {
+            panic!("expected Transaction event");
+        }
+    }
+
+    #[test]
+    fn parse_h0stcnt0_sell_transaction() {
+        let mut fields = vec![""; 21];
+        fields[0] = "000660"; // SK하이닉스
+        fields[1] = "100000";
+        fields[2] = "185000";
+        fields[9] = "100";
+        fields[20] = "2"; // 체결구분: 2=매도
+        let msg = format!("0|H0STCNT0|1|{}", fields.join("^"));
+
+        if let Some(KisEvent::Transaction(tx)) = parse_ws_message(&msg) {
+            assert!(!tx.is_buy);
+        } else {
+            panic!("expected Transaction event");
+        }
+    }
+
+    #[test]
+    fn parse_h0stasp0_quote() {
+        let mut fields = vec![""; 15];
+        fields[0] = "005930"; // 삼성전자
+        fields[1] = "093000"; // 09:30:00 KST
+        fields[3] = "75500";  // 매도호가1
+        fields[4] = "75400";  // 매수호가1
+        fields[13] = "1200";  // 매도호가잔량1
+        fields[14] = "800";   // 매수호가잔량1
+        let msg = format!("0|H0STASP0|1|{}", fields.join("^"));
+
+        let result = parse_ws_message(&msg);
+        assert!(result.is_some(), "should parse H0STASP0");
+        if let Some(KisEvent::Quote(q)) = result {
+            use rust_decimal_macros::dec;
+            assert_eq!(q.symbol, "005930");
+            assert_eq!(q.ask_price, dec!(75500));
+            assert_eq!(q.bid_price, dec!(75400));
+            assert_eq!(q.ask_qty, dec!(1200));
+            assert_eq!(q.bid_qty, dec!(800));
+        } else {
+            panic!("expected Quote event");
         }
     }
 }
