@@ -11,8 +11,8 @@ use crate::rest::overseas::quote;
 use crate::traits::KisApi;
 use crate::{
     CancelOrderRequest, CancelOrderResponse, CandleBar, DailyChartRequest, Exchange, Holiday,
-    KisConfig, KisError, KisStream, NewsItem, PlaceOrderRequest, PlaceOrderResponse, RankingItem,
-    UnfilledOrder,
+    KisConfig, KisError, KisStream, NewsItem, OrderHistoryItem, OrderHistoryRequest,
+    PlaceOrderRequest, PlaceOrderResponse, RankingItem, UnfilledOrder,
 };
 
 struct Inner {
@@ -298,6 +298,10 @@ impl KisApi for KisClient {
 
     async fn news(&self, symbol: &str) -> Result<Vec<NewsItem>, KisError> {
         self.news(symbol).await
+    }
+
+    async fn order_history(&self, req: OrderHistoryRequest) -> Result<Vec<OrderHistoryItem>, KisError> {
+        self.order_history(req).await
     }
 }
 

@@ -1,7 +1,7 @@
 use crate::{
     CancelOrderRequest, CancelOrderResponse, CandleBar, DailyChartRequest, Exchange, Holiday,
-    KisError, KisStream, NewsItem, PlaceOrderRequest, PlaceOrderResponse, RankingItem,
-    UnfilledOrder,
+    KisError, KisStream, NewsItem, OrderHistoryItem, OrderHistoryRequest, PlaceOrderRequest,
+    PlaceOrderResponse, RankingItem, UnfilledOrder,
 };
 use async_trait::async_trait;
 
@@ -37,12 +37,16 @@ pub trait KisApi: Send + Sync {
 
     /// 해외주식 뉴스 조회 (`has_news_catalyst` 판단용)
     async fn news(&self, symbol: &str) -> Result<Vec<NewsItem>, KisError>;
+
+    /// 해외주식 체결내역 조회 (poll_until_filled에서 체결 vs 취소 구분용)
+    async fn order_history(&self, req: OrderHistoryRequest) -> Result<Vec<OrderHistoryItem>, KisError>;
 }
 
 use crate::rest::domestic::{
     DomesticCancelOrderRequest, DomesticCancelOrderResponse, DomesticDailyChartRequest,
-    DomesticExchange, DomesticPlaceOrderRequest, DomesticPlaceOrderResponse,
-    DomesticRankingItem, DomesticUnfilledOrder,
+    DomesticExchange, DomesticOrderHistoryItem, DomesticOrderHistoryRequest,
+    DomesticPlaceOrderRequest, DomesticPlaceOrderResponse, DomesticRankingItem,
+    DomesticUnfilledOrder,
 };
 
 /// 국내주식 클라이언트 트레이트 (KOSPI/KOSDAQ)
@@ -81,6 +85,12 @@ pub trait KisDomesticApi: Send + Sync {
 
     /// 국내주식 미체결 주문 전체 조회
     async fn domestic_unfilled_orders(&self) -> Result<Vec<DomesticUnfilledOrder>, KisError>;
+
+    /// 국내주식 체결내역 조회 (poll_kr_until_filled에서 체결 vs 취소 구분용)
+    async fn domestic_order_history(
+        &self,
+        req: DomesticOrderHistoryRequest,
+    ) -> Result<Vec<DomesticOrderHistoryItem>, KisError>;
 }
 
 #[cfg(test)]
@@ -137,6 +147,12 @@ mod tests {
             async fn news(&self, _: &str) -> Result<Vec<crate::NewsItem>, crate::KisError> {
                 Ok(vec![])
             }
+            async fn order_history(
+                &self,
+                _: crate::OrderHistoryRequest,
+            ) -> Result<Vec<crate::OrderHistoryItem>, crate::KisError> {
+                Ok(vec![])
+            }
         }
         let _: Option<Box<dyn KisApi>> = None;
     }
@@ -154,6 +170,7 @@ mod tests {
             async fn domestic_cancel_order(&self, _: DomesticCancelOrderRequest) -> Result<DomesticCancelOrderResponse, KisError> { unimplemented!() }
             async fn domestic_daily_chart(&self, _: DomesticDailyChartRequest) -> Result<Vec<CandleBar>, KisError> { Ok(vec![]) }
             async fn domestic_unfilled_orders(&self) -> Result<Vec<DomesticUnfilledOrder>, KisError> { Ok(vec![]) }
+            async fn domestic_order_history(&self, _: DomesticOrderHistoryRequest) -> Result<Vec<DomesticOrderHistoryItem>, KisError> { Ok(vec![]) }
         }
 
         let _: Option<Box<dyn KisDomesticApi>> = None;

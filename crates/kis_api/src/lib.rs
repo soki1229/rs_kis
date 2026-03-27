@@ -45,7 +45,8 @@ pub use traits::KisApi;
 pub use traits::KisDomesticApi;
 pub use rest::domestic::{
     DomesticCancelOrderRequest, DomesticCancelOrderResponse,
-    DomesticDailyChartRequest, DomesticExchange, DomesticOrderType,
+    DomesticDailyChartRequest, DomesticExchange, DomesticOrderHistoryItem,
+    DomesticOrderHistoryRequest, DomesticOrderType,
     DomesticPlaceOrderRequest, DomesticPlaceOrderResponse,
     DomesticRankingItem, DomesticUnfilledOrder,
 };

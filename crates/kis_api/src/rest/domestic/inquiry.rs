@@ -74,6 +74,79 @@ pub async fn domestic_unfilled_orders(
     Ok(orders)
 }
 
+pub async fn domestic_order_history(
+    client: &Client,
+    config: &KisConfig,
+    token: &str,
+    req: DomesticOrderHistoryRequest,
+) -> Result<Vec<DomesticOrderHistoryItem>, KisError> {
+    let (cano, prdt_cd) = split_account(&config.account_num);
+
+    let resp = client
+        .get(format!(
+            "{}/uapi/domestic-stock/v1/trading/inquire-daily-ccld",
+            config.rest_url
+        ))
+        .header("authorization", format!("Bearer {}", token))
+        .header("appkey", &config.app_key)
+        .header("appsecret", &config.app_secret)
+        .header("tr_id", "TTTC8001R")
+        .header("custtype", "P")
+        .query(&[
+            ("CANO", cano),
+            ("ACNT_PRDT_CD", prdt_cd),
+            ("INQR_STRT_DT", req.start_date.as_str()),
+            ("INQR_END_DT", req.end_date.as_str()),
+            ("SLL_BUY_DVSN_CD", "00"),
+            ("INQR_DVSN", "00"),
+            ("PDNO", ""),
+            ("CCLD_DVSN", "01"),
+            ("ORD_GNO_BRNO", ""),
+            ("ODNO", ""),
+            ("INQR_DVSN_3", "00"),
+            ("INQR_DVSN_1", ""),
+            ("CTX_AREA_FK100", ""),
+            ("CTX_AREA_NK100", ""),
+        ])
+        .send()
+        .await
+        .map_err(KisError::Network)?;
+
+    let json: serde_json::Value = resp.json().await.map_err(KisError::Network)?;
+    let rt_cd = json["rt_cd"].as_str().unwrap_or("");
+    if rt_cd != "0" {
+        return Err(KisError::Api {
+            code: rt_cd.into(),
+            message: json["msg1"].as_str().unwrap_or("unknown").into(),
+        });
+    }
+
+    let items = json["output1"]
+        .as_array()
+        .map(|arr| {
+            arr.iter()
+                .filter_map(|o| {
+                    let qty: u32 = o["ord_qty"].as_str()?.parse().ok()?;
+                    let filled_qty: u32 = o["tot_ccld_qty"].as_str()?.parse().ok()?;
+                    let filled_price =
+                        Decimal::from_str(o["avg_prvs"].as_str().unwrap_or("0")).ok()?;
+                    Some(DomesticOrderHistoryItem {
+                        order_no: o["odno"].as_str()?.into(),
+                        symbol: o["pdno"].as_str()?.into(),
+                        side_cd: o["sll_buy_dvsn_cd"].as_str()?.into(),
+                        qty,
+                        filled_qty,
+                        filled_price,
+                        filled_date: o["ord_dt"].as_str().unwrap_or("").into(),
+                    })
+                })
+                .collect()
+        })
+        .unwrap_or_default();
+
+    Ok(items)
+}
+
 pub async fn domestic_daily_chart(
     client: &Client,
     config: &KisConfig,

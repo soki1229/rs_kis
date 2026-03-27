@@ -12,6 +12,8 @@ pub struct MockDomesticKisApi {
     /// `Some(resp)` → Ok(resp), `None` → Err(KisError::Auth("mock error"))
     pub place_order_result: std::sync::Arc<std::sync::Mutex<Option<DomesticPlaceOrderResponse>>>,
     pub unfilled_orders_result: std::sync::Arc<std::sync::Mutex<Vec<DomesticUnfilledOrder>>>,
+    /// `order_history` 응답. 빈 리스트면 "취소 또는 내역 없음"으로 처리됨.
+    pub order_history_result: std::sync::Arc<std::sync::Mutex<Vec<DomesticOrderHistoryItem>>>,
 }
 
 impl MockDomesticKisApi {
@@ -25,6 +27,7 @@ impl MockDomesticKisApi {
                 },
             ))),
             unfilled_orders_result: std::sync::Arc::new(std::sync::Mutex::new(vec![])),
+            order_history_result: std::sync::Arc::new(std::sync::Mutex::new(vec![])),
         }
     }
 }
@@ -78,5 +81,11 @@ impl KisDomesticApi for MockDomesticKisApi {
     }
     async fn domestic_unfilled_orders(&self) -> Result<Vec<DomesticUnfilledOrder>, KisError> {
         Ok(self.unfilled_orders_result.lock().unwrap().clone())
+    }
+    async fn domestic_order_history(
+        &self,
+        _: DomesticOrderHistoryRequest,
+    ) -> Result<Vec<DomesticOrderHistoryItem>, KisError> {
+        Ok(self.order_history_result.lock().unwrap().clone())
     }
 }

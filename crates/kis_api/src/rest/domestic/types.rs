@@ -117,6 +117,26 @@ pub struct DomesticDailyChartRequest {
     pub adj_price: bool,
 }
 
+/// 국내주식 체결내역 조회 요청
+#[derive(Debug, Clone)]
+pub struct DomesticOrderHistoryRequest {
+    pub start_date: String, // "YYYYMMDD"
+    pub end_date: String,   // "YYYYMMDD"
+}
+
+/// 국내주식 체결내역 항목
+#[derive(Debug, Clone)]
+pub struct DomesticOrderHistoryItem {
+    pub order_no: String,
+    pub symbol: String,
+    /// "01" = 매도, "02" = 매수
+    pub side_cd: String,
+    pub qty: u32,
+    pub filled_qty: u32,
+    pub filled_price: Decimal,
+    pub filled_date: String,
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

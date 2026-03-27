@@ -2,7 +2,10 @@ use crate::{
     auth::TokenManager,
     rest::{
         domestic::{
-            inquiry::{domestic_daily_chart, domestic_unfilled_orders, domestic_volume_ranking},
+            inquiry::{
+                domestic_daily_chart, domestic_order_history, domestic_unfilled_orders,
+                domestic_volume_ranking,
+            },
             order::{domestic_cancel_order, domestic_place_order},
             types::*,
         },
@@ -78,6 +81,14 @@ impl KisDomesticApi for KisDomesticClient {
     async fn domestic_unfilled_orders(&self) -> Result<Vec<DomesticUnfilledOrder>, KisError> {
         let token = self.token_manager.token().await?;
         domestic_unfilled_orders(&self.http, &self.config, &token).await
+    }
+
+    async fn domestic_order_history(
+        &self,
+        req: DomesticOrderHistoryRequest,
+    ) -> Result<Vec<DomesticOrderHistoryItem>, KisError> {
+        let token = self.token_manager.token().await?;
+        domestic_order_history(&self.http, &self.config, &token, req).await
     }
 }
 
