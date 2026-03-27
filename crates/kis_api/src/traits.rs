@@ -1,7 +1,7 @@
 use crate::{
-    CancelOrderRequest, CancelOrderResponse, CandleBar, DailyChartRequest,
-    Exchange, Holiday, KisError, KisStream, NewsItem, PlaceOrderRequest,
-    PlaceOrderResponse, RankingItem, UnfilledOrder,
+    CancelOrderRequest, CancelOrderResponse, CandleBar, DailyChartRequest, Exchange, Holiday,
+    KisError, KisStream, NewsItem, PlaceOrderRequest, PlaceOrderResponse, RankingItem,
+    UnfilledOrder,
 };
 use async_trait::async_trait;
 
@@ -39,6 +39,50 @@ pub trait KisApi: Send + Sync {
     async fn news(&self, symbol: &str) -> Result<Vec<NewsItem>, KisError>;
 }
 
+use crate::rest::domestic::{
+    DomesticCancelOrderRequest, DomesticCancelOrderResponse, DomesticDailyChartRequest,
+    DomesticExchange, DomesticPlaceOrderRequest, DomesticPlaceOrderResponse,
+    DomesticRankingItem, DomesticUnfilledOrder,
+};
+
+/// 국내주식 클라이언트 트레이트 (KOSPI/KOSDAQ)
+#[async_trait]
+pub trait KisDomesticApi: Send + Sync {
+    /// 국내주식 실시간 WebSocket 스트림 (H0STCNT0 / H0STASP0 구독용)
+    async fn domestic_stream(&self) -> Result<KisStream, KisError>;
+
+    /// 국내주식 거래량 순위 조회
+    async fn domestic_volume_ranking(
+        &self,
+        exchange: &DomesticExchange,
+        count: u32,
+    ) -> Result<Vec<DomesticRankingItem>, KisError>;
+
+    /// 국내/공휴일 조회 (country: "KOR")
+    async fn domestic_holidays(&self, country: &str) -> Result<Vec<Holiday>, KisError>;
+
+    /// 국내주식 매수/매도 주문
+    async fn domestic_place_order(
+        &self,
+        req: DomesticPlaceOrderRequest,
+    ) -> Result<DomesticPlaceOrderResponse, KisError>;
+
+    /// 국내주식 주문 취소
+    async fn domestic_cancel_order(
+        &self,
+        req: DomesticCancelOrderRequest,
+    ) -> Result<DomesticCancelOrderResponse, KisError>;
+
+    /// 국내주식 일/주/월봉 조회
+    async fn domestic_daily_chart(
+        &self,
+        req: DomesticDailyChartRequest,
+    ) -> Result<Vec<CandleBar>, KisError>;
+
+    /// 국내주식 미체결 주문 전체 조회
+    async fn domestic_unfilled_orders(&self) -> Result<Vec<DomesticUnfilledOrder>, KisError>;
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -56,15 +100,62 @@ mod tests {
         struct MockNine;
         #[async_trait::async_trait]
         impl KisApi for MockNine {
-            async fn stream(&self) -> Result<crate::KisStream, crate::KisError> { unimplemented!() }
-            async fn volume_ranking(&self, _: &crate::Exchange, _: u32) -> Result<Vec<crate::RankingItem>, crate::KisError> { Ok(vec![]) }
-            async fn holidays(&self, _: &str) -> Result<Vec<crate::Holiday>, crate::KisError> { Ok(vec![]) }
-            async fn place_order(&self, _: crate::PlaceOrderRequest) -> Result<crate::PlaceOrderResponse, crate::KisError> { unimplemented!() }
-            async fn cancel_order(&self, _: crate::CancelOrderRequest) -> Result<crate::CancelOrderResponse, crate::KisError> { unimplemented!() }
-            async fn daily_chart(&self, _: crate::DailyChartRequest) -> Result<Vec<crate::CandleBar>, crate::KisError> { Ok(vec![]) }
-            async fn unfilled_orders(&self) -> Result<Vec<crate::UnfilledOrder>, crate::KisError> { Ok(vec![]) }
-            async fn news(&self, _: &str) -> Result<Vec<crate::NewsItem>, crate::KisError> { Ok(vec![]) }
+            async fn stream(&self) -> Result<crate::KisStream, crate::KisError> {
+                unimplemented!()
+            }
+            async fn volume_ranking(
+                &self,
+                _: &crate::Exchange,
+                _: u32,
+            ) -> Result<Vec<crate::RankingItem>, crate::KisError> {
+                Ok(vec![])
+            }
+            async fn holidays(&self, _: &str) -> Result<Vec<crate::Holiday>, crate::KisError> {
+                Ok(vec![])
+            }
+            async fn place_order(
+                &self,
+                _: crate::PlaceOrderRequest,
+            ) -> Result<crate::PlaceOrderResponse, crate::KisError> {
+                unimplemented!()
+            }
+            async fn cancel_order(
+                &self,
+                _: crate::CancelOrderRequest,
+            ) -> Result<crate::CancelOrderResponse, crate::KisError> {
+                unimplemented!()
+            }
+            async fn daily_chart(
+                &self,
+                _: crate::DailyChartRequest,
+            ) -> Result<Vec<crate::CandleBar>, crate::KisError> {
+                Ok(vec![])
+            }
+            async fn unfilled_orders(&self) -> Result<Vec<crate::UnfilledOrder>, crate::KisError> {
+                Ok(vec![])
+            }
+            async fn news(&self, _: &str) -> Result<Vec<crate::NewsItem>, crate::KisError> {
+                Ok(vec![])
+            }
         }
         let _: Option<Box<dyn KisApi>> = None;
+    }
+
+    #[test]
+    fn kis_domestic_api_is_object_safe() {
+        struct MockDomestic;
+
+        #[async_trait::async_trait]
+        impl KisDomesticApi for MockDomestic {
+            async fn domestic_stream(&self) -> Result<KisStream, KisError> { unimplemented!() }
+            async fn domestic_volume_ranking(&self, _: &DomesticExchange, _: u32) -> Result<Vec<DomesticRankingItem>, KisError> { Ok(vec![]) }
+            async fn domestic_holidays(&self, _: &str) -> Result<Vec<Holiday>, KisError> { Ok(vec![]) }
+            async fn domestic_place_order(&self, _: DomesticPlaceOrderRequest) -> Result<DomesticPlaceOrderResponse, KisError> { unimplemented!() }
+            async fn domestic_cancel_order(&self, _: DomesticCancelOrderRequest) -> Result<DomesticCancelOrderResponse, KisError> { unimplemented!() }
+            async fn domestic_daily_chart(&self, _: DomesticDailyChartRequest) -> Result<Vec<CandleBar>, KisError> { Ok(vec![]) }
+            async fn domestic_unfilled_orders(&self) -> Result<Vec<DomesticUnfilledOrder>, KisError> { Ok(vec![]) }
+        }
+
+        let _: Option<Box<dyn KisDomesticApi>> = None;
     }
 }
