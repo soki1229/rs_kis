@@ -348,7 +348,7 @@ fn parse_domestic_transaction(fields: &[&str]) -> Option<KisEvent> {
 
     let price = Decimal::from_str(fields.get(H0STCNT0_F_PRICE)?).ok()?;
     let qty = Decimal::from_str(fields.get(H0STCNT0_F_QTY)?).ok()?;
-    let is_buy = fields.get(H0STCNT0_F_IS_BUY).map_or(true, |v| *v == "1");
+    let is_buy = fields.get(H0STCNT0_F_IS_BUY).is_none_or(|v| *v == "1");
 
     let hhmmss = fields.get(H0STCNT0_F_TIME)?;
     let naive_time = NaiveTime::parse_from_str(hhmmss, "%H%M%S").ok()?;
