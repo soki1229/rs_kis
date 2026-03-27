@@ -5,6 +5,7 @@ pub mod db;
 pub mod discovery;
 pub mod error;
 pub mod execution;
+pub mod monitoring;
 pub mod position;
 pub mod qualification;
 pub mod regime;
