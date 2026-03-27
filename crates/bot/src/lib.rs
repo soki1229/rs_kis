@@ -1,8 +1,13 @@
+pub mod bot;
 pub mod config;
+pub mod control;
 pub mod db;
 pub mod discovery;
 pub mod error;
+pub mod execution;
+pub mod position;
 pub mod qualification;
 pub mod regime;
+pub mod risk;
 pub mod signal;
 pub mod types;
