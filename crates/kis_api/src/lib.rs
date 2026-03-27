@@ -7,8 +7,10 @@ mod stream;
 mod traits;
 
 mod client;
+mod domestic_client;
 pub use auth::TokenManager;
 pub use client::KisClient;
+pub use domestic_client::KisDomesticClient;
 pub use config::{KisConfig, KisConfigBuilder};
 pub use error::KisError;
 pub use event::{KisEvent, OrderConfirmData, QuoteData, TransactionData};
@@ -36,3 +38,10 @@ pub use rest::overseas::quote::search::{SearchResult, SymbolInfo};
 pub use rest::overseas::types::{Exchange, OrderSide, OrderType};
 pub use stream::{EventReceiver, KisStream, SubscriptionKind};
 pub use traits::KisApi;
+pub use traits::KisDomesticApi;
+pub use rest::domestic::{
+    DomesticCancelOrderRequest, DomesticCancelOrderResponse,
+    DomesticDailyChartRequest, DomesticExchange, DomesticOrderType,
+    DomesticPlaceOrderRequest, DomesticPlaceOrderResponse,
+    DomesticRankingItem, DomesticUnfilledOrder,
+};
