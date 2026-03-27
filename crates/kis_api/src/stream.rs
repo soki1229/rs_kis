@@ -10,10 +10,14 @@ use crate::{KisConfig, KisError, KisEvent};
 /// 구독 종류
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum SubscriptionKind {
-    /// 실시간 체결가 (HDFSCNT0)
+    /// 실시간 체결가 해외 (HDFSCNT0)
     Price,
-    /// 실시간 호가 (HDFSASP0/1)
+    /// 실시간 호가 해외 (HDFSASP0/1)
     Orderbook,
+    /// 실시간 체결가 국내 (H0STCNT0)
+    DomesticPrice,
+    /// 실시간 호가 국내 (H0STASP0)
+    DomesticOrderbook,
 }
 
 type SubscriptionKey = (String, SubscriptionKind);
@@ -181,6 +185,8 @@ impl KisStream {
         let tr_id = match kind {
             SubscriptionKind::Price => "HDFSCNT0",
             SubscriptionKind::Orderbook => "HDFSASP0",
+            SubscriptionKind::DomesticPrice => "H0STCNT0",
+            SubscriptionKind::DomesticOrderbook => "H0STASP0",
         };
 
         let msg = serde_json::json!({
@@ -236,6 +242,8 @@ fn parse_ws_message(text: &str) -> Option<KisEvent> {
     match parts[1] {
         "HDFSCNT0" => parse_transaction(&fields),
         "HDFSASP0" | "HDFSASP1" => parse_quote(&fields),
+        "H0STCNT0" => parse_domestic_transaction(&fields),
+        "H0STASP0" | "H0STASP1" => parse_domestic_quote(&fields),
         _ => None,
     }
 }
@@ -303,6 +311,84 @@ fn parse_quote(fields: &[&str]) -> Option<KisEvent> {
     let bid_qty = Decimal::from_str(fields.get(HDFSASP_F_BID_QTY)?).ok()?;
 
     let hhmmss = fields.get(HDFSASP_F_TIME)?;
+    let naive_time = NaiveTime::parse_from_str(hhmmss, "%H%M%S").ok()?;
+    let naive_dt = Utc::now().date_naive().and_time(naive_time);
+    let kst = FixedOffset::east_opt(9 * 3600)?;
+    let time = kst.from_local_datetime(&naive_dt).single()?;
+
+    Some(KisEvent::Quote(QuoteData {
+        symbol,
+        ask_price,
+        bid_price,
+        ask_qty,
+        bid_qty,
+        time,
+    }))
+}
+
+// ── H0STCNT0 필드 인덱스 (KIS 국내 실시간 체결) ──────────────────────────
+// 필드 구조 (pipe-separated after header): 종목코드^시간^현재가^...^체결량^...
+// ⚠ 정확한 인덱스는 KIS OpenAPI 개발가이드 "H0STCNT0" 항목에서 확인 필요
+const H0STCNT0_F_SYMBOL: usize = 0;
+const H0STCNT0_F_TIME: usize = 1; // HHMMSS (KST)
+const H0STCNT0_F_PRICE: usize = 2; // 주식현재가
+const H0STCNT0_F_QTY: usize = 9; // 체결거래량
+
+fn parse_domestic_transaction(fields: &[&str]) -> Option<KisEvent> {
+    use crate::event::TransactionData;
+    use chrono::{FixedOffset, NaiveTime, TimeZone, Utc};
+    use rust_decimal::Decimal;
+    use std::str::FromStr;
+
+    let symbol = fields.get(H0STCNT0_F_SYMBOL)?.to_string();
+    if symbol.is_empty() {
+        return None;
+    }
+
+    let price = Decimal::from_str(fields.get(H0STCNT0_F_PRICE)?).ok()?;
+    let qty = Decimal::from_str(fields.get(H0STCNT0_F_QTY)?).ok()?;
+
+    let hhmmss = fields.get(H0STCNT0_F_TIME)?;
+    let naive_time = NaiveTime::parse_from_str(hhmmss, "%H%M%S").ok()?;
+    let naive_dt = Utc::now().date_naive().and_time(naive_time);
+    let kst = FixedOffset::east_opt(9 * 3600)?;
+    let time = kst.from_local_datetime(&naive_dt).single()?;
+
+    Some(KisEvent::Transaction(TransactionData {
+        symbol,
+        price,
+        qty,
+        time,
+        is_buy: true, // 국내 체결에는 별도 방향 필드 없음 — 방향 중립
+    }))
+}
+
+// ── H0STASP0 필드 인덱스 (KIS 국내 실시간 호가) ──────────────────────────
+// ⚠ 정확한 인덱스는 KIS OpenAPI 개발가이드 "H0STASP0" 항목에서 확인 필요
+const H0STASP0_F_SYMBOL: usize = 0;
+const H0STASP0_F_TIME: usize = 1;
+const H0STASP0_F_ASK_PRICE: usize = 3; // 매도호가1
+const H0STASP0_F_BID_PRICE: usize = 4; // 매수호가1
+const H0STASP0_F_ASK_QTY: usize = 13; // 매도호가잔량1
+const H0STASP0_F_BID_QTY: usize = 14; // 매수호가잔량1
+
+fn parse_domestic_quote(fields: &[&str]) -> Option<KisEvent> {
+    use crate::event::QuoteData;
+    use chrono::{FixedOffset, NaiveTime, TimeZone, Utc};
+    use rust_decimal::Decimal;
+    use std::str::FromStr;
+
+    let symbol = fields.get(H0STASP0_F_SYMBOL)?.to_string();
+    if symbol.is_empty() {
+        return None;
+    }
+
+    let ask_price = Decimal::from_str(fields.get(H0STASP0_F_ASK_PRICE)?).ok()?;
+    let bid_price = Decimal::from_str(fields.get(H0STASP0_F_BID_PRICE)?).ok()?;
+    let ask_qty = Decimal::from_str(fields.get(H0STASP0_F_ASK_QTY)?).ok()?;
+    let bid_qty = Decimal::from_str(fields.get(H0STASP0_F_BID_QTY)?).ok()?;
+
+    let hhmmss = fields.get(H0STASP0_F_TIME)?;
     let naive_time = NaiveTime::parse_from_str(hhmmss, "%H%M%S").ok()?;
     let naive_dt = Utc::now().date_naive().and_time(naive_time);
     let kst = FixedOffset::east_opt(9 * 3600)?;
@@ -465,5 +551,22 @@ mod tests {
         fields[17] = "300";
         let msg = format!("0|HDFSASP1|1|{}", fields.join("^"));
         assert!(matches!(parse_ws_message(&msg), Some(KisEvent::Quote(_))));
+    }
+
+    #[test]
+    fn domestic_subscription_kind_maps_to_h0stcnt0() {
+        // Verify that DomesticPrice maps to the correct KIS TR ID
+        assert_eq!(subscription_tr_id(SubscriptionKind::DomesticPrice), "H0STCNT0");
+        assert_eq!(subscription_tr_id(SubscriptionKind::DomesticOrderbook), "H0STASP0");
+    }
+
+    // Helper exposed only for tests:
+    fn subscription_tr_id(kind: SubscriptionKind) -> &'static str {
+        match kind {
+            SubscriptionKind::Price => "HDFSCNT0",
+            SubscriptionKind::Orderbook => "HDFSASP0",
+            SubscriptionKind::DomesticPrice => "H0STCNT0",
+            SubscriptionKind::DomesticOrderbook => "H0STASP0",
+        }
     }
 }
