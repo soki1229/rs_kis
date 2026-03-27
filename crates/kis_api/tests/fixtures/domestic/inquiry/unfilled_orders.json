@@ -1,0 +1,16 @@
+{
+  "rt_cd": "0",
+  "msg_cd": "APBK0013",
+  "msg1": "조회가 완료되었습니다.",
+  "output": [
+    {
+      "odno": "0000123456",
+      "pdno": "005930",
+      "ord_excg_dvsn_cd": "KSC",
+      "sll_buy_dvsn_cd": "02",
+      "ord_qty": "10",
+      "psbl_qty": "10",
+      "ord_unpr": "70000"
+    }
+  ]
+}

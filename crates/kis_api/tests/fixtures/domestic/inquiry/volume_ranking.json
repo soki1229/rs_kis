@@ -1,0 +1,19 @@
+{
+  "rt_cd": "0",
+  "msg_cd": "APBK0013",
+  "msg1": "조회가 완료되었습니다.",
+  "output": [
+    {
+      "mksc_shrn_iscd": "005930",
+      "hts_kor_isnm": "삼성전자",
+      "stck_prpr": "72000",
+      "acml_vol": "15000000"
+    },
+    {
+      "mksc_shrn_iscd": "000660",
+      "hts_kor_isnm": "SK하이닉스",
+      "stck_prpr": "185000",
+      "acml_vol": "8000000"
+    }
+  ]
+}

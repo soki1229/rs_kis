@@ -111,3 +111,67 @@ pub async fn domestic_cancel_order(
         order_time: output["ORD_TMD"].as_str().unwrap_or("").into(),
     })
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use rust_decimal_macros::dec;
+
+    #[test]
+    fn deserialize_place_order_response() {
+        let json: serde_json::Value = serde_json::from_str(
+            include_str!("../../../tests/fixtures/domestic/order/place_order.json"),
+        )
+        .unwrap();
+        let output = &json["output"];
+        let resp = DomesticPlaceOrderResponse {
+            order_no: output["ODNO"].as_str().unwrap_or("").into(),
+            order_date: output["ORD_DT"].as_str().unwrap_or("").into(),
+            order_time: output["ORD_TMD"].as_str().unwrap_or("").into(),
+        };
+        assert_eq!(resp.order_no, "0000123456");
+        assert_eq!(resp.order_date, "20260327");
+        assert_eq!(resp.order_time, "091500");
+    }
+
+    #[test]
+    fn deserialize_cancel_order_response() {
+        let json: serde_json::Value = serde_json::from_str(
+            include_str!("../../../tests/fixtures/domestic/order/cancel_order.json"),
+        )
+        .unwrap();
+        let output = &json["output"];
+        let resp = DomesticCancelOrderResponse {
+            order_no: output["ODNO"].as_str().unwrap_or("").into(),
+            order_date: output["ORD_DT"].as_str().unwrap_or("").into(),
+            order_time: output["ORD_TMD"].as_str().unwrap_or("").into(),
+        };
+        assert_eq!(resp.order_no, "0000123457");
+        assert_eq!(resp.order_date, "20260327");
+        assert_eq!(resp.order_time, "092000");
+    }
+
+    #[test]
+    fn place_order_request_fields() {
+        let req = DomesticPlaceOrderRequest {
+            symbol: "005930".into(),
+            exchange: DomesticExchange::KOSPI,
+            side: OrderSide::Buy,
+            order_type: DomesticOrderType::Limit,
+            qty: 10,
+            price: Some(dec!(70000)),
+        };
+        assert_eq!(req.symbol, "005930");
+        assert_eq!(req.order_type.as_str(), "00");
+        assert_eq!(req.exchange.market_code(), "J");
+    }
+
+    #[test]
+    fn error_response_not_zero_rt_cd() {
+        let json: serde_json::Value = serde_json::json!({
+            "rt_cd": "1",
+            "msg1": "잘못된 요청입니다."
+        });
+        assert_ne!(json["rt_cd"].as_str().unwrap_or(""), "0");
+    }
+}

@@ -1,3 +1,4 @@
+pub mod domestic_order;
 pub mod order;
 
 /// 통합 테스트 스킵 매크로

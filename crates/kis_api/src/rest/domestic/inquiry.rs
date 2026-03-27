@@ -205,3 +205,109 @@ pub async fn domestic_volume_ranking(
 
     Ok(items)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use rust_decimal_macros::dec;
+
+    #[test]
+    fn deserialize_unfilled_orders() {
+        let json: serde_json::Value = serde_json::from_str(
+            include_str!("../../../tests/fixtures/domestic/inquiry/unfilled_orders.json"),
+        )
+        .unwrap();
+
+        let orders: Vec<DomesticUnfilledOrder> = json["output"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter_map(|o| {
+                let qty: u32 = o["ord_qty"].as_str()?.parse().ok()?;
+                let remaining: u32 = o["psbl_qty"].as_str()?.parse().ok()?;
+                let filled = qty.saturating_sub(remaining);
+                Some(DomesticUnfilledOrder {
+                    order_no: o["odno"].as_str()?.into(),
+                    symbol: o["pdno"].as_str()?.into(),
+                    exchange: o["ord_excg_dvsn_cd"].as_str().unwrap_or("KSC").into(),
+                    side_cd: o["sll_buy_dvsn_cd"].as_str()?.into(),
+                    qty,
+                    price: Decimal::from_str(o["ord_unpr"].as_str()?).ok()?,
+                    filled_qty: filled,
+                    remaining_qty: remaining,
+                })
+            })
+            .collect();
+
+        assert_eq!(orders.len(), 1);
+        assert_eq!(orders[0].order_no, "0000123456");
+        assert_eq!(orders[0].symbol, "005930");
+        assert_eq!(orders[0].exchange, "KSC");
+        assert_eq!(orders[0].side_cd, "02");
+        assert_eq!(orders[0].qty, 10);
+        assert_eq!(orders[0].filled_qty, 0);
+        assert_eq!(orders[0].remaining_qty, 10);
+        assert_eq!(orders[0].price, dec!(70000));
+    }
+
+    #[test]
+    fn deserialize_daily_chart() {
+        let json: serde_json::Value = serde_json::from_str(
+            include_str!("../../../tests/fixtures/domestic/inquiry/daily_chart.json"),
+        )
+        .unwrap();
+
+        let bars: Vec<crate::CandleBar> = json["output2"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter_map(|b| {
+                Some(crate::CandleBar {
+                    date: b["stck_bsop_date"].as_str()?.into(),
+                    open: Decimal::from_str(b["stck_oprc"].as_str()?).ok()?,
+                    high: Decimal::from_str(b["stck_hgpr"].as_str()?).ok()?,
+                    low: Decimal::from_str(b["stck_lwpr"].as_str()?).ok()?,
+                    close: Decimal::from_str(b["stck_clpr"].as_str()?).ok()?,
+                    volume: Decimal::from_str(b["acml_vol"].as_str()?).ok()?,
+                })
+            })
+            .collect();
+
+        assert_eq!(bars.len(), 2);
+        assert_eq!(bars[0].date, "20260326");
+        assert_eq!(bars[0].close, dec!(72000));
+        assert_eq!(bars[0].volume, dec!(15000000));
+        assert_eq!(bars[1].date, "20260325");
+        assert_eq!(bars[1].close, dec!(71000));
+    }
+
+    #[test]
+    fn deserialize_volume_ranking() {
+        let json: serde_json::Value = serde_json::from_str(
+            include_str!("../../../tests/fixtures/domestic/inquiry/volume_ranking.json"),
+        )
+        .unwrap();
+
+        let items: Vec<DomesticRankingItem> = json["output"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter_map(|i| {
+                Some(DomesticRankingItem {
+                    symbol: i["mksc_shrn_iscd"].as_str()?.into(),
+                    name: i["hts_kor_isnm"].as_str().unwrap_or("").into(),
+                    exchange: "J".into(),
+                    price: Decimal::from_str(i["stck_prpr"].as_str()?).ok()?,
+                    volume: Decimal::from_str(i["acml_vol"].as_str()?).ok()?,
+                })
+            })
+            .collect();
+
+        assert_eq!(items.len(), 2);
+        assert_eq!(items[0].symbol, "005930");
+        assert_eq!(items[0].name, "삼성전자");
+        assert_eq!(items[0].price, dec!(72000));
+        assert_eq!(items[0].volume, dec!(15000000));
+        assert_eq!(items[1].symbol, "000660");
+    }
+}

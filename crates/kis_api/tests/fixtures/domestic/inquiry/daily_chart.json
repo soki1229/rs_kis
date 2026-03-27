@@ -1,0 +1,27 @@
+{
+  "rt_cd": "0",
+  "msg_cd": "APBK0013",
+  "msg1": "조회가 완료되었습니다.",
+  "output1": {
+    "stck_prpr": "72000",
+    "prdy_vrss": "1000"
+  },
+  "output2": [
+    {
+      "stck_bsop_date": "20260326",
+      "stck_oprc": "71000",
+      "stck_hgpr": "72500",
+      "stck_lwpr": "70500",
+      "stck_clpr": "72000",
+      "acml_vol": "15000000"
+    },
+    {
+      "stck_bsop_date": "20260325",
+      "stck_oprc": "70000",
+      "stck_hgpr": "71200",
+      "stck_lwpr": "69800",
+      "stck_clpr": "71000",
+      "acml_vol": "12000000"
+    }
+  ]
+}
