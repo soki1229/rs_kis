@@ -42,12 +42,12 @@ fn full_pipeline_happy_path() {
 
     // 4. Signal decision
     let signal = RuleSignal { direction: Direction::Long, strength: 0.80 };
-    let decision = SignalDecision::evaluate_without_llm(
+    let trace = SignalDecision::evaluate_without_llm(
         score,
         Some(signal.clone()),
         cfg.signal.rule_strength_threshold,
     );
-    assert!(matches!(decision, SignalDecision::Enter { .. }));
+    assert!(matches!(trace.decision, SignalDecision::Enter { .. }));
 
     // 5. Risk sizing
     let size = calculate_size(&RiskSizerInput {
