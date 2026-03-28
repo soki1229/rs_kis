@@ -248,6 +248,7 @@ pub async fn domestic_daily_chart(
         ChartPeriod::Monthly => "M",
     };
     let adj = if req.adj_price { "1" } else { "0" };
+    let mkt_div = req.exchange.market_code();
 
     let resp = client
         .get(format!(
@@ -259,7 +260,7 @@ pub async fn domestic_daily_chart(
         .header("appsecret", &config.app_secret)
         .header("tr_id", "FHKST03010100")
         .query(&[
-            ("FID_COND_MRKT_DIV_CODE", "J"),
+            ("FID_COND_MRKT_DIV_CODE", mkt_div),
             ("FID_INPUT_ISCD", req.symbol.as_str()),
             ("FID_INPUT_DATE_1", ""),
             ("FID_INPUT_DATE_2", ""),

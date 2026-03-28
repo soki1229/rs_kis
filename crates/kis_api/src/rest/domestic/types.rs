@@ -115,6 +115,8 @@ pub struct DomesticDailyChartRequest {
     pub period: crate::ChartPeriod,
     /// 수정주가 사용 여부
     pub adj_price: bool,
+    /// 시장 구분 (KOSPI = "J", KOSDAQ = "Q"). 기본값: KOSPI
+    pub exchange: DomesticExchange,
 }
 
 /// 국내주식 체결내역 조회 요청
