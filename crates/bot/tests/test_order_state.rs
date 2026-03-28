@@ -21,7 +21,10 @@ fn submitted_to_fully_filled() {
 fn submitted_to_partially_filled_to_fully_filled() {
     let mut sm = OrderStateMachine::new();
     sm.transition(OrderState::Submitted).unwrap();
-    sm.transition(OrderState::PartiallyFilled { filled_qty: dec!(1) }).unwrap();
+    sm.transition(OrderState::PartiallyFilled {
+        filled_qty: dec!(1),
+    })
+    .unwrap();
     sm.transition(OrderState::FullyFilled).unwrap();
     assert_eq!(sm.state(), &OrderState::FullyFilled);
 }
@@ -30,8 +33,14 @@ fn submitted_to_partially_filled_to_fully_filled() {
 fn partially_filled_to_cancelled_partial() {
     let mut sm = OrderStateMachine::new();
     sm.transition(OrderState::Submitted).unwrap();
-    sm.transition(OrderState::PartiallyFilled { filled_qty: dec!(1) }).unwrap();
-    sm.transition(OrderState::CancelledPartial { filled_qty: dec!(1) }).unwrap();
+    sm.transition(OrderState::PartiallyFilled {
+        filled_qty: dec!(1),
+    })
+    .unwrap();
+    sm.transition(OrderState::CancelledPartial {
+        filled_qty: dec!(1),
+    })
+    .unwrap();
     assert!(matches!(sm.state(), OrderState::CancelledPartial { .. }));
 }
 

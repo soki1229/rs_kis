@@ -5,8 +5,8 @@ pub enum HardBlockReason {
     FomcOrCpi,
     OpenBlackout,
     CloseBlackout,
-    DailyGainExceeded,   // > +10%
-    DailyLossExceeded,   // < -3%
+    DailyGainExceeded, // > +10%
+    DailyLossExceeded, // < -3%
 }
 
 pub struct HardBlockInput {

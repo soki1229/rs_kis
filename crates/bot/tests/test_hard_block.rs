@@ -56,5 +56,8 @@ fn blocks_large_daily_loss() {
 fn passes_normal_conditions() {
     let checker = HardBlockChecker;
     let input = make_input(2.0, 60, 300, false);
-    assert!(checker.check(&input).is_none(), "normal conditions should pass");
+    assert!(
+        checker.check(&input).is_none(),
+        "normal conditions should pass"
+    );
 }

@@ -3,10 +3,10 @@
 use kis_bot::{
     config::{BotConfig, ProfileName},
     monitoring::alert::{AlertRouter, AlertSeverity},
-    monitoring::strategy_monitor::{MonitoringInput, evaluate_monitoring, MonitoringDecision},
-    qualification::setup_score::{SetupScoreInput, calculate_setup_score},
-    regime::{RegimeInput, classify_regime},
-    risk::{PortfolioContext, RiskSizerInput, calculate_size, strength_size_factor},
+    monitoring::strategy_monitor::{evaluate_monitoring, MonitoringDecision, MonitoringInput},
+    qualification::setup_score::{calculate_setup_score, SetupScoreInput},
+    regime::{classify_regime, RegimeInput},
+    risk::{calculate_size, strength_size_factor, PortfolioContext, RiskSizerInput},
     signal::SignalDecision,
     types::*,
 };
@@ -20,8 +20,10 @@ fn full_pipeline_happy_path() {
 
     // 2. Regime 판정
     let regime = classify_regime(&RegimeInput {
-        ma5: 100.0, ma20: 98.0,
-        daily_change_pct: 0.8, volume_ratio: 1.0,
+        ma5: 100.0,
+        ma20: 98.0,
+        daily_change_pct: 0.8,
+        volume_ratio: 1.0,
     });
     assert_eq!(regime, MarketRegime::Trending);
 
@@ -41,7 +43,10 @@ fn full_pipeline_happy_path() {
     assert_eq!(score, 100);
 
     // 4. Signal decision
-    let signal = RuleSignal { direction: Direction::Long, strength: 0.80 };
+    let signal = RuleSignal {
+        direction: Direction::Long,
+        strength: 0.80,
+    };
     let trace = SignalDecision::evaluate_without_llm(
         score,
         Some(signal.clone()),
@@ -96,7 +101,9 @@ fn monitoring_force_conservative_on_drawdown() {
         conservative_7d_r: 0.0,
     };
     let decisions = evaluate_monitoring(&input);
-    assert!(decisions.iter().any(|d| matches!(d, MonitoringDecision::ForceConservative { .. })));
+    assert!(decisions
+        .iter()
+        .any(|d| matches!(d, MonitoringDecision::ForceConservative { .. })));
 }
 
 #[test]

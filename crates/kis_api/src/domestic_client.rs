@@ -51,7 +51,8 @@ impl KisDomesticApi for KisDomesticClient {
 
     async fn domestic_holidays(&self, country: &str) -> Result<Vec<Holiday>, KisError> {
         let token = self.token_manager.token().await?;
-        crate::rest::overseas::quote::corporate::holidays(&self.http, &self.config, &token, country).await
+        crate::rest::overseas::quote::corporate::holidays(&self.http, &self.config, &token, country)
+            .await
     }
 
     async fn domestic_place_order(

@@ -28,7 +28,11 @@ impl RuleEngine {
         }
 
         // 방향 결정: 분봉 방향 다수결
-        let up_count = input.recent_candle_directions.iter().filter(|&&d| d).count();
+        let up_count = input
+            .recent_candle_directions
+            .iter()
+            .filter(|&&d| d)
+            .count();
         let direction = if up_count * 2 >= input.recent_candle_directions.len() {
             Direction::Long
         } else {

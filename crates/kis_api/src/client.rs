@@ -300,7 +300,10 @@ impl KisApi for KisClient {
         self.news(symbol).await
     }
 
-    async fn order_history(&self, req: OrderHistoryRequest) -> Result<Vec<OrderHistoryItem>, KisError> {
+    async fn order_history(
+        &self,
+        req: OrderHistoryRequest,
+    ) -> Result<Vec<OrderHistoryItem>, KisError> {
         self.order_history(req).await
     }
 }

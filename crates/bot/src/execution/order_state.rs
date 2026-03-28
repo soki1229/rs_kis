@@ -13,7 +13,9 @@ pub struct OrderStateMachine {
 
 impl OrderStateMachine {
     pub fn new() -> Self {
-        Self { state: OrderState::PendingSubmit }
+        Self {
+            state: OrderState::PendingSubmit,
+        }
     }
 
     pub fn state(&self) -> &OrderState {
@@ -24,9 +26,9 @@ impl OrderStateMachine {
         matches!(
             self.state,
             OrderState::FullyFilled
-            | OrderState::CancelledPartial { .. }
-            | OrderState::Cancelled
-            | OrderState::Failed { .. }
+                | OrderState::CancelledPartial { .. }
+                | OrderState::Cancelled
+                | OrderState::Failed { .. }
         )
     }
 
@@ -42,13 +44,16 @@ impl OrderStateMachine {
         let valid = matches!(
             (&self.state, &next),
             (OrderState::PendingSubmit, OrderState::Submitted)
-            | (OrderState::PendingSubmit, OrderState::Failed { .. })
-            | (OrderState::Submitted, OrderState::PartiallyFilled { .. })
-            | (OrderState::Submitted, OrderState::FullyFilled)
-            | (OrderState::Submitted, OrderState::Cancelled)
-            | (OrderState::Submitted, OrderState::Failed { .. })
-            | (OrderState::PartiallyFilled { .. }, OrderState::FullyFilled)
-            | (OrderState::PartiallyFilled { .. }, OrderState::CancelledPartial { .. })
+                | (OrderState::PendingSubmit, OrderState::Failed { .. })
+                | (OrderState::Submitted, OrderState::PartiallyFilled { .. })
+                | (OrderState::Submitted, OrderState::FullyFilled)
+                | (OrderState::Submitted, OrderState::Cancelled)
+                | (OrderState::Submitted, OrderState::Failed { .. })
+                | (OrderState::PartiallyFilled { .. }, OrderState::FullyFilled)
+                | (
+                    OrderState::PartiallyFilled { .. },
+                    OrderState::CancelledPartial { .. }
+                )
         );
 
         if !valid {

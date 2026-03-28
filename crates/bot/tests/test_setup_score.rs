@@ -1,4 +1,4 @@
-use kis_bot::qualification::setup_score::{SetupScoreInput, calculate_setup_score};
+use kis_bot::qualification::setup_score::{calculate_setup_score, SetupScoreInput};
 use kis_bot::types::MarketRegime;
 
 fn base_input() -> SetupScoreInput {

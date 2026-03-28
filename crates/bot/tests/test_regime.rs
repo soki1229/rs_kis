@@ -1,4 +1,4 @@
-use kis_bot::regime::{RegimeInput, classify_regime};
+use kis_bot::regime::{classify_regime, RegimeInput};
 use kis_bot::types::MarketRegime;
 
 #[test]

@@ -10,14 +10,20 @@ mod client;
 mod domestic_client;
 #[cfg(any(test, feature = "test-utils"))]
 mod mock_domestic;
-#[cfg(any(test, feature = "test-utils"))]
-pub use mock_domestic::MockDomesticKisApi;
 pub use auth::TokenManager;
 pub use client::KisClient;
-pub use domestic_client::KisDomesticClient;
 pub use config::{KisConfig, KisConfigBuilder};
+pub use domestic_client::KisDomesticClient;
 pub use error::KisError;
 pub use event::{KisEvent, OrderConfirmData, QuoteData, TransactionData};
+#[cfg(any(test, feature = "test-utils"))]
+pub use mock_domestic::MockDomesticKisApi;
+pub use rest::domestic::{
+    DomesticCancelOrderRequest, DomesticCancelOrderResponse, DomesticDailyChartRequest,
+    DomesticExchange, DomesticOrderHistoryItem, DomesticOrderHistoryRequest, DomesticOrderType,
+    DomesticPlaceOrderRequest, DomesticPlaceOrderResponse, DomesticRankingItem,
+    DomesticUnfilledOrder,
+};
 pub use rest::overseas::analysis::market::{
     HighLowKind, MarketCapItem, NewHighLowItem, TradeTurnoverItem, VolumePowerItem,
 };
@@ -43,10 +49,3 @@ pub use rest::overseas::types::{Exchange, OrderSide, OrderType};
 pub use stream::{EventReceiver, KisStream, SubscriptionKind};
 pub use traits::KisApi;
 pub use traits::KisDomesticApi;
-pub use rest::domestic::{
-    DomesticCancelOrderRequest, DomesticCancelOrderResponse,
-    DomesticDailyChartRequest, DomesticExchange, DomesticOrderHistoryItem,
-    DomesticOrderHistoryRequest, DomesticOrderType,
-    DomesticPlaceOrderRequest, DomesticPlaceOrderResponse,
-    DomesticRankingItem, DomesticUnfilledOrder,
-};

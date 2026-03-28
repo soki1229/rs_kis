@@ -286,9 +286,9 @@ mod tests {
 
     #[test]
     fn deserialize_unfilled_orders() {
-        let json: serde_json::Value = serde_json::from_str(
-            include_str!("../../../tests/fixtures/domestic/inquiry/unfilled_orders.json"),
-        )
+        let json: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../tests/fixtures/domestic/inquiry/unfilled_orders.json"
+        ))
         .unwrap();
 
         let orders: Vec<DomesticUnfilledOrder> = json["output"]
@@ -325,9 +325,9 @@ mod tests {
 
     #[test]
     fn deserialize_daily_chart() {
-        let json: serde_json::Value = serde_json::from_str(
-            include_str!("../../../tests/fixtures/domestic/inquiry/daily_chart.json"),
-        )
+        let json: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../tests/fixtures/domestic/inquiry/daily_chart.json"
+        ))
         .unwrap();
 
         let bars: Vec<crate::CandleBar> = json["output2"]
@@ -356,9 +356,9 @@ mod tests {
 
     #[test]
     fn deserialize_volume_ranking() {
-        let json: serde_json::Value = serde_json::from_str(
-            include_str!("../../../tests/fixtures/domestic/inquiry/volume_ranking.json"),
-        )
+        let json: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../tests/fixtures/domestic/inquiry/volume_ranking.json"
+        ))
         .unwrap();
 
         let items: Vec<DomesticRankingItem> = json["output"]

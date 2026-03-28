@@ -10,7 +10,10 @@ fn score_below_60_is_rejected() {
 
 #[test]
 fn score_60_79_rule_only_passes_with_strong_signal() {
-    let signal = RuleSignal { direction: Direction::Long, strength: 0.70 };
+    let signal = RuleSignal {
+        direction: Direction::Long,
+        strength: 0.70,
+    };
     let trace = SignalDecision::evaluate_without_llm(70, Some(signal), 0.65);
     assert!(matches!(trace.decision, SignalDecision::Enter { .. }));
     assert_eq!(trace.path, DecisionPath::RuleOnly);
@@ -19,7 +22,10 @@ fn score_60_79_rule_only_passes_with_strong_signal() {
 
 #[test]
 fn score_60_79_rule_only_fails_with_weak_signal() {
-    let signal = RuleSignal { direction: Direction::Long, strength: 0.60 };
+    let signal = RuleSignal {
+        direction: Direction::Long,
+        strength: 0.60,
+    };
     let trace = SignalDecision::evaluate_without_llm(70, Some(signal), 0.65);
     assert!(matches!(trace.decision, SignalDecision::Rejected { .. }));
     assert_eq!(trace.path, DecisionPath::RuleOnly);
@@ -27,7 +33,10 @@ fn score_60_79_rule_only_fails_with_weak_signal() {
 
 #[test]
 fn llm_block_overrides_strong_rule() {
-    let signal = RuleSignal { direction: Direction::Long, strength: 0.90 };
+    let signal = RuleSignal {
+        direction: Direction::Long,
+        strength: 0.90,
+    };
     let trace = SignalDecision::evaluate_with_llm(85, Some(signal), 0.55, LlmVerdict::Block);
     assert!(matches!(trace.decision, SignalDecision::Rejected { .. }));
     assert_eq!(trace.path, DecisionPath::RuleAndLlm);
@@ -36,7 +45,10 @@ fn llm_block_overrides_strong_rule() {
 
 #[test]
 fn llm_enter_with_strong_rule_enters() {
-    let signal = RuleSignal { direction: Direction::Long, strength: 0.80 };
+    let signal = RuleSignal {
+        direction: Direction::Long,
+        strength: 0.80,
+    };
     let trace = SignalDecision::evaluate_with_llm(90, Some(signal), 0.55, LlmVerdict::Enter);
     assert!(matches!(trace.decision, SignalDecision::Enter { .. }));
     assert_eq!(trace.path, DecisionPath::RuleAndLlm);

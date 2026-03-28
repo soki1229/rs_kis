@@ -1,9 +1,6 @@
 #![cfg(any(test, feature = "test-utils"))]
 
-use crate::{
-    rest::domestic::types::*,
-    CandleBar, Holiday, KisDomesticApi, KisError, KisStream,
-};
+use crate::{rest::domestic::types::*, CandleBar, Holiday, KisDomesticApi, KisError, KisStream};
 
 /// 테스트용 `KisDomesticApi` mock — 설정 가능한 캔들 응답 반환
 ///

@@ -16,7 +16,8 @@ fn soft_kill_switch_persists_to_file() {
     let path = dir.path().join("ks").to_str().unwrap().to_string();
     let ks = KillSwitch::new(path.clone());
 
-    ks.activate(KillSwitchMode::Soft, "KIS API 3 errors", "HTTP 503 x3").unwrap();
+    ks.activate(KillSwitchMode::Soft, "KIS API 3 errors", "HTTP 503 x3")
+        .unwrap();
 
     let ks2 = KillSwitch::new(path);
     assert_eq!(ks2.current_mode(), Some(KillSwitchMode::Soft));
@@ -28,7 +29,8 @@ fn hard_kill_switch_persists() {
     let path = dir.path().join("ks").to_str().unwrap().to_string();
     let ks = KillSwitch::new(path.clone());
 
-    ks.activate(KillSwitchMode::Hard, "balance mismatch", "").unwrap();
+    ks.activate(KillSwitchMode::Hard, "balance mismatch", "")
+        .unwrap();
     assert_eq!(ks.current_mode(), Some(KillSwitchMode::Hard));
 }
 
@@ -51,7 +53,8 @@ fn file_content_includes_reason() {
     let path = dir.path().join("ks").to_str().unwrap().to_string();
     let ks = KillSwitch::new(path.clone());
 
-    ks.activate(KillSwitchMode::Soft, "KIS API error", "detail info").unwrap();
+    ks.activate(KillSwitchMode::Soft, "KIS API error", "detail info")
+        .unwrap();
 
     let content = std::fs::read_to_string(&path).unwrap();
     assert!(content.contains("KIS API error"));

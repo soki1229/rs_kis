@@ -1,5 +1,4 @@
 use kis_bot::types::*;
-use serde_json;
 
 #[test]
 fn market_regime_serde_roundtrip() {
@@ -12,7 +11,9 @@ fn market_regime_serde_roundtrip() {
 #[test]
 fn order_state_partially_filled() {
     use rust_decimal_macros::dec;
-    let s = OrderState::PartiallyFilled { filled_qty: dec!(1.5) };
+    let s = OrderState::PartiallyFilled {
+        filled_qty: dec!(1.5),
+    };
     let json = serde_json::to_string(&s).unwrap();
     let back: OrderState = serde_json::from_str(&json).unwrap();
     assert!(matches!(back, OrderState::PartiallyFilled { .. }));
@@ -26,6 +27,9 @@ fn kill_switch_mode_debug() {
 
 #[test]
 fn rule_signal_strength_range() {
-    let s = RuleSignal { direction: Direction::Long, strength: 0.75 };
+    let s = RuleSignal {
+        direction: Direction::Long,
+        strength: 0.75,
+    };
     assert!(s.strength >= 0.0 && s.strength <= 1.0);
 }

@@ -1,4 +1,4 @@
-use kis_bot::discovery::{Watchlist, AddReason};
+use kis_bot::discovery::{AddReason, Watchlist};
 
 #[test]
 fn add_and_contains() {
@@ -40,5 +40,8 @@ fn duplicate_add_refreshes_ttl() {
     wl.add_with_time("AAPL".to_string(), AddReason::VolumeSurge, old_time);
     wl.add("AAPL".to_string(), AddReason::News);
     wl.remove_expired();
-    assert!(wl.contains("AAPL"), "re-added entry should survive expiry check");
+    assert!(
+        wl.contains("AAPL"),
+        "re-added entry should survive expiry check"
+    );
 }

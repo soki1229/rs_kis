@@ -1,6 +1,6 @@
 use kis_bot::bot::BotHandle;
-use tokio_util::sync::CancellationToken;
 use tokio::time::{timeout, Duration};
+use tokio_util::sync::CancellationToken;
 
 #[tokio::test]
 async fn cancellation_token_stops_runner() {

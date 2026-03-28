@@ -1,8 +1,8 @@
+use crate::error::BotError;
+use crate::types::LlmVerdict;
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use std::time::Duration;
-use crate::error::BotError;
-use crate::types::LlmVerdict;
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct LlmResponse {
@@ -46,7 +46,8 @@ impl LlmEngine {
     }
 
     pub async fn evaluate(&self, input: &LlmInput) -> Result<LlmResponse, BotError> {
-        let news_text = input.news_headlines
+        let news_text = input
+            .news_headlines
             .iter()
             .enumerate()
             .map(|(i, h)| format!("  {}. {}", i + 1, h))
@@ -75,7 +76,8 @@ impl LlmEngine {
             "messages": [{"role": "user", "content": prompt}]
         });
 
-        let resp = self.client
+        let resp = self
+            .client
             .post("https://api.anthropic.com/v1/messages")
             .header("x-api-key", &self.api_key)
             .header("anthropic-version", "2023-06-01")
@@ -89,7 +91,10 @@ impl LlmEngine {
         if !resp.status().is_success() {
             let status = resp.status();
             let text = resp.text().await.unwrap_or_default();
-            return Err(BotError::Llm(format!("Anthropic API error {}: {}", status, text)));
+            return Err(BotError::Llm(format!(
+                "Anthropic API error {}: {}",
+                status, text
+            )));
         }
 
         let raw: serde_json::Value = resp.json().await.map_err(BotError::Http)?;

@@ -1,4 +1,4 @@
-use kis_bot::signal::rule_engine::{RuleEngineInput, RuleEngine};
+use kis_bot::signal::rule_engine::{RuleEngine, RuleEngineInput};
 use kis_bot::types::Direction;
 
 fn consistent_long_input() -> RuleEngineInput {
@@ -16,7 +16,11 @@ fn strong_long_signal_high_strength() {
     assert!(signal.is_some());
     let s = signal.unwrap();
     assert_eq!(s.direction, Direction::Long);
-    assert!(s.strength >= 0.75, "consistent bullish should be strong: {}", s.strength);
+    assert!(
+        s.strength >= 0.75,
+        "consistent bullish should be strong: {}",
+        s.strength
+    );
 }
 
 #[test]
@@ -30,7 +34,11 @@ fn weak_signal_below_threshold() {
     };
     let signal = engine.evaluate(&input);
     if let Some(s) = signal {
-        assert!(s.strength < 0.60, "mixed signal should be weak: {}", s.strength);
+        assert!(
+            s.strength < 0.60,
+            "mixed signal should be weak: {}",
+            s.strength
+        );
     }
 }
 

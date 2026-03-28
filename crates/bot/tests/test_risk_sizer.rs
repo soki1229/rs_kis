@@ -1,5 +1,4 @@
-use kis_bot::risk::{PortfolioContext, RiskSizerInput, calculate_size};
-use rust_decimal::Decimal;
+use kis_bot::risk::{calculate_size, PortfolioContext, RiskSizerInput};
 use rust_decimal_macros::dec;
 
 fn default_ctx() -> PortfolioContext {
@@ -45,13 +44,17 @@ fn volatile_regime_halves_size() {
     };
     let volatile_size = calculate_size(&input, &default_ctx());
 
-    let trending_input = RiskSizerInput { regime_factor: dec!(1.0), ..input };
+    let trending_input = RiskSizerInput {
+        regime_factor: dec!(1.0),
+        ..input
+    };
     let trending_size = calculate_size(&trending_input, &default_ctx());
 
     let ratio = volatile_size / trending_size;
     assert!(
         ratio > dec!(0.45) && ratio < dec!(0.55),
-        "volatile should be ~50% of trending, got ratio {}", ratio
+        "volatile should be ~50% of trending, got ratio {}",
+        ratio
     );
 }
 
@@ -116,7 +119,11 @@ fn high_drawdown_reduces_size() {
     assert!(reduced < normal, "drawdown should reduce size");
     // scale factor 0.5 → reduced ≈ normal / 2
     let ratio = reduced / normal;
-    assert!(ratio > dec!(0.45) && ratio < dec!(0.55), "ratio = {}", ratio);
+    assert!(
+        ratio > dec!(0.45) && ratio < dec!(0.55),
+        "ratio = {}",
+        ratio
+    );
 }
 
 #[test]

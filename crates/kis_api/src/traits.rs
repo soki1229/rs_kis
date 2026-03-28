@@ -39,7 +39,10 @@ pub trait KisApi: Send + Sync {
     async fn news(&self, symbol: &str) -> Result<Vec<NewsItem>, KisError>;
 
     /// 해외주식 체결내역 조회 (poll_until_filled에서 체결 vs 취소 구분용)
-    async fn order_history(&self, req: OrderHistoryRequest) -> Result<Vec<OrderHistoryItem>, KisError>;
+    async fn order_history(
+        &self,
+        req: OrderHistoryRequest,
+    ) -> Result<Vec<OrderHistoryItem>, KisError>;
 }
 
 use crate::rest::domestic::{
@@ -159,18 +162,53 @@ mod tests {
 
     #[test]
     fn kis_domestic_api_is_object_safe() {
+        #[allow(dead_code)]
         struct MockDomestic;
 
         #[async_trait::async_trait]
         impl KisDomesticApi for MockDomestic {
-            async fn domestic_stream(&self) -> Result<KisStream, KisError> { unimplemented!() }
-            async fn domestic_volume_ranking(&self, _: &DomesticExchange, _: u32) -> Result<Vec<DomesticRankingItem>, KisError> { Ok(vec![]) }
-            async fn domestic_holidays(&self, _: &str) -> Result<Vec<Holiday>, KisError> { Ok(vec![]) }
-            async fn domestic_place_order(&self, _: DomesticPlaceOrderRequest) -> Result<DomesticPlaceOrderResponse, KisError> { unimplemented!() }
-            async fn domestic_cancel_order(&self, _: DomesticCancelOrderRequest) -> Result<DomesticCancelOrderResponse, KisError> { unimplemented!() }
-            async fn domestic_daily_chart(&self, _: DomesticDailyChartRequest) -> Result<Vec<CandleBar>, KisError> { Ok(vec![]) }
-            async fn domestic_unfilled_orders(&self) -> Result<Vec<DomesticUnfilledOrder>, KisError> { Ok(vec![]) }
-            async fn domestic_order_history(&self, _: DomesticOrderHistoryRequest) -> Result<Vec<DomesticOrderHistoryItem>, KisError> { Ok(vec![]) }
+            async fn domestic_stream(&self) -> Result<KisStream, KisError> {
+                unimplemented!()
+            }
+            async fn domestic_volume_ranking(
+                &self,
+                _: &DomesticExchange,
+                _: u32,
+            ) -> Result<Vec<DomesticRankingItem>, KisError> {
+                Ok(vec![])
+            }
+            async fn domestic_holidays(&self, _: &str) -> Result<Vec<Holiday>, KisError> {
+                Ok(vec![])
+            }
+            async fn domestic_place_order(
+                &self,
+                _: DomesticPlaceOrderRequest,
+            ) -> Result<DomesticPlaceOrderResponse, KisError> {
+                unimplemented!()
+            }
+            async fn domestic_cancel_order(
+                &self,
+                _: DomesticCancelOrderRequest,
+            ) -> Result<DomesticCancelOrderResponse, KisError> {
+                unimplemented!()
+            }
+            async fn domestic_daily_chart(
+                &self,
+                _: DomesticDailyChartRequest,
+            ) -> Result<Vec<CandleBar>, KisError> {
+                Ok(vec![])
+            }
+            async fn domestic_unfilled_orders(
+                &self,
+            ) -> Result<Vec<DomesticUnfilledOrder>, KisError> {
+                Ok(vec![])
+            }
+            async fn domestic_order_history(
+                &self,
+                _: DomesticOrderHistoryRequest,
+            ) -> Result<Vec<DomesticOrderHistoryItem>, KisError> {
+                Ok(vec![])
+            }
         }
 
         let _: Option<Box<dyn KisDomesticApi>> = None;

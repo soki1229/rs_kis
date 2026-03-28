@@ -1,4 +1,4 @@
-use kis_bot::position::{ExitDecision, PositionState, evaluate_exit};
+use kis_bot::position::{evaluate_exit, ExitDecision, PositionState};
 use kis_bot::types::MarketRegime;
 use rust_decimal::Decimal;
 use rust_decimal_macros::dec;
@@ -63,6 +63,12 @@ fn no_exit_when_in_normal_range() {
 #[test]
 fn trailing_stop_price_for_trending_regime() {
     use kis_bot::position::calculate_trailing_stop;
-    let stop = calculate_trailing_stop(dec!(120), dec!(5), &MarketRegime::Trending, dec!(2.0), dec!(1.0));
+    let stop = calculate_trailing_stop(
+        dec!(120),
+        dec!(5),
+        &MarketRegime::Trending,
+        dec!(2.0),
+        dec!(1.0),
+    );
     assert_eq!(stop, dec!(110));
 }

@@ -35,7 +35,10 @@ pub struct Watchlist {
 
 impl Watchlist {
     pub fn new(max_size: usize) -> Self {
-        Self { entries: HashMap::new(), max_size }
+        Self {
+            entries: HashMap::new(),
+            max_size,
+        }
     }
 
     pub fn add(&mut self, symbol: String, reason: AddReason) {
@@ -54,12 +57,15 @@ impl Watchlist {
         if self.entries.len() >= self.max_size {
             return;
         }
-        self.entries.insert(symbol.clone(), WatchlistEntry {
-            symbol,
-            reason,
-            added_at: time,
-            event_end: None,
-        });
+        self.entries.insert(
+            symbol.clone(),
+            WatchlistEntry {
+                symbol,
+                reason,
+                added_at: time,
+                event_end: None,
+            },
+        );
     }
 
     pub fn extend_event_window(&mut self, symbol: &str, end: DateTime<Utc>) {

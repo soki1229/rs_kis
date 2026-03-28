@@ -9,17 +9,16 @@ async fn connect_creates_schema() {
     let pool = connect(&db_path).await.expect("connect should succeed");
 
     // orders 테이블 존재 확인
-    let row: (i64,) = sqlx::query_as(
-        "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='orders'"
-    )
-    .fetch_one(&pool)
-    .await
-    .unwrap();
+    let row: (i64,) =
+        sqlx::query_as("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='orders'")
+            .fetch_one(&pool)
+            .await
+            .unwrap();
     assert_eq!(row.0, 1, "orders table should exist");
 
     // positions 테이블 존재 확인
     let row: (i64,) = sqlx::query_as(
-        "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='positions'"
+        "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='positions'",
     )
     .fetch_one(&pool)
     .await
@@ -37,7 +36,7 @@ async fn connect_idempotent() {
     let pool2 = connect(&db_path).await.unwrap();
 
     let row: (i64,) = sqlx::query_as(
-        "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='signal_log'"
+        "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='signal_log'",
     )
     .fetch_one(&pool2)
     .await

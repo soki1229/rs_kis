@@ -1,6 +1,6 @@
-use chrono::{TimeZone, Utc};
 use crate::error::BotError;
 use crate::types::{KillSwitchFile, KillSwitchMode};
+use chrono::{TimeZone, Utc};
 
 pub struct KillSwitch {
     path: String,
@@ -19,7 +19,12 @@ impl KillSwitch {
     }
 
     /// Kill Switch 발동. 파일에 JSON으로 기록.
-    pub fn activate(&self, mode: KillSwitchMode, reason: &str, details: &str) -> Result<(), BotError> {
+    pub fn activate(
+        &self,
+        mode: KillSwitchMode,
+        reason: &str,
+        details: &str,
+    ) -> Result<(), BotError> {
         let kst = chrono::FixedOffset::east_opt(9 * 3600)
             .unwrap()
             .from_utc_datetime(&Utc::now().naive_utc());

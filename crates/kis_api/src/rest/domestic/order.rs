@@ -4,8 +4,8 @@
 // - 취소: POST /uapi/domestic-stock/v1/trading/order-rvsecncl (tr_id: TTTC0803U)
 
 use super::types::*;
-use crate::{KisConfig, KisError, OrderSide};
 use crate::rest::overseas::types::split_account;
+use crate::{KisConfig, KisError, OrderSide};
 use reqwest::Client;
 use serde_json::json;
 
@@ -32,7 +32,10 @@ pub async fn domestic_place_order(
     });
 
     let resp = client
-        .post(format!("{}/uapi/domestic-stock/v1/trading/order-cash", config.rest_url))
+        .post(format!(
+            "{}/uapi/domestic-stock/v1/trading/order-cash",
+            config.rest_url
+        ))
         .header("authorization", format!("Bearer {}", token))
         .header("appkey", &config.app_key)
         .header("appsecret", &config.app_secret)
@@ -43,10 +46,7 @@ pub async fn domestic_place_order(
         .await
         .map_err(KisError::Network)?;
 
-    let json: serde_json::Value = resp
-        .json()
-        .await
-        .map_err(KisError::Network)?;
+    let json: serde_json::Value = resp.json().await.map_err(KisError::Network)?;
 
     let rt_cd = json["rt_cd"].as_str().unwrap_or("");
     if rt_cd != "0" {
@@ -85,7 +85,10 @@ pub async fn domestic_cancel_order(
     });
 
     let resp = client
-        .post(format!("{}/uapi/domestic-stock/v1/trading/order-rvsecncl", config.rest_url))
+        .post(format!(
+            "{}/uapi/domestic-stock/v1/trading/order-rvsecncl",
+            config.rest_url
+        ))
         .header("authorization", format!("Bearer {}", token))
         .header("appkey", &config.app_key)
         .header("appsecret", &config.app_secret)
@@ -119,9 +122,9 @@ mod tests {
 
     #[test]
     fn deserialize_place_order_response() {
-        let json: serde_json::Value = serde_json::from_str(
-            include_str!("../../../tests/fixtures/domestic/order/place_order.json"),
-        )
+        let json: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../tests/fixtures/domestic/order/place_order.json"
+        ))
         .unwrap();
         let output = &json["output"];
         let resp = DomesticPlaceOrderResponse {
@@ -136,9 +139,9 @@ mod tests {
 
     #[test]
     fn deserialize_cancel_order_response() {
-        let json: serde_json::Value = serde_json::from_str(
-            include_str!("../../../tests/fixtures/domestic/order/cancel_order.json"),
-        )
+        let json: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../tests/fixtures/domestic/order/cancel_order.json"
+        ))
         .unwrap();
         let output = &json["output"];
         let resp = DomesticCancelOrderResponse {

@@ -558,8 +558,14 @@ mod tests {
     #[test]
     fn domestic_subscription_kind_maps_to_h0stcnt0() {
         // Verify that DomesticPrice maps to the correct KIS TR ID
-        assert_eq!(subscription_tr_id(SubscriptionKind::DomesticPrice), "H0STCNT0");
-        assert_eq!(subscription_tr_id(SubscriptionKind::DomesticOrderbook), "H0STASP0");
+        assert_eq!(
+            subscription_tr_id(SubscriptionKind::DomesticPrice),
+            "H0STCNT0"
+        );
+        assert_eq!(
+            subscription_tr_id(SubscriptionKind::DomesticOrderbook),
+            "H0STASP0"
+        );
     }
 
     // Helper exposed only for tests:
@@ -577,9 +583,9 @@ mod tests {
         let mut fields = vec![""; 21];
         fields[0] = "005930"; // 삼성전자
         fields[1] = "093000"; // 09:30:00 KST
-        fields[2] = "75400";  // 주식현재가
-        fields[9] = "300";    // 체결거래량
-        fields[20] = "1";     // 체결구분: 1=매수
+        fields[2] = "75400"; // 주식현재가
+        fields[9] = "300"; // 체결거래량
+        fields[20] = "1"; // 체결구분: 1=매수
         let msg = format!("0|H0STCNT0|1|{}", fields.join("^"));
 
         let result = parse_ws_message(&msg);
@@ -617,10 +623,10 @@ mod tests {
         let mut fields = vec![""; 15];
         fields[0] = "005930"; // 삼성전자
         fields[1] = "093000"; // 09:30:00 KST
-        fields[3] = "75500";  // 매도호가1
-        fields[4] = "75400";  // 매수호가1
-        fields[13] = "1200";  // 매도호가잔량1
-        fields[14] = "800";   // 매수호가잔량1
+        fields[3] = "75500"; // 매도호가1
+        fields[4] = "75400"; // 매수호가1
+        fields[13] = "1200"; // 매도호가잔량1
+        fields[14] = "800"; // 매수호가잔량1
         let msg = format!("0|H0STASP0|1|{}", fields.join("^"));
 
         let result = parse_ws_message(&msg);

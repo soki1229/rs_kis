@@ -14,7 +14,10 @@ pub enum RecoveryOutcome {
     /// UNRECONCILED_FILL: DB 상태만 갱신하고 계속 진행
     AutoFixed { count: usize },
     /// Kill Switch 발동 필요
-    Fail { code: RecoveryFailureCode, detail: String },
+    Fail {
+        code: RecoveryFailureCode,
+        detail: String,
+    },
 }
 
 pub struct RecoveryInput {
@@ -69,7 +72,9 @@ pub fn run_recovery_check(input: &RecoveryInput) -> RecoveryOutcome {
 
     // UNRECONCILED_FILL: 자동 복구 (Kill Switch 없음)
     if input.unreconciled_fill_count > 0 {
-        return RecoveryOutcome::AutoFixed { count: input.unreconciled_fill_count };
+        return RecoveryOutcome::AutoFixed {
+            count: input.unreconciled_fill_count,
+        };
     }
 
     RecoveryOutcome::Pass

@@ -1,6 +1,6 @@
+use crate::error::BotError;
 use serde::{Deserialize, Serialize};
 use std::path::Path;
-use crate::error::BotError;
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct BotConfig {

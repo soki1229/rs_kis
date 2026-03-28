@@ -40,8 +40,8 @@ pub enum DomesticOrderType {
 impl DomesticOrderType {
     pub fn as_str(&self) -> &'static str {
         match self {
-            DomesticOrderType::Limit => "00",   // KIS 지정가 코드
-            DomesticOrderType::Market => "01",  // KIS 시장가 코드
+            DomesticOrderType::Limit => "00",  // KIS 지정가 코드
+            DomesticOrderType::Market => "01", // KIS 시장가 코드
         }
     }
 }

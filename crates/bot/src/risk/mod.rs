@@ -64,8 +64,7 @@ pub fn calculate_size(input: &RiskSizerInput, ctx: &PortfolioContext) -> Decimal
     let allowed_loss = input.account_balance * input.risk_per_trade;
     let base_size = allowed_loss / stop_distance;
 
-    let sf = Decimal::from_f64_retain(strength_size_factor(input.strength))
-        .unwrap_or(dec!(1.0));
+    let sf = Decimal::from_f64_retain(strength_size_factor(input.strength)).unwrap_or(dec!(1.0));
 
     let final_size = base_size * sf * input.regime_factor * input.profile_factor * scale;
 

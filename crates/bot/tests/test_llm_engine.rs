@@ -1,4 +1,4 @@
-use kis_bot::signal::llm_engine::{LlmResponse, parse_llm_response};
+use kis_bot::signal::llm_engine::{parse_llm_response, LlmResponse};
 use kis_bot::types::LlmVerdict;
 
 #[test]

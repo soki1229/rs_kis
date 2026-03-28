@@ -1,5 +1,5 @@
 use kis_bot::control::recovery::{
-    RecoveryInput, RecoveryOutcome, RecoveryFailureCode, run_recovery_check,
+    run_recovery_check, RecoveryFailureCode, RecoveryInput, RecoveryOutcome,
 };
 use rust_decimal::Decimal;
 use rust_decimal_macros::dec;
@@ -33,7 +33,10 @@ fn large_balance_mismatch_fails() {
     let result = run_recovery_check(&input);
     assert!(matches!(
         result,
-        RecoveryOutcome::Fail { code: RecoveryFailureCode::BalanceMismatch, .. }
+        RecoveryOutcome::Fail {
+            code: RecoveryFailureCode::BalanceMismatch,
+            ..
+        }
     ));
 }
 
@@ -43,7 +46,10 @@ fn orphaned_order_fails() {
     let result = run_recovery_check(&input);
     assert!(matches!(
         result,
-        RecoveryOutcome::Fail { code: RecoveryFailureCode::OrphanedOrder, .. }
+        RecoveryOutcome::Fail {
+            code: RecoveryFailureCode::OrphanedOrder,
+            ..
+        }
     ));
 }
 
@@ -61,6 +67,9 @@ fn missing_broker_id_fails() {
     let result = run_recovery_check(&input);
     assert!(matches!(
         result,
-        RecoveryOutcome::Fail { code: RecoveryFailureCode::BrokerOrderMissing, .. }
+        RecoveryOutcome::Fail {
+            code: RecoveryFailureCode::BrokerOrderMissing,
+            ..
+        }
     ));
 }

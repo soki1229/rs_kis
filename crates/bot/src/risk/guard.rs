@@ -1,5 +1,5 @@
-use rust_decimal::Decimal;
 use crate::error::BotError;
+use rust_decimal::Decimal;
 
 pub struct SessionStats {
     pub open_positions: u32,
@@ -51,7 +51,10 @@ impl RiskGuard {
 
         if stats.consecutive_losses >= self.consecutive_loss_limit {
             return Err(BotError::RiskBlocked {
-                reason: format!("consecutive_loss_limit {} reached", self.consecutive_loss_limit),
+                reason: format!(
+                    "consecutive_loss_limit {} reached",
+                    self.consecutive_loss_limit
+                ),
             });
         }
 

@@ -1,5 +1,5 @@
-use thiserror::Error;
 use crate::types::KillSwitchMode;
+use thiserror::Error;
 
 #[derive(Debug, Error)]
 pub enum BotError {

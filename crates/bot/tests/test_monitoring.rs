@@ -1,7 +1,7 @@
-use kis_bot::monitoring::strategy_monitor::{
-    MonitoringInput, MonitoringDecision, evaluate_monitoring,
-};
 use kis_bot::config::ProfileName;
+use kis_bot::monitoring::strategy_monitor::{
+    evaluate_monitoring, MonitoringDecision, MonitoringInput,
+};
 
 fn default_input() -> MonitoringInput {
     MonitoringInput {
@@ -31,7 +31,9 @@ fn force_conservative_when_7d_r_below_minus_2() {
     input.rolling_7d_r = -2.5;
     let decisions = evaluate_monitoring(&input);
     assert!(
-        decisions.iter().any(|d| matches!(d, MonitoringDecision::ForceConservative { .. })),
+        decisions
+            .iter()
+            .any(|d| matches!(d, MonitoringDecision::ForceConservative { .. })),
         "should force conservative"
     );
 }
@@ -41,7 +43,9 @@ fn force_conservative_when_mdd_5pct() {
     let mut input = default_input();
     input.mdd_pct = 0.055;
     let decisions = evaluate_monitoring(&input);
-    assert!(decisions.iter().any(|d| matches!(d, MonitoringDecision::ForceConservative { .. })));
+    assert!(decisions
+        .iter()
+        .any(|d| matches!(d, MonitoringDecision::ForceConservative { .. })));
 }
 
 #[test]
@@ -50,7 +54,9 @@ fn warn_alert_when_30d_r_below_minus_5() {
     input.rolling_30d_r = -5.5;
     let decisions = evaluate_monitoring(&input);
     assert!(
-        decisions.iter().any(|d| matches!(d, MonitoringDecision::WarnAlert { .. })),
+        decisions
+            .iter()
+            .any(|d| matches!(d, MonitoringDecision::WarnAlert { .. })),
         "should emit warn alert"
     );
 }
@@ -60,7 +66,9 @@ fn regime_suspend_when_5_consecutive_losses() {
     let mut input = default_input();
     input.regime_consecutive_losses = 5;
     let decisions = evaluate_monitoring(&input);
-    assert!(decisions.iter().any(|d| matches!(d, MonitoringDecision::SuspendRegime { .. })));
+    assert!(decisions
+        .iter()
+        .any(|d| matches!(d, MonitoringDecision::SuspendRegime { .. })));
 }
 
 #[test]
@@ -72,7 +80,9 @@ fn return_to_default_after_cooldown_and_recovery() {
     input.consecutive_losses = 0;
     let decisions = evaluate_monitoring(&input);
     assert!(
-        decisions.iter().any(|d| matches!(d, MonitoringDecision::ReturnToDefault)),
+        decisions
+            .iter()
+            .any(|d| matches!(d, MonitoringDecision::ReturnToDefault)),
         "should return to default after cooldown"
     );
 }
@@ -86,7 +96,9 @@ fn no_return_to_default_before_cooldown() {
     input.consecutive_losses = 0;
     let decisions = evaluate_monitoring(&input);
     assert!(
-        !decisions.iter().any(|d| matches!(d, MonitoringDecision::ReturnToDefault)),
+        !decisions
+            .iter()
+            .any(|d| matches!(d, MonitoringDecision::ReturnToDefault)),
         "should not return before cooldown"
     );
 }

@@ -1,5 +1,5 @@
-use rust_decimal::Decimal;
 use crate::types::MarketRegime;
+use rust_decimal::Decimal;
 
 pub struct PositionState {
     pub entry_price: Decimal,
@@ -52,7 +52,9 @@ pub fn evaluate_exit(pos: &PositionState, current_price: Decimal) -> ExitDecisio
     } else {
         // 1차 목표가 도달
         if current_price >= pos.profit_target_1 {
-            return ExitDecision::PartialExit { pct: Decimal::new(5, 1) }; // 0.5
+            return ExitDecision::PartialExit {
+                pct: Decimal::new(5, 1),
+            }; // 0.5
         }
     }
 
