@@ -6,7 +6,7 @@ use kis_bot::{
     monitoring::strategy_monitor::{MonitoringInput, evaluate_monitoring, MonitoringDecision},
     qualification::setup_score::{SetupScoreInput, calculate_setup_score},
     regime::{RegimeInput, classify_regime},
-    risk::{RiskSizerInput, calculate_size, strength_size_factor},
+    risk::{PortfolioContext, RiskSizerInput, calculate_size, strength_size_factor},
     signal::SignalDecision,
     types::*,
 };
@@ -50,17 +50,24 @@ fn full_pipeline_happy_path() {
     assert!(matches!(trace.decision, SignalDecision::Enter { .. }));
 
     // 5. Risk sizing
-    let size = calculate_size(&RiskSizerInput {
-        account_balance: dec!(10000),
-        risk_per_trade: dec!(0.005),
-        atr: dec!(18),
-        atr_stop_multiplier: dec!(1.5),
-        entry_price: dec!(100),
-        strength: signal.strength,
-        regime_factor: dec!(1.0),
-        profile_factor: dec!(1.0),
-        max_position_pct: dec!(0.10),
-    });
+    let size = calculate_size(
+        &RiskSizerInput {
+            account_balance: dec!(10000),
+            risk_per_trade: dec!(0.005),
+            atr: dec!(18),
+            atr_stop_multiplier: dec!(1.5),
+            entry_price: dec!(100),
+            strength: signal.strength,
+            regime_factor: dec!(1.0),
+            profile_factor: dec!(1.0),
+            max_position_pct: dec!(0.10),
+        },
+        &PortfolioContext {
+            open_position_count: 0,
+            max_open_positions: 5,
+            current_drawdown_pct: dec!(0),
+        },
+    );
     assert!(size > dec!(0));
 }
 

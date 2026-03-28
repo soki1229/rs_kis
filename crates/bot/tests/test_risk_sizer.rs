@@ -1,6 +1,14 @@
-use kis_bot::risk::{RiskSizerInput, calculate_size};
-use rust_decimal_macros::dec;
+use kis_bot::risk::{PortfolioContext, RiskSizerInput, calculate_size};
 use rust_decimal::Decimal;
+use rust_decimal_macros::dec;
+
+fn default_ctx() -> PortfolioContext {
+    PortfolioContext {
+        open_position_count: 0,
+        max_open_positions: 5,
+        current_drawdown_pct: dec!(0),
+    }
+}
 
 #[test]
 fn basic_size_calculation() {
@@ -17,7 +25,7 @@ fn basic_size_calculation() {
         profile_factor: dec!(1.0),
         max_position_pct: dec!(0.10),
     };
-    let size = calculate_size(&input);
+    let size = calculate_size(&input, &default_ctx());
     assert!(size > dec!(2.0) && size < dec!(2.5), "size = {}", size);
 }
 
@@ -35,10 +43,10 @@ fn volatile_regime_halves_size() {
         profile_factor: dec!(1.0),
         max_position_pct: dec!(0.10),
     };
-    let volatile_size = calculate_size(&input);
+    let volatile_size = calculate_size(&input, &default_ctx());
 
     let trending_input = RiskSizerInput { regime_factor: dec!(1.0), ..input };
-    let trending_size = calculate_size(&trending_input);
+    let trending_size = calculate_size(&trending_input, &default_ctx());
 
     let ratio = volatile_size / trending_size;
     assert!(
@@ -60,8 +68,55 @@ fn max_position_pct_caps_size() {
         profile_factor: dec!(1.6),
         max_position_pct: dec!(0.10),
     };
-    let size = calculate_size(&input);
+    let size = calculate_size(&input, &default_ctx());
     assert!(size <= dec!(10), "capped size should be ≤ 10, got {}", size);
+}
+
+#[test]
+fn position_limit_reached_returns_zero() {
+    let input = RiskSizerInput {
+        account_balance: dec!(10000),
+        risk_per_trade: dec!(0.005),
+        atr: dec!(18),
+        atr_stop_multiplier: dec!(1.5),
+        entry_price: dec!(100),
+        strength: 0.80,
+        regime_factor: dec!(1.0),
+        profile_factor: dec!(1.0),
+        max_position_pct: dec!(0.10),
+    };
+    let ctx = PortfolioContext {
+        open_position_count: 5,
+        max_open_positions: 5,
+        current_drawdown_pct: dec!(0),
+    };
+    assert_eq!(calculate_size(&input, &ctx), dec!(0));
+}
+
+#[test]
+fn high_drawdown_reduces_size() {
+    let input = RiskSizerInput {
+        account_balance: dec!(10000),
+        risk_per_trade: dec!(0.005),
+        atr: dec!(18),
+        atr_stop_multiplier: dec!(1.5),
+        entry_price: dec!(100),
+        strength: 0.80,
+        regime_factor: dec!(1.0),
+        profile_factor: dec!(1.0),
+        max_position_pct: dec!(0.10),
+    };
+    let normal = calculate_size(&input, &default_ctx());
+    let drawdown_ctx = PortfolioContext {
+        open_position_count: 0,
+        max_open_positions: 5,
+        current_drawdown_pct: dec!(0.12),
+    };
+    let reduced = calculate_size(&input, &drawdown_ctx);
+    assert!(reduced < normal, "drawdown should reduce size");
+    // scale factor 0.5 → reduced ≈ normal / 2
+    let ratio = reduced / normal;
+    assert!(ratio > dec!(0.45) && ratio < dec!(0.55), "ratio = {}", ratio);
 }
 
 #[test]
