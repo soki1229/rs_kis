@@ -1,0 +1,29 @@
+{
+  "rt_cd": "0",
+  "msg_cd": "KIOK0000",
+  "msg1": "정상처리 되었습니다.",
+  "output1": [
+    {
+      "pdno": "005930",
+      "prdt_name": "삼성전자",
+      "hldg_qty": "10",
+      "ord_psbl_qty": "10",
+      "pchs_avg_pric": "71000.00",
+      "pchs_amt": "710000",
+      "prpr": "72000",
+      "evlu_amt": "720000",
+      "evlu_pfls_amt": "10000",
+      "evlu_pfls_rt": "1.41"
+    }
+  ],
+  "output2": [
+    {
+      "dnca_tot_amt": "5000000",
+      "tot_evlu_amt": "5720000",
+      "nass_amt": "5710000",
+      "tot_loan_amt": "0",
+      "rlzt_pfls": "0",
+      "tot_evlu_pfls_amt": "10000"
+    }
+  ]
+}

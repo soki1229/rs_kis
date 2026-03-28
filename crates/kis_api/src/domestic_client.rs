@@ -3,15 +3,15 @@ use crate::{
     rest::{
         domestic::{
             inquiry::{
-                domestic_daily_chart, domestic_order_history, domestic_unfilled_orders,
-                domestic_volume_ranking,
+                domestic_balance, domestic_daily_chart, domestic_order_history,
+                domestic_unfilled_orders, domestic_volume_ranking,
             },
             order::{domestic_cancel_order, domestic_place_order},
             types::*,
         },
         http::fetch_approval_key,
     },
-    CandleBar, Holiday, KisConfig, KisDomesticApi, KisError, KisStream,
+    BalanceResponse, CandleBar, Holiday, KisConfig, KisDomesticApi, KisError, KisStream,
 };
 use async_trait::async_trait;
 
@@ -90,6 +90,11 @@ impl KisDomesticApi for KisDomesticClient {
     ) -> Result<Vec<DomesticOrderHistoryItem>, KisError> {
         let token = self.token_manager.token().await?;
         domestic_order_history(&self.http, &self.config, &token, req).await
+    }
+
+    async fn domestic_balance(&self) -> Result<BalanceResponse, KisError> {
+        let token = self.token_manager.token().await?;
+        domestic_balance(&self.http, &self.config, &token).await
     }
 }
 

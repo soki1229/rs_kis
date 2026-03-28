@@ -1,6 +1,9 @@
 #![cfg(any(test, feature = "test-utils"))]
 
-use crate::{rest::domestic::types::*, CandleBar, Holiday, KisDomesticApi, KisError, KisStream};
+use crate::{
+    rest::domestic::types::*, BalanceResponse, BalanceSummary, CandleBar, Holiday, KisDomesticApi,
+    KisError, KisStream,
+};
 
 /// 테스트용 `KisDomesticApi` mock — 설정 가능한 캔들 응답 반환
 ///
@@ -84,5 +87,15 @@ impl KisDomesticApi for MockDomesticKisApi {
         _: DomesticOrderHistoryRequest,
     ) -> Result<Vec<DomesticOrderHistoryItem>, KisError> {
         Ok(self.order_history_result.lock().unwrap().clone())
+    }
+    async fn domestic_balance(&self) -> Result<BalanceResponse, KisError> {
+        Ok(BalanceResponse {
+            items: vec![],
+            summary: BalanceSummary {
+                purchase_amount: rust_decimal::Decimal::ZERO,
+                realized_pnl: rust_decimal::Decimal::ZERO,
+                total_pnl: rust_decimal::Decimal::ZERO,
+            },
+        })
     }
 }

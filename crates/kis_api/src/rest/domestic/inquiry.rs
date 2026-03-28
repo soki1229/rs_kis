@@ -4,6 +4,7 @@
 // - 거래량: GET /uapi/domestic-stock/v1/ranking/volume (tr_id: FHPST01710000)
 
 use super::types::*;
+use crate::rest::overseas::inquiry::balance::{BalanceItem, BalanceResponse, BalanceSummary};
 use crate::rest::overseas::types::split_account;
 use crate::{CandleBar, ChartPeriod, KisConfig, KisError};
 use reqwest::Client;
@@ -72,6 +73,94 @@ pub async fn domestic_unfilled_orders(
         .unwrap_or_default();
 
     Ok(orders)
+}
+
+pub async fn domestic_balance(
+    client: &Client,
+    config: &KisConfig,
+    token: &str,
+) -> Result<BalanceResponse, KisError> {
+    let tr_id = if config.mock {
+        "VTTC8434R"
+    } else {
+        "TTTC8434R"
+    };
+    let (cano, prdt_cd) = split_account(&config.account_num);
+
+    let resp = client
+        .get(format!(
+            "{}/uapi/domestic-stock/v1/trading/inquire-balance",
+            config.rest_url
+        ))
+        .header("authorization", format!("Bearer {}", token))
+        .header("appkey", &config.app_key)
+        .header("appsecret", &config.app_secret)
+        .header("tr_id", tr_id)
+        .header("custtype", "P")
+        .query(&[
+            ("CANO", cano),
+            ("ACNT_PRDT_CD", prdt_cd),
+            ("AFHR_FLPR_YN", "N"),
+            ("OFL_YN", ""),
+            ("INQR_DVSN", "02"),
+            ("UNPR_DVSN", "01"),
+            ("FUND_STTL_ICLD_YN", "N"),
+            ("FINY_PFTRT_ICLD_YN", "N"),
+            ("PRCS_DVSN", "00"),
+            ("CTX_AREA_FK100", ""),
+            ("CTX_AREA_NK100", ""),
+        ])
+        .send()
+        .await
+        .map_err(KisError::Network)?;
+
+    let json: serde_json::Value = resp.json().await.map_err(KisError::Network)?;
+    let rt_cd = json["rt_cd"].as_str().unwrap_or("");
+    if rt_cd != "0" {
+        return Err(KisError::Api {
+            code: rt_cd.into(),
+            message: json["msg1"].as_str().unwrap_or("unknown").into(),
+        });
+    }
+
+    let items = json["output1"]
+        .as_array()
+        .unwrap_or(&vec![])
+        .iter()
+        .filter_map(|i| {
+            Some(BalanceItem {
+                symbol: i["pdno"].as_str()?.into(),
+                name: i["prdt_name"].as_str().unwrap_or("").into(),
+                exchange: "KSC".into(),
+                qty: Decimal::from_str(i["hldg_qty"].as_str()?).ok()?,
+                avg_price: Decimal::from_str(i["pchs_avg_pric"].as_str()?).ok()?,
+                eval_amount: Decimal::from_str(i["evlu_amt"].as_str().unwrap_or("0"))
+                    .unwrap_or(Decimal::ZERO),
+                unrealized_pnl: Decimal::from_str(i["evlu_pfls_amt"].as_str().unwrap_or("0"))
+                    .unwrap_or(Decimal::ZERO),
+                pnl_rate: Decimal::from_str(i["evlu_pfls_rt"].as_str().unwrap_or("0"))
+                    .unwrap_or(Decimal::ZERO),
+            })
+        })
+        .collect();
+
+    // output2 is an array with one element for domestic balance
+    let out2 = json["output2"]
+        .as_array()
+        .and_then(|a| a.first())
+        .cloned()
+        .unwrap_or(serde_json::Value::Null);
+    let summary = BalanceSummary {
+        // dnca_tot_amt: 예수금 총금액 (주문가능금액 근사)
+        purchase_amount: Decimal::from_str(out2["dnca_tot_amt"].as_str().unwrap_or("0"))
+            .unwrap_or(Decimal::ZERO),
+        realized_pnl: Decimal::from_str(out2["rlzt_pfls"].as_str().unwrap_or("0"))
+            .unwrap_or(Decimal::ZERO),
+        total_pnl: Decimal::from_str(out2["tot_evlu_pfls_amt"].as_str().unwrap_or("0"))
+            .unwrap_or(Decimal::ZERO),
+    };
+
+    Ok(BalanceResponse { items, summary })
 }
 
 pub async fn domestic_order_history(
@@ -382,5 +471,42 @@ mod tests {
         assert_eq!(items[0].price, dec!(72000));
         assert_eq!(items[0].volume, dec!(15000000));
         assert_eq!(items[1].symbol, "000660");
+    }
+
+    #[test]
+    fn deserialize_domestic_balance() {
+        let json: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../tests/fixtures/domestic/inquiry/balance.json"
+        ))
+        .unwrap();
+
+        let items: Vec<BalanceItem> = json["output1"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter_map(|i| {
+                Some(BalanceItem {
+                    symbol: i["pdno"].as_str()?.into(),
+                    name: i["prdt_name"].as_str().unwrap_or("").into(),
+                    exchange: "KSC".into(),
+                    qty: Decimal::from_str(i["hldg_qty"].as_str()?).ok()?,
+                    avg_price: Decimal::from_str(i["pchs_avg_pric"].as_str()?).ok()?,
+                    eval_amount: Decimal::from_str(i["evlu_amt"].as_str().unwrap_or("0"))
+                        .unwrap_or(Decimal::ZERO),
+                    unrealized_pnl: Decimal::from_str(i["evlu_pfls_amt"].as_str().unwrap_or("0"))
+                        .unwrap_or(Decimal::ZERO),
+                    pnl_rate: Decimal::from_str(i["evlu_pfls_rt"].as_str().unwrap_or("0"))
+                        .unwrap_or(Decimal::ZERO),
+                })
+            })
+            .collect();
+
+        assert_eq!(items.len(), 1);
+        assert_eq!(items[0].symbol, "005930");
+        assert_eq!(items[0].qty, dec!(10));
+
+        let out2 = json["output2"].as_array().and_then(|a| a.first()).unwrap();
+        let purchase_amount = Decimal::from_str(out2["dnca_tot_amt"].as_str().unwrap()).unwrap();
+        assert_eq!(purchase_amount, dec!(5000000));
     }
 }

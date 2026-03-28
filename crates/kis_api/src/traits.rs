@@ -97,6 +97,9 @@ pub trait KisDomesticApi: Send + Sync {
         &self,
         req: DomesticOrderHistoryRequest,
     ) -> Result<Vec<DomesticOrderHistoryItem>, KisError>;
+
+    /// 국내주식 잔고 조회 (예수금 총금액 → purchase_amount)
+    async fn domestic_balance(&self) -> Result<BalanceResponse, KisError>;
 }
 
 #[cfg(test)]
@@ -221,6 +224,16 @@ mod tests {
                 _: DomesticOrderHistoryRequest,
             ) -> Result<Vec<DomesticOrderHistoryItem>, KisError> {
                 Ok(vec![])
+            }
+            async fn domestic_balance(&self) -> Result<BalanceResponse, KisError> {
+                Ok(BalanceResponse {
+                    items: vec![],
+                    summary: crate::BalanceSummary {
+                        purchase_amount: rust_decimal::Decimal::ZERO,
+                        realized_pnl: rust_decimal::Decimal::ZERO,
+                        total_pnl: rust_decimal::Decimal::ZERO,
+                    },
+                })
             }
         }
 
