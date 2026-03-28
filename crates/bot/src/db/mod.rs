@@ -16,6 +16,17 @@ pub async fn connect(db_path: &str) -> Result<SqlitePool, BotError> {
     let url = format!("sqlite://{}?mode=rwc", expanded);
     let pool = SqlitePoolOptions::new()
         .max_connections(5)
+        .after_connect(|conn, _meta| {
+            Box::pin(async move {
+                sqlx::query("PRAGMA journal_mode=WAL")
+                    .execute(&mut *conn)
+                    .await?;
+                sqlx::query("PRAGMA synchronous=NORMAL")
+                    .execute(&mut *conn)
+                    .await?;
+                Ok(())
+            })
+        })
         .connect(&url)
         .await?;
 
