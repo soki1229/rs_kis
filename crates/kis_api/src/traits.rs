@@ -1,7 +1,7 @@
 use crate::{
-    CancelOrderRequest, CancelOrderResponse, CandleBar, DailyChartRequest, Exchange, Holiday,
-    KisError, KisStream, NewsItem, OrderHistoryItem, OrderHistoryRequest, PlaceOrderRequest,
-    PlaceOrderResponse, RankingItem, UnfilledOrder,
+    BalanceResponse, CancelOrderRequest, CancelOrderResponse, CandleBar, DailyChartRequest,
+    Exchange, Holiday, KisError, KisStream, NewsItem, OrderHistoryItem, OrderHistoryRequest,
+    PlaceOrderRequest, PlaceOrderResponse, RankingItem, UnfilledOrder,
 };
 use async_trait::async_trait;
 
@@ -43,6 +43,9 @@ pub trait KisApi: Send + Sync {
         &self,
         req: OrderHistoryRequest,
     ) -> Result<Vec<OrderHistoryItem>, KisError>;
+
+    /// 해외주식 잔고 조회 (risk sizing용 account_balance 확보)
+    async fn balance(&self) -> Result<BalanceResponse, KisError>;
 }
 
 use crate::rest::domestic::{
@@ -107,8 +110,8 @@ mod tests {
     }
 
     #[test]
-    fn kis_api_all_nine_methods_are_object_safe() {
-        // Box<dyn KisApi> still compiles with 9 methods
+    fn kis_api_is_object_safe() {
+        // Box<dyn KisApi> still compiles with all methods
         #[allow(dead_code)]
         struct MockNine;
         #[async_trait::async_trait]
@@ -155,6 +158,16 @@ mod tests {
                 _: crate::OrderHistoryRequest,
             ) -> Result<Vec<crate::OrderHistoryItem>, crate::KisError> {
                 Ok(vec![])
+            }
+            async fn balance(&self) -> Result<crate::BalanceResponse, crate::KisError> {
+                Ok(crate::BalanceResponse {
+                    items: vec![],
+                    summary: crate::BalanceSummary {
+                        purchase_amount: rust_decimal::Decimal::ZERO,
+                        realized_pnl: rust_decimal::Decimal::ZERO,
+                        total_pnl: rust_decimal::Decimal::ZERO,
+                    },
+                })
             }
         }
         let _: Option<Box<dyn KisApi>> = None;

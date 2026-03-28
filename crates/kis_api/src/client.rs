@@ -306,6 +306,10 @@ impl KisApi for KisClient {
     ) -> Result<Vec<OrderHistoryItem>, KisError> {
         self.order_history(req).await
     }
+
+    async fn balance(&self) -> Result<crate::BalanceResponse, KisError> {
+        self.balance().await
+    }
 }
 
 #[cfg(test)]
