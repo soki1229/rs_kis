@@ -14,6 +14,8 @@ pub struct PositionState {
     pub profit_target_2_atr: Decimal,
     pub trailing_atr_trending: Decimal,
     pub trailing_atr_volatile: Decimal,
+    /// KIS 시장분류코드: "J"=KOSPI, "Q"=KOSDAQ. US는 None.
+    pub exchange_code: Option<String>,
 }
 
 #[derive(Debug, Clone, PartialEq)]

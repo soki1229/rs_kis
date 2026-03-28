@@ -19,6 +19,7 @@ fn make_position(entry: f64, atr: f64) -> PositionState {
         profit_target_2_atr: dec!(4.0),
         trailing_atr_trending: dec!(2.0),
         trailing_atr_volatile: dec!(1.0),
+        exchange_code: None,
     }
 }
 
