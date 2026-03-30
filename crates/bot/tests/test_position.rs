@@ -71,5 +71,31 @@ fn trailing_stop_price_for_trending_regime() {
         dec!(2.0),
         dec!(1.0),
     );
-    assert_eq!(stop, dec!(110));
+    assert_eq!(stop, Some(dec!(110)));
+}
+
+#[test]
+fn trailing_stop_price_for_volatile_regime() {
+    use kis_bot::position::calculate_trailing_stop;
+    let stop = calculate_trailing_stop(
+        dec!(120),
+        dec!(5),
+        &MarketRegime::Volatile,
+        dec!(2.0),
+        dec!(1.0),
+    );
+    assert_eq!(stop, Some(dec!(115)));
+}
+
+#[test]
+fn trailing_stop_returns_none_for_quiet_regime() {
+    use kis_bot::position::calculate_trailing_stop;
+    let stop = calculate_trailing_stop(
+        dec!(120),
+        dec!(5),
+        &MarketRegime::Quiet,
+        dec!(2.0),
+        dec!(1.0),
+    );
+    assert_eq!(stop, None);
 }

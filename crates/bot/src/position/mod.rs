@@ -64,17 +64,18 @@ pub fn evaluate_exit(pos: &PositionState, current_price: Decimal) -> ExitDecisio
 }
 
 /// 레짐별 trailing stop 가격 계산. 스펙 Section 7 기반.
+/// Quiet 레짐은 trailing stop 없음 → None 반환.
 pub fn calculate_trailing_stop(
     high_price: Decimal,
     atr: Decimal,
     regime: &MarketRegime,
     trending_multiplier: Decimal,
     volatile_multiplier: Decimal,
-) -> Decimal {
+) -> Option<Decimal> {
     let multiplier = match regime {
         MarketRegime::Trending => trending_multiplier,
         MarketRegime::Volatile => volatile_multiplier,
-        MarketRegime::Quiet => return high_price,
+        MarketRegime::Quiet => return None,
     };
-    high_price - atr * multiplier
+    Some(high_price - atr * multiplier)
 }
