@@ -61,9 +61,22 @@ impl KisDomesticApi for KisDomesticClient {
     }
 
     async fn domestic_holidays(&self, country: &str) -> Result<Vec<Holiday>, KisError> {
-        let token = self.throttled_token().await?;
-        crate::rest::overseas::quote::corporate::holidays(&self.http, &self.config, &token, country)
-            .await
+        let tok = self.throttled_token().await?;
+        let result = crate::rest::overseas::quote::corporate::holidays(
+            &self.http, &self.config, &tok, country,
+        )
+        .await;
+        match result {
+            Err(KisError::Auth(_)) => {
+                log::warn!("401 received — refreshing token and retrying");
+                let tok2 = self.token_manager.refresh().await?;
+                crate::rest::overseas::quote::corporate::holidays(
+                    &self.http, &self.config, &tok2, country,
+                )
+                .await
+            }
+            other => other,
+        }
     }
 
     async fn domestic_place_order(

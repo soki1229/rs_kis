@@ -15,6 +15,26 @@ use crate::{
     PlaceOrderRequest, PlaceOrderResponse, RankingItem, UnfilledOrder,
 };
 
+/// Execute a REST call with automatic 401 → token refresh → retry (once).
+///
+/// Usage: `with_401_retry!(self, |token| { async_call(token).await })`
+/// `token` is bound as `&str` inside the body.
+macro_rules! with_401_retry {
+    ($self:expr, |$token:ident| $body:expr) => {{
+        let __tok = $self.throttled_token().await?;
+        let $token: &str = &__tok;
+        match $body {
+            Err(KisError::Auth(_)) => {
+                log::warn!("401 received — refreshing token and retrying");
+                let __tok2 = $self.inner.token_manager.refresh().await?;
+                let $token: &str = &__tok2;
+                $body
+            }
+            other => other,
+        }
+    }};
+}
+
 /// Default REST rate limit: 15 requests/second (KIS allows ~20).
 const DEFAULT_RATE_LIMIT: u32 = 15;
 
@@ -66,10 +86,6 @@ impl KisClient {
         &self.inner.config
     }
 
-    pub(crate) fn token_manager(&self) -> &TokenManager {
-        &self.inner.token_manager
-    }
-
     /// Wait for rate-limit slot, then get a valid token. Used by every REST method.
     async fn throttled_token(&self) -> Result<String, KisError> {
         self.inner.rate_limiter.acquire().await;
@@ -81,9 +97,15 @@ impl KisClient {
         &self,
         req: crate::PlaceOrderRequest,
     ) -> Result<crate::PlaceOrderResponse, KisError> {
-        let token = self.throttled_token().await?;
-        crate::rest::overseas::order::place::place_order(self.http(), self.config(), &token, req)
+        with_401_retry!(self, |token| {
+            crate::rest::overseas::order::place::place_order(
+                self.http(),
+                self.config(),
+                token,
+                req.clone(),
+            )
             .await
+        })
     }
 
     /// 해외주식 정정/취소 주문
@@ -91,21 +113,29 @@ impl KisClient {
         &self,
         req: crate::CancelOrderRequest,
     ) -> Result<crate::CancelOrderResponse, KisError> {
-        let token = self.throttled_token().await?;
-        crate::rest::overseas::order::cancel::cancel_order(self.http(), self.config(), &token, req)
+        with_401_retry!(self, |token| {
+            crate::rest::overseas::order::cancel::cancel_order(
+                self.http(),
+                self.config(),
+                token,
+                req.clone(),
+            )
             .await
+        })
     }
 
     /// 해외주식 잔고 조회
     pub async fn balance(&self) -> Result<crate::BalanceResponse, KisError> {
-        let token = self.throttled_token().await?;
-        balance::balance(self.http(), self.config(), &token).await
+        with_401_retry!(self, |token| {
+            balance::balance(self.http(), self.config(), token).await
+        })
     }
 
     /// 해외주식 미체결 조회
     pub async fn unfilled_orders(&self) -> Result<Vec<crate::UnfilledOrder>, KisError> {
-        let token = self.throttled_token().await?;
-        orders::unfilled_orders(self.http(), self.config(), &token).await
+        with_401_retry!(self, |token| {
+            orders::unfilled_orders(self.http(), self.config(), token).await
+        })
     }
 
     /// 해외주식 체결내역 조회
@@ -113,8 +143,9 @@ impl KisClient {
         &self,
         req: crate::OrderHistoryRequest,
     ) -> Result<Vec<crate::OrderHistoryItem>, KisError> {
-        let token = self.throttled_token().await?;
-        orders::order_history(self.http(), self.config(), &token, req).await
+        with_401_retry!(self, |token| {
+            orders::order_history(self.http(), self.config(), token, req.clone()).await
+        })
     }
 
     /// 해외주식 기간손익 조회
@@ -122,8 +153,9 @@ impl KisClient {
         &self,
         req: crate::PeriodProfitRequest,
     ) -> Result<crate::PeriodProfitResponse, KisError> {
-        let token = self.throttled_token().await?;
-        profit::period_profit(self.http(), self.config(), &token, req).await
+        with_401_retry!(self, |token| {
+            profit::period_profit(self.http(), self.config(), token, req.clone()).await
+        })
     }
 
     /// 해외주식 매수가능금액 조회
@@ -131,8 +163,9 @@ impl KisClient {
         &self,
         req: crate::BuyableAmountRequest,
     ) -> Result<crate::BuyableAmountResponse, KisError> {
-        let token = self.throttled_token().await?;
-        profit::buyable_amount(self.http(), self.config(), &token, req).await
+        with_401_retry!(self, |token| {
+            profit::buyable_amount(self.http(), self.config(), token, req.clone()).await
+        })
     }
 
     /// 해외주식 현재가 조회
@@ -141,8 +174,9 @@ impl KisClient {
         symbol: &str,
         exchange: &crate::Exchange,
     ) -> Result<crate::PriceResponse, KisError> {
-        let token = self.throttled_token().await?;
-        quote::price::price(self.http(), self.config(), &token, symbol, exchange).await
+        with_401_retry!(self, |token| {
+            quote::price::price(self.http(), self.config(), token, symbol, exchange).await
+        })
     }
 
     /// 해외주식 호가 조회
@@ -151,8 +185,9 @@ impl KisClient {
         symbol: &str,
         exchange: &crate::Exchange,
     ) -> Result<crate::OrderbookResponse, KisError> {
-        let token = self.throttled_token().await?;
-        quote::orderbook::orderbook(self.http(), self.config(), &token, symbol, exchange).await
+        with_401_retry!(self, |token| {
+            quote::orderbook::orderbook(self.http(), self.config(), token, symbol, exchange).await
+        })
     }
 
     /// 해외주식 일/주/월봉 조회
@@ -160,8 +195,9 @@ impl KisClient {
         &self,
         req: crate::DailyChartRequest,
     ) -> Result<Vec<crate::CandleBar>, KisError> {
-        let token = self.throttled_token().await?;
-        quote::chart::daily_chart(self.http(), self.config(), &token, req).await
+        with_401_retry!(self, |token| {
+            quote::chart::daily_chart(self.http(), self.config(), token, req.clone()).await
+        })
     }
 
     /// 해외주식 분봉 조회
@@ -169,14 +205,16 @@ impl KisClient {
         &self,
         req: crate::MinuteChartRequest,
     ) -> Result<Vec<crate::MinuteBar>, KisError> {
-        let token = self.throttled_token().await?;
-        quote::chart::minute_chart(self.http(), self.config(), &token, req).await
+        with_401_retry!(self, |token| {
+            quote::chart::minute_chart(self.http(), self.config(), token, req.clone()).await
+        })
     }
 
     /// 해외주식 종목 검색
     pub async fn search(&self, keyword: &str) -> Result<Vec<crate::SearchResult>, KisError> {
-        let token = self.throttled_token().await?;
-        quote::search::search(self.http(), self.config(), &token, keyword).await
+        with_401_retry!(self, |token| {
+            quote::search::search(self.http(), self.config(), token, keyword).await
+        })
     }
 
     /// 해외주식 종목 정보 조회
@@ -185,14 +223,16 @@ impl KisClient {
         symbol: &str,
         exchange: &crate::Exchange,
     ) -> Result<crate::SymbolInfo, KisError> {
-        let token = self.throttled_token().await?;
-        quote::search::symbol_info(self.http(), self.config(), &token, symbol, exchange).await
+        with_401_retry!(self, |token| {
+            quote::search::symbol_info(self.http(), self.config(), token, symbol, exchange).await
+        })
     }
 
     /// 해외주식 뉴스 조회
     pub async fn news(&self, symbol: &str) -> Result<Vec<crate::NewsItem>, KisError> {
-        let token = self.throttled_token().await?;
-        quote::corporate::news(self.http(), self.config(), &token, symbol).await
+        with_401_retry!(self, |token| {
+            quote::corporate::news(self.http(), self.config(), token, symbol).await
+        })
     }
 
     /// 해외주식 배당 조회
@@ -201,14 +241,16 @@ impl KisClient {
         symbol: &str,
         exchange: &crate::Exchange,
     ) -> Result<Vec<crate::DividendItem>, KisError> {
-        let token = self.throttled_token().await?;
-        quote::corporate::dividend(self.http(), self.config(), &token, symbol, exchange).await
+        with_401_retry!(self, |token| {
+            quote::corporate::dividend(self.http(), self.config(), token, symbol, exchange).await
+        })
     }
 
     /// 해외주식 휴장일 조회
     pub async fn holidays(&self, country: &str) -> Result<Vec<crate::Holiday>, KisError> {
-        let token = self.throttled_token().await?;
-        quote::corporate::holidays(self.http(), self.config(), &token, country).await
+        with_401_retry!(self, |token| {
+            quote::corporate::holidays(self.http(), self.config(), token, country).await
+        })
     }
 
     /// 해외주식 등락률 순위 조회
@@ -216,8 +258,9 @@ impl KisClient {
         &self,
         req: crate::RankingRequest,
     ) -> Result<Vec<crate::RankingItem>, KisError> {
-        let token = self.throttled_token().await?;
-        ranking::price_ranking(self.http(), self.config(), &token, req).await
+        with_401_retry!(self, |token| {
+            ranking::price_ranking(self.http(), self.config(), token, req.clone()).await
+        })
     }
 
     /// 해외주식 거래량 순위 조회
@@ -226,8 +269,9 @@ impl KisClient {
         exchange: &crate::Exchange,
         count: u32,
     ) -> Result<Vec<crate::RankingItem>, KisError> {
-        let token = self.throttled_token().await?;
-        ranking::volume_ranking(self.http(), self.config(), &token, exchange, count).await
+        with_401_retry!(self, |token| {
+            ranking::volume_ranking(self.http(), self.config(), token, exchange, count).await
+        })
     }
 
     /// 해외주식 거래량 급증 순위 조회
@@ -236,8 +280,9 @@ impl KisClient {
         exchange: &crate::Exchange,
         count: u32,
     ) -> Result<Vec<crate::VolumeSurgeItem>, KisError> {
-        let token = self.throttled_token().await?;
-        ranking::volume_surge(self.http(), self.config(), &token, exchange, count).await
+        with_401_retry!(self, |token| {
+            ranking::volume_surge(self.http(), self.config(), token, exchange, count).await
+        })
     }
 
     /// 해외주식 체결강도 조회
@@ -246,8 +291,9 @@ impl KisClient {
         symbol: &str,
         exchange: &crate::Exchange,
     ) -> Result<Vec<crate::VolumePowerItem>, KisError> {
-        let token = self.throttled_token().await?;
-        market::volume_power(self.http(), self.config(), &token, symbol, exchange).await
+        with_401_retry!(self, |token| {
+            market::volume_power(self.http(), self.config(), token, symbol, exchange).await
+        })
     }
 
     /// 해외주식 신고가/신저가 순위 조회
@@ -257,8 +303,9 @@ impl KisClient {
         kind: &crate::HighLowKind,
         count: u32,
     ) -> Result<Vec<crate::NewHighLowItem>, KisError> {
-        let token = self.throttled_token().await?;
-        market::new_highlow(self.http(), self.config(), &token, exchange, kind, count).await
+        with_401_retry!(self, |token| {
+            market::new_highlow(self.http(), self.config(), token, exchange, kind, count).await
+        })
     }
 
     /// 해외주식 시가총액 순위 조회
@@ -267,8 +314,9 @@ impl KisClient {
         exchange: &crate::Exchange,
         count: u32,
     ) -> Result<Vec<crate::MarketCapItem>, KisError> {
-        let token = self.throttled_token().await?;
-        market::market_cap(self.http(), self.config(), &token, exchange, count).await
+        with_401_retry!(self, |token| {
+            market::market_cap(self.http(), self.config(), token, exchange, count).await
+        })
     }
 
     /// 해외주식 거래회전율 순위 조회
@@ -277,8 +325,9 @@ impl KisClient {
         exchange: &crate::Exchange,
         count: u32,
     ) -> Result<Vec<crate::TradeTurnoverItem>, KisError> {
-        let token = self.throttled_token().await?;
-        market::trade_turnover(self.http(), self.config(), &token, exchange, count).await
+        with_401_retry!(self, |token| {
+            market::trade_turnover(self.http(), self.config(), token, exchange, count).await
+        })
     }
 }
 
