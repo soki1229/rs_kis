@@ -10,7 +10,7 @@ mod client;
 mod domestic_client;
 #[cfg(any(test, feature = "test-utils"))]
 mod mock_domestic;
-pub use auth::TokenManager;
+pub use auth::{ApprovalKeyManager, TokenManager};
 pub use client::KisClient;
 pub use config::{KisConfig, KisConfigBuilder};
 pub use domestic_client::KisDomesticClient;

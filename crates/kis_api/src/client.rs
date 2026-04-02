@@ -3,8 +3,7 @@ use std::sync::Arc;
 use async_trait::async_trait;
 use reqwest::Client;
 
-use crate::auth::TokenManager;
-use crate::rest::http::fetch_approval_key;
+use crate::auth::{ApprovalKeyManager, TokenManager};
 use crate::rest::overseas::analysis::{market, ranking};
 use crate::rest::overseas::inquiry::{balance, orders, profit};
 use crate::rest::overseas::quote;
@@ -18,6 +17,7 @@ use crate::{
 struct Inner {
     config: KisConfig,
     token_manager: TokenManager,
+    approval_key_manager: ApprovalKeyManager,
     http: Client,
 }
 
@@ -31,10 +31,12 @@ impl KisClient {
     /// 동기 생성자. `KisConfig::builder()` 로 설정 후 생성.
     pub fn new(config: KisConfig) -> Self {
         let token_manager = TokenManager::new(config.clone());
+        let approval_key_manager = ApprovalKeyManager::new(config.clone());
         Self {
             inner: Arc::new(Inner {
                 config,
                 token_manager,
+                approval_key_manager,
                 http: Client::new(),
             }),
         }
@@ -264,7 +266,7 @@ impl KisClient {
 #[async_trait]
 impl KisApi for KisClient {
     async fn stream(&self) -> Result<KisStream, KisError> {
-        let approval_key = fetch_approval_key(self.http(), self.config()).await?;
+        let approval_key = self.inner.approval_key_manager.approval_key().await?;
         KisStream::connect(self.config().clone(), approval_key).await
     }
 
