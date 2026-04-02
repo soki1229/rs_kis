@@ -3,7 +3,7 @@ use std::sync::Arc;
 
 use chrono::{DateTime, FixedOffset};
 use serde::{Deserialize, Serialize};
-use tokio::sync::RwLock;
+use tokio::sync::{Mutex, RwLock};
 
 use super::current_kst;
 use crate::rest::http::fetch_approval_key;
@@ -30,6 +30,8 @@ pub struct ApprovalKeyManager {
 struct Inner {
     config: KisConfig,
     cache: RwLock<Option<ApprovalKeyCache>>,
+    /// Serializes approval_key refresh (thundering herd prevention).
+    refresh_mutex: Mutex<()>,
     http: reqwest::Client,
 }
 
@@ -44,6 +46,7 @@ impl ApprovalKeyManager {
             inner: Arc::new(Inner {
                 config,
                 cache: RwLock::new(None),
+                refresh_mutex: Mutex::new(()),
                 http,
             }),
         }
@@ -51,17 +54,35 @@ impl ApprovalKeyManager {
 
     /// Returns a valid approval_key, refreshing only when expired or missing.
     pub async fn approval_key(&self) -> Result<String, KisError> {
-        // 1. Check in-memory cache
-        {
-            let guard = self.inner.cache.read().await;
-            if let Some(ref cached) = *guard {
-                if cached.expires_at > current_kst() + chrono::Duration::minutes(5) {
-                    return Ok(cached.approval_key.clone());
-                }
-            }
+        // Fast path: read lock only.
+        if let Some(k) = self.cached_key_if_valid().await {
+            return Ok(k);
         }
 
-        // 2. Try file cache (reuse the token_cache_path directory with _approval suffix)
+        // Slow path: serialize refresh.
+        let _guard = self.inner.refresh_mutex.lock().await;
+
+        // Re-check after acquiring the mutex.
+        if let Some(k) = self.cached_key_if_valid().await {
+            return Ok(k);
+        }
+
+        self.refresh_key_locked().await
+    }
+
+    async fn cached_key_if_valid(&self) -> Option<String> {
+        let guard = self.inner.cache.read().await;
+        if let Some(ref cached) = *guard {
+            if cached.expires_at > current_kst() + chrono::Duration::minutes(5) {
+                return Some(cached.approval_key.clone());
+            }
+        }
+        None
+    }
+
+    /// Must be called with `refresh_mutex` held.
+    async fn refresh_key_locked(&self) -> Result<String, KisError> {
+        // 1. Try file cache
         if let Some(path) = self.cache_file_path() {
             if let Ok(cached) = self.load_from_file(&path).await {
                 if cached.expires_at > current_kst() + chrono::Duration::minutes(5) {
@@ -72,7 +93,7 @@ impl ApprovalKeyManager {
             }
         }
 
-        // 3. Fetch from KIS API
+        // 2. Fetch from KIS API
         let key = fetch_approval_key(&self.inner.http, &self.inner.config).await?;
         let cached = ApprovalKeyCache {
             approval_key: key.clone(),
