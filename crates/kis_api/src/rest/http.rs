@@ -57,7 +57,10 @@ fn is_retryable_status(status: StatusCode) -> bool {
 /// Whether the request method is safe to retry after receiving an HTTP response.
 /// POST is NOT safe — we could duplicate orders.
 fn is_idempotent(method: &Method) -> bool {
-    matches!(*method, Method::GET | Method::HEAD | Method::PUT | Method::DELETE | Method::OPTIONS)
+    matches!(
+        *method,
+        Method::GET | Method::HEAD | Method::PUT | Method::DELETE | Method::OPTIONS
+    )
 }
 
 /// Outcome of a single attempt — lets the retry loop distinguish
@@ -177,9 +180,7 @@ where
 
     // 401 — let the caller (KisClient) handle token refresh.
     if status == StatusCode::UNAUTHORIZED {
-        return Attempt::Fail(KisError::Auth(
-            "401 Unauthorized — token expired?".into(),
-        ));
+        return Attempt::Fail(KisError::Auth("401 Unauthorized — token expired?".into()));
     }
 
     // Retryable HTTP status — but only for idempotent methods.
