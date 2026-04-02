@@ -7,6 +7,7 @@ use crate::auth::{build_http_client, ApprovalKeyManager, TokenManager};
 use crate::rest::overseas::analysis::{market, ranking};
 use crate::rest::overseas::inquiry::{balance, orders, profit};
 use crate::rest::overseas::quote;
+use crate::rest::rate_limit::RateLimiter;
 use crate::traits::KisApi;
 use crate::{
     CancelOrderRequest, CancelOrderResponse, CandleBar, DailyChartRequest, Exchange, Holiday,
@@ -14,11 +15,15 @@ use crate::{
     PlaceOrderRequest, PlaceOrderResponse, RankingItem, UnfilledOrder,
 };
 
+/// Default REST rate limit: 15 requests/second (KIS allows ~20).
+const DEFAULT_RATE_LIMIT: u32 = 15;
+
 struct Inner {
     config: KisConfig,
     token_manager: TokenManager,
     approval_key_manager: ApprovalKeyManager,
     http: Client,
+    rate_limiter: RateLimiter,
 }
 
 /// KIS REST API 클라이언트. `Clone`은 저렴 (`Arc` 복사).
@@ -41,6 +46,7 @@ impl KisClient {
                 token_manager,
                 approval_key_manager,
                 http,
+                rate_limiter: RateLimiter::new(DEFAULT_RATE_LIMIT),
             }),
         }
     }
@@ -60,12 +66,22 @@ impl KisClient {
         &self.inner.config
     }
 
+    pub(crate) fn token_manager(&self) -> &TokenManager {
+        &self.inner.token_manager
+    }
+
+    /// Wait for rate-limit slot, then get a valid token. Used by every REST method.
+    async fn throttled_token(&self) -> Result<String, KisError> {
+        self.inner.rate_limiter.acquire().await;
+        self.token().await
+    }
+
     /// 해외주식 주문
     pub async fn place_order(
         &self,
         req: crate::PlaceOrderRequest,
     ) -> Result<crate::PlaceOrderResponse, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         crate::rest::overseas::order::place::place_order(self.http(), self.config(), &token, req)
             .await
     }
@@ -75,20 +91,20 @@ impl KisClient {
         &self,
         req: crate::CancelOrderRequest,
     ) -> Result<crate::CancelOrderResponse, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         crate::rest::overseas::order::cancel::cancel_order(self.http(), self.config(), &token, req)
             .await
     }
 
     /// 해외주식 잔고 조회
     pub async fn balance(&self) -> Result<crate::BalanceResponse, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         balance::balance(self.http(), self.config(), &token).await
     }
 
     /// 해외주식 미체결 조회
     pub async fn unfilled_orders(&self) -> Result<Vec<crate::UnfilledOrder>, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         orders::unfilled_orders(self.http(), self.config(), &token).await
     }
 
@@ -97,7 +113,7 @@ impl KisClient {
         &self,
         req: crate::OrderHistoryRequest,
     ) -> Result<Vec<crate::OrderHistoryItem>, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         orders::order_history(self.http(), self.config(), &token, req).await
     }
 
@@ -106,7 +122,7 @@ impl KisClient {
         &self,
         req: crate::PeriodProfitRequest,
     ) -> Result<crate::PeriodProfitResponse, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         profit::period_profit(self.http(), self.config(), &token, req).await
     }
 
@@ -115,7 +131,7 @@ impl KisClient {
         &self,
         req: crate::BuyableAmountRequest,
     ) -> Result<crate::BuyableAmountResponse, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         profit::buyable_amount(self.http(), self.config(), &token, req).await
     }
 
@@ -125,7 +141,7 @@ impl KisClient {
         symbol: &str,
         exchange: &crate::Exchange,
     ) -> Result<crate::PriceResponse, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         quote::price::price(self.http(), self.config(), &token, symbol, exchange).await
     }
 
@@ -135,7 +151,7 @@ impl KisClient {
         symbol: &str,
         exchange: &crate::Exchange,
     ) -> Result<crate::OrderbookResponse, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         quote::orderbook::orderbook(self.http(), self.config(), &token, symbol, exchange).await
     }
 
@@ -144,7 +160,7 @@ impl KisClient {
         &self,
         req: crate::DailyChartRequest,
     ) -> Result<Vec<crate::CandleBar>, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         quote::chart::daily_chart(self.http(), self.config(), &token, req).await
     }
 
@@ -153,13 +169,13 @@ impl KisClient {
         &self,
         req: crate::MinuteChartRequest,
     ) -> Result<Vec<crate::MinuteBar>, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         quote::chart::minute_chart(self.http(), self.config(), &token, req).await
     }
 
     /// 해외주식 종목 검색
     pub async fn search(&self, keyword: &str) -> Result<Vec<crate::SearchResult>, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         quote::search::search(self.http(), self.config(), &token, keyword).await
     }
 
@@ -169,13 +185,13 @@ impl KisClient {
         symbol: &str,
         exchange: &crate::Exchange,
     ) -> Result<crate::SymbolInfo, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         quote::search::symbol_info(self.http(), self.config(), &token, symbol, exchange).await
     }
 
     /// 해외주식 뉴스 조회
     pub async fn news(&self, symbol: &str) -> Result<Vec<crate::NewsItem>, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         quote::corporate::news(self.http(), self.config(), &token, symbol).await
     }
 
@@ -185,13 +201,13 @@ impl KisClient {
         symbol: &str,
         exchange: &crate::Exchange,
     ) -> Result<Vec<crate::DividendItem>, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         quote::corporate::dividend(self.http(), self.config(), &token, symbol, exchange).await
     }
 
     /// 해외주식 휴장일 조회
     pub async fn holidays(&self, country: &str) -> Result<Vec<crate::Holiday>, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         quote::corporate::holidays(self.http(), self.config(), &token, country).await
     }
 
@@ -200,7 +216,7 @@ impl KisClient {
         &self,
         req: crate::RankingRequest,
     ) -> Result<Vec<crate::RankingItem>, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         ranking::price_ranking(self.http(), self.config(), &token, req).await
     }
 
@@ -210,7 +226,7 @@ impl KisClient {
         exchange: &crate::Exchange,
         count: u32,
     ) -> Result<Vec<crate::RankingItem>, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         ranking::volume_ranking(self.http(), self.config(), &token, exchange, count).await
     }
 
@@ -220,7 +236,7 @@ impl KisClient {
         exchange: &crate::Exchange,
         count: u32,
     ) -> Result<Vec<crate::VolumeSurgeItem>, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         ranking::volume_surge(self.http(), self.config(), &token, exchange, count).await
     }
 
@@ -230,7 +246,7 @@ impl KisClient {
         symbol: &str,
         exchange: &crate::Exchange,
     ) -> Result<Vec<crate::VolumePowerItem>, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         market::volume_power(self.http(), self.config(), &token, symbol, exchange).await
     }
 
@@ -241,7 +257,7 @@ impl KisClient {
         kind: &crate::HighLowKind,
         count: u32,
     ) -> Result<Vec<crate::NewHighLowItem>, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         market::new_highlow(self.http(), self.config(), &token, exchange, kind, count).await
     }
 
@@ -251,7 +267,7 @@ impl KisClient {
         exchange: &crate::Exchange,
         count: u32,
     ) -> Result<Vec<crate::MarketCapItem>, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         market::market_cap(self.http(), self.config(), &token, exchange, count).await
     }
 
@@ -261,7 +277,7 @@ impl KisClient {
         exchange: &crate::Exchange,
         count: u32,
     ) -> Result<Vec<crate::TradeTurnoverItem>, KisError> {
-        let token = self.token().await?;
+        let token = self.throttled_token().await?;
         market::trade_turnover(self.http(), self.config(), &token, exchange, count).await
     }
 }
