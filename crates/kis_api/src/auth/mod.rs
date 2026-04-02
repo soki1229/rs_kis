@@ -1,3 +1,6 @@
+mod approval_key;
+pub use approval_key::ApprovalKeyManager;
+
 use std::path::PathBuf;
 use std::sync::Arc;
 

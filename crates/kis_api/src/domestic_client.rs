@@ -1,15 +1,12 @@
 use crate::{
-    auth::TokenManager,
-    rest::{
-        domestic::{
-            inquiry::{
-                domestic_balance, domestic_daily_chart, domestic_order_history,
-                domestic_unfilled_orders, domestic_volume_ranking,
-            },
-            order::{domestic_cancel_order, domestic_place_order},
-            types::*,
+    auth::{ApprovalKeyManager, TokenManager},
+    rest::domestic::{
+        inquiry::{
+            domestic_balance, domestic_daily_chart, domestic_order_history,
+            domestic_unfilled_orders, domestic_volume_ranking,
         },
-        http::fetch_approval_key,
+        order::{domestic_cancel_order, domestic_place_order},
+        types::*,
     },
     BalanceResponse, CandleBar, Holiday, KisConfig, KisDomesticApi, KisError, KisStream,
 };
@@ -19,15 +16,18 @@ use async_trait::async_trait;
 pub struct KisDomesticClient {
     config: KisConfig,
     token_manager: TokenManager,
+    approval_key_manager: ApprovalKeyManager,
     http: reqwest::Client,
 }
 
 impl KisDomesticClient {
     pub fn new(config: KisConfig) -> Self {
         let token_manager = TokenManager::new(config.clone());
+        let approval_key_manager = ApprovalKeyManager::new(config.clone());
         Self {
             config,
             token_manager,
+            approval_key_manager,
             http: reqwest::Client::new(),
         }
     }
@@ -36,7 +36,7 @@ impl KisDomesticClient {
 #[async_trait]
 impl KisDomesticApi for KisDomesticClient {
     async fn domestic_stream(&self) -> Result<KisStream, KisError> {
-        let approval_key = fetch_approval_key(&self.http, &self.config).await?;
+        let approval_key = self.approval_key_manager.approval_key().await?;
         KisStream::connect(self.config.clone(), approval_key).await
     }
 
