@@ -1,3 +1,6 @@
+use std::time::Duration;
+
+use rand::Rng;
 use reqwest::{Client, Method, StatusCode};
 use serde::de::DeserializeOwned;
 use serde_json::Value;
@@ -29,7 +32,49 @@ pub struct RequestParams<'a> {
     pub body: Option<&'a Value>,
 }
 
-/// KIS REST API 실행기
+const MAX_RETRIES: u32 = 3;
+/// Backoff schedule: 500ms, 1s, 2s.
+const BACKOFF_MS: [u64; 3] = [500, 1000, 2000];
+
+/// Compute a jittered backoff delay for the given attempt (0-indexed).
+fn backoff_delay(attempt: u32) -> Duration {
+    let base = BACKOFF_MS[attempt.min(MAX_RETRIES - 1) as usize];
+    let jitter = rand::thread_rng().gen_range(0..=base / 4);
+    Duration::from_millis(base + jitter)
+}
+
+/// Returns `true` if the reqwest error occurred before any HTTP response was
+/// received (i.e. a connection or timeout error — safe to retry even for POST).
+fn is_network_error(e: &reqwest::Error) -> bool {
+    e.is_connect() || e.is_timeout()
+}
+
+/// Whether the given HTTP status code is retryable (for idempotent requests).
+fn is_retryable_status(status: StatusCode) -> bool {
+    status == StatusCode::TOO_MANY_REQUESTS || status.is_server_error()
+}
+
+/// Whether the request method is safe to retry after receiving an HTTP response.
+/// POST is NOT safe — we could duplicate orders.
+fn is_idempotent(method: &Method) -> bool {
+    matches!(
+        *method,
+        Method::GET | Method::HEAD | Method::PUT | Method::DELETE | Method::OPTIONS
+    )
+}
+
+/// Outcome of a single attempt — lets the retry loop distinguish
+/// "no response received" from "got an HTTP response we can inspect".
+enum Attempt<T> {
+    /// Successful parse result.
+    Ok(T),
+    /// Retryable failure (network error before response, or retryable status).
+    Retry(KisError),
+    /// Non-retryable failure — return immediately.
+    Fail(KisError),
+}
+
+/// KIS REST API 실행기 with retry + exponential backoff.
 pub async fn execute<T>(
     client: &Client,
     config: &KisConfig,
@@ -40,9 +85,51 @@ where
     T: DeserializeOwned,
 {
     let url = format!("{}{}", config.rest_url, params.path);
+    let is_idem = is_idempotent(&params.method);
 
+    let mut last_err: Option<KisError> = None;
+
+    for attempt in 0..=MAX_RETRIES {
+        if attempt > 0 {
+            let delay = backoff_delay(attempt - 1);
+            log::warn!(
+                "REST retry {}/{} after {:?}: {}",
+                attempt,
+                MAX_RETRIES,
+                delay,
+                last_err.as_ref().unwrap()
+            );
+            tokio::time::sleep(delay).await;
+        }
+
+        match try_execute::<T>(client, config, token, &params, &url, is_idem).await {
+            Attempt::Ok(v) => return Ok(v),
+            Attempt::Fail(e) => return Err(e),
+            Attempt::Retry(e) => {
+                last_err = Some(e);
+            }
+        }
+    }
+
+    Err(last_err.unwrap())
+}
+
+/// Single-attempt execution. Returns an `Attempt` to tell the caller whether
+/// to retry, fail, or return the value.
+async fn try_execute<T>(
+    client: &Client,
+    config: &KisConfig,
+    token: &str,
+    params: &RequestParams<'_>,
+    url: &str,
+    is_idem: bool,
+) -> Attempt<T>
+where
+    T: DeserializeOwned,
+{
+    // ---- Build request (not cloneable, so rebuilt each attempt) ----
     let mut req = client
-        .request(params.method, &url)
+        .request(params.method.clone(), url)
         .header("authorization", format!("Bearer {token}"))
         .header("appkey", &config.app_key)
         .header("appsecret", &config.app_secret)
@@ -51,7 +138,6 @@ where
         .header("accept", "text/plain");
 
     if let Some(query) = params.query {
-        // Value::Object → query string
         if let Some(obj) = query.as_object() {
             let pairs: Vec<(String, String)> = obj
                 .iter()
@@ -65,42 +151,79 @@ where
         req = req.json(body);
     }
 
-    let resp = req.send().await.map_err(KisError::Network)?;
+    // ---- Send ----
+    let resp = match req.send().await {
+        Ok(r) => r,
+        Err(e) => {
+            // Network error *before* any response → always safe to retry.
+            if is_network_error(&e) {
+                return Attempt::Retry(KisError::Network(e));
+            }
+            return Attempt::Fail(KisError::Network(e));
+        }
+    };
 
+    // ---- We received an HTTP response ----
     let status = resp.status();
-    let text = resp.text().await.map_err(KisError::Network)?;
 
+    // Read the body (may also fail with network error).
+    let text = match resp.text().await {
+        Ok(t) => t,
+        Err(e) => {
+            // Body read failure — treat as network error.
+            if is_network_error(&e) {
+                return Attempt::Retry(KisError::Network(e));
+            }
+            return Attempt::Fail(KisError::Network(e));
+        }
+    };
+
+    // 401 — let the caller (KisClient) handle token refresh.
     if status == StatusCode::UNAUTHORIZED {
-        return Err(KisError::Auth("401 Unauthorized — token expired?".into()));
+        return Attempt::Fail(KisError::Auth("401 Unauthorized — token expired?".into()));
+    }
+
+    // Retryable HTTP status — but only for idempotent methods.
+    if is_retryable_status(status) && is_idem {
+        let err = make_api_error(status, &text);
+        return Attempt::Retry(err);
     }
 
     if !status.is_success() {
-        // KIS가 에러 응답도 JSON으로 반환하는 경우
-        if let Ok(v) = serde_json::from_str::<Value>(&text) {
-            let code = v["msg_cd"].as_str().unwrap_or("unknown").to_string();
-            let msg = v["msg1"].as_str().unwrap_or(&text).to_string();
-            return Err(KisError::Api { code, message: msg });
-        }
-        return Err(KisError::Api {
-            code: status.as_str().to_string(),
-            message: text,
-        });
+        return Attempt::Fail(make_api_error(status, &text));
     }
 
-    // 응답 JSON 파싱
-    let v: Value = serde_json::from_str(&text).map_err(KisError::Parse)?;
+    // ---- Parse response ----
+    let v: Value = match serde_json::from_str(&text) {
+        Ok(v) => v,
+        Err(e) => return Attempt::Fail(KisError::Parse(e)),
+    };
 
-    // rt_cd가 "0"이 아닌 경우 API 에러
     if let Some(rt_cd) = v["rt_cd"].as_str() {
         if rt_cd != "0" {
             let code = v["msg_cd"].as_str().unwrap_or("unknown").to_string();
             let msg = v["msg1"].as_str().unwrap_or("unknown").to_string();
-            return Err(KisError::Api { code, message: msg });
+            return Attempt::Fail(KisError::Api { code, message: msg });
         }
     }
 
-    // T로 역직렬화
-    serde_json::from_value::<T>(v).map_err(KisError::Parse)
+    match serde_json::from_value::<T>(v) {
+        Ok(val) => Attempt::Ok(val),
+        Err(e) => Attempt::Fail(KisError::Parse(e)),
+    }
+}
+
+/// Construct a `KisError::Api` from a non-success response.
+fn make_api_error(status: StatusCode, text: &str) -> KisError {
+    if let Ok(v) = serde_json::from_str::<Value>(text) {
+        let code = v["msg_cd"].as_str().unwrap_or("unknown").to_string();
+        let msg = v["msg1"].as_str().unwrap_or(text).to_string();
+        return KisError::Api { code, message: msg };
+    }
+    KisError::Api {
+        code: status.as_str().to_string(),
+        message: text.to_string(),
+    }
 }
 
 /// 승인키(approval key) 발급 — WebSocket 인증에 사용
@@ -156,5 +279,36 @@ mod tests {
             let _ = _f; // suppress unused warning
         }
         assert_execute_signature::<Value>();
+    }
+
+    #[test]
+    fn get_is_idempotent() {
+        assert!(is_idempotent(&Method::GET));
+        assert!(is_idempotent(&Method::PUT));
+        assert!(is_idempotent(&Method::DELETE));
+        assert!(!is_idempotent(&Method::POST));
+        assert!(!is_idempotent(&Method::PATCH));
+    }
+
+    #[test]
+    fn retryable_statuses() {
+        assert!(is_retryable_status(StatusCode::TOO_MANY_REQUESTS));
+        assert!(is_retryable_status(StatusCode::INTERNAL_SERVER_ERROR));
+        assert!(is_retryable_status(StatusCode::BAD_GATEWAY));
+        assert!(is_retryable_status(StatusCode::SERVICE_UNAVAILABLE));
+        assert!(!is_retryable_status(StatusCode::BAD_REQUEST));
+        assert!(!is_retryable_status(StatusCode::UNAUTHORIZED));
+        assert!(!is_retryable_status(StatusCode::OK));
+    }
+
+    #[test]
+    fn backoff_delay_increases() {
+        // Verify base schedule (jitter makes exact values non-deterministic).
+        let d0 = backoff_delay(0);
+        let d1 = backoff_delay(1);
+        let d2 = backoff_delay(2);
+        assert!(d0 >= Duration::from_millis(500));
+        assert!(d1 >= Duration::from_millis(1000));
+        assert!(d2 >= Duration::from_millis(2000));
     }
 }

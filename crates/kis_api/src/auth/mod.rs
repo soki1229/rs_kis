@@ -3,12 +3,24 @@ pub use approval_key::ApprovalKeyManager;
 
 use std::path::PathBuf;
 use std::sync::Arc;
+use std::time::Duration;
 
 use chrono::{DateTime, FixedOffset};
 use serde::{Deserialize, Serialize};
-use tokio::sync::RwLock;
+use tokio::sync::{Mutex, RwLock};
 
 use crate::{KisConfig, KisError};
+
+/// Build the shared `reqwest::Client` with sensible timeouts.
+/// All HTTP-issuing components (`KisClient`, `TokenManager`, `ApprovalKeyManager`)
+/// should share the instance returned by this function.
+pub fn build_http_client() -> reqwest::Client {
+    reqwest::Client::builder()
+        .timeout(Duration::from_secs(30))
+        .connect_timeout(Duration::from_secs(10))
+        .build()
+        .expect("failed to build reqwest::Client")
+}
 
 /// KST(UTC+9) FixedOffset
 pub fn current_kst() -> DateTime<FixedOffset> {
@@ -40,33 +52,73 @@ pub struct TokenManager {
 struct Inner {
     config: KisConfig,
     cache: RwLock<Option<TokenCache>>,
+    /// Serializes token refresh so only one task fetches at a time (thundering herd).
+    refresh_mutex: Mutex<()>,
     http: reqwest::Client,
 }
 
 impl TokenManager {
     pub fn new(config: KisConfig) -> Self {
+        Self::with_http(config, build_http_client())
+    }
+
+    /// Create with an externally-provided `reqwest::Client` (shared instance).
+    pub fn with_http(config: KisConfig, http: reqwest::Client) -> Self {
         Self {
             inner: Arc::new(Inner {
                 config,
                 cache: RwLock::new(None),
-                http: reqwest::Client::new(),
+                refresh_mutex: Mutex::new(()),
+                http,
             }),
         }
     }
 
     /// 유효한 토큰 반환. 만료 또는 미존재 시 자동 갱신.
     pub async fn token(&self) -> Result<String, KisError> {
-        // 1. 캐시에서 유효한 토큰 확인
-        {
-            let guard = self.inner.cache.read().await;
-            if let Some(ref cached) = *guard {
-                if cached.expires_at > current_kst() + chrono::Duration::minutes(5) {
-                    return Ok(cached.access_token.clone());
-                }
-            }
+        // Fast path: read lock, check if cached token is still valid.
+        if let Some(t) = self.cached_token_if_valid().await {
+            return Ok(t);
         }
 
-        // 2. 파일 캐시에서 로드 시도
+        // Slow path: serialize refresh so only one task fetches at a time.
+        let _guard = self.inner.refresh_mutex.lock().await;
+
+        // Re-check: another task may have refreshed while we waited.
+        if let Some(t) = self.cached_token_if_valid().await {
+            return Ok(t);
+        }
+
+        self.refresh_token_locked().await
+    }
+
+    /// Force a token refresh (used by 401 retry logic).
+    /// Serialized via the same mutex — concurrent callers coalesce.
+    pub(crate) async fn refresh(&self) -> Result<String, KisError> {
+        let _guard = self.inner.refresh_mutex.lock().await;
+
+        // Re-check: the in-memory cache may have been refreshed by another task
+        // after the 401 was observed but before we acquired the mutex.
+        if let Some(t) = self.cached_token_if_valid().await {
+            return Ok(t);
+        }
+
+        self.refresh_token_locked().await
+    }
+
+    async fn cached_token_if_valid(&self) -> Option<String> {
+        let guard = self.inner.cache.read().await;
+        if let Some(ref cached) = *guard {
+            if cached.expires_at > current_kst() + chrono::Duration::minutes(5) {
+                return Some(cached.access_token.clone());
+            }
+        }
+        None
+    }
+
+    /// Must be called with `refresh_mutex` held.
+    async fn refresh_token_locked(&self) -> Result<String, KisError> {
+        // 1. Try file cache
         if let Some(path) = &self.inner.config.token_cache_path {
             if let Ok(token) = self.load_from_file(path).await {
                 if token.expires_at > current_kst() + chrono::Duration::minutes(5) {
@@ -77,11 +129,11 @@ impl TokenManager {
             }
         }
 
-        // 3. KIS API에서 신규 발급
+        // 2. Fetch from KIS API
         let token = self.fetch_token().await?;
         let t = token.access_token.clone();
 
-        // 4. 파일 캐시 저장
+        // 3. Save to file cache
         if let Some(path) = &self.inner.config.token_cache_path {
             let _ = self.save_to_file(path, &token).await;
         }
@@ -146,14 +198,24 @@ impl TokenManager {
     }
 
     async fn save_to_file(&self, path: &PathBuf, token: &TokenCache) -> Result<(), KisError> {
-        if let Some(parent) = path.parent() {
-            tokio::fs::create_dir_all(parent)
-                .await
-                .map_err(KisError::Io)?;
-        }
-        let data = serde_json::to_string_pretty(token).map_err(KisError::Parse)?;
-        tokio::fs::write(path, data).await.map_err(KisError::Io)
+        atomic_write_json(path, token).await
     }
+}
+
+/// Atomic file write: serialize to temp file in the same directory, then rename.
+/// Prevents corrupted cache files if the process crashes mid-write.
+async fn atomic_write_json<T: Serialize>(path: &PathBuf, value: &T) -> Result<(), KisError> {
+    if let Some(parent) = path.parent() {
+        tokio::fs::create_dir_all(parent)
+            .await
+            .map_err(KisError::Io)?;
+    }
+    let data = serde_json::to_string_pretty(value).map_err(KisError::Parse)?;
+
+    // Write to a temp file next to the target, then atomically rename.
+    let tmp = path.with_extension("tmp");
+    tokio::fs::write(&tmp, &data).await.map_err(KisError::Io)?;
+    tokio::fs::rename(&tmp, path).await.map_err(KisError::Io)
 }
 
 #[cfg(test)]

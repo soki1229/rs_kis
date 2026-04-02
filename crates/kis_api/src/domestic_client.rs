@@ -1,5 +1,5 @@
 use crate::{
-    auth::{ApprovalKeyManager, TokenManager},
+    auth::{build_http_client, ApprovalKeyManager, TokenManager},
     rest::domestic::{
         inquiry::{
             domestic_balance, domestic_daily_chart, domestic_order_history,
@@ -8,9 +8,12 @@ use crate::{
         order::{domestic_cancel_order, domestic_place_order},
         types::*,
     },
+    rest::rate_limit::RateLimiter,
     BalanceResponse, CandleBar, Holiday, KisConfig, KisDomesticApi, KisError, KisStream,
 };
 use async_trait::async_trait;
+
+const DEFAULT_RATE_LIMIT: u32 = 15;
 
 /// 국내주식 전용 KIS 클라이언트
 pub struct KisDomesticClient {
@@ -18,18 +21,26 @@ pub struct KisDomesticClient {
     token_manager: TokenManager,
     approval_key_manager: ApprovalKeyManager,
     http: reqwest::Client,
+    rate_limiter: RateLimiter,
 }
 
 impl KisDomesticClient {
     pub fn new(config: KisConfig) -> Self {
-        let token_manager = TokenManager::new(config.clone());
-        let approval_key_manager = ApprovalKeyManager::new(config.clone());
+        let http = build_http_client();
+        let token_manager = TokenManager::with_http(config.clone(), http.clone());
+        let approval_key_manager = ApprovalKeyManager::with_http(config.clone(), http.clone());
         Self {
             config,
             token_manager,
             approval_key_manager,
-            http: reqwest::Client::new(),
+            http,
+            rate_limiter: RateLimiter::new(DEFAULT_RATE_LIMIT),
         }
+    }
+
+    async fn throttled_token(&self) -> Result<String, KisError> {
+        self.rate_limiter.acquire().await;
+        self.token_manager.token().await
     }
 }
 
@@ -45,21 +56,40 @@ impl KisDomesticApi for KisDomesticClient {
         exchange: &DomesticExchange,
         count: u32,
     ) -> Result<Vec<DomesticRankingItem>, KisError> {
-        let token = self.token_manager.token().await?;
+        let token = self.throttled_token().await?;
         domestic_volume_ranking(&self.http, &self.config, &token, exchange, count).await
     }
 
     async fn domestic_holidays(&self, country: &str) -> Result<Vec<Holiday>, KisError> {
-        let token = self.token_manager.token().await?;
-        crate::rest::overseas::quote::corporate::holidays(&self.http, &self.config, &token, country)
-            .await
+        let tok = self.throttled_token().await?;
+        let result = crate::rest::overseas::quote::corporate::holidays(
+            &self.http,
+            &self.config,
+            &tok,
+            country,
+        )
+        .await;
+        match result {
+            Err(KisError::Auth(_)) => {
+                log::warn!("401 received — refreshing token and retrying");
+                let tok2 = self.token_manager.refresh().await?;
+                crate::rest::overseas::quote::corporate::holidays(
+                    &self.http,
+                    &self.config,
+                    &tok2,
+                    country,
+                )
+                .await
+            }
+            other => other,
+        }
     }
 
     async fn domestic_place_order(
         &self,
         req: DomesticPlaceOrderRequest,
     ) -> Result<DomesticPlaceOrderResponse, KisError> {
-        let token = self.token_manager.token().await?;
+        let token = self.throttled_token().await?;
         domestic_place_order(&self.http, &self.config, &token, req).await
     }
 
@@ -67,7 +97,7 @@ impl KisDomesticApi for KisDomesticClient {
         &self,
         req: DomesticCancelOrderRequest,
     ) -> Result<DomesticCancelOrderResponse, KisError> {
-        let token = self.token_manager.token().await?;
+        let token = self.throttled_token().await?;
         domestic_cancel_order(&self.http, &self.config, &token, req).await
     }
 
@@ -75,12 +105,12 @@ impl KisDomesticApi for KisDomesticClient {
         &self,
         req: DomesticDailyChartRequest,
     ) -> Result<Vec<CandleBar>, KisError> {
-        let token = self.token_manager.token().await?;
+        let token = self.throttled_token().await?;
         domestic_daily_chart(&self.http, &self.config, &token, req).await
     }
 
     async fn domestic_unfilled_orders(&self) -> Result<Vec<DomesticUnfilledOrder>, KisError> {
-        let token = self.token_manager.token().await?;
+        let token = self.throttled_token().await?;
         domestic_unfilled_orders(&self.http, &self.config, &token).await
     }
 
@@ -88,12 +118,12 @@ impl KisDomesticApi for KisDomesticClient {
         &self,
         req: DomesticOrderHistoryRequest,
     ) -> Result<Vec<DomesticOrderHistoryItem>, KisError> {
-        let token = self.token_manager.token().await?;
+        let token = self.throttled_token().await?;
         domestic_order_history(&self.http, &self.config, &token, req).await
     }
 
     async fn domestic_balance(&self) -> Result<BalanceResponse, KisError> {
-        let token = self.token_manager.token().await?;
+        let token = self.throttled_token().await?;
         domestic_balance(&self.http, &self.config, &token).await
     }
 }

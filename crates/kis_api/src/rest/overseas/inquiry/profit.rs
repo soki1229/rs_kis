@@ -29,6 +29,7 @@ pub struct ProfitSummary {
     pub total_pnl: Decimal,
 }
 
+#[derive(Clone)]
 pub struct PeriodProfitRequest {
     pub start_date: String,
     pub end_date: String,
@@ -39,6 +40,7 @@ pub struct PeriodProfitResponse {
     pub summary: ProfitSummary,
 }
 
+#[derive(Clone)]
 pub struct BuyableAmountRequest {
     pub exchange_cd: String,
     pub symbol: String,

@@ -40,6 +40,7 @@ pub struct OrderHistoryItem {
     pub filled_time: String,
 }
 
+#[derive(Clone)]
 pub struct OrderHistoryRequest {
     pub start_date: String,
     pub end_date: String,
