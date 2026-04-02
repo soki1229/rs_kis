@@ -147,30 +147,26 @@ impl KisStream {
     /// 종목 구독 등록
     pub async fn subscribe(&self, symbol: &str, kind: SubscriptionKind) -> Result<(), KisError> {
         let key = (symbol.to_string(), kind);
-        {
-            let subs = self.inner.subscriptions.read().await;
-            if subs.contains_key(&key) {
-                return Ok(());
-            }
+        let mut subs = self.inner.subscriptions.write().await;
+        if subs.contains_key(&key) {
+            return Ok(());
         }
 
         self.send_subscribe_message(symbol, kind, true).await?;
-        self.inner.subscriptions.write().await.insert(key, ());
+        subs.insert(key, ());
         Ok(())
     }
 
     /// 종목 구독 해제
     pub async fn unsubscribe(&self, symbol: &str, kind: SubscriptionKind) -> Result<(), KisError> {
         let key = (symbol.to_string(), kind);
-        {
-            let subs = self.inner.subscriptions.read().await;
-            if !subs.contains_key(&key) {
-                return Ok(());
-            }
+        let mut subs = self.inner.subscriptions.write().await;
+        if !subs.contains_key(&key) {
+            return Ok(());
         }
 
         self.send_subscribe_message(symbol, kind, false).await?;
-        self.inner.subscriptions.write().await.remove(&key);
+        subs.remove(&key);
         Ok(())
     }
 
@@ -207,11 +203,16 @@ impl KisStream {
         let text = serde_json::to_string(&msg).map_err(KisError::Parse)?;
 
         let mut guard = self.inner.ws_tx.lock().await;
-        if let Some(ref mut writer) = *guard {
-            writer
-                .send(Message::Text(text))
-                .await
-                .map_err(|e| KisError::WebSocket(e.to_string()))?;
+        match *guard {
+            Some(ref mut writer) => {
+                writer
+                    .send(Message::Text(text))
+                    .await
+                    .map_err(|e| KisError::WebSocket(e.to_string()))?;
+            }
+            None => {
+                return Err(KisError::WebSocket("WebSocket not connected".into()));
+            }
         }
 
         Ok(())
