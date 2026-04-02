@@ -3,12 +3,24 @@ pub use approval_key::ApprovalKeyManager;
 
 use std::path::PathBuf;
 use std::sync::Arc;
+use std::time::Duration;
 
 use chrono::{DateTime, FixedOffset};
 use serde::{Deserialize, Serialize};
 use tokio::sync::RwLock;
 
 use crate::{KisConfig, KisError};
+
+/// Build the shared `reqwest::Client` with sensible timeouts.
+/// All HTTP-issuing components (`KisClient`, `TokenManager`, `ApprovalKeyManager`)
+/// should share the instance returned by this function.
+pub fn build_http_client() -> reqwest::Client {
+    reqwest::Client::builder()
+        .timeout(Duration::from_secs(30))
+        .connect_timeout(Duration::from_secs(10))
+        .build()
+        .expect("failed to build reqwest::Client")
+}
 
 /// KST(UTC+9) FixedOffset
 pub fn current_kst() -> DateTime<FixedOffset> {
@@ -45,11 +57,16 @@ struct Inner {
 
 impl TokenManager {
     pub fn new(config: KisConfig) -> Self {
+        Self::with_http(config, build_http_client())
+    }
+
+    /// Create with an externally-provided `reqwest::Client` (shared instance).
+    pub fn with_http(config: KisConfig, http: reqwest::Client) -> Self {
         Self {
             inner: Arc::new(Inner {
                 config,
                 cache: RwLock::new(None),
-                http: reqwest::Client::new(),
+                http,
             }),
         }
     }

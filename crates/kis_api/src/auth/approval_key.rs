@@ -35,11 +35,16 @@ struct Inner {
 
 impl ApprovalKeyManager {
     pub fn new(config: KisConfig) -> Self {
+        Self::with_http(config, super::build_http_client())
+    }
+
+    /// Create with an externally-provided `reqwest::Client` (shared instance).
+    pub fn with_http(config: KisConfig, http: reqwest::Client) -> Self {
         Self {
             inner: Arc::new(Inner {
                 config,
                 cache: RwLock::new(None),
-                http: reqwest::Client::new(),
+                http,
             }),
         }
     }

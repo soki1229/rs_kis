@@ -3,7 +3,7 @@ use std::sync::Arc;
 use async_trait::async_trait;
 use reqwest::Client;
 
-use crate::auth::{ApprovalKeyManager, TokenManager};
+use crate::auth::{build_http_client, ApprovalKeyManager, TokenManager};
 use crate::rest::overseas::analysis::{market, ranking};
 use crate::rest::overseas::inquiry::{balance, orders, profit};
 use crate::rest::overseas::quote;
@@ -29,15 +29,18 @@ pub struct KisClient {
 
 impl KisClient {
     /// 동기 생성자. `KisConfig::builder()` 로 설정 후 생성.
+    /// A single `reqwest::Client` (with 30 s request / 10 s connect timeouts)
+    /// is shared across the main client, `TokenManager`, and `ApprovalKeyManager`.
     pub fn new(config: KisConfig) -> Self {
-        let token_manager = TokenManager::new(config.clone());
-        let approval_key_manager = ApprovalKeyManager::new(config.clone());
+        let http = build_http_client();
+        let token_manager = TokenManager::with_http(config.clone(), http.clone());
+        let approval_key_manager = ApprovalKeyManager::with_http(config.clone(), http.clone());
         Self {
             inner: Arc::new(Inner {
                 config,
                 token_manager,
                 approval_key_manager,
-                http: Client::new(),
+                http,
             }),
         }
     }

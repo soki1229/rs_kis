@@ -1,5 +1,5 @@
 use crate::{
-    auth::{ApprovalKeyManager, TokenManager},
+    auth::{build_http_client, ApprovalKeyManager, TokenManager},
     rest::domestic::{
         inquiry::{
             domestic_balance, domestic_daily_chart, domestic_order_history,
@@ -22,13 +22,14 @@ pub struct KisDomesticClient {
 
 impl KisDomesticClient {
     pub fn new(config: KisConfig) -> Self {
-        let token_manager = TokenManager::new(config.clone());
-        let approval_key_manager = ApprovalKeyManager::new(config.clone());
+        let http = build_http_client();
+        let token_manager = TokenManager::with_http(config.clone(), http.clone());
+        let approval_key_manager = ApprovalKeyManager::with_http(config.clone(), http.clone());
         Self {
             config,
             token_manager,
             approval_key_manager,
-            http: reqwest::Client::new(),
+            http,
         }
     }
 }
