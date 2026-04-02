@@ -32,6 +32,8 @@ http = "1"
 log = "0.4"
 # Cancellation token
 tokio-util = { version = "0.7", features = ["rt"] }
+# Random jitter for reconnection backoff
+rand = "0.8"
 
 [features]
 test-utils = []

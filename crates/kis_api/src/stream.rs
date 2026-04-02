@@ -7,6 +7,12 @@ use tokio_util::sync::CancellationToken;
 
 use crate::{KisConfig, KisError, KisEvent};
 
+// ── Reconnection backoff constants ──────────────────────────────────────
+const BACKOFF_INITIAL_MS: u64 = 1_000;
+const BACKOFF_MAX_MS: u64 = 60_000;
+/// Jitter adds up to this fraction of the backoff interval (0.0–1.0).
+const BACKOFF_JITTER_FRACTION: f64 = 0.3;
+
 /// 구독 종류
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum SubscriptionKind {
@@ -38,6 +44,11 @@ impl EventReceiver {
     }
 }
 
+type WsSink = futures_util::stream::SplitSink<
+    tokio_tungstenite::WebSocketStream<tokio_tungstenite::MaybeTlsStream<tokio::net::TcpStream>>,
+    tokio_tungstenite::tungstenite::Message,
+>;
+
 /// WebSocket 실시간 스트림
 #[derive(Clone)]
 pub struct KisStream {
@@ -51,16 +62,7 @@ struct StreamInner {
     subscriptions: RwLock<HashMap<SubscriptionKey, ()>>,
     cancel: CancellationToken,
     /// WS writer (shared for sending subscribe/unsubscribe messages)
-    ws_tx: Mutex<
-        Option<
-            futures_util::stream::SplitSink<
-                tokio_tungstenite::WebSocketStream<
-                    tokio_tungstenite::MaybeTlsStream<tokio::net::TcpStream>,
-                >,
-                tokio_tungstenite::tungstenite::Message,
-            >,
-        >,
-    >,
+    ws_tx: Mutex<Option<WsSink>>,
 }
 
 impl KisStream {
@@ -80,61 +82,26 @@ impl KisStream {
             }),
         };
 
-        // 연결 및 수신 루프 시작
-        stream.start_connection_loop(tx, cancel).await?;
+        // Initial connection — fail fast so caller knows immediately if URL is invalid.
+        let ws_read = {
+            use tokio_tungstenite::connect_async;
 
-        Ok(stream)
-    }
+            let (ws_stream, _) = connect_async(&stream.inner.config.ws_url)
+                .await
+                .map_err(|e| KisError::WebSocket(e.to_string()))?;
 
-    async fn start_connection_loop(
-        &self,
-        tx: broadcast::Sender<KisEvent>,
-        cancel: CancellationToken,
-    ) -> Result<(), KisError> {
-        use tokio_tungstenite::connect_async;
-        use tokio_tungstenite::tungstenite::Message;
+            let (ws_write, ws_read) = ws_stream.split();
+            *stream.inner.ws_tx.lock().await = Some(ws_write);
+            ws_read
+        };
 
-        let url = &self.inner.config.ws_url;
-        let (ws_stream, _) = connect_async(url)
-            .await
-            .map_err(|e| KisError::WebSocket(e.to_string()))?;
-
-        let (ws_write, ws_read) = ws_stream.split();
-        *self.inner.ws_tx.lock().await = Some(ws_write);
-
-        let _inner_clone = self.inner.clone();
-        let tx_clone = tx.clone();
-
+        // Spawn the reconnection loop (handles future disconnections)
+        let inner = stream.inner.clone();
         tokio::spawn(async move {
-            let mut reader = ws_read;
-            loop {
-                tokio::select! {
-                    _ = cancel.cancelled() => break,
-                    msg = reader.next() => {
-                        match msg {
-                            Some(Ok(Message::Text(text))) => {
-                                if let Some(event) = parse_ws_message(&text) {
-                                    let _ = tx_clone.send(event);
-                                }
-                            }
-                            Some(Ok(Message::Ping(data))) => {
-                                // Pong은 tokio-tungstenite가 자동 처리
-                                let _ = data;
-                            }
-                            Some(Err(e)) => {
-                                log::warn!("WS error: {e}");
-                                break;
-                            }
-                            None => break,
-                            _ => {}
-                        }
-                    }
-                }
-            }
-            // tx_clone이 drop되면 수신측에서 RecvError::Closed → KisError::StreamClosed
+            run_connection_loop(inner, ws_read).await;
         });
 
-        Ok(())
+        Ok(stream)
     }
 
     /// 실시간 이벤트 수신기 획득
@@ -147,30 +114,26 @@ impl KisStream {
     /// 종목 구독 등록
     pub async fn subscribe(&self, symbol: &str, kind: SubscriptionKind) -> Result<(), KisError> {
         let key = (symbol.to_string(), kind);
-        {
-            let subs = self.inner.subscriptions.read().await;
-            if subs.contains_key(&key) {
-                return Ok(());
-            }
+        let mut subs = self.inner.subscriptions.write().await;
+        if subs.contains_key(&key) {
+            return Ok(());
         }
 
         self.send_subscribe_message(symbol, kind, true).await?;
-        self.inner.subscriptions.write().await.insert(key, ());
+        subs.insert(key, ());
         Ok(())
     }
 
     /// 종목 구독 해제
     pub async fn unsubscribe(&self, symbol: &str, kind: SubscriptionKind) -> Result<(), KisError> {
         let key = (symbol.to_string(), kind);
-        {
-            let subs = self.inner.subscriptions.read().await;
-            if !subs.contains_key(&key) {
-                return Ok(());
-            }
+        let mut subs = self.inner.subscriptions.write().await;
+        if !subs.contains_key(&key) {
+            return Ok(());
         }
 
         self.send_subscribe_message(symbol, kind, false).await?;
-        self.inner.subscriptions.write().await.remove(&key);
+        subs.remove(&key);
         Ok(())
     }
 
@@ -180,47 +143,270 @@ impl KisStream {
         kind: SubscriptionKind,
         subscribe: bool,
     ) -> Result<(), KisError> {
-        use tokio_tungstenite::tungstenite::Message;
-
-        let tr_id = match kind {
-            SubscriptionKind::Price => "HDFSCNT0",
-            SubscriptionKind::Orderbook => "HDFSASP0",
-            SubscriptionKind::DomesticPrice => "H0STCNT0",
-            SubscriptionKind::DomesticOrderbook => "H0STASP0",
-        };
-
-        let msg = serde_json::json!({
-            "header": {
-                "approval_key": self.inner.approval_key,
-                "custtype": "P",
-                "tr_type": if subscribe { "1" } else { "2" },
-                "content-type": "utf-8"
-            },
-            "body": {
-                "input": {
-                    "tr_id": tr_id,
-                    "tr_key": symbol
-                }
-            }
-        });
-
-        let text = serde_json::to_string(&msg).map_err(KisError::Parse)?;
-
-        let mut guard = self.inner.ws_tx.lock().await;
-        if let Some(ref mut writer) = *guard {
-            writer
-                .send(Message::Text(text))
-                .await
-                .map_err(|e| KisError::WebSocket(e.to_string()))?;
-        }
-
-        Ok(())
+        send_subscribe_raw(
+            &self.inner.ws_tx,
+            &self.inner.approval_key,
+            symbol,
+            kind,
+            subscribe,
+        )
+        .await
     }
 
     /// 스트림 종료
     pub fn close(&self) {
         self.inner.cancel.cancel();
     }
+}
+
+/// Send a subscribe/unsubscribe message over the provided writer mutex.
+async fn send_subscribe_raw(
+    ws_tx: &Mutex<Option<WsSink>>,
+    approval_key: &str,
+    symbol: &str,
+    kind: SubscriptionKind,
+    subscribe: bool,
+) -> Result<(), KisError> {
+    use tokio_tungstenite::tungstenite::Message;
+
+    let tr_id = match kind {
+        SubscriptionKind::Price => "HDFSCNT0",
+        SubscriptionKind::Orderbook => "HDFSASP0",
+        SubscriptionKind::DomesticPrice => "H0STCNT0",
+        SubscriptionKind::DomesticOrderbook => "H0STASP0",
+    };
+
+    let msg = serde_json::json!({
+        "header": {
+            "approval_key": approval_key,
+            "custtype": "P",
+            "tr_type": if subscribe { "1" } else { "2" },
+            "content-type": "utf-8"
+        },
+        "body": {
+            "input": {
+                "tr_id": tr_id,
+                "tr_key": symbol
+            }
+        }
+    });
+
+    let text = serde_json::to_string(&msg).map_err(KisError::Parse)?;
+
+    let mut guard = ws_tx.lock().await;
+    match *guard {
+        Some(ref mut writer) => {
+            writer
+                .send(Message::Text(text))
+                .await
+                .map_err(|e| KisError::WebSocket(e.to_string()))?;
+        }
+        None => {
+            return Err(KisError::WebSocket("WebSocket not connected".into()));
+        }
+    }
+
+    Ok(())
+}
+
+/// Re-subscribe all active subscriptions after a reconnect.
+async fn resubscribe_all(inner: &StreamInner) {
+    let subs = inner.subscriptions.read().await;
+    let entries: Vec<_> = subs.keys().cloned().collect();
+    drop(subs);
+
+    for (symbol, kind) in entries {
+        if let Err(e) =
+            send_subscribe_raw(&inner.ws_tx, &inner.approval_key, &symbol, kind, true).await
+        {
+            log::warn!("failed to re-subscribe {symbol}/{kind:?}: {e}");
+        }
+    }
+}
+
+/// Calculate backoff duration with jitter.
+fn backoff_duration(attempt: u32) -> std::time::Duration {
+    use rand::Rng;
+
+    let base_ms = BACKOFF_INITIAL_MS.saturating_mul(1u64.checked_shl(attempt).unwrap_or(u64::MAX));
+    let capped_ms = base_ms.min(BACKOFF_MAX_MS);
+    let jitter_ms =
+        (capped_ms as f64 * BACKOFF_JITTER_FRACTION * rand::thread_rng().gen::<f64>()) as u64;
+    std::time::Duration::from_millis(capped_ms + jitter_ms)
+}
+
+type WsReadHalf = futures_util::stream::SplitStream<
+    tokio_tungstenite::WebSocketStream<tokio_tungstenite::MaybeTlsStream<tokio::net::TcpStream>>,
+>;
+
+/// Core connection loop: reads messages, handles PINGPONG, and reconnects on failure.
+///
+/// Accepts the read half from the initial connection (done in `connect`).
+/// On disconnect it reconnects with exponential backoff and re-subscribes.
+async fn run_connection_loop(inner: Arc<StreamInner>, initial_ws_read: WsReadHalf) {
+    use tokio_tungstenite::connect_async;
+
+    let cancel = &inner.cancel;
+    let mut attempt: u32 = 0;
+    let mut received_data = false;
+    let mut current_ws_read = Some(initial_ws_read);
+
+    loop {
+        if cancel.is_cancelled() {
+            break;
+        }
+
+        // Use the initial read half on first iteration, reconnect on subsequent ones.
+        let ws_read = if let Some(initial) = current_ws_read.take() {
+            initial
+        } else {
+            // Backoff before reconnecting
+            let delay = backoff_duration(attempt.saturating_sub(1));
+            log::info!(
+                "WS reconnecting in {}ms (attempt {attempt})",
+                delay.as_millis()
+            );
+
+            tokio::select! {
+                _ = cancel.cancelled() => break,
+                _ = tokio::time::sleep(delay) => {}
+            }
+
+            if cancel.is_cancelled() {
+                break;
+            }
+
+            // Establish new connection
+            match connect_async(&inner.config.ws_url).await {
+                Ok((ws_stream, _)) => {
+                    let (ws_write, ws_read) = ws_stream.split();
+                    *inner.ws_tx.lock().await = Some(ws_write);
+
+                    log::info!("WS reconnected successfully");
+                    // Re-subscribe all active subscriptions
+                    resubscribe_all(&inner).await;
+
+                    ws_read
+                }
+                Err(e) => {
+                    log::warn!("WS connect failed: {e}");
+                    attempt = attempt.saturating_add(1);
+                    received_data = false;
+                    continue;
+                }
+            }
+        };
+
+        // Read loop
+        let disconnect_reason = read_loop(&inner, ws_read, cancel).await;
+
+        // Clear the writer since connection is dead
+        *inner.ws_tx.lock().await = None;
+
+        match disconnect_reason {
+            DisconnectReason::Cancelled => break,
+            DisconnectReason::Error(e) => {
+                log::warn!("WS disconnected: {e}");
+            }
+            DisconnectReason::Eof => {
+                log::warn!("WS connection closed by server");
+            }
+        }
+
+        // Only reset backoff after sustained connection (received data messages)
+        if received_data {
+            attempt = 1; // start with short backoff
+        } else {
+            attempt = attempt.saturating_add(1);
+        }
+        received_data = false;
+    }
+}
+
+enum DisconnectReason {
+    Cancelled,
+    Error(String),
+    Eof,
+}
+
+/// Read messages from the WebSocket, handle PINGPONG, and dispatch events.
+async fn read_loop(
+    inner: &StreamInner,
+    ws_read: WsReadHalf,
+    cancel: &CancellationToken,
+) -> DisconnectReason {
+    use tokio_tungstenite::tungstenite::Message;
+
+    let mut reader = ws_read;
+
+    loop {
+        tokio::select! {
+            _ = cancel.cancelled() => return DisconnectReason::Cancelled,
+            msg = reader.next() => {
+                match msg {
+                    Some(Ok(Message::Text(text))) => {
+                        match classify_text_message(&text) {
+                            TextMessage::PingPong => {
+                                // Echo the PINGPONG message back to keep the connection alive
+                                let mut guard = inner.ws_tx.lock().await;
+                                if let Some(ref mut writer) = *guard {
+                                    if let Err(e) = writer.send(Message::Text(text)).await {
+                                        log::warn!("failed to send PINGPONG response: {e}");
+                                        return DisconnectReason::Error(e.to_string());
+                                    }
+                                }
+                                log::info!("PINGPONG heartbeat responded");
+                            }
+                            TextMessage::OtherJson => {
+                                // Other JSON control messages — log and skip
+                                log::info!("WS control message: {text}");
+                            }
+                            TextMessage::Data => {
+                                if let Some(event) = parse_ws_message(&text) {
+                                    let _ = inner.tx.send(event);
+                                }
+                            }
+                        }
+                    }
+                    Some(Ok(Message::Ping(_))) => {
+                        // Pong은 tokio-tungstenite가 자동 처리
+                    }
+                    Some(Err(e)) => {
+                        return DisconnectReason::Error(e.to_string());
+                    }
+                    None => return DisconnectReason::Eof,
+                    _ => {}
+                }
+            }
+        }
+    }
+}
+
+/// Classifies an incoming text message from the WebSocket.
+enum TextMessage {
+    /// KIS PINGPONG heartbeat — must echo back.
+    PingPong,
+    /// Other JSON control message (not PINGPONG).
+    OtherJson,
+    /// Pipe-delimited market data.
+    Data,
+}
+
+fn classify_text_message(text: &str) -> TextMessage {
+    if !text.starts_with('{') {
+        return TextMessage::Data;
+    }
+    // Minimal JSON check for PINGPONG: look for "PINGPONG" in tr_id
+    if let Ok(v) = serde_json::from_str::<serde_json::Value>(text) {
+        if v.get("header")
+            .and_then(|h| h.get("tr_id"))
+            .and_then(|t| t.as_str())
+            == Some("PINGPONG")
+        {
+            return TextMessage::PingPong;
+        }
+    }
+    TextMessage::OtherJson
 }
 
 // ── HDFSCNT0 필드 인덱스 (KIS 해외 실시간 체결) ──────────────────────────
@@ -641,5 +827,45 @@ mod tests {
         } else {
             panic!("expected Quote event");
         }
+    }
+
+    #[test]
+    fn classify_pingpong_message() {
+        let pingpong = r#"{"header":{"tr_id":"PINGPONG"},"body":{}}"#;
+        assert!(matches!(
+            classify_text_message(pingpong),
+            TextMessage::PingPong
+        ));
+    }
+
+    #[test]
+    fn classify_other_json_message() {
+        let json = r#"{"header":{"tr_id":"SUBSCRIBE"},"body":{}}"#;
+        assert!(matches!(
+            classify_text_message(json),
+            TextMessage::OtherJson
+        ));
+    }
+
+    #[test]
+    fn classify_data_message() {
+        let data = "0|HDFSCNT0|1|data^fields^here";
+        assert!(matches!(classify_text_message(data), TextMessage::Data));
+    }
+
+    #[test]
+    fn backoff_duration_increases() {
+        let d0 = backoff_duration(0);
+        let d3 = backoff_duration(3);
+        // d0 should be around 1s (+ jitter), d3 around 8s (+ jitter)
+        assert!(d0.as_millis() >= 1000);
+        assert!(d0.as_millis() <= 1300); // 1000 + 30% jitter max
+        assert!(d3.as_millis() >= 8000);
+    }
+
+    #[test]
+    fn backoff_duration_caps_at_max() {
+        let d_big = backoff_duration(20); // 2^20 * 1000 would be huge
+        assert!(d_big.as_millis() <= (BACKOFF_MAX_MS as u128) * 2); // max + jitter
     }
 }
