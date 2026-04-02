@@ -198,14 +198,24 @@ impl TokenManager {
     }
 
     async fn save_to_file(&self, path: &PathBuf, token: &TokenCache) -> Result<(), KisError> {
-        if let Some(parent) = path.parent() {
-            tokio::fs::create_dir_all(parent)
-                .await
-                .map_err(KisError::Io)?;
-        }
-        let data = serde_json::to_string_pretty(token).map_err(KisError::Parse)?;
-        tokio::fs::write(path, data).await.map_err(KisError::Io)
+        atomic_write_json(path, token).await
     }
+}
+
+/// Atomic file write: serialize to temp file in the same directory, then rename.
+/// Prevents corrupted cache files if the process crashes mid-write.
+async fn atomic_write_json<T: Serialize>(path: &PathBuf, value: &T) -> Result<(), KisError> {
+    if let Some(parent) = path.parent() {
+        tokio::fs::create_dir_all(parent)
+            .await
+            .map_err(KisError::Io)?;
+    }
+    let data = serde_json::to_string_pretty(value).map_err(KisError::Parse)?;
+
+    // Write to a temp file next to the target, then atomically rename.
+    let tmp = path.with_extension("tmp");
+    tokio::fs::write(&tmp, &data).await.map_err(KisError::Io)?;
+    tokio::fs::rename(&tmp, path).await.map_err(KisError::Io)
 }
 
 #[cfg(test)]

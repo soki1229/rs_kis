@@ -134,13 +134,7 @@ impl ApprovalKeyManager {
         path: &PathBuf,
         cached: &ApprovalKeyCache,
     ) -> Result<(), KisError> {
-        if let Some(parent) = path.parent() {
-            tokio::fs::create_dir_all(parent)
-                .await
-                .map_err(KisError::Io)?;
-        }
-        let data = serde_json::to_string_pretty(cached).map_err(KisError::Parse)?;
-        tokio::fs::write(path, data).await.map_err(KisError::Io)
+        super::atomic_write_json(path, cached).await
     }
 }
 
