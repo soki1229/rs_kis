@@ -143,12 +143,24 @@ mod tests {
     #[test]
     fn vts_flag_selects_correct_tr_id() {
         // 모의투자(VTS) — VTTC 계열
-        assert_eq!(select_place_order_tr_id(true, &OrderSide::Buy), "VTTC0802U");
-        assert_eq!(select_place_order_tr_id(true, &OrderSide::Sell), "VTTC0801U");
+        assert_eq!(
+            select_place_order_tr_id(true, &OrderSide::Buy),
+            "VTTC0802U"
+        );
+        assert_eq!(
+            select_place_order_tr_id(true, &OrderSide::Sell),
+            "VTTC0801U"
+        );
         assert_eq!(select_cancel_order_tr_id(true), "VTTC0803U");
         // 실전투자 — TTTC 계열
-        assert_eq!(select_place_order_tr_id(false, &OrderSide::Buy), "TTTC0802U");
-        assert_eq!(select_place_order_tr_id(false, &OrderSide::Sell), "TTTC0801U");
+        assert_eq!(
+            select_place_order_tr_id(false, &OrderSide::Buy),
+            "TTTC0802U"
+        );
+        assert_eq!(
+            select_place_order_tr_id(false, &OrderSide::Sell),
+            "TTTC0801U"
+        );
         assert_eq!(select_cancel_order_tr_id(false), "TTTC0803U");
     }
 
