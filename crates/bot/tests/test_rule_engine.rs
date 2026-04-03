@@ -51,5 +51,8 @@ fn consistent_down_gives_no_signal() {
         volume_acceleration: vec![1.0, 1.3, 1.6],
     };
     let signal = engine.evaluate(&input);
-    assert!(signal.is_none(), "Short 신호는 현재 미지원 — None 반환 기대");
+    assert!(
+        signal.is_none(),
+        "Short 신호는 현재 미지원 — None 반환 기대"
+    );
 }
