@@ -1,7 +1,12 @@
 // ⚠ TR ID 및 필드명은 KIS OpenAPI 가이드에서 확인 필요
+// 실전투자:
 // - 매수: POST /uapi/domestic-stock/v1/trading/order-cash  (tr_id: TTTC0802U)
 // - 매도: POST /uapi/domestic-stock/v1/trading/order-cash  (tr_id: TTTC0801U)
 // - 취소: POST /uapi/domestic-stock/v1/trading/order-rvsecncl (tr_id: TTTC0803U)
+// 모의투자(VTS):
+// - 매수: tr_id: VTTC0802U
+// - 매도: tr_id: VTTC0801U
+// - 취소: tr_id: VTTC0803U
 
 use super::types::*;
 use crate::rest::overseas::types::split_account;
@@ -9,16 +14,30 @@ use crate::{KisConfig, KisError, OrderSide};
 use reqwest::Client;
 use serde_json::json;
 
+fn select_place_order_tr_id(is_domestic_virtual: bool, side: &OrderSide) -> &'static str {
+    match (is_domestic_virtual, side) {
+        (true, OrderSide::Buy) => "VTTC0802U",
+        (true, OrderSide::Sell) => "VTTC0801U",
+        (false, OrderSide::Buy) => "TTTC0802U",
+        (false, OrderSide::Sell) => "TTTC0801U",
+    }
+}
+
+fn select_cancel_order_tr_id(is_domestic_virtual: bool) -> &'static str {
+    if is_domestic_virtual {
+        "VTTC0803U"
+    } else {
+        "TTTC0803U"
+    }
+}
+
 pub async fn domestic_place_order(
     client: &Client,
     config: &KisConfig,
     token: &str,
     req: DomesticPlaceOrderRequest,
 ) -> Result<DomesticPlaceOrderResponse, KisError> {
-    let tr_id = match req.side {
-        OrderSide::Buy => "TTTC0802U",
-        OrderSide::Sell => "TTTC0801U",
-    };
+    let tr_id = select_place_order_tr_id(config.is_domestic_virtual, &req.side);
 
     let (cano, prdt_cd) = split_account(&config.account_num);
 
@@ -70,6 +89,7 @@ pub async fn domestic_cancel_order(
     token: &str,
     req: DomesticCancelOrderRequest,
 ) -> Result<DomesticCancelOrderResponse, KisError> {
+    let tr_id = select_cancel_order_tr_id(config.is_domestic_virtual);
     let (cano, prdt_cd) = split_account(&config.account_num);
 
     let body = json!({
@@ -92,7 +112,7 @@ pub async fn domestic_cancel_order(
         .header("authorization", format!("Bearer {}", token))
         .header("appkey", &config.app_key)
         .header("appsecret", &config.app_secret)
-        .header("tr_id", "TTTC0803U")
+        .header("tr_id", tr_id)
         .header("custtype", "P")
         .json(&body)
         .send()
@@ -119,6 +139,18 @@ pub async fn domestic_cancel_order(
 mod tests {
     use super::*;
     use rust_decimal_macros::dec;
+
+    #[test]
+    fn vts_flag_selects_correct_tr_id() {
+        // 모의투자(VTS) — VTTC 계열
+        assert_eq!(select_place_order_tr_id(true, &OrderSide::Buy), "VTTC0802U");
+        assert_eq!(select_place_order_tr_id(true, &OrderSide::Sell), "VTTC0801U");
+        assert_eq!(select_cancel_order_tr_id(true), "VTTC0803U");
+        // 실전투자 — TTTC 계열
+        assert_eq!(select_place_order_tr_id(false, &OrderSide::Buy), "TTTC0802U");
+        assert_eq!(select_place_order_tr_id(false, &OrderSide::Sell), "TTTC0801U");
+        assert_eq!(select_cancel_order_tr_id(false), "TTTC0803U");
+    }
 
     #[test]
     fn deserialize_place_order_response() {

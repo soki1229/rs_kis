@@ -15,6 +15,8 @@ pub struct KisConfig {
     pub rest_url: String,
     pub ws_url: String,
     pub mock: bool,
+    /// 국내 주식 모의투자(VTS) 여부 — true 이면 TR-ID에 VTTC 계열 사용.
+    pub is_domestic_virtual: bool,
     pub token_cache_path: Option<PathBuf>,
     pub ws_event_buffer: usize,
 }
@@ -61,6 +63,7 @@ impl KisConfig {
             rest_url,
             ws_url,
             mock,
+            is_domestic_virtual: mock,
             token_cache_path,
             ws_event_buffer: DEFAULT_WS_EVENT_BUFFER,
         })
@@ -75,6 +78,7 @@ pub struct KisConfigBuilder {
     rest_url: Option<String>,
     ws_url: Option<String>,
     mock: bool,
+    is_domestic_virtual: bool,
     token_cache_path: Option<PathBuf>,
     ws_event_buffer: Option<usize>,
 }
@@ -102,6 +106,10 @@ impl KisConfigBuilder {
     }
     pub fn mock(mut self, v: bool) -> Self {
         self.mock = v;
+        self
+    }
+    pub fn is_domestic_virtual(mut self, v: bool) -> Self {
+        self.is_domestic_virtual = v;
         self
     }
     pub fn token_cache(mut self, path: impl Into<String>) -> Self {
@@ -144,6 +152,7 @@ impl KisConfigBuilder {
             rest_url: self.rest_url.unwrap_or_else(|| default_rest.to_string()),
             ws_url: self.ws_url.unwrap_or_else(|| default_ws.to_string()),
             mock: self.mock,
+            is_domestic_virtual: self.is_domestic_virtual,
             token_cache_path,
             ws_event_buffer: self.ws_event_buffer.unwrap_or(DEFAULT_WS_EVENT_BUFFER),
         })
@@ -227,5 +236,28 @@ mod tests {
     #[test]
     fn kis_config_is_send_sync() {
         assert_send_sync::<KisConfig>();
+    }
+
+    #[test]
+    fn is_domestic_virtual_defaults_false() {
+        let cfg = KisConfig::builder()
+            .app_key("k")
+            .app_secret("s")
+            .account_num("a")
+            .build()
+            .unwrap();
+        assert!(!cfg.is_domestic_virtual);
+    }
+
+    #[test]
+    fn is_domestic_virtual_builder_setter() {
+        let cfg = KisConfig::builder()
+            .app_key("k")
+            .app_secret("s")
+            .account_num("a")
+            .is_domestic_virtual(true)
+            .build()
+            .unwrap();
+        assert!(cfg.is_domestic_virtual);
     }
 }
