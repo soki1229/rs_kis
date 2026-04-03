@@ -21,7 +21,14 @@ pub async fn connect(db_path: &str) -> Result<SqlitePool, BotError> {
                 sqlx::query("PRAGMA journal_mode=WAL")
                     .execute(&mut *conn)
                     .await?;
-                sqlx::query("PRAGMA synchronous=NORMAL")
+                // FULL: 각 커밋마다 WAL을 fsync — 전원 장애 시에도 커밋 손실 없음.
+                // NORMAL 대비 약간 느리지만 금융 거래 DB에서 필수.
+                sqlx::query("PRAGMA synchronous=FULL")
+                    .execute(&mut *conn)
+                    .await?;
+                // WAL 파일이 1000페이지(약 4MB) 초과 시 자동 체크포인트.
+                // 미설정 시 장기 운용 중 WAL 파일이 수백 MB로 누적될 수 있음.
+                sqlx::query("PRAGMA wal_autocheckpoint=1000")
                     .execute(&mut *conn)
                     .await?;
                 Ok(())
