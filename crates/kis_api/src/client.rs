@@ -71,6 +71,22 @@ impl KisClient {
         }
     }
 
+    /// Shared-component accessors — allow `KisDomesticClient` (or other
+    /// consumers using the same app-key) to reuse the same `TokenManager`,
+    /// `ApprovalKeyManager`, `reqwest::Client`, and `RateLimiter`.
+    pub fn token_manager(&self) -> &TokenManager {
+        &self.inner.token_manager
+    }
+    pub fn approval_key_manager(&self) -> &ApprovalKeyManager {
+        &self.inner.approval_key_manager
+    }
+    pub fn shared_http(&self) -> &Client {
+        &self.inner.http
+    }
+    pub fn rate_limiter(&self) -> &RateLimiter {
+        &self.inner.rate_limiter
+    }
+
     /// 현재 유효한 액세스 토큰 반환 (내부 헬퍼)
     pub(crate) async fn token(&self) -> Result<String, KisError> {
         self.inner.token_manager.token().await
@@ -415,5 +431,14 @@ mod tests {
         fn accepts_kis_api(_: &impl KisApi) {}
         let c = make_client();
         accepts_kis_api(&c);
+    }
+
+    #[test]
+    fn shared_accessors_return_same_types() {
+        let c = make_client();
+        let _tm = c.token_manager();
+        let _ak = c.approval_key_manager();
+        let _http = c.shared_http();
+        let _rl = c.rate_limiter();
     }
 }

@@ -38,6 +38,22 @@ impl KisDomesticClient {
         }
     }
 
+    /// Create a domestic client that reuses the `TokenManager`, `ApprovalKeyManager`,
+    /// `reqwest::Client`, and `RateLimiter` from an existing `KisClient`.
+    ///
+    /// This avoids duplicate token issuance when a `KisClient` (overseas) and
+    /// `KisDomesticClient` share the same app-key — KIS enforces a 1-request/minute
+    /// rate limit on token issuance per app-key.
+    pub fn from_client(overseas: &crate::KisClient) -> Self {
+        Self {
+            config: overseas.config().clone(),
+            token_manager: overseas.token_manager().clone(),
+            approval_key_manager: overseas.approval_key_manager().clone(),
+            http: overseas.shared_http().clone(),
+            rate_limiter: overseas.rate_limiter().clone(),
+        }
+    }
+
     async fn throttled_token(&self) -> Result<String, KisError> {
         self.rate_limiter.acquire().await;
         self.token_manager.token().await
@@ -155,6 +171,20 @@ mod tests {
         fn accepts_domestic_api(_: &impl KisDomesticApi) {}
         let c = make_client();
         accepts_domestic_api(&c);
+    }
+
+    #[test]
+    fn domestic_client_from_client_shares_config() {
+        let config = KisConfig::builder()
+            .app_key("shared_key")
+            .app_secret("shared_secret")
+            .account_num("12345678-01")
+            .mock(true)
+            .build()
+            .unwrap();
+        let overseas = crate::KisClient::new(config);
+        let domestic = KisDomesticClient::from_client(&overseas);
+        assert_eq!(domestic.config.app_key, "shared_key");
     }
 
     #[test]
