@@ -48,6 +48,12 @@ pub async fn domestic_unfilled_orders(
     let json: serde_json::Value = resp.json().await.map_err(KisError::Network)?;
     let rt_cd = json["rt_cd"].as_str().unwrap_or("");
     if rt_cd != "0" {
+        // KIS VTS does not support this endpoint (msg_cd 90000000).
+        // Treat as empty unfilled list — VTS orders are typically auto-filled.
+        let msg_cd = json["msg_cd"].as_str().unwrap_or("");
+        if msg_cd == "90000000" {
+            return Ok(vec![]);
+        }
         return Err(KisError::Api {
             code: rt_cd.into(),
             message: json["msg1"].as_str().unwrap_or("unknown").into(),
@@ -112,6 +118,7 @@ pub async fn domestic_balance(
             ("FUND_STTL_ICLD_YN", "N"),
             ("FINY_PFTRT_ICLD_YN", "N"),
             ("PRCS_DVSN", "00"),
+            ("FNCG_AMT_AUTO_RDPT_YN", "N"),
             ("CTX_AREA_FK100", ""),
             ("CTX_AREA_NK100", ""),
         ])
