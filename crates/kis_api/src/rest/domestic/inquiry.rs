@@ -16,6 +16,11 @@ pub async fn domestic_unfilled_orders(
     config: &KisConfig,
     token: &str,
 ) -> Result<Vec<DomesticUnfilledOrder>, KisError> {
+    let tr_id = if config.is_domestic_virtual {
+        "VTTC8036R"
+    } else {
+        "TTTC8036R"
+    };
     let (cano, prdt_cd) = split_account(&config.account_num);
 
     let resp = client
@@ -26,7 +31,7 @@ pub async fn domestic_unfilled_orders(
         .header("authorization", format!("Bearer {}", token))
         .header("appkey", &config.app_key)
         .header("appsecret", &config.app_secret)
-        .header("tr_id", "TTTC8036R")
+        .header("tr_id", tr_id)
         .header("custtype", "P")
         .query(&[
             ("CANO", cano),
@@ -179,7 +184,14 @@ pub async fn domestic_order_history(
         .header("authorization", format!("Bearer {}", token))
         .header("appkey", &config.app_key)
         .header("appsecret", &config.app_secret)
-        .header("tr_id", "TTTC8001R")
+        .header(
+            "tr_id",
+            if config.is_domestic_virtual {
+                "VTTC8001R"
+            } else {
+                "TTTC8001R"
+            },
+        )
         .header("custtype", "P")
         .query(&[
             ("CANO", cano),

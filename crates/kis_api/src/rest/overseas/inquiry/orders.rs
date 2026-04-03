@@ -63,6 +63,8 @@ pub async fn unfilled_orders(
         "CTX_AREA_NK200": ""
     });
 
+    let tr_id = if config.mock { "VTTS3018R" } else { "TTTS3018R" };
+
     let resp: Value = execute(
         http,
         config,
@@ -70,7 +72,7 @@ pub async fn unfilled_orders(
         RequestParams {
             method: reqwest::Method::GET,
             path: "/uapi/overseas-stock/v1/trading/inquire-nccs",
-            tr_id: "TTTS3018R",
+            tr_id,
             query: Some(&query),
             body: None,
         },
