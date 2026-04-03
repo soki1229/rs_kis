@@ -143,10 +143,7 @@ mod tests {
     #[test]
     fn vts_flag_selects_correct_tr_id() {
         // 모의투자(VTS) — VTTC 계열
-        assert_eq!(
-            select_place_order_tr_id(true, &OrderSide::Buy),
-            "VTTC0802U"
-        );
+        assert_eq!(select_place_order_tr_id(true, &OrderSide::Buy), "VTTC0802U");
         assert_eq!(
             select_place_order_tr_id(true, &OrderSide::Sell),
             "VTTC0801U"
