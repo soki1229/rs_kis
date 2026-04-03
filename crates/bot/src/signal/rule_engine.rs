@@ -33,14 +33,15 @@ impl RuleEngine {
             .iter()
             .filter(|&&d| d)
             .count();
-        let direction = if up_count * 2 >= input.recent_candle_directions.len() {
-            Direction::Long
-        } else {
-            Direction::Short
-        };
+
+        // Direction::Short은 현재 미지원 — KIS 공매도는 별도 대주 API 필요.
+        // Short 조건(하락 다수결)이면 신호 없음으로 처리.
+        if up_count * 2 < input.recent_candle_directions.len() {
+            return None;
+        }
 
         Some(RuleSignal {
-            direction,
+            direction: Direction::Long,
             strength: raw_strength.clamp(0.0, 1.0),
         })
     }
