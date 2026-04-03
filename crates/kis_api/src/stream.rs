@@ -608,6 +608,7 @@ impl KisStream {
                     rest_url: "http://localhost".into(),
                     ws_url: "ws://localhost".into(),
                     mock: true,
+                    is_domestic_virtual: false,
                     token_cache_path: None,
                     ws_event_buffer: 128,
                 },

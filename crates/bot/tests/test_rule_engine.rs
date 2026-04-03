@@ -43,7 +43,7 @@ fn weak_signal_below_threshold() {
 }
 
 #[test]
-fn consistent_down_gives_short_signal() {
+fn consistent_down_gives_no_signal() {
     let engine = RuleEngine;
     let input = RuleEngineInput {
         recent_candle_directions: vec![false, false, false, false, false],
@@ -51,6 +51,8 @@ fn consistent_down_gives_short_signal() {
         volume_acceleration: vec![1.0, 1.3, 1.6],
     };
     let signal = engine.evaluate(&input);
-    assert!(signal.is_some());
-    assert_eq!(signal.unwrap().direction, Direction::Short);
+    assert!(
+        signal.is_none(),
+        "Short 신호는 현재 미지원 — None 반환 기대"
+    );
 }
