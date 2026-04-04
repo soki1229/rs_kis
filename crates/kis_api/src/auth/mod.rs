@@ -37,10 +37,44 @@ struct TokenCache {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 struct TokenResponse {
     access_token: String,
-    /// 예: "86400" (초)
+    /// 예: "86400" 또는 86400 (KIS가 string/integer 둘 다 반환함)
+    #[serde(default, deserialize_with = "deserialize_expires_in")]
     expires_in: Option<String>,
     /// 예: "2026-03-22 09:30:00" (KIS API가 반환하는 만료 시각 문자열)
     access_token_token_expired: Option<String>,
+}
+
+fn deserialize_expires_in<'de, D>(deserializer: D) -> Result<Option<String>, D::Error>
+where
+    D: serde::Deserializer<'de>,
+{
+    use serde::de::Visitor;
+    struct ExpiresInVisitor;
+    impl<'de> Visitor<'de> for ExpiresInVisitor {
+        type Value = Option<String>;
+        fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+            write!(f, "string or integer for expires_in")
+        }
+        fn visit_str<E: serde::de::Error>(self, v: &str) -> Result<Self::Value, E> {
+            Ok(Some(v.to_string()))
+        }
+        fn visit_string<E: serde::de::Error>(self, v: String) -> Result<Self::Value, E> {
+            Ok(Some(v))
+        }
+        fn visit_i64<E: serde::de::Error>(self, v: i64) -> Result<Self::Value, E> {
+            Ok(Some(v.to_string()))
+        }
+        fn visit_u64<E: serde::de::Error>(self, v: u64) -> Result<Self::Value, E> {
+            Ok(Some(v.to_string()))
+        }
+        fn visit_none<E: serde::de::Error>(self) -> Result<Self::Value, E> {
+            Ok(None)
+        }
+        fn visit_unit<E: serde::de::Error>(self) -> Result<Self::Value, E> {
+            Ok(None)
+        }
+    }
+    deserializer.deserialize_any(ExpiresInVisitor)
 }
 
 /// 토큰 자동 갱신 + 파일 캐시 관리
