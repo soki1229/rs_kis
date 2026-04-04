@@ -80,14 +80,22 @@ fn parse_optional_decimal(v: &Value, field: &str) -> Option<Decimal> {
 }
 
 fn parse_ranking_item(item: &Value) -> Result<RankingItem, KisError> {
+    let symbol = item["symb"].as_str().unwrap_or("").to_string();
+    if symbol.is_empty() {
+        return Err(KisError::Api {
+            code: "PARSE_ERR".to_string(),
+            message: "missing symbol in ranking item".to_string(),
+        });
+    }
     Ok(RankingItem {
         exchange: item["excd"].as_str().unwrap_or("").to_string(),
-        symbol: item["symb"].as_str().unwrap_or("").to_string(),
+        symbol,
         name: item["name"].as_str().unwrap_or("").to_string(),
-        last: parse_decimal(item, "last")?,
-        diff: parse_decimal(item, "diff")?,
-        rate: parse_decimal(item, "rate")?,
-        volume: parse_decimal(item, "tvol")?,
+        // last/diff/rate/volume may be empty strings on weekends/after-hours
+        last: parse_optional_decimal(item, "last").unwrap_or(rust_decimal::Decimal::ZERO),
+        diff: parse_optional_decimal(item, "diff").unwrap_or(rust_decimal::Decimal::ZERO),
+        rate: parse_optional_decimal(item, "rate").unwrap_or(rust_decimal::Decimal::ZERO),
+        volume: parse_optional_decimal(item, "tvol").unwrap_or(rust_decimal::Decimal::ZERO),
         amount: parse_optional_decimal(item, "tamt").unwrap_or(rust_decimal::Decimal::ZERO),
         market_cap: parse_optional_decimal(item, "tomv")
             .or_else(|| parse_optional_decimal(item, "mcap")),
