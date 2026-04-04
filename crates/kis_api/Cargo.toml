@@ -41,3 +41,11 @@ test-utils = []
 [dev-dependencies]
 dotenvy = "0.15"
 tokio = { version = "1", features = ["full"] }
+
+[[test]]
+name = "integration_overseas"
+path = "tests/integration/order.rs"
+
+[[test]]
+name = "integration_domestic"
+path = "tests/integration/domestic_order.rs"

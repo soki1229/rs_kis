@@ -1,7 +1,8 @@
 {
   "rt_cd": "0", "msg_cd": "KIOK0000", "msg1": "정상처리 되었습니다.",
-  "output": [
-    { "EXCD": "NAS", "SYMB": "NVDA", "DNAM": "NVIDIA CORP", "LAST": "875.40", "DIFF": "43.20", "RATE": "5.19", "TVOL": "48320100", "TAMT": "42281127840", "MKTC": "2154000000000" },
-    { "EXCD": "NAS", "SYMB": "AMD", "DNAM": "ADVANCED MICRO DEVICES", "LAST": "182.30", "DIFF": "8.10", "RATE": "4.65", "TVOL": "31200400", "TAMT": "5687812920", "MKTC": "294000000000" }
+  "output1": { "zdiv": "2", "stat": "00", "crec": "2", "trec": "2", "nrec": "2" },
+  "output2": [
+    { "excd": "NAS", "symb": "NVDA", "name": "NVIDIA CORP", "last": "875.40", "diff": "43.20", "rate": "5.19", "tvol": "48320100", "tamt": "42281127840", "tomv": "2154000000000" },
+    { "excd": "NAS", "symb": "AMD", "name": "ADVANCED MICRO DEVICES", "last": "182.30", "diff": "8.10", "rate": "4.65", "tvol": "31200400", "tamt": "5687812920", "tomv": "294000000000" }
   ]
 }

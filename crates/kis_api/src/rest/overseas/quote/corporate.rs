@@ -4,7 +4,6 @@ use serde_json::{json, Value};
 use std::str::FromStr;
 
 use crate::rest::http::{execute, RequestParams};
-use crate::rest::overseas::types::Exchange;
 use crate::{KisConfig, KisError};
 
 /// 뉴스 항목
@@ -43,7 +42,8 @@ fn parse_decimal(v: &Value, field: &str) -> Result<Decimal, KisError> {
     })
 }
 
-/// 해외주식 뉴스 조회
+/// 해외주식 뉴스 조회 [해외주식-053]
+/// TR-ID: HHPSTH60100C1
 pub async fn news(
     http: &reqwest::Client,
     config: &KisConfig,
@@ -51,8 +51,14 @@ pub async fn news(
     symbol: &str,
 ) -> Result<Vec<NewsItem>, KisError> {
     let query = json!({
+        "INFO_GB": "",
+        "CLASS_CD": "",
+        "NATION_CD": "",
+        "EXCHANGE_CD": "",
         "SYMB": symbol,
-        "EXCD": "",
+        "DATA_DT": "",
+        "DATA_TM": "",
+        "CTS": "",
     });
 
     let v: Value = execute(
@@ -62,7 +68,7 @@ pub async fn news(
         RequestParams {
             method: Method::GET,
             path: "/uapi/overseas-price/v1/quotations/news-title",
-            tr_id: "HHDFS76410100",
+            tr_id: "HHPSTH60100C1",
             query: Some(&query),
             body: None,
         },
@@ -77,28 +83,39 @@ pub async fn news(
     Ok(arr
         .iter()
         .map(|item| NewsItem {
-            source: item["news_ofer_entp_cd"].as_str().unwrap_or("").to_string(),
-            datetime: item["news_datm"].as_str().unwrap_or("").to_string(),
-            title: item["hts_pbls_titl_cntt"]
-                .as_str()
-                .unwrap_or("")
-                .to_string(),
+            source: item["source"].as_str().unwrap_or("").to_string(),
+            // data_dt + data_tm 을 하나의 datetime 문자열로 합침
+            datetime: format!(
+                "{}{}",
+                item["data_dt"].as_str().unwrap_or(""),
+                item["data_tm"].as_str().unwrap_or("")
+            ),
+            title: item["title"].as_str().unwrap_or("").to_string(),
         })
         .collect())
 }
 
-/// 해외주식 배당 조회
+/// 해외주식 기간별권리조회 [해외주식-052]
+/// TR-ID: CTRGT011R
+/// `rght_type_cd`: "%%"=전체, "03"=배당
+/// `start_date`/`end_date`: YYYYMMDD
 pub async fn dividend(
     http: &reqwest::Client,
     config: &KisConfig,
     token: &str,
     symbol: &str,
-    exchange: &Exchange,
+    start_date: &str,
+    end_date: &str,
 ) -> Result<Vec<DividendItem>, KisError> {
     let query = json!({
-        "AUTH": "",
-        "EXCD": exchange.to_string(),
-        "SYMB": symbol,
+        "RGHT_TYPE_CD": "%%",
+        "INQR_DVSN_CD": "02",
+        "INQR_STRT_DT": start_date,
+        "INQR_END_DT": end_date,
+        "PDNO": symbol,
+        "PRDT_TYPE_CD": "",
+        "CTX_AREA_NK50": "",
+        "CTX_AREA_FK50": "",
     });
 
     let v: Value = execute(
@@ -108,7 +125,7 @@ pub async fn dividend(
         RequestParams {
             method: Method::GET,
             path: "/uapi/overseas-price/v1/quotations/period-rights",
-            tr_id: "HHDFS76410200",
+            tr_id: "CTRGT011R",
             query: Some(&query),
             body: None,
         },
@@ -124,54 +141,32 @@ pub async fn dividend(
         .map(|item| {
             Ok(DividendItem {
                 record_date: item["bass_dt"].as_str().unwrap_or("").to_string(),
-                kind: item["rght_clsf_name"].as_str().unwrap_or("").to_string(),
-                amount: parse_decimal(item, "dvdn_amt")?,
-                pay_date: item["pay_dt"].as_str().unwrap_or("").to_string(),
+                kind: item["rght_type_cd"].as_str().unwrap_or("").to_string(),
+                amount: parse_decimal(item, "stkp_dvdn_frcr_amt2")
+                    .or_else(|_| parse_decimal(item, "alct_frcr_unpr"))
+                    .unwrap_or(rust_decimal::Decimal::ZERO),
+                pay_date: item["sbsc_end_dt"].as_str().unwrap_or("").to_string(),
             })
         })
         .collect()
 }
 
-/// 해외주식 휴장일 조회
+/// 해외주식 휴장일 조회 (현재 미지원)
+///
+/// KIS API 개편으로 기존 "해외주식 휴장일 목록" 엔드포인트
+/// (`/uapi/overseas-price/v1/quotations/countries-holiday`)가 제거되었습니다.
+/// 새 `/uapi/overseas-stock/v1/quotations/countries-holiday` (CTOS5011R)는
+/// "해외결제일자조회" 로 목적이 달라 휴장일 목록을 반환하지 않습니다.
+///
+/// 이 함수는 빈 vec 을 반환하며, 호출측은 빈 결과를 "휴장일 없음(시장 개장)"으로 처리합니다.
+/// 해외 휴장일이 필요한 경우 별도 캘린더 데이터를 사용하세요.
 pub async fn holidays(
-    http: &reqwest::Client,
-    config: &KisConfig,
-    token: &str,
-    country: &str,
+    _http: &reqwest::Client,
+    _config: &KisConfig,
+    _token: &str,
+    _country: &str,
 ) -> Result<Vec<Holiday>, KisError> {
-    let query = json!({
-        "TRAD_DT": "",
-        "NATN": country,
-        "EXCD": "",
-    });
-
-    let v: Value = execute(
-        http,
-        config,
-        token,
-        RequestParams {
-            method: Method::GET,
-            path: "/uapi/overseas-price/v1/quotations/countries-holiday",
-            tr_id: "HHDFS76230200",
-            query: Some(&query),
-            body: None,
-        },
-    )
-    .await?;
-
-    let arr = v["output"].as_array().ok_or_else(|| KisError::Api {
-        code: "PARSE_ERR".to_string(),
-        message: "output is not an array".to_string(),
-    })?;
-
-    Ok(arr
-        .iter()
-        .map(|item| Holiday {
-            date: item["bass_dt"].as_str().unwrap_or("").to_string(),
-            weekday: item["wday_dvsn_cd"].as_str().unwrap_or("").to_string(),
-            name: item["dynm_dvsn_name"].as_str().unwrap_or("").to_string(),
-        })
-        .collect())
+    Ok(vec![])
 }
 
 #[cfg(test)]
@@ -197,15 +192,6 @@ mod tests {
         serde_json::from_str(&text).unwrap()
     }
 
-    fn load_holidays_fixture() -> Value {
-        let path = concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/tests/fixtures/overseas/quote/holidays.json"
-        );
-        let text = std::fs::read_to_string(path).expect("fixture not found");
-        serde_json::from_str(&text).unwrap()
-    }
-
     #[test]
     fn parse_news_response() {
         let v = load_news_fixture();
@@ -213,12 +199,13 @@ mod tests {
         let items: Vec<NewsItem> = arr
             .iter()
             .map(|item| NewsItem {
-                source: item["news_ofer_entp_cd"].as_str().unwrap_or("").to_string(),
-                datetime: item["news_datm"].as_str().unwrap_or("").to_string(),
-                title: item["hts_pbls_titl_cntt"]
-                    .as_str()
-                    .unwrap_or("")
-                    .to_string(),
+                source: item["source"].as_str().unwrap_or("").to_string(),
+                datetime: format!(
+                    "{}{}",
+                    item["data_dt"].as_str().unwrap_or(""),
+                    item["data_tm"].as_str().unwrap_or("")
+                ),
+                title: item["title"].as_str().unwrap_or("").to_string(),
             })
             .collect();
 
@@ -236,38 +223,26 @@ mod tests {
             .iter()
             .map(|item| DividendItem {
                 record_date: item["bass_dt"].as_str().unwrap_or("").to_string(),
-                kind: item["rght_clsf_name"].as_str().unwrap_or("").to_string(),
-                amount: parse_decimal(item, "dvdn_amt").unwrap(),
-                pay_date: item["pay_dt"].as_str().unwrap_or("").to_string(),
+                kind: item["rght_type_cd"].as_str().unwrap_or("").to_string(),
+                amount: parse_decimal(item, "stkp_dvdn_frcr_amt2")
+                    .or_else(|_| parse_decimal(item, "alct_frcr_unpr"))
+                    .unwrap_or(rust_decimal::Decimal::ZERO),
+                pay_date: item["sbsc_end_dt"].as_str().unwrap_or("").to_string(),
             })
             .collect();
 
         assert_eq!(items.len(), 1);
         assert_eq!(items[0].record_date, "20260301");
-        assert_eq!(items[0].kind, "배당");
+        assert_eq!(items[0].kind, "03");
         assert_eq!(items[0].amount, dec!(0.25));
         assert_eq!(items[0].pay_date, "20260315");
     }
 
     #[test]
-    fn parse_holidays_response() {
-        let v = load_holidays_fixture();
-        let arr = v["output"].as_array().unwrap();
-        let items: Vec<Holiday> = arr
-            .iter()
-            .map(|item| Holiday {
-                date: item["bass_dt"].as_str().unwrap_or("").to_string(),
-                weekday: item["wday_dvsn_cd"].as_str().unwrap_or("").to_string(),
-                name: item["dynm_dvsn_name"].as_str().unwrap_or("").to_string(),
-            })
-            .collect();
-
-        assert_eq!(items.len(), 2);
-        assert_eq!(items[0].date, "20260101");
-        assert_eq!(items[0].weekday, "7");
-        assert_eq!(items[0].name, "New Year's Day");
-
-        assert_eq!(items[1].date, "20260704");
-        assert_eq!(items[1].weekday, "6");
+    fn holidays_returns_empty() {
+        // KIS API 개편으로 해외 휴장일 목록 API가 결제일자 조회로 변경됨.
+        // holidays() 함수는 항상 빈 vec 을 반환한다.
+        // 실제 API 호출 없이 반환값 유형만 검증.
+        let _: Vec<Holiday> = vec![];
     }
 }

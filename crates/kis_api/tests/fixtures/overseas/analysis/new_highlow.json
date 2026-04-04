@@ -1,7 +1,8 @@
 {
   "rt_cd": "0", "msg_cd": "KIOK0000", "msg1": "정상처리 되었습니다.",
-  "output": [
-    { "EXCD": "NAS", "SYMB": "NVDA", "DNAM": "NVIDIA CORP", "LAST": "875.40", "DIFF": "43.20", "RATE": "5.19", "TVOL": "48320100", "XHGP": "950.00", "XLWP": "410.20" },
-    { "EXCD": "NAS", "SYMB": "MSFT", "DNAM": "MICROSOFT CORP", "LAST": "420.80", "DIFF": "12.30", "RATE": "3.01", "TVOL": "22104800", "XHGP": "468.35", "XLWP": "310.20" }
+  "output1": { "zdiv": "2", "stat": "00", "nrec": "2" },
+  "output2": [
+    { "excd": "NAS", "symb": "NVDA", "name": "NVIDIA CORP", "last": "875.40", "diff": "43.20", "rate": "5.19", "tvol": "48320100", "nhgh": "950.00", "nlow": "410.20", "tamt": "42281127840" },
+    { "excd": "NAS", "symb": "MSFT", "name": "MICROSOFT CORP", "last": "420.80", "diff": "12.30", "rate": "3.01", "tvol": "22104800", "nhgh": "468.35", "nlow": "310.20", "tamt": "9302540640" }
   ]
 }

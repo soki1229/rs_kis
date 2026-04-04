@@ -1,7 +1,8 @@
 {
   "rt_cd": "0", "msg_cd": "KIOK0000", "msg1": "정상처리 되었습니다.",
-  "output": [
-    { "EXCD": "NAS", "SYMB": "META", "DNAM": "META PLATFORMS INC", "LAST": "510.70", "DIFF": "22.40", "RATE": "4.59", "TVOL": "28340200", "PRDY_TVOL": "12102300", "TVOL_RATE": "134.17" },
-    { "EXCD": "NAS", "SYMB": "AMZN", "DNAM": "AMAZON.COM INC", "LAST": "185.30", "DIFF": "6.80", "RATE": "3.81", "TVOL": "45028100", "PRDY_TVOL": "21304200", "TVOL_RATE": "111.35" }
+  "output1": { "zdiv": "2", "stat": "00", "nrec": "2" },
+  "output2": [
+    { "excd": "NAS", "symb": "META", "name": "META PLATFORMS INC", "last": "510.70", "diff": "22.40", "rate": "4.59", "tvol": "28340200", "n_tvol": "12102300", "n_rate": "134.17", "tamt": "14477562140" },
+    { "excd": "NAS", "symb": "AMZN", "name": "AMAZON.COM INC", "last": "185.30", "diff": "6.80", "rate": "3.81", "tvol": "45028100", "n_tvol": "21304200", "n_rate": "111.35", "tamt": "8343710930" }
   ]
 }

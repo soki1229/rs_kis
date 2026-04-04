@@ -83,7 +83,25 @@ pub async fn search(
         .collect())
 }
 
-/// 해외주식 종목 정보 조회
+/// Exchange → PRDT_TYPE_CD 변환 (해외주식 상품기본정보 조회용)
+fn exchange_to_prdt_type_cd(exchange: &Exchange) -> &'static str {
+    match exchange {
+        Exchange::NASD => "512", // 미국 나스닥
+        Exchange::NYSE => "513", // 미국 뉴욕
+        Exchange::AMEX => "529", // 미국 아멕스
+        Exchange::TKSE => "515", // 일본
+        Exchange::SEHK => "501", // 홍콩
+        Exchange::HASE => "543", // 홍콩CNY
+        Exchange::SHAA => "551", // 중국 상해A
+        Exchange::SZAA => "552", // 중국 심천A
+        Exchange::VNSE => "508", // 베트남 호치민
+        Exchange::Other(_) => "512",
+    }
+}
+
+/// 해외주식 상품기본정보 조회 [해외주식-034]
+/// TR-ID: CTPF1702R
+/// Params: PRDT_TYPE_CD (Exchange→코드 변환), PDNO (종목코드)
 pub async fn symbol_info(
     http: &reqwest::Client,
     config: &KisConfig,
@@ -91,10 +109,10 @@ pub async fn symbol_info(
     symbol: &str,
     exchange: &Exchange,
 ) -> Result<SymbolInfo, KisError> {
+    let prdt_type_cd = exchange_to_prdt_type_cd(exchange);
     let query = json!({
-        "AUTH": "",
-        "EXCD": exchange.to_string(),
-        "SYMB": symbol,
+        "PRDT_TYPE_CD": prdt_type_cd,
+        "PDNO": symbol,
     });
 
     let v: Value = execute(
@@ -104,7 +122,7 @@ pub async fn symbol_info(
         RequestParams {
             method: Method::GET,
             path: "/uapi/overseas-price/v1/quotations/search-info",
-            tr_id: "HHDFS76200200",
+            tr_id: "CTPF1702R",
             query: Some(&query),
             body: None,
         },
@@ -118,8 +136,8 @@ pub async fn symbol_info(
         country: output["natn_kor_name"].as_str().unwrap_or("").to_string(),
         exchange: output["ovrs_excg_cd"].as_str().unwrap_or("").to_string(),
         listed_shares: output["lstg_stck_num"].as_str().unwrap_or("").to_string(),
-        per: parse_decimal(output, "perx")?,
-        pbr: parse_decimal(output, "pbrx")?,
+        per: parse_decimal(output, "perx").unwrap_or(Decimal::ZERO),
+        pbr: parse_decimal(output, "pbrx").unwrap_or(Decimal::ZERO),
     })
 }
 
