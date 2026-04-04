@@ -52,9 +52,7 @@ pub async fn domestic_unfilled_orders(
         // "없는 서비스 코드": 신규 TR-ID(VTTC0084R)에 대한 VTS 미지원 응답
         let msg_cd = json["msg_cd"].as_str().unwrap_or("");
         let msg1 = json["msg1"].as_str().unwrap_or("");
-        if config.is_domestic_virtual
-            || msg_cd == "90000000"
-            || msg1.contains("없는 서비스 코드")
+        if config.is_domestic_virtual || msg_cd == "90000000" || msg1.contains("없는 서비스 코드")
         {
             return Ok(vec![]);
         }

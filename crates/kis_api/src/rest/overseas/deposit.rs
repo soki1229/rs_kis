@@ -34,7 +34,11 @@ pub async fn check_deposit(
         "INQR_DVSN_CD": "00",       // 00=전체
     });
 
-    let tr_id = if config.mock { "VTRP6504R" } else { "CTRP6504R" };
+    let tr_id = if config.mock {
+        "VTRP6504R"
+    } else {
+        "CTRP6504R"
+    };
 
     let v: serde_json::Value = execute(
         http,

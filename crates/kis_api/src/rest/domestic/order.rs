@@ -15,15 +15,19 @@ use serde_json::json;
 
 fn select_place_order_tr_id(is_domestic_virtual: bool, side: &OrderSide) -> &'static str {
     match (is_domestic_virtual, side) {
-        (true,  OrderSide::Buy)  => "VTTC0012U",
-        (true,  OrderSide::Sell) => "VTTC0011U",
-        (false, OrderSide::Buy)  => "TTTC0012U",
+        (true, OrderSide::Buy) => "VTTC0012U",
+        (true, OrderSide::Sell) => "VTTC0011U",
+        (false, OrderSide::Buy) => "TTTC0012U",
         (false, OrderSide::Sell) => "TTTC0011U",
     }
 }
 
 fn select_cancel_order_tr_id(is_domestic_virtual: bool) -> &'static str {
-    if is_domestic_virtual { "VTTC0013U" } else { "TTTC0013U" }
+    if is_domestic_virtual {
+        "VTTC0013U"
+    } else {
+        "TTTC0013U"
+    }
 }
 
 pub async fn domestic_place_order(
@@ -138,13 +142,22 @@ mod tests {
     #[test]
     fn vts_flag_selects_correct_tr_id() {
         // 모의투자(VTS) — VTTC 00xx 계열
-        assert_eq!(select_place_order_tr_id(true,  &OrderSide::Buy),  "VTTC0012U");
-        assert_eq!(select_place_order_tr_id(true,  &OrderSide::Sell), "VTTC0011U");
-        assert_eq!(select_cancel_order_tr_id(true),                   "VTTC0013U");
+        assert_eq!(select_place_order_tr_id(true, &OrderSide::Buy), "VTTC0012U");
+        assert_eq!(
+            select_place_order_tr_id(true, &OrderSide::Sell),
+            "VTTC0011U"
+        );
+        assert_eq!(select_cancel_order_tr_id(true), "VTTC0013U");
         // 실전투자 — TTTC 00xx 계열
-        assert_eq!(select_place_order_tr_id(false, &OrderSide::Buy),  "TTTC0012U");
-        assert_eq!(select_place_order_tr_id(false, &OrderSide::Sell), "TTTC0011U");
-        assert_eq!(select_cancel_order_tr_id(false),                  "TTTC0013U");
+        assert_eq!(
+            select_place_order_tr_id(false, &OrderSide::Buy),
+            "TTTC0012U"
+        );
+        assert_eq!(
+            select_place_order_tr_id(false, &OrderSide::Sell),
+            "TTTC0011U"
+        );
+        assert_eq!(select_cancel_order_tr_id(false), "TTTC0013U");
     }
 
     #[test]
