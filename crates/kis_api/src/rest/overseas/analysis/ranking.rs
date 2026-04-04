@@ -109,7 +109,7 @@ pub async fn price_ranking(
     };
     let query = json!({
         "AUTH": "",
-        "EXCD": req.exchange.to_string(),
+        "EXCD": req.exchange.to_price_code(),
         "NDAY": "0",
         "GUBN": gubn,
         "VOL_RANG": "0",
@@ -153,7 +153,7 @@ pub async fn volume_ranking(
 ) -> Result<Vec<RankingItem>, KisError> {
     let query = json!({
         "AUTH": "",
-        "EXCD": exchange.to_string(),
+        "EXCD": exchange.to_price_code(),
         "NDAY": "0",
         "VOL_RANG": "0",
         "KEYB": "",
@@ -198,7 +198,7 @@ pub async fn volume_surge(
 ) -> Result<Vec<VolumeSurgeItem>, KisError> {
     let query = json!({
         "AUTH": "",
-        "EXCD": exchange.to_string(),
+        "EXCD": exchange.to_price_code(),
         "MINX": "0",
         "VOL_RANG": "0",
         "KEYB": "",
