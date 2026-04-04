@@ -1,12 +1,11 @@
-// ⚠ TR ID 및 필드명은 KIS OpenAPI 가이드에서 확인 필요
 // 실전투자:
-// - 매수: POST /uapi/domestic-stock/v1/trading/order-cash  (tr_id: TTTC0802U)
-// - 매도: POST /uapi/domestic-stock/v1/trading/order-cash  (tr_id: TTTC0801U)
-// - 취소: POST /uapi/domestic-stock/v1/trading/order-rvsecncl (tr_id: TTTC0803U)
+// - 매수: POST /uapi/domestic-stock/v1/trading/order-cash  (tr_id: TTTC0012U)
+// - 매도: POST /uapi/domestic-stock/v1/trading/order-cash  (tr_id: TTTC0011U)
+// - 취소: POST /uapi/domestic-stock/v1/trading/order-rvsecncl (tr_id: TTTC0013U)
 // 모의투자(VTS):
-// - 매수: tr_id: VTTC0802U
-// - 매도: tr_id: VTTC0801U
-// - 취소: tr_id: VTTC0803U
+// - 매수: tr_id: VTTC0012U
+// - 매도: tr_id: VTTC0011U
+// - 취소: tr_id: VTTC0013U
 
 use super::types::*;
 use crate::rest::overseas::types::split_account;
@@ -16,19 +15,15 @@ use serde_json::json;
 
 fn select_place_order_tr_id(is_domestic_virtual: bool, side: &OrderSide) -> &'static str {
     match (is_domestic_virtual, side) {
-        (true, OrderSide::Buy) => "VTTC0802U",
-        (true, OrderSide::Sell) => "VTTC0801U",
-        (false, OrderSide::Buy) => "TTTC0802U",
-        (false, OrderSide::Sell) => "TTTC0801U",
+        (true,  OrderSide::Buy)  => "VTTC0012U",
+        (true,  OrderSide::Sell) => "VTTC0011U",
+        (false, OrderSide::Buy)  => "TTTC0012U",
+        (false, OrderSide::Sell) => "TTTC0011U",
     }
 }
 
 fn select_cancel_order_tr_id(is_domestic_virtual: bool) -> &'static str {
-    if is_domestic_virtual {
-        "VTTC0803U"
-    } else {
-        "TTTC0803U"
-    }
+    if is_domestic_virtual { "VTTC0013U" } else { "TTTC0013U" }
 }
 
 pub async fn domestic_place_order(
@@ -142,23 +137,14 @@ mod tests {
 
     #[test]
     fn vts_flag_selects_correct_tr_id() {
-        // 모의투자(VTS) — VTTC 계열
-        assert_eq!(select_place_order_tr_id(true, &OrderSide::Buy), "VTTC0802U");
-        assert_eq!(
-            select_place_order_tr_id(true, &OrderSide::Sell),
-            "VTTC0801U"
-        );
-        assert_eq!(select_cancel_order_tr_id(true), "VTTC0803U");
-        // 실전투자 — TTTC 계열
-        assert_eq!(
-            select_place_order_tr_id(false, &OrderSide::Buy),
-            "TTTC0802U"
-        );
-        assert_eq!(
-            select_place_order_tr_id(false, &OrderSide::Sell),
-            "TTTC0801U"
-        );
-        assert_eq!(select_cancel_order_tr_id(false), "TTTC0803U");
+        // 모의투자(VTS) — VTTC 00xx 계열
+        assert_eq!(select_place_order_tr_id(true,  &OrderSide::Buy),  "VTTC0012U");
+        assert_eq!(select_place_order_tr_id(true,  &OrderSide::Sell), "VTTC0011U");
+        assert_eq!(select_cancel_order_tr_id(true),                   "VTTC0013U");
+        // 실전투자 — TTTC 00xx 계열
+        assert_eq!(select_place_order_tr_id(false, &OrderSide::Buy),  "TTTC0012U");
+        assert_eq!(select_place_order_tr_id(false, &OrderSide::Sell), "TTTC0011U");
+        assert_eq!(select_cancel_order_tr_id(false),                  "TTTC0013U");
     }
 
     #[test]
