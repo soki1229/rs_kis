@@ -408,11 +408,7 @@ pub async fn domestic_check_holiday(
         .header("appsecret", &config.app_secret)
         .header("tr_id", "CTCA0903R")
         .header("custtype", "P")
-        .query(&[
-            ("BASS_DT", date),
-            ("CTX_AREA_FK", ""),
-            ("CTX_AREA_NK", ""),
-        ])
+        .query(&[("BASS_DT", date), ("CTX_AREA_FK", ""), ("CTX_AREA_NK", "")])
         .send()
         .await
         .map_err(KisError::Network)?;

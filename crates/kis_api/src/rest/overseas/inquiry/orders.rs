@@ -63,7 +63,11 @@ pub async fn unfilled_orders(
         "CTX_AREA_NK200": ""
     });
 
-    let tr_id = if config.mock { "VTTS3018R" } else { "TTTS3018R" };
+    let tr_id = if config.mock {
+        "VTTS3018R"
+    } else {
+        "TTTS3018R"
+    };
 
     let resp: Value = execute(
         http,

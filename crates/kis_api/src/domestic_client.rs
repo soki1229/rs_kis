@@ -2,8 +2,8 @@ use crate::{
     auth::{build_http_client, ApprovalKeyManager, TokenManager},
     rest::domestic::{
         inquiry::{
-            domestic_balance, domestic_check_holiday, domestic_daily_chart,
-            domestic_order_history, domestic_unfilled_orders, domestic_volume_ranking,
+            domestic_balance, domestic_check_holiday, domestic_daily_chart, domestic_order_history,
+            domestic_unfilled_orders, domestic_volume_ranking,
         },
         order::{domestic_cancel_order, domestic_place_order},
         types::*,
