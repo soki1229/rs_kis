@@ -93,7 +93,7 @@ pub async fn domestic_balance(
     config: &KisConfig,
     token: &str,
 ) -> Result<BalanceResponse, KisError> {
-    let tr_id = if config.mock {
+    let tr_id = if config.is_domestic_virtual {
         "VTTC8434R"
     } else {
         "TTTC8434R"
