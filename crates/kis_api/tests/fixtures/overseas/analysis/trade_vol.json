@@ -1,7 +1,10 @@
 {
-  "rt_cd": "0", "msg_cd": "KIOK0000", "msg1": "정상처리 되었습니다.",
-  "output": [
-    { "EXCD": "NAS", "SYMB": "TSLA", "DNAM": "TESLA INC", "LAST": "248.50", "DIFF": "-3.20", "RATE": "-1.27", "TVOL": "112048300", "TAMT": "27843993550" },
-    { "EXCD": "NAS", "SYMB": "AAPL", "DNAM": "APPLE INC", "LAST": "178.90", "DIFF": "1.30", "RATE": "0.73", "TVOL": "98320100", "TAMT": "17597526090" }
+  "rt_cd": "0",
+  "msg_cd": "KIOK0000",
+  "msg1": "정상처리 되었습니다.",
+  "output1": { "zdiv": "2", "stat": "00", "crec": "2", "trec": "2", "nrec": "2" },
+  "output2": [
+    { "excd": "NAS", "symb": "TSLA", "name": "TESLA INC", "last": "248.50", "diff": "-3.20", "rate": "-1.27", "tvol": "112048300", "tamt": "27843993550" },
+    { "excd": "NAS", "symb": "AAPL", "name": "APPLE INC", "last": "178.90", "diff": "1.30", "rate": "0.73", "tvol": "98320100", "tamt": "17597526090" }
   ]
 }

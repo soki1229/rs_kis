@@ -68,8 +68,9 @@ pub trait KisDomesticApi: Send + Sync {
         count: u32,
     ) -> Result<Vec<DomesticRankingItem>, KisError>;
 
-    /// 국내/공휴일 조회 (country: "KOR")
-    async fn domestic_holidays(&self, country: &str) -> Result<Vec<Holiday>, KisError>;
+    /// 국내 휴장일 조회. `date`: 기준일자 YYYYMMDD (ex. "20260404").
+    /// 해당 날짜가 개장일이 아니면 Holiday vec 반환, 개장일이면 빈 vec 반환.
+    async fn domestic_holidays(&self, date: &str) -> Result<Vec<Holiday>, KisError>;
 
     /// 국내주식 매수/매도 주문
     async fn domestic_place_order(

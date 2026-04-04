@@ -81,31 +81,38 @@ fn parse_optional_decimal(v: &Value, field: &str) -> Option<Decimal> {
 
 fn parse_ranking_item(item: &Value) -> Result<RankingItem, KisError> {
     Ok(RankingItem {
-        exchange: item["EXCD"].as_str().unwrap_or("").to_string(),
-        symbol: item["SYMB"].as_str().unwrap_or("").to_string(),
-        name: item["DNAM"].as_str().unwrap_or("").to_string(),
-        last: parse_decimal(item, "LAST")?,
-        diff: parse_decimal(item, "DIFF")?,
-        rate: parse_decimal(item, "RATE")?,
-        volume: parse_decimal(item, "TVOL")?,
-        amount: parse_decimal(item, "TAMT")?,
-        market_cap: parse_optional_decimal(item, "MKTC"),
+        exchange: item["excd"].as_str().unwrap_or("").to_string(),
+        symbol: item["symb"].as_str().unwrap_or("").to_string(),
+        name: item["name"].as_str().unwrap_or("").to_string(),
+        last: parse_decimal(item, "last")?,
+        diff: parse_decimal(item, "diff")?,
+        rate: parse_decimal(item, "rate")?,
+        volume: parse_decimal(item, "tvol")?,
+        amount: parse_optional_decimal(item, "tamt").unwrap_or(rust_decimal::Decimal::ZERO),
+        market_cap: parse_optional_decimal(item, "tomv").or_else(|| parse_optional_decimal(item, "mcap")),
     })
 }
 
-/// 해외주식 등락률 순위 조회
+/// 해외주식 등락률 순위 조회 [해외주식-041]
+/// TR-ID: HHDFS76290000
+/// `req.sort`: ChangeRate=상승률(gubn="1"), else=하락률(gubn="0")
 pub async fn price_ranking(
     http: &reqwest::Client,
     config: &KisConfig,
     token: &str,
     req: RankingRequest,
 ) -> Result<Vec<RankingItem>, KisError> {
+    let gubn = match req.sort {
+        RankingSort::ChangeRate => "1",
+        _ => "0",
+    };
     let query = json!({
         "AUTH": "",
         "EXCD": req.exchange.to_string(),
-        "GUBN": req.sort.to_gubn(),
+        "NDAY": "0",
+        "GUBN": gubn,
+        "VOL_RANG": "0",
         "KEYB": "",
-        "NREC": req.count.to_string(),
     });
 
     let v: Value = execute(
@@ -114,26 +121,28 @@ pub async fn price_ranking(
         token,
         RequestParams {
             method: Method::GET,
-            path: "/uapi/overseas-price/v1/quotations/updown-rate",
-            tr_id: "HHDFS76280100",
+            path: "/uapi/overseas-stock/v1/ranking/updown-rate",
+            tr_id: "HHDFS76290000",
             query: Some(&query),
             body: None,
         },
     )
     .await?;
 
-    v["output"]
-        .as_array()
-        .ok_or_else(|| KisError::Api {
-            code: "PARSE_ERR".to_string(),
-            message: "missing output array".to_string(),
-        })?
-        .iter()
-        .map(parse_ranking_item)
-        .collect()
+    let arr = v["output2"].as_array().ok_or_else(|| KisError::Api {
+        code: "PARSE_ERR".to_string(),
+        message: "missing output2 array".to_string(),
+    })?;
+
+    let items: Result<Vec<RankingItem>, KisError> = arr.iter().map(parse_ranking_item).collect();
+    items.map(|mut v| {
+        v.truncate(req.count as usize);
+        v
+    })
 }
 
-/// 해외주식 거래량 순위 조회
+/// 해외주식 거래량 순위 조회 [해외주식-043]
+/// TR-ID: HHDFS76310010
 pub async fn volume_ranking(
     http: &reqwest::Client,
     config: &KisConfig,
@@ -144,8 +153,11 @@ pub async fn volume_ranking(
     let query = json!({
         "AUTH": "",
         "EXCD": exchange.to_string(),
+        "NDAY": "0",
+        "VOL_RANG": "0",
         "KEYB": "",
-        "NREC": count.to_string(),
+        "PRC1": "",
+        "PRC2": "",
     });
 
     let v: Value = execute(
@@ -154,26 +166,28 @@ pub async fn volume_ranking(
         token,
         RequestParams {
             method: Method::GET,
-            path: "/uapi/overseas-price/v1/quotations/trade-vol",
-            tr_id: "HHDFS76280200",
+            path: "/uapi/overseas-stock/v1/ranking/trade-vol",
+            tr_id: "HHDFS76310010",
             query: Some(&query),
             body: None,
         },
     )
     .await?;
 
-    v["output"]
-        .as_array()
-        .ok_or_else(|| KisError::Api {
-            code: "PARSE_ERR".to_string(),
-            message: "missing output array".to_string(),
-        })?
-        .iter()
-        .map(parse_ranking_item)
-        .collect()
+    let arr = v["output2"].as_array().ok_or_else(|| KisError::Api {
+        code: "PARSE_ERR".to_string(),
+        message: "missing output2 array".to_string(),
+    })?;
+
+    let items: Result<Vec<RankingItem>, KisError> = arr.iter().map(parse_ranking_item).collect();
+    items.map(|mut v| {
+        v.truncate(count as usize);
+        v
+    })
 }
 
-/// 해외주식 거래량 급증 순위 조회
+/// 해외주식 거래량 급증 순위 조회 [해외주식-045]
+/// TR-ID: HHDFS76270000
 pub async fn volume_surge(
     http: &reqwest::Client,
     config: &KisConfig,
@@ -184,8 +198,9 @@ pub async fn volume_surge(
     let query = json!({
         "AUTH": "",
         "EXCD": exchange.to_string(),
+        "MINX": "0",
+        "VOL_RANG": "0",
         "KEYB": "",
-        "NREC": count.to_string(),
     });
 
     let v: Value = execute(
@@ -194,35 +209,43 @@ pub async fn volume_surge(
         token,
         RequestParams {
             method: Method::GET,
-            path: "/uapi/overseas-price/v1/quotations/volume-surge",
-            tr_id: "HHDFS76280400",
+            path: "/uapi/overseas-stock/v1/ranking/volume-surge",
+            tr_id: "HHDFS76270000",
             query: Some(&query),
             body: None,
         },
     )
     .await?;
 
-    v["output"]
-        .as_array()
-        .ok_or_else(|| KisError::Api {
-            code: "PARSE_ERR".to_string(),
-            message: "missing output array".to_string(),
-        })?
+    let arr = v["output2"].as_array().ok_or_else(|| KisError::Api {
+        code: "PARSE_ERR".to_string(),
+        message: "missing output2 array".to_string(),
+    })?;
+
+    let mut items: Vec<VolumeSurgeItem> = arr
         .iter()
-        .map(|item| {
-            Ok(VolumeSurgeItem {
-                exchange: item["EXCD"].as_str().unwrap_or("").to_string(),
-                symbol: item["SYMB"].as_str().unwrap_or("").to_string(),
-                name: item["DNAM"].as_str().unwrap_or("").to_string(),
-                last: parse_decimal(item, "LAST")?,
-                diff: parse_decimal(item, "DIFF")?,
-                rate: parse_decimal(item, "RATE")?,
-                volume: parse_decimal(item, "TVOL")?,
-                prev_volume: parse_decimal(item, "PRDY_TVOL")?,
-                volume_surge_rate: parse_decimal(item, "TVOL_RATE")?,
+        .filter_map(|item| {
+            Some(VolumeSurgeItem {
+                exchange: item["excd"].as_str().unwrap_or("").to_string(),
+                symbol: item["symb"].as_str().unwrap_or("").to_string(),
+                name: item["name"]
+                    .as_str()
+                    .or_else(|| item["knam"].as_str())
+                    .unwrap_or("")
+                    .to_string(),
+                last: parse_optional_decimal(item, "last")?,
+                diff: parse_optional_decimal(item, "diff").unwrap_or(rust_decimal::Decimal::ZERO),
+                rate: parse_optional_decimal(item, "rate").unwrap_or(rust_decimal::Decimal::ZERO),
+                volume: parse_optional_decimal(item, "tvol").unwrap_or(rust_decimal::Decimal::ZERO),
+                prev_volume: parse_optional_decimal(item, "n_tvol").unwrap_or(rust_decimal::Decimal::ZERO),
+                volume_surge_rate: parse_optional_decimal(item, "n_rate")
+                    .or_else(|| parse_optional_decimal(item, "trat"))
+                    .unwrap_or(rust_decimal::Decimal::ZERO),
             })
         })
-        .collect()
+        .collect();
+    items.truncate(count as usize);
+    Ok(items)
 }
 
 #[cfg(test)]
@@ -251,7 +274,7 @@ mod tests {
     #[test]
     fn deserialize_updown_rate() {
         let v = load_fixture("updown_rate");
-        let items: Vec<RankingItem> = v["output"]
+        let items: Vec<RankingItem> = v["output2"]
             .as_array()
             .unwrap()
             .iter()
@@ -273,7 +296,7 @@ mod tests {
     #[test]
     fn deserialize_trade_vol() {
         let v = load_fixture("trade_vol");
-        let items: Vec<RankingItem> = v["output"]
+        let items: Vec<RankingItem> = v["output2"]
             .as_array()
             .unwrap()
             .iter()
@@ -284,31 +307,30 @@ mod tests {
         let first = &items[0];
         assert_eq!(first.symbol, "TSLA");
         assert_eq!(first.last, dec!(248.50));
-        // MKTC 필드 없음 → None
+        // tomv 필드 없음 → None
         assert!(first.market_cap.is_none());
     }
 
     #[test]
     fn deserialize_volume_surge() {
         let v = load_fixture("volume_surge");
-        let items: Vec<VolumeSurgeItem> = v["output"]
+        let items: Vec<VolumeSurgeItem> = v["output2"]
             .as_array()
             .unwrap()
             .iter()
-            .map(|item| {
-                Ok::<VolumeSurgeItem, KisError>(VolumeSurgeItem {
-                    exchange: item["EXCD"].as_str().unwrap_or("").to_string(),
-                    symbol: item["SYMB"].as_str().unwrap_or("").to_string(),
-                    name: item["DNAM"].as_str().unwrap_or("").to_string(),
-                    last: parse_decimal(item, "LAST").unwrap(),
-                    diff: parse_decimal(item, "DIFF").unwrap(),
-                    rate: parse_decimal(item, "RATE").unwrap(),
-                    volume: parse_decimal(item, "TVOL").unwrap(),
-                    prev_volume: parse_decimal(item, "PRDY_TVOL").unwrap(),
-                    volume_surge_rate: parse_decimal(item, "TVOL_RATE").unwrap(),
+            .filter_map(|item| {
+                Some(VolumeSurgeItem {
+                    exchange: item["excd"].as_str().unwrap_or("").to_string(),
+                    symbol: item["symb"].as_str().unwrap_or("").to_string(),
+                    name: item["name"].as_str().unwrap_or("").to_string(),
+                    last: parse_optional_decimal(item, "last")?,
+                    diff: parse_optional_decimal(item, "diff").unwrap_or(rust_decimal::Decimal::ZERO),
+                    rate: parse_optional_decimal(item, "rate").unwrap_or(rust_decimal::Decimal::ZERO),
+                    volume: parse_optional_decimal(item, "tvol").unwrap_or(rust_decimal::Decimal::ZERO),
+                    prev_volume: parse_optional_decimal(item, "n_tvol").unwrap_or(rust_decimal::Decimal::ZERO),
+                    volume_surge_rate: parse_optional_decimal(item, "n_rate").unwrap_or(rust_decimal::Decimal::ZERO),
                 })
             })
-            .map(|r| r.unwrap())
             .collect();
 
         assert_eq!(items.len(), 2);

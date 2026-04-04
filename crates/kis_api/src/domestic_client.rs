@@ -2,8 +2,8 @@ use crate::{
     auth::{build_http_client, ApprovalKeyManager, TokenManager},
     rest::domestic::{
         inquiry::{
-            domestic_balance, domestic_daily_chart, domestic_order_history,
-            domestic_unfilled_orders, domestic_volume_ranking,
+            domestic_balance, domestic_check_holiday, domestic_daily_chart,
+            domestic_order_history, domestic_unfilled_orders, domestic_volume_ranking,
         },
         order::{domestic_cancel_order, domestic_place_order},
         types::*,
@@ -76,26 +76,15 @@ impl KisDomesticApi for KisDomesticClient {
         domestic_volume_ranking(&self.http, &self.config, &token, exchange, count).await
     }
 
-    async fn domestic_holidays(&self, country: &str) -> Result<Vec<Holiday>, KisError> {
+    /// `date`: 기준일자 YYYYMMDD — 해당 날짜의 국내 개장 여부 조회.
+    async fn domestic_holidays(&self, date: &str) -> Result<Vec<Holiday>, KisError> {
         let tok = self.throttled_token().await?;
-        let result = crate::rest::overseas::quote::corporate::holidays(
-            &self.http,
-            &self.config,
-            &tok,
-            country,
-        )
-        .await;
+        let result = domestic_check_holiday(&self.http, &self.config, &tok, date).await;
         match result {
             Err(KisError::Auth(_)) => {
                 log::warn!("401 received — refreshing token and retrying");
                 let tok2 = self.token_manager.refresh().await?;
-                crate::rest::overseas::quote::corporate::holidays(
-                    &self.http,
-                    &self.config,
-                    &tok2,
-                    country,
-                )
-                .await
+                domestic_check_holiday(&self.http, &self.config, &tok2, date).await
             }
             other => other,
         }

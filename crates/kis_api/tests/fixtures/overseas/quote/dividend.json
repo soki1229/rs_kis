@@ -5,9 +5,10 @@
   "output": [
     {
       "bass_dt": "20260301",
-      "rght_clsf_name": "배당",
-      "dvdn_amt": "0.25",
-      "pay_dt": "20260315"
+      "rght_type_cd": "03",
+      "stkp_dvdn_frcr_amt2": "0.25",
+      "sbsc_end_dt": "20260315",
+      "dfnt_yn": "Y"
     }
   ]
 }

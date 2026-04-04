@@ -1,7 +1,8 @@
 {
   "rt_cd": "0", "msg_cd": "KIOK0000", "msg1": "정상처리 되었습니다.",
-  "output": [
-    { "XYMD": "20260321", "TVOL": "48320100", "MBVOL": "26540200", "MSVOL": "21779900", "POWER": "121.89" },
-    { "XYMD": "20260320", "TVOL": "35102400", "MBVOL": "18204300", "MSVOL": "16898100", "POWER": "107.73" }
+  "output1": { "zdiv": "2", "stat": "00", "nrec": "2" },
+  "output2": [
+    { "excd": "NAS", "symb": "NVDA", "name": "NVIDIA CORP", "last": "875.40", "diff": "43.20", "rate": "5.19", "tvol": "48320100", "asvl": "26540200", "bivl": "21779900", "strn": "121.89", "tamt": "42281127840" },
+    { "excd": "NAS", "symb": "TSLA", "name": "TESLA INC", "last": "248.50", "diff": "-3.20", "rate": "-1.27", "tvol": "35102400", "asvl": "18204300", "bivl": "16898100", "strn": "107.73", "tamt": "8722946250" }
   ]
 }

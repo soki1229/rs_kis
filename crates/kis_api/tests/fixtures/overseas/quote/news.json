@@ -4,9 +4,10 @@
   "msg1": "정상처리 되었습니다.",
   "output": [
     {
-      "news_ofer_entp_cd": "REUTERS",
-      "news_datm": "20260321143000",
-      "hts_pbls_titl_cntt": "Apple hits new high amid strong earnings"
+      "source": "REUTERS",
+      "data_dt": "20260321",
+      "data_tm": "143000",
+      "title": "Apple hits new high amid strong earnings"
     }
   ]
 }

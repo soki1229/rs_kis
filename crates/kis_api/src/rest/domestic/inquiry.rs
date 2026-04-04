@@ -335,7 +335,7 @@ pub async fn domestic_volume_ranking(
 
     let resp = client
         .get(format!(
-            "{}/uapi/domestic-stock/v1/ranking/volume",
+            "{}/uapi/domestic-stock/v1/quotations/volume-rank",
             config.rest_url
         ))
         .header("authorization", format!("Bearer {}", token))
@@ -386,6 +386,68 @@ pub async fn domestic_volume_ranking(
         .unwrap_or_default();
 
     Ok(items)
+}
+
+/// 국내휴장일 조회 (TCA0903R)
+/// `date`: 기준일자 YYYYMMDD — 해당 날짜의 개장 여부를 반환.
+/// `opnd_yn == "N"` 인 날짜를 휴장일로 간주하여 `Holiday` vec 에 담아 반환.
+/// `opnd_yn == "Y"` 이면 빈 vec 반환.
+pub async fn domestic_check_holiday(
+    client: &Client,
+    config: &KisConfig,
+    token: &str,
+    date: &str,
+) -> Result<Vec<crate::Holiday>, KisError> {
+    let resp = client
+        .get(format!(
+            "{}/uapi/domestic-stock/v1/quotations/chk-holiday",
+            config.rest_url
+        ))
+        .header("authorization", format!("Bearer {}", token))
+        .header("appkey", &config.app_key)
+        .header("appsecret", &config.app_secret)
+        .header("tr_id", "CTCA0903R")
+        .header("custtype", "P")
+        .query(&[
+            ("BASS_DT", date),
+            ("CTX_AREA_FK", ""),
+            ("CTX_AREA_NK", ""),
+        ])
+        .send()
+        .await
+        .map_err(KisError::Network)?;
+
+    let json: serde_json::Value = resp.json().await.map_err(KisError::Network)?;
+    let rt_cd = json["rt_cd"].as_str().unwrap_or("");
+    if rt_cd != "0" {
+        return Err(KisError::Api {
+            code: rt_cd.into(),
+            message: json["msg1"].as_str().unwrap_or("unknown").into(),
+        });
+    }
+
+    let holidays = json["output"]
+        .as_array()
+        .map(|arr| {
+            arr.iter()
+                .filter_map(|item| {
+                    let d = item["bass_dt"].as_str()?;
+                    // opnd_yn = "N" → 개장하지 않는 날 = 휴장일
+                    if item["opnd_yn"].as_str().unwrap_or("Y") == "N" {
+                        Some(crate::Holiday {
+                            date: d.to_string(),
+                            weekday: item["wday_dvsn_cd"].as_str().unwrap_or("").to_string(),
+                            name: "휴장일".to_string(),
+                        })
+                    } else {
+                        None
+                    }
+                })
+                .collect()
+        })
+        .unwrap_or_default();
+
+    Ok(holidays)
 }
 
 #[cfg(test)]

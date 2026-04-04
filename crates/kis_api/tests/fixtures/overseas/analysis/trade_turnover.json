@@ -1,7 +1,8 @@
 {
   "rt_cd": "0", "msg_cd": "KIOK0000", "msg1": "정상처리 되었습니다.",
-  "output": [
-    { "EXCD": "NAS", "SYMB": "GME", "DNAM": "GAMESTOP CORP", "LAST": "12.40", "DIFF": "0.80", "RATE": "6.90", "TVOL": "58204300", "TRNO": "18.43" },
-    { "EXCD": "NAS", "SYMB": "AMC", "DNAM": "AMC ENTERTAINMENT HOLDINGS", "LAST": "4.20", "DIFF": "0.30", "RATE": "7.69", "TVOL": "41023800", "TRNO": "14.22" }
+  "output1": { "zdiv": "2", "stat": "00", "crec": "2", "trec": "2", "nrec": "2" },
+  "output2": [
+    { "excd": "NAS", "symb": "GME", "name": "GAMESTOP CORP", "last": "12.40", "diff": "0.80", "rate": "6.90", "tvol": "58204300", "tover": "18.43", "tamt": "721729320" },
+    { "excd": "NAS", "symb": "AMC", "name": "AMC ENTERTAINMENT HOLDINGS", "last": "4.20", "diff": "0.30", "rate": "7.69", "tvol": "41023800", "tover": "14.22", "tamt": "172299960" }
   ]
 }

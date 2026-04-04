@@ -251,14 +251,24 @@ impl KisClient {
         })
     }
 
-    /// 해외주식 배당 조회
+    /// 해외주식 기간별권리(배당 포함) 조회
+    /// `start_date`/`end_date`: YYYYMMDD
     pub async fn dividend(
         &self,
         symbol: &str,
-        exchange: &crate::Exchange,
+        start_date: &str,
+        end_date: &str,
     ) -> Result<Vec<crate::DividendItem>, KisError> {
         with_401_retry!(self, |token| {
-            quote::corporate::dividend(self.http(), self.config(), token, symbol, exchange).await
+            quote::corporate::dividend(
+                self.http(),
+                self.config(),
+                token,
+                symbol,
+                start_date,
+                end_date,
+            )
+            .await
         })
     }
 
@@ -301,14 +311,14 @@ impl KisClient {
         })
     }
 
-    /// 해외주식 체결강도 조회
+    /// 해외주식 체결강도 순위 조회 (거래소 전체 순위)
     pub async fn volume_power(
         &self,
-        symbol: &str,
         exchange: &crate::Exchange,
+        count: u32,
     ) -> Result<Vec<crate::VolumePowerItem>, KisError> {
         with_401_retry!(self, |token| {
-            market::volume_power(self.http(), self.config(), token, symbol, exchange).await
+            market::volume_power(self.http(), self.config(), token, exchange, count).await
         })
     }
 

@@ -84,20 +84,22 @@ fn parse_decimal(v: &Value, field: &str) -> Result<Decimal, KisError> {
     })
 }
 
-/// 해외주식 체결강도 조회
+/// 해외주식 체결강도 순위 조회 [해외주식-046]
+/// TR-ID: HHDFS76280000
+/// (API 개편: 종목별 체결강도→거래소 전체 체결강도 순위로 변경)
 pub async fn volume_power(
     http: &reqwest::Client,
     config: &KisConfig,
     token: &str,
-    symbol: &str,
     exchange: &Exchange,
+    count: u32,
 ) -> Result<Vec<VolumePowerItem>, KisError> {
     let query = json!({
         "AUTH": "",
         "EXCD": exchange.to_string(),
-        "SYMB": symbol,
+        "NDAY": "0",
+        "VOL_RANG": "0",
         "KEYB": "",
-        "NREC": "30",
     });
 
     let v: Value = execute(
@@ -106,34 +108,40 @@ pub async fn volume_power(
         token,
         RequestParams {
             method: Method::GET,
-            path: "/uapi/overseas-price/v1/quotations/volume-power",
-            tr_id: "HHDFS76370100",
+            path: "/uapi/overseas-stock/v1/ranking/volume-power",
+            tr_id: "HHDFS76280000",
             query: Some(&query),
             body: None,
         },
     )
     .await?;
 
-    v["output"]
-        .as_array()
-        .ok_or_else(|| KisError::Api {
-            code: "PARSE_ERR".to_string(),
-            message: "missing output array".to_string(),
-        })?
+    let arr = v["output2"].as_array().ok_or_else(|| KisError::Api {
+        code: "PARSE_ERR".to_string(),
+        message: "missing output2 array".to_string(),
+    })?;
+
+    let mut items: Vec<VolumePowerItem> = arr
         .iter()
-        .map(|item| {
-            Ok(VolumePowerItem {
-                date: item["XYMD"].as_str().unwrap_or("").to_string(),
-                total_volume: parse_decimal(item, "TVOL")?,
-                buy_volume: parse_decimal(item, "MBVOL")?,
-                sell_volume: parse_decimal(item, "MSVOL")?,
-                power: parse_decimal(item, "POWER")?,
+        .filter_map(|item| {
+            Some(VolumePowerItem {
+                date: item["excd"].as_str().unwrap_or("").to_string(),
+                total_volume: parse_decimal(item, "tvol").ok()?,
+                buy_volume: parse_decimal(item, "asvl").unwrap_or(rust_decimal::Decimal::ZERO),
+                sell_volume: parse_decimal(item, "bivl").unwrap_or(rust_decimal::Decimal::ZERO),
+                power: parse_decimal(item, "strn")
+                    .or_else(|_| parse_decimal(item, "tpow"))
+                    .unwrap_or(rust_decimal::Decimal::ZERO),
             })
         })
-        .collect()
+        .collect();
+    items.truncate(count as usize);
+    Ok(items)
 }
 
-/// 해외주식 신고가/신저가 순위 조회
+/// 해외주식 신고가/신저가 순위 조회 [해외주식-044]
+/// TR-ID: HHDFS76300000
+/// `kind`: High=상승(gubn="1"), Low=하락(gubn="0")
 pub async fn new_highlow(
     http: &reqwest::Client,
     config: &KisConfig,
@@ -142,12 +150,14 @@ pub async fn new_highlow(
     kind: &HighLowKind,
     count: u32,
 ) -> Result<Vec<NewHighLowItem>, KisError> {
+    let gubn = kind.to_hlgu(); // "1"=신고가, "2"=신저가 (재사용)
     let query = json!({
         "AUTH": "",
         "EXCD": exchange.to_string(),
-        "HLGU": kind.to_hlgu(),
+        "MINX": "0",
+        "VOL_RANG": "0",
+        "GUBN": gubn,
         "KEYB": "",
-        "NREC": count.to_string(),
     });
 
     let v: Value = execute(
@@ -156,38 +166,41 @@ pub async fn new_highlow(
         token,
         RequestParams {
             method: Method::GET,
-            path: "/uapi/overseas-price/v1/quotations/new-highlow",
-            tr_id: "HHDFS76280300",
+            path: "/uapi/overseas-stock/v1/ranking/new-highlow",
+            tr_id: "HHDFS76300000",
             query: Some(&query),
             body: None,
         },
     )
     .await?;
 
-    v["output"]
-        .as_array()
-        .ok_or_else(|| KisError::Api {
-            code: "PARSE_ERR".to_string(),
-            message: "missing output array".to_string(),
-        })?
+    let arr = v["output2"].as_array().ok_or_else(|| KisError::Api {
+        code: "PARSE_ERR".to_string(),
+        message: "missing output2 array".to_string(),
+    })?;
+
+    let mut items: Vec<NewHighLowItem> = arr
         .iter()
-        .map(|item| {
-            Ok(NewHighLowItem {
-                exchange: item["EXCD"].as_str().unwrap_or("").to_string(),
-                symbol: item["SYMB"].as_str().unwrap_or("").to_string(),
-                name: item["DNAM"].as_str().unwrap_or("").to_string(),
-                last: parse_decimal(item, "LAST")?,
-                diff: parse_decimal(item, "DIFF")?,
-                rate: parse_decimal(item, "RATE")?,
-                volume: parse_decimal(item, "TVOL")?,
-                high_price: parse_decimal(item, "XHGP")?,
-                low_price: parse_decimal(item, "XLWP")?,
+        .filter_map(|item| {
+            Some(NewHighLowItem {
+                exchange: item["excd"].as_str().unwrap_or("").to_string(),
+                symbol: item["symb"].as_str().unwrap_or("").to_string(),
+                name: item["name"].as_str().unwrap_or("").to_string(),
+                last: parse_decimal(item, "last").ok()?,
+                diff: parse_decimal(item, "diff").unwrap_or(rust_decimal::Decimal::ZERO),
+                rate: parse_decimal(item, "rate").unwrap_or(rust_decimal::Decimal::ZERO),
+                volume: parse_decimal(item, "tvol").unwrap_or(rust_decimal::Decimal::ZERO),
+                high_price: parse_decimal(item, "nhgh").unwrap_or(rust_decimal::Decimal::ZERO),
+                low_price: parse_decimal(item, "nlow").unwrap_or(rust_decimal::Decimal::ZERO),
             })
         })
-        .collect()
+        .collect();
+    items.truncate(count as usize);
+    Ok(items)
 }
 
-/// 해외주식 시가총액 순위 조회
+/// 해외주식 시가총액 순위 조회 [해외주식-042]
+/// TR-ID: HHDFS76350100
 pub async fn market_cap(
     http: &reqwest::Client,
     config: &KisConfig,
@@ -198,8 +211,8 @@ pub async fn market_cap(
     let query = json!({
         "AUTH": "",
         "EXCD": exchange.to_string(),
+        "VOL_RANG": "0",
         "KEYB": "",
-        "NREC": count.to_string(),
     });
 
     let v: Value = execute(
@@ -208,37 +221,42 @@ pub async fn market_cap(
         token,
         RequestParams {
             method: Method::GET,
-            path: "/uapi/overseas-price/v1/quotations/market-cap",
-            tr_id: "HHDFS76260100",
+            path: "/uapi/overseas-stock/v1/ranking/market-cap",
+            tr_id: "HHDFS76350100",
             query: Some(&query),
             body: None,
         },
     )
     .await?;
 
-    v["output"]
-        .as_array()
-        .ok_or_else(|| KisError::Api {
-            code: "PARSE_ERR".to_string(),
-            message: "missing output array".to_string(),
-        })?
+    let arr = v["output2"].as_array().ok_or_else(|| KisError::Api {
+        code: "PARSE_ERR".to_string(),
+        message: "missing output2 array".to_string(),
+    })?;
+
+    let mut items: Vec<MarketCapItem> = arr
         .iter()
-        .map(|item| {
-            Ok(MarketCapItem {
-                exchange: item["EXCD"].as_str().unwrap_or("").to_string(),
-                symbol: item["SYMB"].as_str().unwrap_or("").to_string(),
-                name: item["DNAM"].as_str().unwrap_or("").to_string(),
-                last: parse_decimal(item, "LAST")?,
-                diff: parse_decimal(item, "DIFF")?,
-                rate: parse_decimal(item, "RATE")?,
-                volume: parse_decimal(item, "TVOL")?,
-                market_cap: parse_decimal(item, "MKTC")?,
+        .filter_map(|item| {
+            Some(MarketCapItem {
+                exchange: item["excd"].as_str().unwrap_or("").to_string(),
+                symbol: item["symb"].as_str().unwrap_or("").to_string(),
+                name: item["name"].as_str().unwrap_or("").to_string(),
+                last: parse_decimal(item, "last").ok()?,
+                diff: parse_decimal(item, "diff").unwrap_or(rust_decimal::Decimal::ZERO),
+                rate: parse_decimal(item, "rate").unwrap_or(rust_decimal::Decimal::ZERO),
+                volume: parse_decimal(item, "tvol").unwrap_or(rust_decimal::Decimal::ZERO),
+                market_cap: parse_decimal(item, "tomv")
+                    .or_else(|_| parse_decimal(item, "mcap"))
+                    .unwrap_or(rust_decimal::Decimal::ZERO),
             })
         })
-        .collect()
+        .collect();
+    items.truncate(count as usize);
+    Ok(items)
 }
 
-/// 해외주식 거래회전율 순위 조회
+/// 해외주식 거래회전율 순위 조회 [해외주식-048]
+/// TR-ID: HHDFS76340000
 pub async fn trade_turnover(
     http: &reqwest::Client,
     config: &KisConfig,
@@ -249,8 +267,9 @@ pub async fn trade_turnover(
     let query = json!({
         "AUTH": "",
         "EXCD": exchange.to_string(),
+        "NDAY": "0",
+        "VOL_RANG": "0",
         "KEYB": "",
-        "NREC": count.to_string(),
     });
 
     let v: Value = execute(
@@ -259,34 +278,38 @@ pub async fn trade_turnover(
         token,
         RequestParams {
             method: Method::GET,
-            path: "/uapi/overseas-price/v1/quotations/trade-turnover",
-            tr_id: "HHDFS76370200",
+            path: "/uapi/overseas-stock/v1/ranking/trade-turnover",
+            tr_id: "HHDFS76340000",
             query: Some(&query),
             body: None,
         },
     )
     .await?;
 
-    v["output"]
-        .as_array()
-        .ok_or_else(|| KisError::Api {
-            code: "PARSE_ERR".to_string(),
-            message: "missing output array".to_string(),
-        })?
+    let arr = v["output2"].as_array().ok_or_else(|| KisError::Api {
+        code: "PARSE_ERR".to_string(),
+        message: "missing output2 array".to_string(),
+    })?;
+
+    let mut items: Vec<TradeTurnoverItem> = arr
         .iter()
-        .map(|item| {
-            Ok(TradeTurnoverItem {
-                exchange: item["EXCD"].as_str().unwrap_or("").to_string(),
-                symbol: item["SYMB"].as_str().unwrap_or("").to_string(),
-                name: item["DNAM"].as_str().unwrap_or("").to_string(),
-                last: parse_decimal(item, "LAST")?,
-                diff: parse_decimal(item, "DIFF")?,
-                rate: parse_decimal(item, "RATE")?,
-                volume: parse_decimal(item, "TVOL")?,
-                turnover_rate: parse_decimal(item, "TRNO")?,
+        .filter_map(|item| {
+            Some(TradeTurnoverItem {
+                exchange: item["excd"].as_str().unwrap_or("").to_string(),
+                symbol: item["symb"].as_str().unwrap_or("").to_string(),
+                name: item["name"].as_str().unwrap_or("").to_string(),
+                last: parse_decimal(item, "last").ok()?,
+                diff: parse_decimal(item, "diff").unwrap_or(rust_decimal::Decimal::ZERO),
+                rate: parse_decimal(item, "rate").unwrap_or(rust_decimal::Decimal::ZERO),
+                volume: parse_decimal(item, "tvol").unwrap_or(rust_decimal::Decimal::ZERO),
+                turnover_rate: parse_decimal(item, "tover")
+                    .or_else(|_| parse_decimal(item, "trat"))
+                    .unwrap_or(rust_decimal::Decimal::ZERO),
             })
         })
-        .collect()
+        .collect();
+    items.truncate(count as usize);
+    Ok(items)
 }
 
 #[cfg(test)]
@@ -314,22 +337,24 @@ mod tests {
     #[test]
     fn deserialize_volume_power() {
         let v = load_fixture("volume_power");
-        let items: Vec<VolumePowerItem> = v["output"]
+        let items: Vec<VolumePowerItem> = v["output2"]
             .as_array()
             .unwrap()
             .iter()
-            .map(|item| VolumePowerItem {
-                date: item["XYMD"].as_str().unwrap_or("").to_string(),
-                total_volume: parse_decimal(item, "TVOL").unwrap(),
-                buy_volume: parse_decimal(item, "MBVOL").unwrap(),
-                sell_volume: parse_decimal(item, "MSVOL").unwrap(),
-                power: parse_decimal(item, "POWER").unwrap(),
+            .filter_map(|item| {
+                Some(VolumePowerItem {
+                    date: item["excd"].as_str().unwrap_or("").to_string(),
+                    total_volume: parse_decimal(item, "tvol").ok()?,
+                    buy_volume: parse_decimal(item, "asvl").unwrap_or(rust_decimal::Decimal::ZERO),
+                    sell_volume: parse_decimal(item, "bivl").unwrap_or(rust_decimal::Decimal::ZERO),
+                    power: parse_decimal(item, "strn").unwrap_or(rust_decimal::Decimal::ZERO),
+                })
             })
             .collect();
 
         assert_eq!(items.len(), 2);
         let first = &items[0];
-        assert_eq!(first.date, "20260321");
+        assert_eq!(first.date, "NAS");
         assert_eq!(first.buy_volume, dec!(26540200));
         assert_eq!(first.sell_volume, dec!(21779900));
         assert_eq!(first.power, dec!(121.89));
@@ -338,20 +363,22 @@ mod tests {
     #[test]
     fn deserialize_new_highlow() {
         let v = load_fixture("new_highlow");
-        let items: Vec<NewHighLowItem> = v["output"]
+        let items: Vec<NewHighLowItem> = v["output2"]
             .as_array()
             .unwrap()
             .iter()
-            .map(|item| NewHighLowItem {
-                exchange: item["EXCD"].as_str().unwrap_or("").to_string(),
-                symbol: item["SYMB"].as_str().unwrap_or("").to_string(),
-                name: item["DNAM"].as_str().unwrap_or("").to_string(),
-                last: parse_decimal(item, "LAST").unwrap(),
-                diff: parse_decimal(item, "DIFF").unwrap(),
-                rate: parse_decimal(item, "RATE").unwrap(),
-                volume: parse_decimal(item, "TVOL").unwrap(),
-                high_price: parse_decimal(item, "XHGP").unwrap(),
-                low_price: parse_decimal(item, "XLWP").unwrap(),
+            .filter_map(|item| {
+                Some(NewHighLowItem {
+                    exchange: item["excd"].as_str().unwrap_or("").to_string(),
+                    symbol: item["symb"].as_str().unwrap_or("").to_string(),
+                    name: item["name"].as_str().unwrap_or("").to_string(),
+                    last: parse_decimal(item, "last").ok()?,
+                    diff: parse_decimal(item, "diff").unwrap_or(rust_decimal::Decimal::ZERO),
+                    rate: parse_decimal(item, "rate").unwrap_or(rust_decimal::Decimal::ZERO),
+                    volume: parse_decimal(item, "tvol").unwrap_or(rust_decimal::Decimal::ZERO),
+                    high_price: parse_decimal(item, "nhgh").unwrap_or(rust_decimal::Decimal::ZERO),
+                    low_price: parse_decimal(item, "nlow").unwrap_or(rust_decimal::Decimal::ZERO),
+                })
             })
             .collect();
 
@@ -365,19 +392,21 @@ mod tests {
     #[test]
     fn deserialize_market_cap() {
         let v = load_fixture("market_cap");
-        let items: Vec<MarketCapItem> = v["output"]
+        let items: Vec<MarketCapItem> = v["output2"]
             .as_array()
             .unwrap()
             .iter()
-            .map(|item| MarketCapItem {
-                exchange: item["EXCD"].as_str().unwrap_or("").to_string(),
-                symbol: item["SYMB"].as_str().unwrap_or("").to_string(),
-                name: item["DNAM"].as_str().unwrap_or("").to_string(),
-                last: parse_decimal(item, "LAST").unwrap(),
-                diff: parse_decimal(item, "DIFF").unwrap(),
-                rate: parse_decimal(item, "RATE").unwrap(),
-                volume: parse_decimal(item, "TVOL").unwrap(),
-                market_cap: parse_decimal(item, "MKTC").unwrap(),
+            .filter_map(|item| {
+                Some(MarketCapItem {
+                    exchange: item["excd"].as_str().unwrap_or("").to_string(),
+                    symbol: item["symb"].as_str().unwrap_or("").to_string(),
+                    name: item["name"].as_str().unwrap_or("").to_string(),
+                    last: parse_decimal(item, "last").ok()?,
+                    diff: parse_decimal(item, "diff").unwrap_or(rust_decimal::Decimal::ZERO),
+                    rate: parse_decimal(item, "rate").unwrap_or(rust_decimal::Decimal::ZERO),
+                    volume: parse_decimal(item, "tvol").unwrap_or(rust_decimal::Decimal::ZERO),
+                    market_cap: parse_decimal(item, "tomv").unwrap_or(rust_decimal::Decimal::ZERO),
+                })
             })
             .collect();
 
@@ -390,19 +419,21 @@ mod tests {
     #[test]
     fn deserialize_trade_turnover() {
         let v = load_fixture("trade_turnover");
-        let items: Vec<TradeTurnoverItem> = v["output"]
+        let items: Vec<TradeTurnoverItem> = v["output2"]
             .as_array()
             .unwrap()
             .iter()
-            .map(|item| TradeTurnoverItem {
-                exchange: item["EXCD"].as_str().unwrap_or("").to_string(),
-                symbol: item["SYMB"].as_str().unwrap_or("").to_string(),
-                name: item["DNAM"].as_str().unwrap_or("").to_string(),
-                last: parse_decimal(item, "LAST").unwrap(),
-                diff: parse_decimal(item, "DIFF").unwrap(),
-                rate: parse_decimal(item, "RATE").unwrap(),
-                volume: parse_decimal(item, "TVOL").unwrap(),
-                turnover_rate: parse_decimal(item, "TRNO").unwrap(),
+            .filter_map(|item| {
+                Some(TradeTurnoverItem {
+                    exchange: item["excd"].as_str().unwrap_or("").to_string(),
+                    symbol: item["symb"].as_str().unwrap_or("").to_string(),
+                    name: item["name"].as_str().unwrap_or("").to_string(),
+                    last: parse_decimal(item, "last").ok()?,
+                    diff: parse_decimal(item, "diff").unwrap_or(rust_decimal::Decimal::ZERO),
+                    rate: parse_decimal(item, "rate").unwrap_or(rust_decimal::Decimal::ZERO),
+                    volume: parse_decimal(item, "tvol").unwrap_or(rust_decimal::Decimal::ZERO),
+                    turnover_rate: parse_decimal(item, "tover").unwrap_or(rust_decimal::Decimal::ZERO),
+                })
             })
             .collect();
 
