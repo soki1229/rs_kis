@@ -1,7 +1,6 @@
-// ⚠ TR ID 및 필드명은 KIS OpenAPI 가이드에서 확인 필요
-// - 미체결: GET /uapi/domestic-stock/v1/trading/inquire-psbl-rvsecncl (tr_id: TTTC8036R)
+// - 미체결: GET /uapi/domestic-stock/v1/trading/inquire-psbl-rvsecncl (tr_id: TTTC0084R)
 // - 일봉: GET /uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice (tr_id: FHKST03010100)
-// - 거래량: GET /uapi/domestic-stock/v1/ranking/volume (tr_id: FHPST01710000)
+// - 거래량: GET /uapi/domestic-stock/v1/quotations/volume-rank (tr_id: FHPST01710000)
 
 use super::types::*;
 use crate::rest::overseas::inquiry::balance::{BalanceItem, BalanceResponse, BalanceSummary};
@@ -17,9 +16,9 @@ pub async fn domestic_unfilled_orders(
     token: &str,
 ) -> Result<Vec<DomesticUnfilledOrder>, KisError> {
     let tr_id = if config.is_domestic_virtual {
-        "VTTC8036R"
+        "VTTC0084R"
     } else {
-        "TTTC8036R"
+        "TTTC0084R"
     };
     let (cano, prdt_cd) = split_account(&config.account_num);
 
@@ -48,15 +47,20 @@ pub async fn domestic_unfilled_orders(
     let json: serde_json::Value = resp.json().await.map_err(KisError::Network)?;
     let rt_cd = json["rt_cd"].as_str().unwrap_or("");
     if rt_cd != "0" {
-        // KIS VTS does not support this endpoint (msg_cd 90000000).
-        // Treat as empty unfilled list — VTS orders are typically auto-filled.
+        // VTS는 미체결조회를 지원하지 않음 — 빈 목록 반환
+        // msg_cd 90000000: 구버전 VTS 미지원 응답
+        // "없는 서비스 코드": 신규 TR-ID(VTTC0084R)에 대한 VTS 미지원 응답
         let msg_cd = json["msg_cd"].as_str().unwrap_or("");
-        if msg_cd == "90000000" {
+        let msg1 = json["msg1"].as_str().unwrap_or("");
+        if config.is_domestic_virtual
+            || msg_cd == "90000000"
+            || msg1.contains("없는 서비스 코드")
+        {
             return Ok(vec![]);
         }
         return Err(KisError::Api {
             code: rt_cd.into(),
-            message: json["msg1"].as_str().unwrap_or("unknown").into(),
+            message: msg1.into(),
         });
     }
 
@@ -194,9 +198,9 @@ pub async fn domestic_order_history(
         .header(
             "tr_id",
             if config.is_domestic_virtual {
-                "VTTC8001R"
+                "VTTC0081R"
             } else {
-                "TTTC8001R"
+                "TTTC0081R"
             },
         )
         .header("custtype", "P")
@@ -398,6 +402,10 @@ pub async fn domestic_check_holiday(
     token: &str,
     date: &str,
 ) -> Result<Vec<crate::Holiday>, KisError> {
+    // CTCA0903R은 VTS 미지원 — 빈 목록 반환 (개장으로 간주)
+    if config.is_domestic_virtual {
+        return Ok(vec![]);
+    }
     let resp = client
         .get(format!(
             "{}/uapi/domestic-stock/v1/quotations/chk-holiday",
