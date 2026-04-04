@@ -61,17 +61,6 @@ pub struct VolumeSurgeItem {
     pub volume_surge_rate: Decimal,
 }
 
-fn parse_decimal(v: &Value, field: &str) -> Result<Decimal, KisError> {
-    let s = v[field].as_str().ok_or_else(|| KisError::Api {
-        code: "PARSE_ERR".to_string(),
-        message: format!("missing field: {field}"),
-    })?;
-    Decimal::from_str(s).map_err(|e| KisError::Api {
-        code: "PARSE_ERR".to_string(),
-        message: format!("decimal parse error for {field}: {e}"),
-    })
-}
-
 fn parse_optional_decimal(v: &Value, field: &str) -> Option<Decimal> {
     v[field]
         .as_str()

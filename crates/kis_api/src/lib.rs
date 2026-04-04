@@ -30,6 +30,7 @@ pub use rest::overseas::analysis::market::{
 pub use rest::overseas::analysis::ranking::{
     RankingItem, RankingRequest, RankingSort, VolumeSurgeItem,
 };
+pub use rest::overseas::deposit::DepositInfo;
 pub use rest::overseas::inquiry::balance::{BalanceItem, BalanceResponse, BalanceSummary};
 pub use rest::overseas::inquiry::orders::{OrderHistoryItem, OrderHistoryRequest, UnfilledOrder};
 pub use rest::overseas::inquiry::profit::{

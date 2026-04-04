@@ -406,6 +406,12 @@ impl KisApi for KisClient {
     async fn balance(&self) -> Result<crate::BalanceResponse, KisError> {
         self.balance().await
     }
+
+    async fn check_deposit(&self) -> Result<crate::DepositInfo, KisError> {
+        with_401_retry!(self, |token| {
+            crate::rest::overseas::deposit::check_deposit(self.http(), self.config(), token).await
+        })
+    }
 }
 
 #[cfg(test)]

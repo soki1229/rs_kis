@@ -1,7 +1,7 @@
 use crate::{
     BalanceResponse, CancelOrderRequest, CancelOrderResponse, CandleBar, DailyChartRequest,
-    Exchange, Holiday, KisError, KisStream, NewsItem, OrderHistoryItem, OrderHistoryRequest,
-    PlaceOrderRequest, PlaceOrderResponse, RankingItem, UnfilledOrder,
+    DepositInfo, Exchange, Holiday, KisError, KisStream, NewsItem, OrderHistoryItem,
+    OrderHistoryRequest, PlaceOrderRequest, PlaceOrderResponse, RankingItem, UnfilledOrder,
 };
 use async_trait::async_trait;
 
@@ -46,6 +46,9 @@ pub trait KisApi: Send + Sync {
 
     /// 해외주식 잔고 조회 (risk sizing용 account_balance 확보)
     async fn balance(&self) -> Result<BalanceResponse, KisError>;
+
+    /// USD 예수금 조회 (주문가능 USD 현금 — risk sizing의 available cash)
+    async fn check_deposit(&self) -> Result<DepositInfo, KisError>;
 }
 
 use crate::rest::domestic::{
@@ -171,6 +174,12 @@ mod tests {
                         realized_pnl: rust_decimal::Decimal::ZERO,
                         total_pnl: rust_decimal::Decimal::ZERO,
                     },
+                })
+            }
+            async fn check_deposit(&self) -> Result<crate::DepositInfo, crate::KisError> {
+                Ok(crate::DepositInfo {
+                    currency: "USD".to_string(),
+                    amount: rust_decimal::Decimal::ZERO,
                 })
             }
         }
