@@ -432,7 +432,8 @@ mod tests {
                     diff: parse_decimal(item, "diff").unwrap_or(rust_decimal::Decimal::ZERO),
                     rate: parse_decimal(item, "rate").unwrap_or(rust_decimal::Decimal::ZERO),
                     volume: parse_decimal(item, "tvol").unwrap_or(rust_decimal::Decimal::ZERO),
-                    turnover_rate: parse_decimal(item, "tover").unwrap_or(rust_decimal::Decimal::ZERO),
+                    turnover_rate: parse_decimal(item, "tover")
+                        .unwrap_or(rust_decimal::Decimal::ZERO),
                 })
             })
             .collect();

@@ -89,7 +89,8 @@ fn parse_ranking_item(item: &Value) -> Result<RankingItem, KisError> {
         rate: parse_decimal(item, "rate")?,
         volume: parse_decimal(item, "tvol")?,
         amount: parse_optional_decimal(item, "tamt").unwrap_or(rust_decimal::Decimal::ZERO),
-        market_cap: parse_optional_decimal(item, "tomv").or_else(|| parse_optional_decimal(item, "mcap")),
+        market_cap: parse_optional_decimal(item, "tomv")
+            .or_else(|| parse_optional_decimal(item, "mcap")),
     })
 }
 
@@ -237,7 +238,8 @@ pub async fn volume_surge(
                 diff: parse_optional_decimal(item, "diff").unwrap_or(rust_decimal::Decimal::ZERO),
                 rate: parse_optional_decimal(item, "rate").unwrap_or(rust_decimal::Decimal::ZERO),
                 volume: parse_optional_decimal(item, "tvol").unwrap_or(rust_decimal::Decimal::ZERO),
-                prev_volume: parse_optional_decimal(item, "n_tvol").unwrap_or(rust_decimal::Decimal::ZERO),
+                prev_volume: parse_optional_decimal(item, "n_tvol")
+                    .unwrap_or(rust_decimal::Decimal::ZERO),
                 volume_surge_rate: parse_optional_decimal(item, "n_rate")
                     .or_else(|| parse_optional_decimal(item, "trat"))
                     .unwrap_or(rust_decimal::Decimal::ZERO),
@@ -324,11 +326,16 @@ mod tests {
                     symbol: item["symb"].as_str().unwrap_or("").to_string(),
                     name: item["name"].as_str().unwrap_or("").to_string(),
                     last: parse_optional_decimal(item, "last")?,
-                    diff: parse_optional_decimal(item, "diff").unwrap_or(rust_decimal::Decimal::ZERO),
-                    rate: parse_optional_decimal(item, "rate").unwrap_or(rust_decimal::Decimal::ZERO),
-                    volume: parse_optional_decimal(item, "tvol").unwrap_or(rust_decimal::Decimal::ZERO),
-                    prev_volume: parse_optional_decimal(item, "n_tvol").unwrap_or(rust_decimal::Decimal::ZERO),
-                    volume_surge_rate: parse_optional_decimal(item, "n_rate").unwrap_or(rust_decimal::Decimal::ZERO),
+                    diff: parse_optional_decimal(item, "diff")
+                        .unwrap_or(rust_decimal::Decimal::ZERO),
+                    rate: parse_optional_decimal(item, "rate")
+                        .unwrap_or(rust_decimal::Decimal::ZERO),
+                    volume: parse_optional_decimal(item, "tvol")
+                        .unwrap_or(rust_decimal::Decimal::ZERO),
+                    prev_volume: parse_optional_decimal(item, "n_tvol")
+                        .unwrap_or(rust_decimal::Decimal::ZERO),
+                    volume_surge_rate: parse_optional_decimal(item, "n_rate")
+                        .unwrap_or(rust_decimal::Decimal::ZERO),
                 })
             })
             .collect();
