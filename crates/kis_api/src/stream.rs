@@ -68,6 +68,10 @@ struct StreamInner {
 impl KisStream {
     /// 연결 수립 + 수신 루프 시작. `KisClient::stream()` 이 내부적으로 호출.
     pub(crate) async fn connect(config: KisConfig, approval_key: String) -> Result<Self, KisError> {
+        // rustls 0.23+ requires a process-level CryptoProvider.
+        // install_default() is idempotent — subsequent calls return Err and are intentionally ignored.
+        let _ = rustls::crypto::ring::default_provider().install_default();
+
         let (tx, _) = broadcast::channel(config.ws_event_buffer);
         let cancel = CancellationToken::new();
 
