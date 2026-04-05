@@ -7,8 +7,7 @@ edition = "2021"
 # HTTP
 reqwest = { version = "0.12", features = ["json"] }
 # WebSocket
-tokio-tungstenite = { version = "0.24", features = ["rustls-tls-webpki-roots"] }
-rustls = { version = "0.23", features = ["ring"] }
+tokio-tungstenite = { version = "0.24", features = ["native-tls-vendored"] }
 # Async runtime
 tokio = { version = "1", features = ["full"] }
 futures = "0.3"
