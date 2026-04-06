@@ -1,9 +1,9 @@
 use std::path::PathBuf;
 
 const REAL_REST_URL: &str = "https://openapi.koreainvestment.com:9443";
-const REAL_WS_URL: &str = "wss://ops.koreainvestment.com:21000";
+const REAL_WS_URL: &str = "ws://ops.koreainvestment.com:21000";
 const VTS_REST_URL: &str = "https://openapivts.koreainvestment.com:29443";
-const VTS_WS_URL: &str = "wss://ops.koreainvestment.com:31000";
+const VTS_WS_URL: &str = "ws://ops.koreainvestment.com:31000";
 const DEFAULT_WS_EVENT_BUFFER: usize = 1024;
 const DEFAULT_TOKEN_CACHE: &str = "~/.config/kis_api/token.json";
 
