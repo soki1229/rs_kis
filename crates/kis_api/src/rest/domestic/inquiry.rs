@@ -283,8 +283,8 @@ pub async fn domestic_daily_chart(
         .query(&[
             ("FID_COND_MRKT_DIV_CODE", mkt_div),
             ("FID_INPUT_ISCD", req.symbol.as_str()),
-            ("FID_INPUT_DATE_1", ""),
-            ("FID_INPUT_DATE_2", ""),
+            ("FID_INPUT_DATE_1", req.start_date.as_deref().unwrap_or("")),
+            ("FID_INPUT_DATE_2", req.end_date.as_deref().unwrap_or("")),
             ("FID_PERIOD_DIV_CODE", period_code),
             ("FID_ORG_ADJ_PRC", adj),
         ])

@@ -117,6 +117,10 @@ pub struct DomesticDailyChartRequest {
     pub adj_price: bool,
     /// 시장 구분 (KOSPI = "J", KOSDAQ = "Q"). 기본값: KOSPI
     pub exchange: DomesticExchange,
+    /// 조회 시작 일자 (YYYYMMDD). None이면 "" (API 기본값)
+    pub start_date: Option<String>,
+    /// 조회 종료 일자 (YYYYMMDD). None이면 "" (API 기본값)
+    pub end_date: Option<String>,
 }
 
 /// 국내주식 체결내역 조회 요청
