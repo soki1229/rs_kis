@@ -248,7 +248,6 @@ async fn run_connection_loop(inner: Arc<StreamInner>, initial_ws_read: WsReadHal
 
     let cancel = &inner.cancel;
     let mut attempt: u32 = 0;
-    let mut received_data = false;
     let mut current_ws_read = Some(initial_ws_read);
 
     loop {
@@ -291,14 +290,13 @@ async fn run_connection_loop(inner: Arc<StreamInner>, initial_ws_read: WsReadHal
                 Err(e) => {
                     log::warn!("WS connect failed: {e}");
                     attempt = attempt.saturating_add(1);
-                    received_data = false;
                     continue;
                 }
             }
         };
 
         // Read loop
-        let disconnect_reason = read_loop(&inner, ws_read, cancel).await;
+        let (disconnect_reason, had_data) = read_loop(&inner, ws_read, cancel).await;
 
         // Clear the writer since connection is dead
         *inner.ws_tx.lock().await = None;
@@ -314,12 +312,11 @@ async fn run_connection_loop(inner: Arc<StreamInner>, initial_ws_read: WsReadHal
         }
 
         // Only reset backoff after sustained connection (received data messages)
-        if received_data {
-            attempt = 1; // start with short backoff
+        if had_data {
+            attempt = 0; // reset backoff — connection was healthy
         } else {
             attempt = attempt.saturating_add(1);
         }
-        received_data = false;
     }
 }
 
@@ -330,18 +327,22 @@ enum DisconnectReason {
 }
 
 /// Read messages from the WebSocket, handle PINGPONG, and dispatch events.
+///
+/// Returns `(reason, had_data)` where `had_data` is true if at least one market
+/// data message was successfully parsed and broadcast during this connection.
 async fn read_loop(
     inner: &StreamInner,
     ws_read: WsReadHalf,
     cancel: &CancellationToken,
-) -> DisconnectReason {
+) -> (DisconnectReason, bool) {
     use tokio_tungstenite::tungstenite::Message;
 
     let mut reader = ws_read;
+    let mut had_data = false;
 
     loop {
         tokio::select! {
-            _ = cancel.cancelled() => return DisconnectReason::Cancelled,
+            _ = cancel.cancelled() => return (DisconnectReason::Cancelled, had_data),
             msg = reader.next() => {
                 match msg {
                     Some(Ok(Message::Text(text))) => {
@@ -352,7 +353,7 @@ async fn read_loop(
                                 if let Some(ref mut writer) = *guard {
                                     if let Err(e) = writer.send(Message::Text(text)).await {
                                         log::warn!("failed to send PINGPONG response: {e}");
-                                        return DisconnectReason::Error(e.to_string());
+                                        return (DisconnectReason::Error(e.to_string()), had_data);
                                     }
                                 }
                                 log::info!("PINGPONG heartbeat responded");
@@ -363,6 +364,7 @@ async fn read_loop(
                             }
                             TextMessage::Data => {
                                 if let Some(event) = parse_ws_message(&text) {
+                                    had_data = true;
                                     let _ = inner.tx.send(event);
                                 }
                             }
@@ -372,9 +374,9 @@ async fn read_loop(
                         // Pong은 tokio-tungstenite가 자동 처리
                     }
                     Some(Err(e)) => {
-                        return DisconnectReason::Error(e.to_string());
+                        return (DisconnectReason::Error(e.to_string()), had_data);
                     }
-                    None => return DisconnectReason::Eof,
+                    None => return (DisconnectReason::Eof, had_data),
                     _ => {}
                 }
             }
