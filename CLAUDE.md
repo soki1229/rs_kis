@@ -2,8 +2,9 @@
 
 ## 역할
 
-KIS OpenAPI Rust 클라이언트 라이브러리.
-`rs_kis_pilot`(봇/서버)에서 의존성으로 사용된다.
+**순수 KIS OpenAPI Rust 클라이언트 라이브러리.**
+봇/전략 로직 없이 KIS 증권 API만 래핑한다.
+`rs_kis_server`와 `rs_kis_pilot`에서 의존성으로 사용된다.
 
 ```
 crates/kis_api/src/
@@ -20,28 +21,26 @@ crates/kis_api/src/
     rate_limit.rs    ← RateLimiter (15 req/s)
 ```
 
----
+## 관련 레포
 
-## TODO 관리 규칙
-
-rs_kis 라이브러리 관련 장기 리팩토링 계획은
-**`rs_kis_pilot/TODO.md`** 에서 통합 관리한다.
-
-- Phase 0 (MarketClient trait 추가)이 이 저장소에 해당하는 주요 작업이다.
-- `rs_kis_pilot/CLAUDE.md`의 TODO 관리 규칙을 동일하게 따른다.
+```
+rs_kis/           ← 이 저장소 (KIS API 라이브러리)
+rs_kis_server/    ← 봇 프레임워크 (../rs_kis_server)
+rs_kis_pilot/     ← 전략 구현체 (../rs_kis_pilot)
+```
 
 ---
 
 ## 변경 시 주의사항
 
-### rs_kis_pilot과의 연동
+### 하위 레포와의 연동
 
 `rs_kis`를 수정하면:
 1. `rs_kis`에서 커밋
-2. `rs_kis_pilot/Cargo.toml`의 git rev 업데이트
-3. `rs_kis_pilot`에서 `cargo build`로 연동 확인
+2. `rs_kis_server/crates/server/Cargo.toml`과 `rs_kis_pilot/crates/pilot/Cargo.toml`의 git rev 업데이트
+3. 각 레포에서 `cargo build`로 연동 확인
 
-**로컬 개발 시:** `rs_kis_pilot/Cargo.toml`에서 git 참조를 path 참조로 임시 변경 가능:
+**로컬 개발 시:** git 참조를 path 참조로 임시 변경 가능:
 ```toml
 # 개발 중 (임시)
 kis_api = { path = "../../rs_kis/crates/kis_api" }
@@ -93,6 +92,5 @@ cargo test --lib "parse_hdfscnt0"
 
 ## 컨텍스트 복구 체크리스트
 
-1. `rs_kis_pilot/TODO.md` 읽기 — Phase 0 항목 확인
-2. `git log --oneline -10` — 최근 변경 파악
-3. `cargo test --lib` — 현재 상태 확인
+1. `git log --oneline -10` — 최근 변경 파악
+2. `cargo test --lib` — 현재 상태 확인
