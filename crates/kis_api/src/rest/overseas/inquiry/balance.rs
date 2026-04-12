@@ -138,6 +138,7 @@ mod tests {
             total_pnl: parse_decimal(out2, "OVRS_TOT_PFLS"),
         };
         assert!(summary.purchase_amount > Decimal::ZERO);
+        assert!(summary.available_cash > Decimal::ZERO);
         assert_eq!(summary.realized_pnl, Decimal::ZERO);
     }
 }
