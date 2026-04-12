@@ -1,5 +1,7 @@
 # rs_kis — Claude 작업 규칙
 
+> **공통 규칙 우선:** `../AGENTS.md` → `AGENTS.md` 순서로 읽고 따른다. 이 파일은 Claude 전용 보충 정보다.
+
 ## 역할
 
 **순수 KIS OpenAPI Rust 클라이언트 라이브러리.**
