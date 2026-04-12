@@ -133,6 +133,7 @@ mod tests {
         let out2 = &v["output2"];
         let summary = BalanceSummary {
             purchase_amount: parse_decimal(out2, "FRCR_PCHS_AMT1"),
+            available_cash: parse_decimal(out2, "FRCR_PCHS_AMT1"),
             realized_pnl: parse_decimal(out2, "OVRS_RLZT_PFLS_AMT"),
             total_pnl: parse_decimal(out2, "OVRS_TOT_PFLS"),
         };

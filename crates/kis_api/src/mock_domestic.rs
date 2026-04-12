@@ -93,6 +93,7 @@ impl KisDomesticApi for MockDomesticKisApi {
             items: vec![],
             summary: BalanceSummary {
                 purchase_amount: rust_decimal::Decimal::ZERO,
+                available_cash: rust_decimal::Decimal::ZERO,
                 realized_pnl: rust_decimal::Decimal::ZERO,
                 total_pnl: rust_decimal::Decimal::ZERO,
             },

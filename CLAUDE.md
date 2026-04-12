@@ -36,18 +36,20 @@ rs_kis_pilot/     ← 전략 구현체 (../rs_kis_pilot)
 ### 하위 레포와의 연동
 
 `rs_kis`를 수정하면:
-1. `rs_kis`에서 커밋
-2. `rs_kis_server/crates/server/Cargo.toml`과 `rs_kis_pilot/crates/pilot/Cargo.toml`의 git rev 업데이트
-3. 각 레포에서 `cargo build`로 연동 확인
+1. `rs_kis`에서 커밋 & `master` 브랜치 push
+2. `rs_kis_server`, `rs_kis_pilot` 에서 `cargo update` 또는 `cargo build` 로 최신 반영 확인
+   - rev 고정이 아닌 `branch = "master"` 추적이므로 Cargo.toml 수정 불필요
 
 **로컬 개발 시:** git 참조를 path 참조로 임시 변경 가능:
 ```toml
 # 개발 중 (임시)
 kis_api = { path = "../../rs_kis/crates/kis_api" }
 
-# 배포 (원상복구)
-kis_api = { git = "...", rev = "..." }
+# 배포 (원상복구) — branch = "master" 로 최신 추적
+kis_api = { git = "https://github.com/soki1229/rs_kis.git", branch = "master" }
 ```
+
+> **주의:** rev 고정 방식은 사용하지 않는다. 항상 `branch = "master"` 로 최신을 추적한다.
 
 ### WebSocket (stream.rs) 수정 시
 
