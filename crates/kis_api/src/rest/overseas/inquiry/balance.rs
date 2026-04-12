@@ -26,6 +26,7 @@ pub struct BalanceItem {
 
 pub struct BalanceSummary {
     pub purchase_amount: Decimal,
+    pub available_cash: Decimal,
     pub realized_pnl: Decimal,
     pub total_pnl: Decimal,
 }
@@ -89,6 +90,7 @@ pub async fn balance(
     let out2 = &resp["output2"];
     let summary = BalanceSummary {
         purchase_amount: parse_decimal(out2, "FRCR_PCHS_AMT1"),
+        available_cash: parse_decimal(out2, "FRCR_PCHS_AMT1"),
         realized_pnl: parse_decimal(out2, "OVRS_RLZT_PFLS_AMT"),
         total_pnl: parse_decimal(out2, "OVRS_TOT_PFLS"),
     };

@@ -165,8 +165,9 @@ pub async fn domestic_balance(
         .cloned()
         .unwrap_or(serde_json::Value::Null);
     let summary = BalanceSummary {
-        // dnca_tot_amt: 예수금 총금액 (주문가능금액 근사)
-        purchase_amount: Decimal::from_str(out2["dnca_tot_amt"].as_str().unwrap_or("0"))
+        purchase_amount: Decimal::from_str(out2["pchs_amt_smtot_amt"].as_str().unwrap_or("0"))
+            .unwrap_or(Decimal::ZERO),
+        available_cash: Decimal::from_str(out2["dnca_tot_amt"].as_str().unwrap_or("0"))
             .unwrap_or(Decimal::ZERO),
         realized_pnl: Decimal::from_str(out2["rlzt_pfls"].as_str().unwrap_or("0"))
             .unwrap_or(Decimal::ZERO),
