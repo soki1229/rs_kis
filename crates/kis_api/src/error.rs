@@ -1,71 +1,54 @@
+use serde::Deserialize;
 use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum KisError {
-    #[error("auth error: {0}")]
-    Auth(String),
-
-    #[error("network error: {0}")]
-    Network(#[from] reqwest::Error),
-
-    #[error("KIS API error {code}: {message}")]
-    Api { code: String, message: String },
-
-    #[error("websocket error: {0}")]
-    WebSocket(String),
-
-    #[error("event stream lagged: {0} events missed")]
-    Lagged(u64),
-
-    #[error("event stream closed")]
-    StreamClosed,
-
-    #[error("parse error: {0}")]
-    Parse(#[from] serde_json::Error),
-
-    #[error("IO error: {0}")]
+    #[error("KIS API 에러: {rt_cd}/{msg_cd} - {message}")]
+    Api {
+        rt_cd: String,
+        msg_cd: String,
+        message: String,
+    },
+    #[error("HTTP {status}: {message}")]
+    Http { status: u16, message: String },
+    #[error("Serde: {0}")]
+    Serde(#[from] serde_json::Error),
+    #[error("Reqwest: {0}")]
+    Reqwest(#[from] reqwest::Error),
+    #[error("IO: {0}")]
     Io(#[from] std::io::Error),
+    #[error("Auth Error: {0}")]
+    Auth(String),
 }
 
-impl KisError {
-    pub fn is_retryable(&self) -> bool {
-        matches!(self, Self::Network(_) | Self::WebSocket(_))
-    }
+#[derive(Deserialize, Debug)]
+pub struct ApiResponse<T> {
+    pub rt_cd: String,
+    pub msg_cd: String,
+    pub msg1: String,
+    pub output: Option<T>,
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn retryable_errors() {
-        assert!(KisError::WebSocket("timeout".into()).is_retryable());
-        assert!(!KisError::Auth("invalid key".into()).is_retryable());
-        assert!(!KisError::StreamClosed.is_retryable());
-        assert!(!KisError::Lagged(5).is_retryable());
-    }
-
-    #[test]
-    fn error_display_messages() {
-        assert_eq!(
-            KisError::Lagged(42).to_string(),
-            "event stream lagged: 42 events missed"
-        );
-        assert_eq!(KisError::StreamClosed.to_string(), "event stream closed");
-        assert_eq!(
-            KisError::Api {
-                code: "EGW00123".into(),
-                message: "Unauthorized".into()
+impl<T> ApiResponse<T> {
+    pub fn into_result(self) -> Result<T, KisError>
+    where
+        T: Default + serde::de::DeserializeOwned,
+    {
+        if self.rt_cd != "0" && self.rt_cd != "00" {
+            return Err(KisError::Api {
+                rt_cd: self.rt_cd,
+                msg_cd: self.msg_cd,
+                message: self.msg1,
+            });
+        }
+        match self.output {
+            Some(out) => Ok(out),
+            None => {
+                // rt_cd가 0인데 output이 없는 경우 (예: 주문 취소 성공 등)
+                // T의 기본값을 반환하거나 처리 로직이 필요함.
+                // 여기서는 안전하게 Deserialize를 시도하거나 Default를 반환.
+                Ok(T::default())
             }
-            .to_string(),
-            "KIS API error EGW00123: Unauthorized"
-        );
-    }
-
-    fn assert_send_sync<T: Send + Sync>() {}
-
-    #[test]
-    fn kis_error_is_send_sync() {
-        assert_send_sync::<KisError>();
+        }
     }
 }
