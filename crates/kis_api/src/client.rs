@@ -173,7 +173,10 @@ impl KisClient {
         if !resp.status().is_success() {
             let status = resp.status().as_u16();
             let text = resp.text().await.unwrap_or_default();
-            return Err(KisError::Auth(format!("Approval key failed ({}): {}", status, text)));
+            return Err(KisError::Auth(format!(
+                "Approval key failed ({}): {}",
+                status, text
+            )));
         }
 
         let json: serde_json::Value = resp.json().await?;
@@ -195,7 +198,6 @@ impl KisClient {
     pub fn app_key(&self) -> &str {
         &self.inner.app_key
     }
-
 
     pub async fn post<R, B>(&self, path: &str, tr_id: &str, body: B) -> Result<R, KisError>
     where
