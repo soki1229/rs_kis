@@ -19,6 +19,12 @@ pub enum KisError {
     Io(#[from] std::io::Error),
     #[error("Auth Error: {0}")]
     Auth(String),
+    #[error("WebSocket error: {0}")]
+    WebSocket(String),
+    #[error("Stream lagged by {0} messages")]
+    Lagged(u64),
+    #[error("WebSocket stream closed")]
+    StreamClosed,
 }
 
 #[derive(Deserialize, Debug)]

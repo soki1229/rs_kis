@@ -159,6 +159,44 @@ impl KisClient {
         }
     }
 
+    /// WebSocket 연결에 필요한 approval_key 발급.
+    pub async fn approval_key(&self) -> Result<String, KisError> {
+        let url = format!("{}/oauth2/Approval", self.inner.base_url);
+        let req = serde_json::json!({
+            "grant_type": "client_credentials",
+            "appkey": self.inner.app_key,
+            "secretkey": self.inner.app_secret,
+        });
+
+        let resp = self.inner.client.post(&url).json(&req).send().await?;
+
+        if !resp.status().is_success() {
+            let status = resp.status().as_u16();
+            let text = resp.text().await.unwrap_or_default();
+            return Err(KisError::Auth(format!("Approval key failed ({}): {}", status, text)));
+        }
+
+        let json: serde_json::Value = resp.json().await?;
+        json["approval_key"]
+            .as_str()
+            .map(|s| s.to_string())
+            .ok_or_else(|| KisError::Auth("approval_key not found in response".to_string()))
+    }
+
+    /// 이 클라이언트 환경에 맞는 WebSocket URL 반환.
+    pub fn ws_url(&self) -> &'static str {
+        match self.env() {
+            KisEnv::Real => "wss://ops.koreainvestment.com:21000",
+            KisEnv::Vts => "wss://ops.koreainvestment.com:31000",
+        }
+    }
+
+    /// WS 구독 메시지 헤더용 app_key 반환.
+    pub fn app_key(&self) -> &str {
+        &self.inner.app_key
+    }
+
+
     pub async fn post<R, B>(&self, path: &str, tr_id: &str, body: B) -> Result<R, KisError>
     where
         R: for<'de> Deserialize<'de> + Default,
@@ -225,5 +263,40 @@ impl KisClient {
 
         let json: ApiResponse<R> = resp.json().await?;
         json.into_result()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn ws_url_real_env() {
+        let inner = Arc::new(Inner {
+            access_token: RwLock::new(String::new()),
+            token_expires_at: Mutex::new(None),
+            app_key: "key".to_string(),
+            app_secret: "secret".to_string(),
+            client: Client::new(),
+            base_url: "https://openapi.koreainvestment.com:8080".to_string(),
+            cache_path: None,
+        });
+        let client = KisClient { inner };
+        assert_eq!(client.ws_url(), "wss://ops.koreainvestment.com:21000");
+    }
+
+    #[test]
+    fn ws_url_vts_env() {
+        let inner = Arc::new(Inner {
+            access_token: RwLock::new(String::new()),
+            token_expires_at: Mutex::new(None),
+            app_key: "key".to_string(),
+            app_secret: "secret".to_string(),
+            client: Client::new(),
+            base_url: "https://openapivts.koreainvestment.com:29443".to_string(),
+            cache_path: None,
+        });
+        let client = KisClient { inner };
+        assert_eq!(client.ws_url(), "wss://ops.koreainvestment.com:31000");
     }
 }
