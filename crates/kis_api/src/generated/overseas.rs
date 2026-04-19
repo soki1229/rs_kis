@@ -1,8 +1,7 @@
-
 #![allow(clippy::doc_lazy_continuation)]
 use crate::client::KisClient;
-use crate::models::*;
 use crate::error::KisError;
+use crate::models::*;
 
 #[allow(dead_code)]
 pub struct Common(pub(crate) KisClient);
@@ -34,17 +33,17 @@ impl crate::endpoints::Overseas {
 #[allow(non_snake_case)]
 impl Common {
     /// 접근토큰발급(P)
-    /// 
+    ///
     /// - TR_ID: Real= / VTS=
     /// - Endpoint: /oauth2/tokenP
-    /// 
+    ///
     /// OAuth인증
     /// 접근토큰발급(P)[인증-001]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 본인 계좌에 필요한 인증 절차로, 인증을 통해 접근 토큰을 부여받아 오픈API 활용이 가능합니다.
     ///
@@ -61,10 +60,7 @@ impl Common {
     /// 접근토큰발급 API 호출 및 코드 작성하실 때 해당 사항을 참고하시길 바랍니다.
     ///
     /// ※ 참고 : 포럼 > 공지사항 >  [수정] [중요] 접근 토큰 발급 변경 안내
-    pub async fn tokenP(
-        &self,
-        req: TokenPRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn tokenP(&self, req: TokenPRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "",
             crate::client::KisEnv::Vts => "",
@@ -73,23 +69,20 @@ impl Common {
     }
 
     /// 접근토큰폐기(P)
-    /// 
+    ///
     /// - TR_ID: Real= / VTS=
     /// - Endpoint: /oauth2/revokeP
-    /// 
+    ///
     /// OAuth인증
     /// 접근토큰폐기(P)[인증-002]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 부여받은 접큰토큰을 더 이상 활용하지 않을 때 사용합니다.
-    pub async fn revokeP(
-        &self,
-        req: RevokePRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn revokeP(&self, req: RevokePRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "",
             crate::client::KisEnv::Vts => "",
@@ -98,25 +91,22 @@ impl Common {
     }
 
     /// Hashkey
-    /// 
+    ///
     /// - TR_ID: Real= / VTS=
     /// - Endpoint: /uapi/hashkey
-    /// 
+    ///
     /// OAuth인증
     /// Hashkey
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해쉬키(Hashkey)는 보안을 위한 요소로 사용자가 보낸 요청 값을 중간에 탈취하여 변조하지 못하도록 하는데 사용됩니다.
     /// 해쉬키를 사용하면 POST로 보내는 요청(주로 주문/정정/취소 API 해당)의 body 값을 사전에 암호화시킬 수 있습니다.
     /// 해쉬키는 비필수값으로 사용하지 않아도 POST API 호출은 가능합니다.
-    pub async fn hashkey(
-        &self,
-        req: HashkeyRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn hashkey(&self, req: HashkeyRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "",
             crate::client::KisEnv::Vts => "",
@@ -125,26 +115,23 @@ impl Common {
     }
 
     /// 실시간 (웹소켓) 접속키 발급
-    /// 
+    ///
     /// - TR_ID: Real= / VTS=
     /// - Endpoint: /oauth2/Approval
-    /// 
+    ///
     /// OAuth인증
     /// 실시간 (웹소켓) 접속키 발급[실시간-000]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 실시간 (웹소켓) 접속키 발급받으실 수 있는 API 입니다.
     /// 웹소켓 이용 시 해당 키를 appkey와 appsecret 대신 헤더에 넣어 API를 호출합니다.
     ///
     /// 접속키의 유효기간은 24시간이지만, 접속키는 세션 연결 시 초기 1회만 사용하기 때문에 접속키 인증 후에는 세션종료되지 않는 이상 접속키 신규 발급받지 않으셔도 365일 내내 웹소켓 데이터 수신하실 수 있습니다.
-    pub async fn Approval(
-        &self,
-        req: ApprovalRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn Approval(&self, req: ApprovalRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "",
             crate::client::KisEnv::Vts => "",
@@ -153,17 +140,17 @@ impl Common {
     }
 
     /// 국내주식 실시간체결가 (KRX)
-    /// 
+    ///
     /// - TR_ID: Real=H0STCNT0 / VTS=H0STCNT0
     /// - Endpoint: /tryitout/H0STCNT0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 실시간체결가 (KRX) [실시간-003]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     /// 실시간시세(웹소켓) 파이썬 샘플코드는 한국투자증권 Github 참고 부탁드립니다.
@@ -193,10 +180,7 @@ impl Common {
     /// ※ 데이터가 많은 경우 여러 건을 페이징 처리해서 데이터를 보내는 점 참고 부탁드립니다.
     /// ex) 0|H0STCNT0|004|... 인 경우 004가 데이터 개수를 의미하여, 뒤에 체결데이터가 4건 들어옴
     /// → 0|H0STCNT0|004|005930^123929...(체결데이터1)...^005930^123929...(체결데이터2)...^005930^123929...(체결데이터3)...^005930^123929...(체결데이터4)...
-    pub async fn H0STCNT0(
-        &self,
-        req: H0Stcnt0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0STCNT0(&self, req: H0Stcnt0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0STCNT0",
             crate::client::KisEnv::Vts => "H0STCNT0",
@@ -205,17 +189,17 @@ impl Common {
     }
 
     /// 국내주식 실시간호가 (KRX)
-    /// 
+    ///
     /// - TR_ID: Real=H0STASP0 / VTS=H0STASP0
     /// - Endpoint: /tryitout/H0STASP0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 실시간호가 (KRX) [실시간-004]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     /// 실시간시세(웹소켓) 파이썬 샘플코드는 한국투자증권 Github 참고 부탁드립니다.
@@ -238,10 +222,7 @@ impl Common {
     /// - TR_ID : 등록한 tr_id
     /// - 데이터 건수 : (ex. 001 데이터 건수를 참조하여 활용)
     /// - 응답 데이터 : 아래 response 데이터 참조 ( ^로 구분됨)
-    pub async fn H0STASP0(
-        &self,
-        req: H0Stasp0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0STASP0(&self, req: H0Stasp0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0STASP0",
             crate::client::KisEnv::Vts => "H0STASP0",
@@ -250,17 +231,17 @@ impl Common {
     }
 
     /// 국내주식 실시간체결통보
-    /// 
+    ///
     /// - TR_ID: Real=H0STCNI0 / VTS=H0STCNI9
     /// - Endpoint: /tryitout/H0STCNI0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 실시간체결통보 [실시간-005]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 국내주식 실시간 체결통보 수신 시에 (1) 주문·정정·취소·거부 접수 통보 와 (2) 체결 통보 가 모두 수신됩니다.
     /// (14번째 값(CNTG_YN;체결여부)가 2이면 체결통보, 1이면 주문·정정·취소·거부 접수 통보입니다.)
@@ -290,10 +271,7 @@ impl Common {
     /// - 응답 데이터 : 아래 response 데이터 참조 ( ^로 구분됨)
     ///
     /// 체결 통보 응답 결과는 암호화되어 출력됩니다. AES256 KEY IV를 활용해 복호화하여 활용하세요. 자세한 예제는 [도구>wikidocs]에 준비되어 있습니다.
-    pub async fn H0STCNI0(
-        &self,
-        req: H0Stcni0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0STCNI0(&self, req: H0Stcni0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0STCNI0",
             crate::client::KisEnv::Vts => "H0STCNI9",
@@ -302,17 +280,17 @@ impl Common {
     }
 
     /// 국내주식 실시간예상체결 (KRX)
-    /// 
+    ///
     /// - TR_ID: Real=H0STANC0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0STANC0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 실시간예상체결 (KRX) [실시간-041]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 국내주식 실시간예상체결 API입니다.
     ///
@@ -342,10 +320,7 @@ impl Common {
     /// - TR_ID : 등록한 tr_id (ex. H0STCNT0)
     /// - 데이터 건수 : (ex. 001 인 경우 데이터 건수 1건, 004인 경우 데이터 건수 4건)
     /// - 응답 데이터 : 아래 response 데이터 참조 ( ^로 구분됨)
-    pub async fn H0STANC0(
-        &self,
-        req: H0Stanc0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0STANC0(&self, req: H0Stanc0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0STANC0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -354,17 +329,17 @@ impl Common {
     }
 
     /// 국내주식 실시간회원사 (KRX)
-    /// 
+    ///
     /// - TR_ID: Real=H0STMBC0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0STMBC0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 실시간회원사 (KRX) [실시간-047]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     /// 실시간시세(웹소켓) 파이썬 샘플코드는 한국투자증권 Github 참고 부탁드립니다.
@@ -391,10 +366,7 @@ impl Common {
     /// - TR_ID : 등록한 tr_id (ex. H0STCNT0)
     /// - 데이터 건수 : (ex. 001 인 경우 데이터 건수 1건, 004인 경우 데이터 건수 4건)
     /// - 응답 데이터 : 아래 response 데이터 참조 ( ^로 구분됨)
-    pub async fn H0STMBC0(
-        &self,
-        req: H0Stmbc0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0STMBC0(&self, req: H0Stmbc0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0STMBC0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -403,17 +375,17 @@ impl Common {
     }
 
     /// 국내주식 실시간프로그램매매 (KRX)
-    /// 
+    ///
     /// - TR_ID: Real=H0STPGM0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0STPGM0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 실시간프로그램매매 (KRX) [실시간-048]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     /// 실시간시세(웹소켓) 파이썬 샘플코드는 한국투자증권 Github 참고 부탁드립니다.
@@ -440,10 +412,7 @@ impl Common {
     /// - TR_ID : 등록한 tr_id (ex. H0STCNT0)
     /// - 데이터 건수 : (ex. 001 인 경우 데이터 건수 1건, 004인 경우 데이터 건수 4건)
     /// - 응답 데이터 : 아래 response 데이터 참조 ( ^로 구분됨)
-    pub async fn H0STPGM0(
-        &self,
-        req: H0Stpgm0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0STPGM0(&self, req: H0Stpgm0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0STPGM0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -452,17 +421,17 @@ impl Common {
     }
 
     /// 국내주식 장운영정보 (KRX)
-    /// 
+    ///
     /// - TR_ID: Real=H0STMKO0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0STMKO0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 장운영정보 (KRX) [실시간-049]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 국내주식 장운영정보 연결 시, 연결종목의 VI 발동 시와 VI 해제 시에 데이터 수신됩니다.
     ///
@@ -491,10 +460,7 @@ impl Common {
     /// - TR_ID : 등록한 tr_id (ex. H0STCNT0)
     /// - 데이터 건수 : (ex. 001 인 경우 데이터 건수 1건, 004인 경우 데이터 건수 4건)
     /// - 응답 데이터 : 아래 response 데이터 참조 ( ^로 구분됨)
-    pub async fn H0STMKO0(
-        &self,
-        req: H0Stmko0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0STMKO0(&self, req: H0Stmko0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0STMKO0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -503,17 +469,17 @@ impl Common {
     }
 
     /// 국내주식 시간외 실시간호가 (KRX)
-    /// 
+    ///
     /// - TR_ID: Real=H0STOAA0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0STOAA0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 시간외 실시간호가 (KRX) [실시간-025]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 국내주식 시간외 실시간호가 API입니다.
     /// 국내주식 시간외 단일가(16:00~18:00) 시간대에 실시간호가 데이터 확인 가능합니다.
@@ -544,10 +510,7 @@ impl Common {
     /// - TR_ID : 등록한 tr_id (ex. H0STCNT0)
     /// - 데이터 건수 : (ex. 001 인 경우 데이터 건수 1건, 004인 경우 데이터 건수 4건)
     /// - 응답 데이터 : 아래 response 데이터 참조 ( ^로 구분됨)
-    pub async fn H0STOAA0(
-        &self,
-        req: H0Stoaa0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0STOAA0(&self, req: H0Stoaa0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0STOAA0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -556,17 +519,17 @@ impl Common {
     }
 
     /// 국내주식 시간외 실시간체결가 (KRX)
-    /// 
+    ///
     /// - TR_ID: Real=H0STOUP0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0STOUP0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 시간외 실시간체결가 (KRX) [실시간-042]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 국내주식 시간외 실시간체결가 API입니다.
     /// 국내주식 시간외 단일가(16:00~18:00) 시간대에 실시간체결가 데이터 확인 가능합니다.
@@ -597,10 +560,7 @@ impl Common {
     /// - TR_ID : 등록한 tr_id (ex. H0STCNT0)
     /// - 데이터 건수 : (ex. 001 인 경우 데이터 건수 1건, 004인 경우 데이터 건수 4건)
     /// - 응답 데이터 : 아래 response 데이터 참조 ( ^로 구분됨)
-    pub async fn H0STOUP0(
-        &self,
-        req: H0Stoup0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0STOUP0(&self, req: H0Stoup0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0STOUP0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -609,17 +569,17 @@ impl Common {
     }
 
     /// 국내주식 시간외 실시간예상체결 (KRX)
-    /// 
+    ///
     /// - TR_ID: Real=H0STOAC0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0STOAC0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 시간외 실시간예상체결 (KRX) [실시간-024]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 국내주식 시간외 실시간예상체결 API입니다.
     /// 국내주식 시간외 단일가(16:00~18:00) 시간대에 실시간예상체결 데이터 확인 가능합니다.
@@ -650,10 +610,7 @@ impl Common {
     /// - TR_ID : 등록한 tr_id (ex. H0STCNT0)
     /// - 데이터 건수 : (ex. 001 인 경우 데이터 건수 1건, 004인 경우 데이터 건수 4건)
     /// - 응답 데이터 : 아래 response 데이터 참조 ( ^로 구분됨)
-    pub async fn H0STOAC0(
-        &self,
-        req: H0Stoac0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0STOAC0(&self, req: H0Stoac0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0STOAC0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -662,17 +619,17 @@ impl Common {
     }
 
     /// 국내지수 실시간체결
-    /// 
+    ///
     /// - TR_ID: Real=H0UPCNT0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0UPCNT0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내지수 실시간체결 [실시간-026]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     /// 실시간시세(웹소켓) 파이썬 샘플코드는 한국투자증권 Github 참고 부탁드립니다.
@@ -699,10 +656,7 @@ impl Common {
     /// - TR_ID : 등록한 tr_id (ex. H0STCNT0)
     /// - 데이터 건수 : (ex. 001 인 경우 데이터 건수 1건, 004인 경우 데이터 건수 4건)
     /// - 응답 데이터 : 아래 response 데이터 참조 ( ^로 구분됨)
-    pub async fn H0UPCNT0(
-        &self,
-        req: H0Upcnt0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0UPCNT0(&self, req: H0Upcnt0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0UPCNT0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -711,17 +665,17 @@ impl Common {
     }
 
     /// 국내지수 실시간예상체결
-    /// 
+    ///
     /// - TR_ID: Real=H0UPANC0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0UPANC0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내지수 실시간예상체결 [실시간-027]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     /// 실시간시세(웹소켓) 파이썬 샘플코드는 한국투자증권 Github 참고 부탁드립니다.
@@ -748,10 +702,7 @@ impl Common {
     /// - TR_ID : 등록한 tr_id (ex. H0STCNT0)
     /// - 데이터 건수 : (ex. 001 인 경우 데이터 건수 1건, 004인 경우 데이터 건수 4건)
     /// - 응답 데이터 : 아래 response 데이터 참조 ( ^로 구분됨)
-    pub async fn H0UPANC0(
-        &self,
-        req: H0Upanc0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0UPANC0(&self, req: H0Upanc0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0UPANC0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -760,17 +711,17 @@ impl Common {
     }
 
     /// 국내지수 실시간프로그램매매
-    /// 
+    ///
     /// - TR_ID: Real=H0UPPGM0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0UPPGM0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내지수 실시간프로그램매매 [실시간-028]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     /// 실시간시세(웹소켓) 파이썬 샘플코드는 한국투자증권 Github 참고 부탁드립니다.
@@ -797,10 +748,7 @@ impl Common {
     /// - TR_ID : 등록한 tr_id (ex. H0STCNT0)
     /// - 데이터 건수 : (ex. 001 인 경우 데이터 건수 1건, 004인 경우 데이터 건수 4건)
     /// - 응답 데이터 : 아래 response 데이터 참조 ( ^로 구분됨)
-    pub async fn H0UPPGM0(
-        &self,
-        req: H0Uppgm0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0UPPGM0(&self, req: H0Uppgm0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0UPPGM0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -809,17 +757,17 @@ impl Common {
     }
 
     /// ELW 실시간호가
-    /// 
+    ///
     /// - TR_ID: Real=H0EWASP0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0EWASP0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// ELW 실시간호가 [실시간-062]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 실시간호가 API입니다.
     ///
@@ -849,10 +797,7 @@ impl Common {
     /// - TR_ID : 등록한 tr_id (ex. H0STCNT0)
     /// - 데이터 건수 : (ex. 001 인 경우 데이터 건수 1건, 004인 경우 데이터 건수 4건)
     /// - 응답 데이터 : 아래 response 데이터 참조 ( ^로 구분됨)
-    pub async fn H0EWASP0(
-        &self,
-        req: H0Ewasp0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0EWASP0(&self, req: H0Ewasp0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0EWASP0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -861,17 +806,17 @@ impl Common {
     }
 
     /// ELW 실시간체결가
-    /// 
+    ///
     /// - TR_ID: Real=H0EWCNT0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0EWCNT0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// ELW 실시간체결가 [실시간-061]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 실시간체결가 API입니다.
     ///
@@ -901,10 +846,7 @@ impl Common {
     /// - TR_ID : 등록한 tr_id (ex. H0STCNT0)
     /// - 데이터 건수 : (ex. 001 인 경우 데이터 건수 1건, 004인 경우 데이터 건수 4건)
     /// - 응답 데이터 : 아래 response 데이터 참조 ( ^로 구분됨)
-    pub async fn H0EWCNT0(
-        &self,
-        req: H0Ewcnt0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0EWCNT0(&self, req: H0Ewcnt0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0EWCNT0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -913,17 +855,17 @@ impl Common {
     }
 
     /// ELW 실시간예상체결
-    /// 
+    ///
     /// - TR_ID: Real=H0EWANC0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0EWANC0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// ELW 실시간예상체결 [실시간-063]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 실시간예상체결 API입니다.
     ///
@@ -953,10 +895,7 @@ impl Common {
     /// - TR_ID : 등록한 tr_id (ex. H0STCNT0)
     /// - 데이터 건수 : (ex. 001 인 경우 데이터 건수 1건, 004인 경우 데이터 건수 4건)
     /// - 응답 데이터 : 아래 response 데이터 참조 ( ^로 구분됨)
-    pub async fn H0EWANC0(
-        &self,
-        req: H0Ewanc0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0EWANC0(&self, req: H0Ewanc0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0EWANC0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -965,17 +904,17 @@ impl Common {
     }
 
     /// 국내ETF NAV추이
-    /// 
+    ///
     /// - TR_ID: Real=H0STNAV0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0STNAV0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내ETF NAV추이 [실시간-051]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     /// 실시간시세(웹소켓) 파이썬 샘플코드는 한국투자증권 Github 참고 부탁드립니다.
@@ -986,10 +925,7 @@ impl Common {
     ///
     /// 종목코드 마스터파일 파이썬 정제코드는 한국투자증권 Github 참고 부탁드립니다.
     /// https://github.com/koreainvestment/open-trading-api/tree/main/stocks_info
-    pub async fn H0STNAV0(
-        &self,
-        req: H0Stnav0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0STNAV0(&self, req: H0Stnav0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0STNAV0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -998,20 +934,17 @@ impl Common {
     }
 
     /// 국내주식 실시간체결가 (통합)
-    /// 
+    ///
     /// - TR_ID: Real=H0UNCNT0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0UNCNT0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 실시간체결가 (통합)
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    pub async fn H0UNCNT0(
-        &self,
-        req: H0Uncnt0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0UNCNT0(&self, req: H0Uncnt0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0UNCNT0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1020,20 +953,17 @@ impl Common {
     }
 
     /// 국내주식 실시간호가 (통합)
-    /// 
+    ///
     /// - TR_ID: Real=H0UNASP0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0UNASP0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 실시간호가 (통합)
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    pub async fn H0UNASP0(
-        &self,
-        req: H0Unasp0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0UNASP0(&self, req: H0Unasp0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0UNASP0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1042,20 +972,17 @@ impl Common {
     }
 
     /// 국내주식 실시간예상체결 (통합)
-    /// 
+    ///
     /// - TR_ID: Real=H0UNANC0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0UNANC0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 실시간예상체결 (통합)
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    pub async fn H0UNANC0(
-        &self,
-        req: H0Unanc0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0UNANC0(&self, req: H0Unanc0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0UNANC0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1064,20 +991,17 @@ impl Common {
     }
 
     /// 국내주식 실시간회원사 (통합)
-    /// 
+    ///
     /// - TR_ID: Real=H0UNMBC0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0UNMBC0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 실시간회원사 (통합)
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    pub async fn H0UNMBC0(
-        &self,
-        req: H0Unmbc0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0UNMBC0(&self, req: H0Unmbc0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0UNMBC0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1086,20 +1010,17 @@ impl Common {
     }
 
     /// 국내주식 실시간프로그램매매 (통합)
-    /// 
+    ///
     /// - TR_ID: Real=H0UNPGM0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0UNPGM0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 실시간프로그램매매 (통합)
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    pub async fn H0UNPGM0(
-        &self,
-        req: H0Unpgm0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0UNPGM0(&self, req: H0Unpgm0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0UNPGM0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1108,20 +1029,17 @@ impl Common {
     }
 
     /// 국내주식 장운영정보 (통합)
-    /// 
+    ///
     /// - TR_ID: Real=H0UNMKO0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0UNMKO0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 장운영정보 (통합)
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    pub async fn H0UNMKO0(
-        &self,
-        req: H0Unmko0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0UNMKO0(&self, req: H0Unmko0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0UNMKO0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1130,20 +1048,17 @@ impl Common {
     }
 
     /// 국내주식 실시간체결가 (NXT)
-    /// 
+    ///
     /// - TR_ID: Real=H0NXCNT0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0NXCNT0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 실시간체결가 (NXT)
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    pub async fn H0NXCNT0(
-        &self,
-        req: H0Nxcnt0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0NXCNT0(&self, req: H0Nxcnt0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0NXCNT0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1152,20 +1067,17 @@ impl Common {
     }
 
     /// 국내주식 실시간호가 (NXT)
-    /// 
+    ///
     /// - TR_ID: Real=H0NXASP0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0NXASP0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 실시간호가 (NXT)
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    pub async fn H0NXASP0(
-        &self,
-        req: H0Nxasp0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0NXASP0(&self, req: H0Nxasp0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0NXASP0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1174,20 +1086,17 @@ impl Common {
     }
 
     /// 국내주식 실시간예상체결 (NXT)
-    /// 
+    ///
     /// - TR_ID: Real=H0NXANC0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0NXANC0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 실시간예상체결 (NXT)
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    pub async fn H0NXANC0(
-        &self,
-        req: H0Nxanc0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0NXANC0(&self, req: H0Nxanc0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0NXANC0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1196,20 +1105,17 @@ impl Common {
     }
 
     /// 국내주식 실시간회원사 (NXT)
-    /// 
+    ///
     /// - TR_ID: Real=H0NXMBC0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0NXMBC0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 실시간회원사 (NXT)
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    pub async fn H0NXMBC0(
-        &self,
-        req: H0Nxmbc0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0NXMBC0(&self, req: H0Nxmbc0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0NXMBC0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1218,20 +1124,17 @@ impl Common {
     }
 
     /// 국내주식 실시간프로그램매매 (NXT)
-    /// 
+    ///
     /// - TR_ID: Real=H0NXPGM0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0NXPGM0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 실시간프로그램매매 (NXT)
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    pub async fn H0NXPGM0(
-        &self,
-        req: H0Nxpgm0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0NXPGM0(&self, req: H0Nxpgm0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0NXPGM0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1240,20 +1143,17 @@ impl Common {
     }
 
     /// 국내주식 장운영정보 (NXT)
-    /// 
+    ///
     /// - TR_ID: Real=H0NXMKO0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0NXMKO0
-    /// 
+    ///
     /// [국내주식] 실시간시세
     /// 국내주식 장운영정보 (NXT)
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    pub async fn H0NXMKO0(
-        &self,
-        req: H0Nxmko0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0NXMKO0(&self, req: H0Nxmko0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0NXMKO0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1262,17 +1162,17 @@ impl Common {
     }
 
     /// 지수선물 실시간호가
-    /// 
+    ///
     /// - TR_ID: Real=H0IFASP0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0IFASP0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// 지수선물 실시간호가[실시간-011]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ※ 선물옵션 호가 데이터는 0.2초 필터링 옵션이 있습니다.
     /// 필터링 사유는 순간적으로 데이터가 폭증할 경우 서버 뿐만아니라 클라이언트 환경에도 부하를 줄 수 있어 적용된 사항인 점 양해 부탁드립니다.
@@ -1284,10 +1184,7 @@ impl Common {
     ///
     /// 실시간시세(웹소켓) API 사용방법에 대한 자세한 설명은 한국투자증권 Wikidocs 참고 부탁드립니다.
     /// https://wikidocs.net/book/7847 (국내주식 업데이트 완료, 추후 해외주식·국내선물옵션 업데이트 예정)
-    pub async fn H0IFASP0(
-        &self,
-        req: H0Ifasp0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0IFASP0(&self, req: H0Ifasp0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0IFASP0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1296,17 +1193,17 @@ impl Common {
     }
 
     /// 지수선물 실시간체결가
-    /// 
+    ///
     /// - TR_ID: Real=H0IFCNT0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0IFCNT0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// 지수선물 실시간체결가[실시간-010]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     ///
@@ -1318,10 +1215,7 @@ impl Common {
     ///
     /// 종목코드 마스터파일 파이썬 정제코드는 한국투자증권 Github 참고 부탁드립니다.
     /// https://github.com/koreainvestment/open-trading-api/tree/main/stocks_info
-    pub async fn H0IFCNT0(
-        &self,
-        req: H0Ifcnt0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0IFCNT0(&self, req: H0Ifcnt0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0IFCNT0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1330,17 +1224,17 @@ impl Common {
     }
 
     /// 지수옵션 실시간호가
-    /// 
+    ///
     /// - TR_ID: Real=H0IOASP0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0IOASP0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// 지수옵션 실시간호가[실시간-015]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     ///
@@ -1349,10 +1243,7 @@ impl Common {
     ///
     /// 실시간시세(웹소켓) API 사용방법에 대한 자세한 설명은 한국투자증권 Wikidocs 참고 부탁드립니다.
     /// https://wikidocs.net/book/7847 (국내주식 업데이트 완료, 추후 해외주식·국내선물옵션 업데이트 예정)
-    pub async fn H0IOASP0(
-        &self,
-        req: H0Ioasp0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0IOASP0(&self, req: H0Ioasp0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0IOASP0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1361,17 +1252,17 @@ impl Common {
     }
 
     /// 지수옵션 실시간체결가
-    /// 
+    ///
     /// - TR_ID: Real=H0IOCNT0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0IOCNT0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// 지수옵션 실시간체결가[실시간-014]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     ///
@@ -1380,10 +1271,7 @@ impl Common {
     ///
     /// 실시간시세(웹소켓) API 사용방법에 대한 자세한 설명은 한국투자증권 Wikidocs 참고 부탁드립니다.
     /// https://wikidocs.net/book/7847 (국내주식 업데이트 완료, 추후 해외주식·국내선물옵션 업데이트 예정)
-    pub async fn H0IOCNT0(
-        &self,
-        req: H0Iocnt0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0IOCNT0(&self, req: H0Iocnt0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0IOCNT0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1392,17 +1280,17 @@ impl Common {
     }
 
     /// 선물옵션 실시간체결통보
-    /// 
+    ///
     /// - TR_ID: Real=H0IFCNI0 / VTS=H0IFCNI9
     /// - Endpoint: /tryitout/H0IFCNI0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// 선물옵션 실시간체결통보[실시간-012]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     ///
@@ -1411,10 +1299,7 @@ impl Common {
     ///
     /// 실시간시세(웹소켓) API 사용방법에 대한 자세한 설명은 한국투자증권 Wikidocs 참고 부탁드립니다.
     /// https://wikidocs.net/book/7847 (국내주식 업데이트 완료, 추후 해외주식·국내선물옵션 업데이트 예정)
-    pub async fn H0IFCNI0(
-        &self,
-        req: H0Ifcni0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0IFCNI0(&self, req: H0Ifcni0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0IFCNI0",
             crate::client::KisEnv::Vts => "H0IFCNI9",
@@ -1423,24 +1308,21 @@ impl Common {
     }
 
     /// 상품선물 실시간호가
-    /// 
+    ///
     /// - TR_ID: Real=H0CFASP0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0CFASP0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// 상품선물 실시간호가[실시간-023]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ※ 선물옵션 호가 데이터는 0.2초 필터링 옵션이 있습니다.
     /// 필터링 사유는 순간적으로 데이터가 폭증할 경우 서버 뿐만아니라 클라이언트 환경에도 부하를 줄 수 있어 적용된 사항인 점 양해 부탁드립니다.
-    pub async fn H0CFASP0(
-        &self,
-        req: H0Cfasp0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0CFASP0(&self, req: H0Cfasp0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0CFASP0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1449,20 +1331,17 @@ impl Common {
     }
 
     /// 상품선물 실시간체결가
-    /// 
+    ///
     /// - TR_ID: Real=H0CFCNT0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0CFCNT0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// 상품선물 실시간체결가[실시간-022]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    pub async fn H0CFCNT0(
-        &self,
-        req: H0Cfcnt0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0CFCNT0(&self, req: H0Cfcnt0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0CFCNT0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1471,24 +1350,21 @@ impl Common {
     }
 
     /// 주식선물 실시간호가
-    /// 
+    ///
     /// - TR_ID: Real=H0ZFASP0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0ZFASP0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// 주식선물 실시간호가 [실시간-030]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ※ 선물옵션 호가 데이터는 0.2초 필터링 옵션이 있습니다.
     /// 필터링 사유는 순간적으로 데이터가 폭증할 경우 서버 뿐만아니라 클라이언트 환경에도 부하를 줄 수 있어 적용된 사항인 점 양해 부탁드립니다.
-    pub async fn H0ZFASP0(
-        &self,
-        req: H0Zfasp0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0ZFASP0(&self, req: H0Zfasp0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0ZFASP0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1497,20 +1373,17 @@ impl Common {
     }
 
     /// 주식선물 실시간체결가
-    /// 
+    ///
     /// - TR_ID: Real=H0ZFCNT0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0ZFCNT0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// 주식선물 실시간체결가 [실시간-029]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    pub async fn H0ZFCNT0(
-        &self,
-        req: H0Zfcnt0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0ZFCNT0(&self, req: H0Zfcnt0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0ZFCNT0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1519,17 +1392,17 @@ impl Common {
     }
 
     /// 주식선물 실시간예상체결
-    /// 
+    ///
     /// - TR_ID: Real=H0ZFANC0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0ZFANC0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// 주식선물 실시간예상체결 [실시간-031]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     ///
@@ -1538,10 +1411,7 @@ impl Common {
     ///
     /// 실시간시세(웹소켓) API 사용방법에 대한 자세한 설명은 한국투자증권 Wikidocs 참고 부탁드립니다.
     /// https://wikidocs.net/book/7847 (국내주식 업데이트 완료, 추후 해외주식·국내선물옵션 업데이트 예정)
-    pub async fn H0ZFANC0(
-        &self,
-        req: H0Zfanc0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0ZFANC0(&self, req: H0Zfanc0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0ZFANC0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1550,20 +1420,17 @@ impl Common {
     }
 
     /// 주식옵션 실시간호가
-    /// 
+    ///
     /// - TR_ID: Real=H0ZOASP0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0ZOASP0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// 주식옵션 실시간호가 [실시간-045]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    pub async fn H0ZOASP0(
-        &self,
-        req: H0Zoasp0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0ZOASP0(&self, req: H0Zoasp0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0ZOASP0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1572,20 +1439,17 @@ impl Common {
     }
 
     /// 주식옵션 실시간체결가
-    /// 
+    ///
     /// - TR_ID: Real=H0ZOCNT0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0ZOCNT0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// 주식옵션 실시간체결가 [실시간-044]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    pub async fn H0ZOCNT0(
-        &self,
-        req: H0Zocnt0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0ZOCNT0(&self, req: H0Zocnt0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0ZOCNT0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1594,17 +1458,17 @@ impl Common {
     }
 
     /// 주식옵션 실시간예상체결
-    /// 
+    ///
     /// - TR_ID: Real=H0ZOANC0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0ZOANC0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// 주식옵션 실시간예상체결 [실시간-046]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     ///
@@ -1613,10 +1477,7 @@ impl Common {
     ///
     /// 실시간시세(웹소켓) API 사용방법에 대한 자세한 설명은 한국투자증권 Wikidocs 참고 부탁드립니다.
     /// https://wikidocs.net/book/7847 (국내주식 업데이트 완료, 추후 해외주식·국내선물옵션 업데이트 예정)
-    pub async fn H0ZOANC0(
-        &self,
-        req: H0Zoanc0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0ZOANC0(&self, req: H0Zoanc0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0ZOANC0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1625,17 +1486,17 @@ impl Common {
     }
 
     /// KRX야간옵션 실시간호가
-    /// 
+    ///
     /// - TR_ID: Real=H0EUASP0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0EUASP0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// KRX야간옵션 실시간호가 [실시간-033]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     ///
@@ -1647,10 +1508,7 @@ impl Common {
     ///
     /// 종목코드 마스터파일 파이썬 정제코드는 한국투자증권 Github 참고 부탁드립니다.
     /// https://github.com/koreainvestment/open-trading-api/tree/main/stocks_info
-    pub async fn H0EUASP0(
-        &self,
-        req: H0Euasp0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0EUASP0(&self, req: H0Euasp0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0EUASP0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1659,17 +1517,17 @@ impl Common {
     }
 
     /// KRX야간옵션 실시간체결가
-    /// 
+    ///
     /// - TR_ID: Real=H0EUCNT0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0EUCNT0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// KRX야간옵션 실시간체결가 [실시간-032]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     ///
@@ -1681,10 +1539,7 @@ impl Common {
     ///
     /// 종목코드 마스터파일 파이썬 정제코드는 한국투자증권 Github 참고 부탁드립니다.
     /// https://github.com/koreainvestment/open-trading-api/tree/main/stocks_info
-    pub async fn H0EUCNT0(
-        &self,
-        req: H0Eucnt0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0EUCNT0(&self, req: H0Eucnt0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0EUCNT0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1693,17 +1548,17 @@ impl Common {
     }
 
     /// KRX야간옵션실시간예상체결
-    /// 
+    ///
     /// - TR_ID: Real=H0EUANC0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0EUANC0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// KRX야간옵션실시간예상체결 [실시간-034]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     ///
@@ -1715,10 +1570,7 @@ impl Common {
     ///
     /// 종목코드 마스터파일 파이썬 정제코드는 한국투자증권 Github 참고 부탁드립니다.
     /// https://github.com/koreainvestment/open-trading-api/tree/main/stocks_info
-    pub async fn H0EUANC0(
-        &self,
-        req: H0Euanc0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0EUANC0(&self, req: H0Euanc0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0EUANC0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1727,17 +1579,17 @@ impl Common {
     }
 
     /// KRX야간옵션실시간체결통보
-    /// 
+    ///
     /// - TR_ID: Real=H0MFCNI0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0EUCNI0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// KRX야간옵션실시간체결통보 [실시간-067]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     /// 실시간시세(웹소켓) 파이썬 샘플코드는 한국투자증권 Github 참고 부탁드립니다.
@@ -1748,10 +1600,7 @@ impl Common {
     ///
     /// 종목코드 마스터파일 파이썬 정제코드는 한국투자증권 Github 참고 부탁드립니다.
     /// https://github.com/koreainvestment/open-trading-api/tree/main/stocks_info
-    pub async fn H0EUCNI0(
-        &self,
-        req: H0Eucni0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0EUCNI0(&self, req: H0Eucni0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0MFCNI0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1760,17 +1609,17 @@ impl Common {
     }
 
     /// KRX야간선물 실시간호가
-    /// 
+    ///
     /// - TR_ID: Real=H0MFASP0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0MFASP0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// KRX야간선물 실시간호가 [실시간-065]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ※ 선물옵션 호가 데이터는 0.2초 필터링 옵션이 있습니다.
     /// 필터링 사유는 순간적으로 데이터가 폭증할 경우 서버 뿐만아니라 클라이언트 환경에도 부하를 줄 수 있어 적용된 사항인 점 양해 부탁드립니다.
@@ -1785,10 +1634,7 @@ impl Common {
     ///
     /// 종목코드 마스터파일 파이썬 정제코드는 한국투자증권 Github 참고 부탁드립니다.
     /// https://github.com/koreainvestment/open-trading-api/tree/main/stocks_info
-    pub async fn H0MFASP0(
-        &self,
-        req: H0Mfasp0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0MFASP0(&self, req: H0Mfasp0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0MFASP0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1797,17 +1643,17 @@ impl Common {
     }
 
     /// KRX야간선물 실시간종목체결
-    /// 
+    ///
     /// - TR_ID: Real=H0MFCNT0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0MFCNT0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// KRX야간선물 실시간종목체결 [실시간-064]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     ///
@@ -1819,10 +1665,7 @@ impl Common {
     ///
     /// 종목코드 마스터파일 파이썬 정제코드는 한국투자증권 Github 참고 부탁드립니다.
     /// https://github.com/koreainvestment/open-trading-api/tree/main/stocks_info
-    pub async fn H0MFCNT0(
-        &self,
-        req: H0Mfcnt0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0MFCNT0(&self, req: H0Mfcnt0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0MFCNT0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1831,17 +1674,17 @@ impl Common {
     }
 
     /// KRX야간선물 실시간체결통보
-    /// 
+    ///
     /// - TR_ID: Real=H0MFCNI0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0MFCNI0
-    /// 
+    ///
     /// [국내선물옵션] 실시간시세
     /// KRX야간선물 실시간체결통보 [실시간-066]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     ///
@@ -1853,10 +1696,7 @@ impl Common {
     ///
     /// 종목코드 마스터파일 파이썬 정제코드는 한국투자증권 Github 참고 부탁드립니다.
     /// https://github.com/koreainvestment/open-trading-api/tree/main/stocks_info
-    pub async fn H0MFCNI0(
-        &self,
-        req: H0Mfcni0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0MFCNI0(&self, req: H0Mfcni0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0MFCNI0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1865,17 +1705,17 @@ impl Common {
     }
 
     /// 해외주식 실시간호가
-    /// 
+    ///
     /// - TR_ID: Real=HDFSASP0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/HDFSASP0
-    /// 
+    ///
     /// [해외주식] 실시간시세
     /// 해외주식 실시간호가[실시간-021]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 실시간호가 API를 이용하여 미국 실시간 10호가(매수/매도) 시세가 무료로 제공됩니다. (미국은 유료시세 제공 X)
     ///
@@ -1910,10 +1750,7 @@ impl Common {
     /// ■ 무료 실시간 시세 서비스의 시가, 저가, 고가, 종가는 유료 실시간 시세 서비스와 다를 수 있으며,
     /// 종목별 과거 데이터(거래량, 시가, 종가, 고가, 차트 데이터 등)는 장 종료 후(오후 12시경) 유료 실시간 시세 서비스 데이터와 동일하게 업데이트됩니다.
     /// (출처: 한국투자증권 외화증권 거래설명서 - https://securities.koreainvestment.com/main/customer/guide/Guide.jsp?&cmd=TF04ag010002¤tPage=1&num=64)
-    pub async fn HDFSASP0(
-        &self,
-        req: Hdfsasp0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn HDFSASP0(&self, req: Hdfsasp0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HDFSASP0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1922,17 +1759,17 @@ impl Common {
     }
 
     /// 해외주식 지연호가(아시아)
-    /// 
+    ///
     /// - TR_ID: Real=HDFSASP1 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/HDFSASP1
-    /// 
+    ///
     /// [해외주식] 실시간시세
     /// 해외주식 지연호가(아시아)[실시간-008]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 지연호가(아시아)의 경우 아시아 무료시세(지연호가)가 제공됩니다.
     ///
@@ -1948,10 +1785,7 @@ impl Common {
     ///
     /// 실시간시세(웹소켓) API 사용방법에 대한 자세한 설명은 한국투자증권 Wikidocs 참고 부탁드립니다.
     /// https://wikidocs.net/book/7847 (국내주식 업데이트 완료, 추후 해외주식·국내선물옵션 업데이트 예정)
-    pub async fn HDFSASP1(
-        &self,
-        req: Hdfsasp1Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn HDFSASP1(&self, req: Hdfsasp1Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HDFSASP1",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -1960,17 +1794,17 @@ impl Common {
     }
 
     /// 해외주식 실시간지연체결가
-    /// 
+    ///
     /// - TR_ID: Real=HDFSCNT0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/HDFSCNT0
-    /// 
+    ///
     /// [해외주식] 실시간시세
     /// 해외주식 실시간지연체결가[실시간-007]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 실시간지연체결가의 경우 기본적으로 무료시세(지연체결가)가 제공되며,
     /// 아시아 국가의 경우 HTS(efriend Plus) [7781] 시세신청(실시간) 화면에서 유료 서비스 신청 시 API로도 유료시세(실시간체결가)를 받아보실 수 있습니다. (24.11.29 반영)
@@ -1991,10 +1825,7 @@ impl Common {
     ///
     /// 종목코드 마스터파일 파이썬 정제코드는 한국투자증권 Github 참고 부탁드립니다.
     /// https://github.com/koreainvestment/open-trading-api/tree/main/stocks_info
-    pub async fn HDFSCNT0(
-        &self,
-        req: Hdfscnt0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn HDFSCNT0(&self, req: Hdfscnt0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HDFSCNT0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -2003,17 +1834,17 @@ impl Common {
     }
 
     /// 해외주식 실시간체결통보
-    /// 
+    ///
     /// - TR_ID: Real=H0GSCNI0 / VTS=H0GSCNI9
     /// - Endpoint: /tryitout/H0GSCNI0
-    /// 
+    ///
     /// [해외주식] 실시간시세
     /// 해외주식 실시간체결통보[실시간-009]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     ///
@@ -2022,10 +1853,7 @@ impl Common {
     ///
     /// 실시간시세(웹소켓) API 사용방법에 대한 자세한 설명은 한국투자증권 Wikidocs 참고 부탁드립니다.
     /// https://wikidocs.net/book/7847 (국내주식 업데이트 완료, 추후 해외주식·국내선물옵션 업데이트 예정)
-    pub async fn H0GSCNI0(
-        &self,
-        req: H0Gscni0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0GSCNI0(&self, req: H0Gscni0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0GSCNI0",
             crate::client::KisEnv::Vts => "H0GSCNI9",
@@ -2034,17 +1862,17 @@ impl Common {
     }
 
     /// 해외선물옵션 실시간체결가
-    /// 
+    ///
     /// - TR_ID: Real=HDFFF020 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/HDFFF020
-    /// 
+    ///
     /// [해외선물옵션]실시간시세
     /// 해외선물옵션 실시간체결가[실시간-017]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ※ CME, SGX 실시간시세 유료시세 신청 필수 (포럼 > FAQ > 해외선물옵션 API 유료시세 신청방법(CME, SGX 거래소))
     /// - CME, SGX 거래소 실시간시세는 유료시세 신청 후 이용하시는 모든 계좌에 대해서 접근토큰발급 API 호출하셔야 하며,
@@ -2078,10 +1906,7 @@ impl Common {
     ///
     /// 종목코드 마스터파일 파이썬 정제코드는 한국투자증권 Github 참고 부탁드립니다.
     /// https://github.com/koreainvestment/open-trading-api/tree/main/stocks_info
-    pub async fn HDFFF020(
-        &self,
-        req: Hdfff020Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn HDFFF020(&self, req: Hdfff020Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HDFFF020",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -2090,17 +1915,17 @@ impl Common {
     }
 
     /// 해외선물옵션 실시간호가
-    /// 
+    ///
     /// - TR_ID: Real=HDFFF010 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/HDFFF010
-    /// 
+    ///
     /// [해외선물옵션]실시간시세
     /// 해외선물옵션 실시간호가[실시간-018]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ※ CME, SGX 실시간시세 유료시세 신청 필수 (포럼 > FAQ > 해외선물옵션 API 유료시세 신청방법(CME, SGX 거래소))
     /// - CME, SGX 거래소 실시간시세는 유료시세 신청 후 이용하시는 모든 계좌에 대해서 접근토큰발급 API 호출하셔야 하며,
@@ -2133,10 +1958,7 @@ impl Common {
     ///
     /// 종목코드 마스터파일 파이썬 정제코드는 한국투자증권 Github 참고 부탁드립니다.
     /// https://github.com/koreainvestment/open-trading-api/tree/main/stocks_info
-    pub async fn HDFFF010(
-        &self,
-        req: Hdfff010Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn HDFFF010(&self, req: Hdfff010Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HDFFF010",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -2145,17 +1967,17 @@ impl Common {
     }
 
     /// 해외선물옵션 실시간주문내역통보
-    /// 
+    ///
     /// - TR_ID: Real=HDFFF1C0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/HDFFF1C0
-    /// 
+    ///
     /// [해외선물옵션]실시간시세
     /// 해외선물옵션 실시간주문내역통보[실시간-019]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// [참고자료]
     ///
@@ -2167,10 +1989,7 @@ impl Common {
     ///
     /// 종목코드 마스터파일 파이썬 정제코드는 한국투자증권 Github 참고 부탁드립니다.
     /// https://github.com/koreainvestment/open-trading-api/tree/main/stocks_info
-    pub async fn HDFFF1C0(
-        &self,
-        req: Hdfff1C0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn HDFFF1C0(&self, req: Hdfff1C0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HDFFF1C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -2179,20 +1998,17 @@ impl Common {
     }
 
     /// 해외선물옵션 실시간체결내역통보
-    /// 
+    ///
     /// - TR_ID: Real=HDFFF2C0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/HDFFF2C0
-    /// 
+    ///
     /// [해외선물옵션]실시간시세
     /// 해외선물옵션 실시간체결내역통보[실시간-020]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    pub async fn HDFFF2C0(
-        &self,
-        req: Hdfff2C0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn HDFFF2C0(&self, req: Hdfff2C0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HDFFF2C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -2201,17 +2017,17 @@ impl Common {
     }
 
     /// 일반채권 실시간체결가
-    /// 
+    ///
     /// - TR_ID: Real=H0BJCNT0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0BJCNT0
-    /// 
+    ///
     /// [장내채권] 실시간시세
     /// 일반채권 실시간체결가 [실시간-052]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 일반채권 실시간체결가 API입니다.
     ///
@@ -2239,10 +2055,7 @@ impl Common {
     /// - TR_ID : 등록한 tr_id (ex. H0STCNT0)
     /// - 데이터 건수 : (ex. 001 인 경우 데이터 건수 1건, 004인 경우 데이터 건수 4건)
     /// - 응답 데이터 : 아래 response 데이터 참조 ( ^로 구분됨)
-    pub async fn H0BJCNT0(
-        &self,
-        req: H0Bjcnt0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0BJCNT0(&self, req: H0Bjcnt0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0BJCNT0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -2251,17 +2064,17 @@ impl Common {
     }
 
     /// 일반채권 실시간호가
-    /// 
+    ///
     /// - TR_ID: Real=H0BJCNT0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0BJASP0
-    /// 
+    ///
     /// [장내채권] 실시간시세
     /// 일반채권 실시간호가 [실시간-053]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 일반채권 실시간호가 API입니다.
     ///
@@ -2289,10 +2102,7 @@ impl Common {
     /// - TR_ID : 등록한 tr_id (ex. H0STCNT0)
     /// - 데이터 건수 : (ex. 001 인 경우 데이터 건수 1건, 004인 경우 데이터 건수 4건)
     /// - 응답 데이터 : 아래 response 데이터 참조 ( ^로 구분됨)
-    pub async fn H0BJASP0(
-        &self,
-        req: H0Bjasp0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0BJASP0(&self, req: H0Bjasp0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0BJCNT0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -2301,17 +2111,17 @@ impl Common {
     }
 
     /// 채권지수 실시간체결가
-    /// 
+    ///
     /// - TR_ID: Real=H0BICNT0 / VTS=모의투자 미지원
     /// - Endpoint: /tryitout/H0BICNT0
-    /// 
+    ///
     /// [장내채권] 실시간시세
     /// 채권지수 실시간체결가 [실시간-060]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 채권지수 실시간체결가 API입니다.
     ///
@@ -2339,26 +2149,22 @@ impl Common {
     /// - TR_ID : 등록한 tr_id (ex. H0STCNT0)
     /// - 데이터 건수 : (ex. 001 인 경우 데이터 건수 1건, 004인 경우 데이터 건수 4건)
     /// - 응답 데이터 : 아래 response 데이터 참조 ( ^로 구분됨)
-    pub async fn H0BICNT0(
-        &self,
-        req: H0Bicnt0Request,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn H0BICNT0(&self, req: H0Bicnt0Request) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "H0BICNT0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0.post("/tryitout/H0BICNT0", tr_id, req).await
     }
-
 }
 
 #[allow(non_snake_case)]
 impl Quotations {
     /// ETF/ETN 현재가
-    /// 
+    ///
     /// - TR_ID: Real=FHPST02400000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/etfetn/v1/quotations/inquire-price
-    /// 
+    ///
     /// [국내주식] 기본시세
     /// ETF/ETN 현재가[v1_국내주식-068]
     /// stck_prpr
@@ -2421,7 +2227,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ETF/ETN 현재가 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0240] ETF/ETN 현재가 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -2433,14 +2239,16 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPST02400000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/etfetn/v1/quotations/inquire-price", tr_id, req).await
+        self.0
+            .get("/uapi/etfetn/v1/quotations/inquire-price", tr_id, req)
+            .await
     }
 
     /// ETF 구성종목시세
-    /// 
+    ///
     /// - TR_ID: Real=FHKST121600C0 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/etfetn/v1/quotations/inquire-component-stock-price
-    /// 
+    ///
     /// [국내주식] 기본시세
     /// ETF 구성종목시세[국내주식-073]
     /// stck_prpr
@@ -2477,7 +2285,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ETF 구성종목시세 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0245] ETF/ETN 구성종목시세 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -2489,14 +2297,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHKST121600C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/etfetn/v1/quotations/inquire-component-stock-price", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/etfetn/v1/quotations/inquire-component-stock-price",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// NAV 비교추이(종목)
-    /// 
+    ///
     /// - TR_ID: Real=FHPST02440000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/etfetn/v1/quotations/nav-comparison-trend
-    /// 
+    ///
     /// [국내주식] 기본시세
     /// NAV 비교추이(종목)[v1_국내주식-069]
     /// stck_prpr
@@ -2522,7 +2336,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// NAV 비교추이(종목) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0244] ETF/ETN 비교추이(NAV/IIV) 좌측 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -2534,14 +2348,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPST02440000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/etfetn/v1/quotations/nav-comparison-trend", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/etfetn/v1/quotations/nav-comparison-trend",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// NAV 비교추이(일)
-    /// 
+    ///
     /// - TR_ID: Real=FHPST02440200 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/etfetn/v1/quotations/nav-comparison-daily-trend
-    /// 
+    ///
     /// [국내주식] 기본시세
     /// NAV 비교추이(일)[v1_국내주식-071]
     /// stck_bsop_date
@@ -2559,7 +2379,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// NAV 비교추이(일) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0244] ETF/ETN 비교추이(NAV/IIV) 좌측 화면 "일별" 비교추이 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -2572,14 +2392,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPST02440200",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/etfetn/v1/quotations/nav-comparison-daily-trend", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/etfetn/v1/quotations/nav-comparison-daily-trend",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// NAV 비교추이(분)
-    /// 
+    ///
     /// - TR_ID: Real=FHPST02440100 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/etfetn/v1/quotations/nav-comparison-time-trend
-    /// 
+    ///
     /// [국내주식] 기본시세
     /// NAV 비교추이(분)[v1_국내주식-070]
     /// bsop_hour
@@ -2597,7 +2423,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// NAV 비교추이(분) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0244] ETF/ETN 비교추이(NAV/IIV) 좌측 화면 "분별" 비교추이 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -2610,14 +2436,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPST02440100",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/etfetn/v1/quotations/nav-comparison-time-trend", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/etfetn/v1/quotations/nav-comparison-time-trend",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// ELW 신규상장종목
-    /// 
+    ///
     /// - TR_ID: Real=FHKEW154800C0 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/quotations/newly-listed
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 신규상장종목 [국내주식-181]
     /// stck_lstn_date
@@ -2632,7 +2464,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 신규상장종목 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0297] ELW 신규상장종목 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -2644,14 +2476,16 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHKEW154800C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/quotations/newly-listed", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/quotations/newly-listed", tr_id, req)
+            .await
     }
 
     /// ELW 기초자산별 종목시세
-    /// 
+    ///
     /// - TR_ID: Real=FHKEW154101C0 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/quotations/udrl-asset-price
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 기초자산별 종목시세 [국내주식-186]
     /// elw_shrn_iscd
@@ -2680,7 +2514,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 기초자산별 종목시세  API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0288] ELW 기초자산별 ELW 시세 화면의 "우측 기초자산별 종목 리스트" 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -2692,14 +2526,16 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHKEW154101C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/quotations/udrl-asset-price", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/quotations/udrl-asset-price", tr_id, req)
+            .await
     }
 
     /// ELW 종목검색
-    /// 
+    ///
     /// - TR_ID: Real=FHKEW15100000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/quotations/cond-search
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 종목검색 [국내주식-166]
     /// bond_shrn_iscd
@@ -2745,27 +2581,26 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 종목검색 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0291] ELW 종목검색 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     /// 한 번의 호출에 최대 100건까지 확인 가능합니다.
-    pub async fn cond_search(
-        &self,
-        req: CondSearchRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn cond_search(&self, req: CondSearchRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKEW15100000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/quotations/cond-search", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/quotations/cond-search", tr_id, req)
+            .await
     }
 
     /// ELW 기초자산 목록조회
-    /// 
+    ///
     /// - TR_ID: Real=FHKEW154100C0 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/quotations/udrl-asset-list
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 기초자산 목록조회 [국내주식-185]
     /// unas_shrn_iscd
@@ -2778,7 +2613,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 기초자산 목록조회 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0288] ELW 기초자산별 ELW 시세 화면 의 "왼쪽 기초자산 목록" 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -2790,14 +2625,16 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHKEW154100C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/quotations/udrl-asset-list", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/quotations/udrl-asset-list", tr_id, req)
+            .await
     }
 
     /// ELW 비교대상종목조회
-    /// 
+    ///
     /// - TR_ID: Real=FHKEW151701C0 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/quotations/compare-stocks
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 비교대상종목조회 [국내주식-183]
     /// elw_shrn_iscd
@@ -2806,7 +2643,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 비교대상종목조회 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0288] ELW 기초자산별 ELW 시세의 좌측 화면 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -2818,14 +2655,16 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHKEW151701C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/quotations/compare-stocks", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/quotations/compare-stocks", tr_id, req)
+            .await
     }
 
     /// ELW LP매매추이
-    /// 
+    ///
     /// - TR_ID: Real=FHPEW03760000 / VTS=
     /// - Endpoint: /uapi/elw/v1/quotations/lp-trade-trend
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW LP매매추이 [국내주식-182]
     /// elw_prpr
@@ -2857,7 +2696,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW LP매매추이 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0376] ELW LP매매추이 화면 의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -2869,14 +2708,16 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPEW03760000",
             crate::client::KisEnv::Vts => "",
         };
-        self.0.get("/uapi/elw/v1/quotations/lp-trade-trend", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/quotations/lp-trade-trend", tr_id, req)
+            .await
     }
 
     /// ELW 투자지표추이(체결)
-    /// 
+    ///
     /// - TR_ID: Real=FHPEW02740100 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/quotations/indicator-trend-ccnl
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 투자지표추이(체결) [국내주식-172]
     /// stck_cntg_hour
@@ -2893,7 +2734,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 투자지표추이(체결) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0274] ELW 투자지표추이 화면에서 "시간별 비교추이" 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -2905,14 +2746,16 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPEW02740100",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/quotations/indicator-trend-ccnl", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/quotations/indicator-trend-ccnl", tr_id, req)
+            .await
     }
 
     /// ELW 투자지표추이(분별)
-    /// 
+    ///
     /// - TR_ID: Real=FHPEW02740300 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/quotations/indicator-trend-minute
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 투자지표추이(분별) [국내주식-174]
     /// stck_bsop_date
@@ -2930,7 +2773,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 투자지표추이(분별) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0274] ELW 투자지표추이 화면 데이터의 "분별 비교추이" 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -2942,14 +2785,16 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPEW02740300",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/quotations/indicator-trend-minute", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/quotations/indicator-trend-minute", tr_id, req)
+            .await
     }
 
     /// ELW 투자지표추이(일별)
-    /// 
+    ///
     /// - TR_ID: Real=FHPEW02740200 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/quotations/indicator-trend-daily
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 투자지표추이(일별) [국내주식-173]
     /// stck_bsop_date
@@ -2969,7 +2814,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 투자지표추이(일별) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0274] ELW 투자지표추이 화면에서 "일자별 비교추이" 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -2981,14 +2826,16 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPEW02740200",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/quotations/indicator-trend-daily", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/quotations/indicator-trend-daily", tr_id, req)
+            .await
     }
 
     /// ELW 변동성 추이(틱)
-    /// 
+    ///
     /// - TR_ID: Real=FHPEW02840400 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/quotations/volatility-trend-tick
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 변동성 추이(틱) [국내주식-180]
     /// bsop_date
@@ -2999,7 +2846,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 변동성 추이(틱) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0284] ELW 변동성 추이 화면의 "틱 차트" 변동성 추이 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -3011,14 +2858,16 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPEW02840400",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/quotations/volatility-trend-tick", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/quotations/volatility-trend-tick", tr_id, req)
+            .await
     }
 
     /// ELW 변동성추이(체결)
-    /// 
+    ///
     /// - TR_ID: Real=FHPEW02840100 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/quotations/volatility-trend-ccnl
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 변동성추이(체결) [국내주식-177]
     /// stck_cntg_hour
@@ -3032,7 +2881,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 변동성 추이(체결) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0284] ELW 변동성 추이 화면의 "시간별" 변동성 추이 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -3044,14 +2893,16 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPEW02840100",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/quotations/volatility-trend-ccnl", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/quotations/volatility-trend-ccnl", tr_id, req)
+            .await
     }
 
     /// ELW 변동성 추이(일별)
-    /// 
+    ///
     /// - TR_ID: Real=FHPEW02840200 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/quotations/volatility-trend-daily
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 변동성 추이(일별) [국내주식-178]
     /// stck_bsop_date
@@ -3073,7 +2924,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 변동성 추이(일별) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0284] ELW 변동성 추이 화면의 "일별" 변동성 추이 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -3085,14 +2936,16 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPEW02840200",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/quotations/volatility-trend-daily", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/quotations/volatility-trend-daily", tr_id, req)
+            .await
     }
 
     /// ELW 민감도 추이(체결)
-    /// 
+    ///
     /// - TR_ID: Real=FHPEW02830100 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/quotations/sensitivity-trend-ccnl
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 민감도 추이(체결) [국내주식-175]
     /// stck_cntg_hour
@@ -3106,7 +2959,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 민감도 추이(체결) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0283] ELW 민감도 추이 화면 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -3118,14 +2971,16 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPEW02830100",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/quotations/sensitivity-trend-ccnl", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/quotations/sensitivity-trend-ccnl", tr_id, req)
+            .await
     }
 
     /// ELW 변동성 추이(분별)
-    /// 
+    ///
     /// - TR_ID: Real=FHPEW02840300 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/quotations/volatility-trend-minute
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 변동성 추이(분별) [국내주식-179]
     /// stck_bsop_date
@@ -3140,7 +2995,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 변동성 추이(분별) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0284] ELW 변동성 추이 화면의 "분별" 변동성 추이 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -3152,14 +3007,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPEW02840300",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/quotations/volatility-trend-minute", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/elw/v1/quotations/volatility-trend-minute",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// ELW 민감도 추이(일별)
-    /// 
+    ///
     /// - TR_ID: Real=FHPEW02830200 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/quotations/sensitivity-trend-daily
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 민감도 추이(일별) [국내주식-176]
     /// stck_bsop_date
@@ -3173,7 +3034,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 민감도 추이(일별) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0283] ELW 민감도 추이 화면의 "일자별" 민감도추이 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -3185,14 +3046,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPEW02830200",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/quotations/sensitivity-trend-daily", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/elw/v1/quotations/sensitivity-trend-daily",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// ELW 만기예정/만기종목
-    /// 
+    ///
     /// - TR_ID: Real=FHKEW154700C0 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/quotations/expiration-stocks
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 만기예정/만기종목 [국내주식-184]
     /// elw_shrn_iscd
@@ -3219,7 +3086,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 만기예정/만기종목 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0290] ELW 만기예정/만기종목 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -3233,14 +3100,16 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHKEW154700C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/quotations/expiration-stocks", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/quotations/expiration-stocks", tr_id, req)
+            .await
     }
 
     /// 선물옵션 증거금률
-    /// 
+    ///
     /// - TR_ID: Real=TTTO6032R / VTS=미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/margin-rate
-    /// 
+    ///
     /// [국내선물옵션] 주문/계좌
     /// 선물옵션 증거금률
     /// bast_id
@@ -3254,28 +3123,31 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ※ 승수, 계약당 선물 증거금은 최근월물 기준으로 표기되며, 월물에 따라 상이할 수 있습니다.
     /// ※ 계약당 선물 증거금은 선물 1계약 기준 신규 주문증거금이며 스프레드 증거금은 조회되지 않습니다.
     /// ※ 2023.05.24일부터 조회 가능하며, 익영업일 기준 증거금은 17:00~18:00시에 조회됩니다.
     /// ※ 데이터는 하루에 한 번 고정된 이후 데이터 변동이 없으므로  조회가 제한되는 점 이용에 참고 부탁드립니다.
-    pub async fn margin_rate(
-        &self,
-        req: MarginRateRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn margin_rate(&self, req: MarginRateRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTO6032R",
             crate::client::KisEnv::Vts => "미지원",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/quotations/margin-rate", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/quotations/margin-rate",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 선물옵션 시세
-    /// 
+    ///
     /// - TR_ID: Real=FHMIF10000000 / VTS=FHMIF10000000
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/inquire-price
-    /// 
+    ///
     /// [국내선물옵션] 기본시세
     /// 선물옵션 시세[v1_국내선물-006]
     /// hts_kor_isnm
@@ -3321,7 +3193,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 선물옵션 시세 API입니다.
     ///
@@ -3335,14 +3207,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHMIF10000000",
             crate::client::KisEnv::Vts => "FHMIF10000000",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/quotations/inquire-price", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/quotations/inquire-price",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 선물옵션 시세호가
-    /// 
+    ///
     /// - TR_ID: Real=FHMIF10010000 / VTS=FHMIF10010000
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/inquire-asking-price
-    /// 
+    ///
     /// [국내선물옵션] 기본시세
     /// 선물옵션 시세호가[v1_국내선물-007]
     /// hts_kor_isnm
@@ -3392,7 +3270,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 선물옵션 시세호가 API입니다.
     pub async fn inquire_asking_price(
@@ -3403,21 +3281,27 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHMIF10010000",
             crate::client::KisEnv::Vts => "FHMIF10010000",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/quotations/inquire-asking-price", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/quotations/inquire-asking-price",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 선물옵션기간별시세(일/주/월/년)
-    /// 
+    ///
     /// - TR_ID: Real=FHKIF03020100 / VTS=FHKIF03020100
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/inquire-daily-fuopchartprice
-    /// 
+    ///
     /// [국내선물옵션] 기본시세
     /// 선물옵션기간별시세(일/주/월/년)[v1_국내선물-008]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// (지수)선물옵션 기간별시세 데이터(일/주/월/년) 조회 (최대 100건 조회)
     /// 실전계좌의 경우, 한 번의 호출에 최대 100건까지 확인 가능하며, 이후의 값은 연속조회를 통해 확인하실 수 있습니다.
@@ -3430,14 +3314,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHKIF03020100",
             crate::client::KisEnv::Vts => "FHKIF03020100",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/quotations/inquire-daily-fuopchartprice", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/quotations/inquire-daily-fuopchartprice",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 선물옵션 분봉조회
-    /// 
+    ///
     /// - TR_ID: Real=FHKIF03020200 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/inquire-time-fuopchartprice
-    /// 
+    ///
     /// [국내선물옵션] 기본시세
     /// 선물옵션 분봉조회[v1_국내선물-012]
     /// futs_prdy_vrss
@@ -3481,7 +3371,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 선물옵션 분봉조회 API입니다.
     /// 실전계좌의 경우, 한 번의 호출에 최대 102건까지 확인 가능하며,
@@ -3494,14 +3384,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHKIF03020200",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/quotations/inquire-time-fuopchartprice", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/quotations/inquire-time-fuopchartprice",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 국내옵션전광판_옵션월물리스트
-    /// 
+    ///
     /// - TR_ID: Real=FHPIO056104C0 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/display-board-option-list
-    /// 
+    ///
     /// [국내선물옵션] 기본시세
     /// 국내옵션전광판_옵션월물리스트[국내선물-020]
     /// mtrt_yymm_code
@@ -3510,7 +3406,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 국내업종 국내옵션전광판_옵션월물리스트 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0503] 선물옵션 종합시세(Ⅰ) 화면의 "월물리스트 목록 확인" 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -3522,14 +3418,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPIO056104C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/quotations/display-board-option-list", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/quotations/display-board-option-list",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 국내선물 기초자산 시세
-    /// 
+    ///
     /// - TR_ID: Real=FHPIF05030000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/display-board-top
-    /// 
+    ///
     /// [국내선물옵션] 기본시세
     /// 국내선물 기초자산 시세[국내선물-021]
     /// unas_prpr
@@ -3547,7 +3449,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 국내선물 기초자산 시세 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0503] 선물옵션 종합시세(Ⅰ) 화면의 "상단 바" 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -3559,14 +3461,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPIF05030000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/quotations/display-board-top", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/quotations/display-board-top",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 국내옵션전광판_콜풋
-    /// 
+    ///
     /// - TR_ID: Real=FHPIF05030100 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/display-board-callput
-    /// 
+    ///
     /// [국내선물옵션] 기본시세
     /// 국내옵션전광판_콜풋[국내선물-022]
     /// unch_prpr
@@ -3641,7 +3549,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 국내옵션전광판_콜풋 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0503] 선물옵션 종합시세(Ⅰ) 화면의 "중앙" 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -3656,14 +3564,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPIF05030100",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/quotations/display-board-callput", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/quotations/display-board-callput",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 국내옵션전광판_선물
-    /// 
+    ///
     /// - TR_ID: Real=FHPIF05030200 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/display-board-futures
-    /// 
+    ///
     /// [국내선물옵션] 기본시세
     /// 국내옵션전광판_선물[국내선물-023]
     /// futs_shrn_iscd
@@ -3690,7 +3604,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 국내옵션전광판_선물 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0503] 선물옵션 종합시세(Ⅰ) 화면의 "하단" 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -3702,14 +3616,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPIF05030200",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/quotations/display-board-futures", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/quotations/display-board-futures",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 선물옵션 일중예상체결추이
-    /// 
+    ///
     /// - TR_ID: Real=FHPIF05110100 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/exp-price-trend
-    /// 
+    ///
     /// [국내선물옵션] 기본시세
     /// 선물옵션 일중예상체결추이[국내선물-018]
     /// hts_kor_isnm
@@ -3727,7 +3647,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 선물옵션 일중예상체결추이 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0548] 선물옵션 예상체결추이 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -3739,14 +3659,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHPIF05110100",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/quotations/exp-price-trend", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/quotations/exp-price-trend",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외주식 현재가상세
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76200200 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-price/v1/quotations/price-detail
-    /// 
+    ///
     /// [해외주식] 기본시세
     /// 해외주식 현재가상세[v1_해외주식-029]
     /// t_xprc
@@ -3768,7 +3694,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 현재가상세 API입니다.
     ///
@@ -3795,14 +3721,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFS76200200",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-price/v1/quotations/price-detail", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-price/v1/quotations/price-detail",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외주식 현재가 호가
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76200100 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-price/v1/quotations/inquire-asking-price
-    /// 
+    ///
     /// [해외주식] 기본시세
     /// 해외주식 현재가 호가 [해외주식-033]
     /// rclose
@@ -3816,7 +3748,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 현재가 호가 API입니다.
     /// 미국 거래소는 10호가, 그 외 국가 거래소는 1호가만 제공됩니다.
@@ -3843,21 +3775,27 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFS76200100",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-price/v1/quotations/inquire-asking-price", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-price/v1/quotations/inquire-asking-price",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외주식 현재체결가
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS00000300 / VTS=HHDFS00000300
     /// - Endpoint: /uapi/overseas-price/v1/quotations/price
-    /// 
+    ///
     /// [해외주식] 기본시세
     /// 해외주식 현재체결가[v1_해외주식-009]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식종목의 현재체결가를 확인하는 API 입니다.
     ///
@@ -3874,29 +3812,28 @@ impl Quotations {
     /// ■ 무료 실시간 시세 서비스는 유료 실시간 시세 서비스 대비 평균 50% 수준에 해당하는 정보이므로 현재가/호가/순간체결량/차트 등에서 일시적·부분적 차이가 있을 수 있습니다.
     /// ■ 무료 실시간 시세 서비스의 시가, 저가, 고가, 종가는 타 매체의 유료 실시간 시세 서비스와 다를 수 있으며, 이로 인해 발생하는 손실에 대해서 당사가 책임지지 않습니다.
     /// 이용에 유의 부탁드립니다.
-    pub async fn price(
-        &self,
-        req: PriceRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn price(&self, req: PriceRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHDFS00000300",
             crate::client::KisEnv::Vts => "HHDFS00000300",
         };
-        self.0.get("/uapi/overseas-price/v1/quotations/price", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-price/v1/quotations/price", tr_id, req)
+            .await
     }
 
     /// 해외주식 체결추이
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76200300 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-price/v1/quotations/inquire-ccnl
-    /// 
+    ///
     /// [해외주식] 기본시세
     /// 해외주식 체결추이[해외주식-037]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 체결추이 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7625] 해외주식 체결추이 화면 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -3908,21 +3845,27 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFS76200300",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-price/v1/quotations/inquire-ccnl", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-price/v1/quotations/inquire-ccnl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외주식분봉조회
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76950200 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-price/v1/quotations/inquire-time-itemchartprice
-    /// 
+    ///
     /// [해외주식] 기본시세
     /// 해외주식분봉조회[v1_해외주식-030]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식분봉조회 API입니다. 실전계좌의 경우, 한 번의 호출에 최근 120건까지 확인 가능합니다.
     /// NEXT 및 KEYB 값을 사용하여 데이터를 계속해서 다음 조회할 수 있으며, 최대 다음조회 가능 기간은 약 1개월입니다.
@@ -3969,14 +3912,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFS76950200",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-price/v1/quotations/inquire-time-itemchartprice", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-price/v1/quotations/inquire-time-itemchartprice",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외지수분봉조회
-    /// 
+    ///
     /// - TR_ID: Real=FHKST03030200 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-price/v1/quotations/inquire-time-indexchartprice
-    /// 
+    ///
     /// [해외주식] 기본시세
     /// 해외지수분봉조회[v1_해외주식-031]
     /// ovrs_nmix_prdy_vrss
@@ -4001,7 +3950,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외지수분봉조회 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0303] 해외지수 종합차트 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -4014,21 +3963,27 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHKST03030200",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-price/v1/quotations/inquire-time-indexchartprice", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-price/v1/quotations/inquire-time-indexchartprice",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외주식 기간별시세
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76240000 / VTS=HHDFS76240000
     /// - Endpoint: /uapi/overseas-price/v1/quotations/dailyprice
-    /// 
+    ///
     /// [해외주식] 기본시세
     /// 해외주식 기간별시세[v1_해외주식-010]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식의 기간별시세를 확인하는 API 입니다.
     /// 실전계좌/모의계좌의 경우, 한 번의 호출에 최대 100건까지 확인 가능합니다.
@@ -4048,22 +4003,21 @@ impl Quotations {
     /// ■ 무료 실시간 시세 서비스는 유료 실시간 시세 서비스 대비 평균 50% 수준에 해당하는 정보이므로 현재가/호가/순간체결량/차트 등에서 일시적·부분적 차이가 있을 수 있습니다.
     /// ■ 무료 실시간 시세 서비스의 시가, 저가, 고가, 종가는 타 매체의 유료 실시간 시세 서비스와 다를 수 있으며, 이로 인해 발생하는 손실에 대해서 당사가 책임지지 않습니다.
     /// 이용에 유의 부탁드립니다.
-    pub async fn dailyprice(
-        &self,
-        req: DailypriceRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn dailyprice(&self, req: DailypriceRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHDFS76240000",
             crate::client::KisEnv::Vts => "HHDFS76240000",
         };
-        self.0.get("/uapi/overseas-price/v1/quotations/dailyprice", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-price/v1/quotations/dailyprice", tr_id, req)
+            .await
     }
 
     /// 해외주식 종목/지수/환율기간별시세(일/주/월/년)
-    /// 
+    ///
     /// - TR_ID: Real=FHKST03030100 / VTS=FHKST03030100
     /// - Endpoint: /uapi/overseas-price/v1/quotations/inquire-daily-chartprice
-    /// 
+    ///
     /// [해외주식] 기본시세
     /// 해외주식 종목/지수/환율기간별시세(일/주/월/년)[v1_해외주식-012]
     /// ovrs_nmix_prdy_vrss
@@ -4089,7 +4043,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 종목/지수/환율기간별시세(일/주/월/년) API입니다.
     ///
@@ -4105,14 +4059,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHKST03030100",
             crate::client::KisEnv::Vts => "FHKST03030100",
         };
-        self.0.get("/uapi/overseas-price/v1/quotations/inquire-daily-chartprice", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-price/v1/quotations/inquire-daily-chartprice",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외주식조건검색
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76410000 / VTS=HHDFS76410000
     /// - Endpoint: /uapi/overseas-price/v1/quotations/inquire-search
-    /// 
+    ///
     /// [해외주식] 기본시세
     /// 해외주식조건검색[v1_해외주식-015]
     /// e_ordyn
@@ -4120,7 +4080,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 조건검색 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7641] 해외주식 조건검색 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -4157,14 +4117,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFS76410000",
             crate::client::KisEnv::Vts => "HHDFS76410000",
         };
-        self.0.get("/uapi/overseas-price/v1/quotations/inquire-search", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-price/v1/quotations/inquire-search",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외결제일자조회
-    /// 
+    ///
     /// - TR_ID: Real=CTOS5011R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/quotations/countries-holiday
-    /// 
+    ///
     /// [해외주식] 기본시세
     /// 해외결제일자조회[해외주식-017]
     /// prdt_type_cd
@@ -4179,7 +4145,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외결제일자조회 API입니다.
     pub async fn countries_holiday(
@@ -4190,14 +4156,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "CTOS5011R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/quotations/countries-holiday", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-stock/v1/quotations/countries-holiday",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외주식 상품기본정보
-    /// 
+    ///
     /// - TR_ID: Real=CTPF1702R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-price/v1/quotations/search-info
-    /// 
+    ///
     /// [해외주식] 기본시세
     /// 해외주식 상품기본정보[v1_해외주식-034]
     /// std_pdno
@@ -4259,7 +4231,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 상품기본정보 API입니다.
     /// 시세제공기관(연합)에서 제공하는 해외주식 상품기본정보 데이터를 확인하실 수 있습니다.
@@ -4274,14 +4246,16 @@ impl Quotations {
             crate::client::KisEnv::Real => "CTPF1702R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-price/v1/quotations/search-info", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-price/v1/quotations/search-info", tr_id, req)
+            .await
     }
 
     /// 해외주식 업종별시세
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76370000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-price/v1/quotations/industry-theme
-    /// 
+    ///
     /// [해외주식] 기본시세
     /// 해외주식 업종별시세[해외주식-048]
     /// e_ordyn
@@ -4289,7 +4263,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 업종별시세 API입니다.
     pub async fn industry_theme(
@@ -4300,21 +4274,27 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFS76370000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-price/v1/quotations/industry-theme", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-price/v1/quotations/industry-theme",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외주식 업종별코드조회
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76370100 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-price/v1/quotations/industry-price
-    /// 
+    ///
     /// [해외주식] 기본시세
     /// 해외주식 업종별코드조회[해외주식-049]
     /// true friend 한국투자 Open API
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 업종별코드조회 API입니다.
     pub async fn industry_price(
@@ -4325,14 +4305,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFS76370100",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-price/v1/quotations/industry-price", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-price/v1/quotations/industry-price",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외주식 복수종목 시세조회
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76220000 / VTS=미지원
     /// - Endpoint: /uapi/overseas-price/v1/quotations/multprice
-    /// 
+    ///
     /// [해외주식] 기본시세
     /// 해외주식 복수종목 시세조회
     /// t_xprc
@@ -4340,7 +4326,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ※ 지연시세 지연시간 : 미국 - 실시간무료(0분 지연, 나스닥 마켓센터에서 거래되는 호가 및 호가 잔량 정보)
     /// 홍콩, 베트남, 중국, 일본 - 15분지연
@@ -4353,22 +4339,21 @@ impl Quotations {
     /// ■ 무료 실시간 시세 서비스는 유료 실시간 시세 서비스 대비 평균 50% 수준에 해당하는 정보이므로 현재가/호가/순간체결량/차트 등에서 일시적·부분적 차이가 있을 수 있습니다.
     /// ■ 무료 실시간 시세 서비스의 시가, 저가, 고가, 종가는 타 매체의 유료 실시간 시세 서비스와 다를 수 있으며, 이로 인해 발생하는 손실에 대해서 당사가 책임지지 않습니다.
     /// 이용에 유의 부탁드립니다.
-    pub async fn multprice(
-        &self,
-        req: MultpriceRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn multprice(&self, req: MultpriceRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHDFS76220000",
             crate::client::KisEnv::Vts => "미지원",
         };
-        self.0.get("/uapi/overseas-price/v1/quotations/multprice", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-price/v1/quotations/multprice", tr_id, req)
+            .await
     }
 
     /// 해외주식 기간별권리조회
-    /// 
+    ///
     /// - TR_ID: Real=CTRGT011R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-price/v1/quotations/period-rights
-    /// 
+    ///
     /// [해외주식] 시세분석
     /// 해외주식 기간별권리조회 [해외주식-052]
     /// bass_dt
@@ -4394,7 +4379,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 기간별권리조회 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7520] 기간별해외증권권리조회 화면을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -4408,14 +4393,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "CTRGT011R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-price/v1/quotations/period-rights", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-price/v1/quotations/period-rights",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외뉴스종합(제목)
-    /// 
+    ///
     /// - TR_ID: Real=HHPSTH60100C1 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-price/v1/quotations/news-title
-    /// 
+    ///
     /// [해외주식] 시세분석
     /// 해외뉴스종합(제목) [해외주식-053]
     /// info_gb
@@ -4432,7 +4423,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외뉴스종합(제목) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7702] 해외뉴스종합 화면의 "우측 상단 뉴스목록" 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -4444,14 +4435,16 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHPSTH60100C1",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-price/v1/quotations/news-title", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-price/v1/quotations/news-title", tr_id, req)
+            .await
     }
 
     /// 해외주식 권리종합
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS78330900 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-price/v1/quotations/rights-by-ice
-    /// 
+    ///
     /// [해외주식] 시세분석
     /// 해외주식 권리종합 [해외주식-050]
     /// anno_dt
@@ -4470,7 +4463,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 권리종합 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7833] 해외주식 권리(ICE제공) 화면의 "전체" 탭 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -4484,14 +4477,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFS78330900",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-price/v1/quotations/rights-by-ice", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-price/v1/quotations/rights-by-ice",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 당사 해외주식담보대출 가능 종목
-    /// 
+    ///
     /// - TR_ID: Real=CTLN4050R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-price/v1/quotations/colable-by-company
-    /// 
+    ///
     /// [해외주식] 시세분석
     /// 당사 해외주식담보대출 가능 종목 [해외주식-051]
     /// ovrs_item_name
@@ -4510,7 +4509,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 당사 해외주식담보대출 가능 종목 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0497] 당사 해외주식담보대출 가능 종목 화면 의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -4524,14 +4523,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "CTLN4050R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-price/v1/quotations/colable-by-company", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-price/v1/quotations/colable-by-company",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외속보(제목)
-    /// 
+    ///
     /// - TR_ID: Real=FHKST01011801 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-price/v1/quotations/brknews-title
-    /// 
+    ///
     /// [해외주식] 시세분석
     /// 해외속보(제목) [해외주식-055]
     /// cntt_usiq_srno
@@ -4555,7 +4560,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외속보(제목) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7704] 해외속보 화면 의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -4569,14 +4574,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHKST01011801",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-price/v1/quotations/brknews-title", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-price/v1/quotations/brknews-title",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물종목현재가
-    /// 
+    ///
     /// - TR_ID: Real=HHDFC55010000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/inquire-price
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외선물종목현재가 [v1_해외선물-009]
     /// proc_date
@@ -4614,7 +4625,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// (중요) 해외선물시세 출력값을 해석하실 때 ffcode.mst(해외선물종목마스터 파일)에 있는 sCalcDesz(계산 소수점) 값을 활용하셔야 정확한 값을 받아오실 수 있습니다.
     ///
@@ -4647,14 +4658,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFC55010000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/inquire-price", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/inquire-price",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물종목상세
-    /// 
+    ///
     /// - TR_ID: Real=HHDFC55010100 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/stock-detail
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외선물종목상세 [v1_해외선물-008]
     /// exch_cd
@@ -4684,7 +4701,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// (중요) 해외선물시세 출력값을 해석하실 때 ffcode.mst(해외선물종목마스터 파일)에 있는 sCalcDesz(계산 소수점) 값을 활용하셔야 정확한 값을 받아오실 수 있습니다.
     ///
@@ -4712,14 +4729,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFC55010100",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/stock-detail", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/stock-detail",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물 호가
-    /// 
+    ///
     /// - TR_ID: Real=HHDFC86000000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/inquire-asking-price
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외선물 호가 [해외선물-031]
     /// open_price
@@ -4741,7 +4764,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물 호가 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [8602] 해외선물옵션 종합주문(Ⅰ) 화면에서 "왼쪽 호가 창" 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -4772,14 +4795,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFC86000000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/inquire-asking-price", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/inquire-asking-price",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물 분봉조회
-    /// 
+    ///
     /// - TR_ID: Real=HHDFC55020400 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/inquire-time-futurechartprice
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외선물 분봉조회[해외선물-016]
     /// ret_cnt
@@ -4799,7 +4828,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물분봉조회 API입니다. ★ 반드시 아래 호출방법을 확인하시고 호출 사용하시기 바랍니다.
     /// 한국투자 HTS(eFriend Plus) > [5502] 해외선물옵션 체결추이 화면에서 "분" 선택 시 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -4844,14 +4873,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFC55020400",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/inquire-time-futurechartprice", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/inquire-time-futurechartprice",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물 체결추이(틱)
-    /// 
+    ///
     /// - TR_ID: Real=HHDFC55020200 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/tick-ccnl
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외선물 체결추이(틱)[해외선물-019]
     /// tret_cnt
@@ -4871,7 +4906,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물옵션 체결추이(틱) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [5502] 해외선물옵션 체결추이 화면에서 "Tick" 선택 시 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -4892,22 +4927,25 @@ impl Quotations {
     ///
     /// ※ CME, SGX 거래소 API시세는 유료시세로 HTS/MTS에서 유료가입 후 익일부터 시세 이용 가능합니다.
     /// 포럼 > FAQ > 해외선물옵션 API 유료시세 신청방법(CME, SGX 거래소)
-    pub async fn tick_ccnl(
-        &self,
-        req: TickCcnlRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn tick_ccnl(&self, req: TickCcnlRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHDFC55020200",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/tick-ccnl", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/tick-ccnl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물 체결추이(주간)
-    /// 
+    ///
     /// - TR_ID: Real=HHDFC55020000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/weekly-ccnl
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외선물 체결추이(주간)[해외선물-017]
     /// ret_cnt
@@ -4927,7 +4965,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물옵션 체결추이(주간) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [5502] 해외선물옵션 체결추이 화면에서 "주간" 선택 시 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -4948,22 +4986,25 @@ impl Quotations {
     ///
     /// ※ CME, SGX 거래소 API시세는 유료시세로 HTS/MTS에서 유료가입 후 익일부터 시세 이용 가능합니다.
     /// 포럼 > FAQ > 해외선물옵션 API 유료시세 신청방법(CME, SGX 거래소)
-    pub async fn weekly_ccnl(
-        &self,
-        req: WeeklyCcnlRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn weekly_ccnl(&self, req: WeeklyCcnlRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHDFC55020000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/weekly-ccnl", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/weekly-ccnl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물 체결추이(일간)
-    /// 
+    ///
     /// - TR_ID: Real=HHDFC55020100 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/daily-ccnl
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외선물 체결추이(일간)[해외선물-018]
     /// tret_cnt
@@ -4983,7 +5024,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물옵션 체결추이(일간) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [5502] 해외선물옵션 체결추이 화면에서 "일간" 선택 시 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -5004,22 +5045,25 @@ impl Quotations {
     ///
     /// ※ CME, SGX 거래소 API시세는 유료시세로 HTS/MTS에서 유료가입 후 익일부터 시세 이용 가능합니다.
     /// 포럼 > FAQ > 해외선물옵션 API 유료시세 신청방법(CME, SGX 거래소)
-    pub async fn daily_ccnl(
-        &self,
-        req: DailyCcnlRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn daily_ccnl(&self, req: DailyCcnlRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHDFC55020100",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/daily-ccnl", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/daily-ccnl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물 체결추이(월간)
-    /// 
+    ///
     /// - TR_ID: Real=HHDFC55020300 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/monthly-ccnl
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외선물 체결추이(월간)[해외선물-020]
     /// tret_cnt
@@ -5039,7 +5083,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물옵션 체결추이(월간) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [5502] 해외선물옵션 체결추이 화면에서 "월간" 선택 시 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -5068,14 +5112,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFC55020300",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/monthly-ccnl", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/monthly-ccnl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물 상품기본정보
-    /// 
+    ///
     /// - TR_ID: Real=HHDFC55200000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/search-contract-detail
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외선물 상품기본정보 [해외선물-023]
     /// exch_cd
@@ -5104,7 +5154,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물옵션 상품기본정보 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0054] 해외선물옵션 상품기본정보 화면 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -5118,14 +5168,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFC55200000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/search-contract-detail", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/search-contract-detail",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물 미결제추이
-    /// 
+    ///
     /// - TR_ID: Real=HHDDB95030000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/investor-unpd-trend
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외선물 미결제추이 [해외선물-029]
     /// row_cnt
@@ -5150,7 +5206,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물 미결제추이 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [1959] 해외선물 미결제추이의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -5162,14 +5218,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDDB95030000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/investor-unpd-trend", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/investor-unpd-trend",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외옵션종목현재가
-    /// 
+    ///
     /// - TR_ID: Real=HHDFO55010000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/opt-price
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외옵션종목현재가 [해외선물-035]
     /// proc_date
@@ -5206,7 +5268,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외옵션종목현재가 API입니다.
     ///
@@ -5224,22 +5286,25 @@ impl Quotations {
     /// EX) focode.mst 파일의 sCalcDesz(계산 소수점) 값
     /// 품목코드 OES 계산소수점 -2 → 시세 7525 수신 시 75.25 로 해석
     /// 품목코드 O6E 계산소수점 -4 → 시세 54.0 수신 시 0.0054 로 해석
-    pub async fn opt_price(
-        &self,
-        req: OptPriceRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn opt_price(&self, req: OptPriceRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHDFO55010000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/opt-price", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/opt-price",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외옵션종목상세
-    /// 
+    ///
     /// - TR_ID: Real=HHDFO55010100 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/opt-detail
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외옵션종목상세 [해외선물-034]
     /// exch_cd
@@ -5267,7 +5332,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외옵션종목상세 API입니다.
     ///
@@ -5287,22 +5352,25 @@ impl Quotations {
     /// EX) focode.mst 파일의 sCalcDesz(계산 소수점) 값
     /// 품목코드 OES 계산소수점 -2 → 시세 7525 수신 시 75.25 로 해석
     /// 품목코드 O6E 계산소수점 -4 → 시세 54.0 수신 시 0.0054 로 해석
-    pub async fn opt_detail(
-        &self,
-        req: OptDetailRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn opt_detail(&self, req: OptDetailRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHDFO55010100",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/opt-detail", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/opt-detail",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외옵션 호가
-    /// 
+    ///
     /// - TR_ID: Real=HHDFO86000000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/opt-asking-price
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외옵션 호가 [해외선물-033]
     /// open_price
@@ -5324,7 +5392,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외옵션 호가 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [5501] 해외선물옵션 현재가 화면 의 "왼쪽 상단 현재가" 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -5336,14 +5404,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFO86000000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/opt-asking-price", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/opt-asking-price",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외옵션 분봉조회
-    /// 
+    ///
     /// - TR_ID: Real=HHDFO55020400 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/inquire-time-optchartprice
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외옵션 분봉조회 [해외선물-040]
     /// ret_cnt
@@ -5363,7 +5437,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외옵션 분봉조회 API입니다.
     /// 한 번의 호출에 120건까지 확인 가능하며, QRY_TP, INDEX_KEY 를 이용하여 다음조회 가능합니다.
@@ -5394,14 +5468,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFO55020400",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/inquire-time-optchartprice", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/inquire-time-optchartprice",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외옵션 체결추이(틱)
-    /// 
+    ///
     /// - TR_ID: Real=HHDFO55020200 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/opt-tick-ccnl
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외옵션 체결추이(틱) [해외선물-038]
     /// ret_cnt
@@ -5421,7 +5501,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외옵션 체결추이(틱) API입니다.
     /// 한 번의 호출에 40건까지 확인 가능하며, QRY_TP, INDEX_KEY 를 이용하여 다음조회 가능합니다.
@@ -5452,14 +5532,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFO55020200",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/opt-tick-ccnl", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/opt-tick-ccnl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외옵션 체결추이(일간)
-    /// 
+    ///
     /// - TR_ID: Real=HHDFO55020100 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/opt-daily-ccnl
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외옵션 체결추이(일간) [해외선물-037]
     /// ret_cnt
@@ -5479,7 +5565,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외옵션 체결추이(일간) API입니다.
     /// 최근 120건까지 데이터 확인이 가능합니다. ("QRY_CNT: 119 입력", START_DATE_TIME, CLOSE_DATE_TIME은 공란)
@@ -5510,14 +5596,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFO55020100",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/opt-daily-ccnl", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/opt-daily-ccnl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외옵션 체결추이(주간)
-    /// 
+    ///
     /// - TR_ID: Real=HHDFO55020000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/opt-weekly-ccnl
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외옵션 체결추이(주간) [해외선물-036]
     /// ret_cnt
@@ -5537,7 +5629,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외옵션 체결추이(주간) API입니다.
     /// 최근 120건까지 데이터 확인이 가능합니다. (START_DATE_TIME, CLOSE_DATE_TIME은 공란 입력)
@@ -5564,14 +5656,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFO55020000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/opt-weekly-ccnl", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/opt-weekly-ccnl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외옵션 체결추이(월간)
-    /// 
+    ///
     /// - TR_ID: Real=HHDFO55020300 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/opt-monthly-ccnl
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외옵션 체결추이(월간) [해외선물-039]
     /// ret_cnt
@@ -5591,7 +5689,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외옵션 체결추이(월간) API입니다.
     /// 최근 120건까지 데이터 확인이 가능합니다. (START_DATE_TIME, CLOSE_DATE_TIME은 공란 입력)
@@ -5618,14 +5716,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFO55020300",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/opt-monthly-ccnl", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/opt-monthly-ccnl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외옵션 상품기본정보
-    /// 
+    ///
     /// - TR_ID: Real=HHDFO55200000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/search-opt-detail
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외옵션 상품기본정보 [해외선물-041]
     /// exch_cd
@@ -5653,7 +5757,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외옵션 상품기본정보 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0054] 관심종목 화면 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -5680,14 +5784,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "HHDFO55200000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/search-opt-detail", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/search-opt-detail",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물옵션 장운영시간
-    /// 
+    ///
     /// - TR_ID: Real=OTFM2229R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/quotations/market-time
-    /// 
+    ///
     /// [해외선물옵션] 기본시세
     /// 해외선물옵션 장운영시간 [해외선물-030]
     /// fm_pdgr_cd
@@ -5709,7 +5819,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물 장운영시간 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [6773] 해외선물 장운영시간 화면 의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -5721,14 +5831,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "OTFM2229R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/quotations/market-time", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/quotations/market-time",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 장내채권현재가(호가)
-    /// 
+    ///
     /// - TR_ID: Real=FHKBJ773401C0 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-bond/v1/quotations/inquire-asking-price
-    /// 
+    ///
     /// [장내채권] 기본시세
     /// 장내채권현재가(호가) [국내주식-132]
     /// aspr_acpt_hour
@@ -5769,7 +5885,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 장내채권현재가(호가) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0978] 장내채권주문 "우측 호가창" 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -5781,14 +5897,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHKBJ773401C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-bond/v1/quotations/inquire-asking-price", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-bond/v1/quotations/inquire-asking-price",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 장내채권현재가(시세)
-    /// 
+    ///
     /// - TR_ID: Real=FHKBJ773400C0 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-bond/v1/quotations/inquire-price
-    /// 
+    ///
     /// [장내채권] 기본시세
     /// 장내채권현재가(시세) [국내주식-200]
     /// stnd_iscd
@@ -5812,7 +5934,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 장내채권현재가(시세) API입니다.
     /// 장내채권의 기본시세(시가,고가,저가,종가)를 확인할 수 있습니다.
@@ -5824,14 +5946,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHKBJ773400C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-bond/v1/quotations/inquire-price", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-bond/v1/quotations/inquire-price",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 장내채권현재가(체결)
-    /// 
+    ///
     /// - TR_ID: Real=FHKBJ773403C0 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-bond/v1/quotations/inquire-ccnl
-    /// 
+    ///
     /// [장내채권] 기본시세
     /// 장내채권현재가(체결) [국내주식-201]
     /// stck_cntg_hour
@@ -5845,7 +5973,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 장내채권현재가(체결) API입니다
     /// 장내채권의 체결데이터를 확인할 수 있습니다.
@@ -5857,14 +5985,16 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHKBJ773403C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-bond/v1/quotations/inquire-ccnl", tr_id, req).await
+        self.0
+            .get("/uapi/domestic-bond/v1/quotations/inquire-ccnl", tr_id, req)
+            .await
     }
 
     /// 장내채권현재가(일별)
-    /// 
+    ///
     /// - TR_ID: Real=FHKBJ773404C0 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-bond/v1/quotations/inquire-daily-price
-    /// 
+    ///
     /// [장내채권] 기본시세
     /// 장내채권현재가(일별) [국내주식-202]
     /// stck_bsop_date
@@ -5880,7 +6010,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 장내채권현재가(일별) API입니다.
     /// 장내채권의 일별 시세데이터를 최근 100건까지 확인할 수 있습니다.
@@ -5892,14 +6022,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHKBJ773404C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-bond/v1/quotations/inquire-daily-price", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-bond/v1/quotations/inquire-daily-price",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 장내채권 기간별시세(일)
-    /// 
+    ///
     /// - TR_ID: Real=FHKBJ773701C0 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-bond/v1/quotations/inquire-daily-itemchartprice
-    /// 
+    ///
     /// [장내채권] 기본시세
     /// 장내채권 기간별시세(일) [국내주식-159]
     /// stck_bsop_date
@@ -5912,7 +6048,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 장내채권 기간별시세(일) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0979] 장내채권종합주문 화면 가운데 "일별" 클릭 시 시세 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -5926,14 +6062,20 @@ impl Quotations {
             crate::client::KisEnv::Real => "FHKBJ773701C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-bond/v1/quotations/inquire-daily-itemchartprice", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-bond/v1/quotations/inquire-daily-itemchartprice",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 장내채권 평균단가조회
-    /// 
+    ///
     /// - TR_ID: Real=CTPF2005R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-bond/v1/quotations/avg-unit
-    /// 
+    ///
     /// [장내채권] 기본시세
     /// 장내채권 평균단가조회 [국내주식-158]
     /// evlu_dt
@@ -5986,26 +6128,25 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 장내채권 평균단가조회 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7216] 채권 발행정보 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
-    pub async fn avg_unit(
-        &self,
-        req: AvgUnitRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn avg_unit(&self, req: AvgUnitRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTPF2005R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-bond/v1/quotations/avg-unit", tr_id, req).await
+        self.0
+            .get("/uapi/domestic-bond/v1/quotations/avg-unit", tr_id, req)
+            .await
     }
 
     /// 장내채권 발행정보
-    /// 
+    ///
     /// - TR_ID: Real=CTPF1101R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-bond/v1/quotations/issue-info
-    /// 
+    ///
     /// [장내채권] 기본시세
     /// 장내채권 발행정보[국내주식-156]
     /// prdt_type_cd
@@ -6096,26 +6237,25 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 장내채권 발행정보 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7216] 채권 발행정보 화면의 상단 채권정보 데이터를 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
-    pub async fn issue_info(
-        &self,
-        req: IssueInfoRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn issue_info(&self, req: IssueInfoRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTPF1101R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-bond/v1/quotations/issue-info", tr_id, req).await
+        self.0
+            .get("/uapi/domestic-bond/v1/quotations/issue-info", tr_id, req)
+            .await
     }
 
     /// 장내채권 기본조회
-    /// 
+    ///
     /// - TR_ID: Real=CTPF1114R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-bond/v1/quotations/search-bond-info
-    /// 
+    ///
     /// [장내채권] 기본시세
     /// 장내채권 기본조회 [국내주식-129]
     /// prdt_type_cd
@@ -6202,7 +6342,7 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 장내채권 기본조회 API입니다.
     /// 장내채권의 상품정보를 확인 가능합니다.
@@ -6214,18 +6354,23 @@ impl Quotations {
             crate::client::KisEnv::Real => "CTPF1114R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-bond/v1/quotations/search-bond-info", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-bond/v1/quotations/search-bond-info",
+                tr_id,
+                req,
+            )
+            .await
     }
-
 }
 
 #[allow(non_snake_case)]
 impl Ranking {
     /// ELW 민감도 순위
-    /// 
+    ///
     /// - TR_ID: Real=FHPEW02850000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/ranking/sensitivity
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 민감도 순위[국내주식-170]
     /// elw_shrn_iscd
@@ -6243,7 +6388,7 @@ impl Ranking {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 민감도 순위 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0285] ELW 민감도 순위 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -6255,14 +6400,16 @@ impl Ranking {
             crate::client::KisEnv::Real => "FHPEW02850000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/ranking/sensitivity", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/ranking/sensitivity", tr_id, req)
+            .await
     }
 
     /// ELW 당일급변종목
-    /// 
+    ///
     /// - TR_ID: Real=FHPEW02870000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/ranking/quick-change
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 당일급변종목[국내주식-171]
     /// elw_shrn_iscd
@@ -6281,7 +6428,7 @@ impl Ranking {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 당일급변종목 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0287] ELW 당일급변종목 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -6293,14 +6440,16 @@ impl Ranking {
             crate::client::KisEnv::Real => "FHPEW02870000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/ranking/quick-change", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/ranking/quick-change", tr_id, req)
+            .await
     }
 
     /// ELW 지표순위
-    /// 
+    ///
     /// - TR_ID: Real=FHPEW02790000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/ranking/indicator
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 지표순위[국내주식-169]
     /// elw_shrn_iscd
@@ -6319,26 +6468,25 @@ impl Ranking {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 지표순위 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0279] ELW 지표순위 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
-    pub async fn indicator(
-        &self,
-        req: IndicatorRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn indicator(&self, req: IndicatorRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPEW02790000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/ranking/indicator", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/ranking/indicator", tr_id, req)
+            .await
     }
 
     /// ELW 상승률순위
-    /// 
+    ///
     /// - TR_ID: Real=FHPEW02770000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/ranking/updown-rate
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 상승률순위[국내주식-167]
     /// hts_kor_isnm
@@ -6377,26 +6525,25 @@ impl Ranking {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 상승률순위 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0277] ELW 상승률순위 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
-    pub async fn updown_rate(
-        &self,
-        req: UpdownRateRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn updown_rate(&self, req: UpdownRateRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPEW02770000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/ranking/updown-rate", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/ranking/updown-rate", tr_id, req)
+            .await
     }
 
     /// ELW 거래량순위
-    /// 
+    ///
     /// - TR_ID: Real=FHPEW02780000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/elw/v1/ranking/volume-rank
-    /// 
+    ///
     /// [국내주식] ELW 시세
     /// ELW 거래량순위[국내주식-168]
     /// elw_kor_isnm
@@ -6442,26 +6589,25 @@ impl Ranking {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ELW 거래량순위 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0278] ELW 거래량순위 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
-    pub async fn volume_rank(
-        &self,
-        req: VolumeRankRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn volume_rank(&self, req: VolumeRankRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPEW02780000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/elw/v1/ranking/volume-rank", tr_id, req).await
+        self.0
+            .get("/uapi/elw/v1/ranking/volume-rank", tr_id, req)
+            .await
     }
 
     /// 해외주식 가격급등락
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76260000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/ranking/price-fluct
-    /// 
+    ///
     /// [해외주식] 시세분석
     /// 해외주식 가격급등락[해외주식-038]
     /// n_base
@@ -6472,26 +6618,25 @@ impl Ranking {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 가격급등락 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7626] 가격급등락 화면 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
-    pub async fn price_fluct(
-        &self,
-        req: PriceFluctRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn price_fluct(&self, req: PriceFluctRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHDFS76260000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/ranking/price-fluct", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-stock/v1/ranking/price-fluct", tr_id, req)
+            .await
     }
 
     /// 해외주식 거래량급증
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76270000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/ranking/volume-surge
-    /// 
+    ///
     /// [해외주식] 시세분석
     /// 해외주식 거래량급증[해외주식-039]
     /// n_tvol
@@ -6502,7 +6647,7 @@ impl Ranking {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 거래량급증 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7627] 거래대금순위 화면 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -6514,14 +6659,16 @@ impl Ranking {
             crate::client::KisEnv::Real => "HHDFS76270000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/ranking/volume-surge", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-stock/v1/ranking/volume-surge", tr_id, req)
+            .await
     }
 
     /// 해외주식 매수체결강도상위
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76280000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/ranking/volume-power
-    /// 
+    ///
     /// [해외주식] 시세분석
     /// 해외주식 매수체결강도상위[해외주식-040]
     /// e_ordyn
@@ -6529,7 +6676,7 @@ impl Ranking {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 매수체결강도상위 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7628] 매수체결강도상위 화면 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -6541,14 +6688,16 @@ impl Ranking {
             crate::client::KisEnv::Real => "HHDFS76280000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/ranking/volume-power", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-stock/v1/ranking/volume-power", tr_id, req)
+            .await
     }
 
     /// 해외주식 상승율/하락율
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76290000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/ranking/updown-rate
-    /// 
+    ///
     /// [해외주식] 시세분석
     /// 해외주식 상승율/하락율[해외주식-041]
     /// n_base
@@ -6559,7 +6708,7 @@ impl Ranking {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 상승율/하락율 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7629] 상승율/하락율 화면 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -6571,14 +6720,16 @@ impl Ranking {
             crate::client::KisEnv::Real => "HHDFS76290000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/ranking/updown-rate", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-stock/v1/ranking/updown-rate", tr_id, req)
+            .await
     }
 
     /// 해외주식 신고/신저가
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76300000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/ranking/new-highlow
-    /// 
+    ///
     /// [해외주식] 시세분석
     /// 해외주식 신고/신저가[해외주식-042]
     /// n_base
@@ -6589,26 +6740,25 @@ impl Ranking {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// "해외주식 신고/신저가 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7630] 신고/신저가 화면 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다."
-    pub async fn new_highlow(
-        &self,
-        req: NewHighlowRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn new_highlow(&self, req: NewHighlowRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHDFS76300000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/ranking/new-highlow", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-stock/v1/ranking/new-highlow", tr_id, req)
+            .await
     }
 
     /// 해외주식 거래량순위
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76310010 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/ranking/trade-vol
-    /// 
+    ///
     /// [해외주식] 시세분석
     /// 해외주식 거래량순위[해외주식-043]
     /// a_tvol
@@ -6617,26 +6767,25 @@ impl Ranking {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 거래량순위 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7631] 거래대금순위 화면 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
-    pub async fn trade_vol(
-        &self,
-        req: TradeVolRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn trade_vol(&self, req: TradeVolRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHDFS76310010",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/ranking/trade-vol", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-stock/v1/ranking/trade-vol", tr_id, req)
+            .await
     }
 
     /// 해외주식 거래대금순위
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76320010 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/ranking/trade-pbmn
-    /// 
+    ///
     /// [해외주식] 시세분석
     /// 해외주식 거래대금순위[해외주식-044]
     /// a_tamt
@@ -6645,26 +6794,25 @@ impl Ranking {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 거래대금순위 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7632] 거래대금순위 화면 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
-    pub async fn trade_pbmn(
-        &self,
-        req: TradePbmnRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn trade_pbmn(&self, req: TradePbmnRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHDFS76320010",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/ranking/trade-pbmn", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-stock/v1/ranking/trade-pbmn", tr_id, req)
+            .await
     }
 
     /// 해외주식 거래증가율순위
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76330000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/ranking/trade-growth
-    /// 
+    ///
     /// [해외주식] 시세분석
     /// 해외주식 거래증가율순위[해외주식-045]
     /// n_tvol
@@ -6674,7 +6822,7 @@ impl Ranking {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 거래증가율순위 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7633] 거래증가율순위 화면 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -6686,14 +6834,16 @@ impl Ranking {
             crate::client::KisEnv::Real => "HHDFS76330000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/ranking/trade-growth", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-stock/v1/ranking/trade-growth", tr_id, req)
+            .await
     }
 
     /// 해외주식 거래회전율순위
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76340000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/ranking/trade-turnover
-    /// 
+    ///
     /// [해외주식] 시세분석
     /// 해외주식 거래회전율순위[해외주식-046]
     /// n_tvol
@@ -6702,7 +6852,7 @@ impl Ranking {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 거래회전율순위 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7634] 거래회전율순위 화면 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -6714,14 +6864,16 @@ impl Ranking {
             crate::client::KisEnv::Real => "HHDFS76340000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/ranking/trade-turnover", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-stock/v1/ranking/trade-turnover", tr_id, req)
+            .await
     }
 
     /// 해외주식 시가총액순위
-    /// 
+    ///
     /// - TR_ID: Real=HHDFS76350100 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/ranking/market-cap
-    /// 
+    ///
     /// [해외주식] 시세분석
     /// 해외주식 시가총액순위[해외주식-047]
     /// e_ordyn
@@ -6729,7 +6881,7 @@ impl Ranking {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 시가총액순위 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7635] 시가총액순위 화면 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -6741,18 +6893,19 @@ impl Ranking {
             crate::client::KisEnv::Real => "HHDFS76350100",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/ranking/market-cap", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-stock/v1/ranking/market-cap", tr_id, req)
+            .await
     }
-
 }
 
 #[allow(non_snake_case)]
 impl Trading {
     /// 선물옵션 주문
-    /// 
+    ///
     /// - TR_ID: Real=TTTO1101U / VTS=VTTO1101U
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/order
-    /// 
+    ///
     /// [국내선물옵션] 주문/계좌
     /// 선물옵션 주문[v1_국내선물-001]
     /// ACNT_NAME
@@ -6764,7 +6917,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// ​선물옵션 주문 API입니다.
     /// * 선물옵션 운영시간 외 API 호출 시 애러가 발생하오니 운영시간을 확인해주세요.
@@ -6774,22 +6927,21 @@ impl Trading {
     ///
     /// ※ 종목코드 마스터파일 파이썬 정제코드는 한국투자증권 Github 참고 부탁드립니다.
     /// https://github.com/koreainvestment/open-trading-api/tree/main/stocks_info
-    pub async fn order(
-        &self,
-        req: OrderRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn order(&self, req: OrderRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTO1101U",
             crate::client::KisEnv::Vts => "VTTO1101U",
         };
-        self.0.post("/uapi/domestic-futureoption/v1/trading/order", tr_id, req).await
+        self.0
+            .post("/uapi/domestic-futureoption/v1/trading/order", tr_id, req)
+            .await
     }
 
     /// 선물옵션 정정취소주문
-    /// 
+    ///
     /// - TR_ID: Real=TTTO1103U / VTS=VTTO1103U
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/order-rvsecncl
-    /// 
+    ///
     /// [국내선물옵션] 주문/계좌
     /// 선물옵션 정정취소주문[v1_국내선물-002]
     /// ACNT_NAME
@@ -6802,7 +6954,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 선물옵션 주문 건에 대하여 정정 및 취소하는 API입니다. 단, 이미 체결된 건은 정정 및 취소가 불가합니다.
     ///
@@ -6816,14 +6968,20 @@ impl Trading {
             crate::client::KisEnv::Real => "TTTO1103U",
             crate::client::KisEnv::Vts => "VTTO1103U",
         };
-        self.0.post("/uapi/domestic-futureoption/v1/trading/order-rvsecncl", tr_id, req).await
+        self.0
+            .post(
+                "/uapi/domestic-futureoption/v1/trading/order-rvsecncl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 선물옵션 주문체결내역조회
-    /// 
+    ///
     /// - TR_ID: Real=TTTO5201R / VTS=VTTO5201R
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-ccnl
-    /// 
+    ///
     /// [국내선물옵션] 주문/계좌
     /// 선물옵션 주문체결내역조회[v1_국내선물-003]
     /// ord_gno_brno
@@ -6858,7 +7016,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 선물옵션 주문체결내역조회 API입니다. 한 번의 호출에 최대 100건​까지 확인 가능하며, 이후의 값은 연속조회를 통해 확인하실 수 있습니다.
     pub async fn inquire_ccnl(
@@ -6869,14 +7027,20 @@ impl Trading {
             crate::client::KisEnv::Real => "TTTO5201R",
             crate::client::KisEnv::Vts => "VTTO5201R",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/trading/inquire-ccnl", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/trading/inquire-ccnl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 선물옵션 잔고현황
-    /// 
+    ///
     /// - TR_ID: Real=CTFO6118R / VTS=VTFO6118R
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-balance
-    /// 
+    ///
     /// [국내선물옵션] 주문/계좌
     /// 선물옵션 잔고현황[v1_국내선물-004]
     /// acnt_prdt_cd
@@ -6927,7 +7091,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 선물옵션 잔고현황 API입니다. 한 번의 호출에 최대 20건까지 확인 가능하며, 이후의 값은 연속조회를 통해 확인하실 수 있습니다.
     pub async fn inquire_balance(
@@ -6938,14 +7102,20 @@ impl Trading {
             crate::client::KisEnv::Real => "CTFO6118R",
             crate::client::KisEnv::Vts => "VTFO6118R",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/trading/inquire-balance", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/trading/inquire-balance",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 선물옵션 주문가능
-    /// 
+    ///
     /// - TR_ID: Real=TTTO5105R / VTS=VTTO5105R
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-psbl-order
-    /// 
+    ///
     /// [국내선물옵션] 주문/계좌
     /// 선물옵션 주문가능[v1_국내선물-005]
     /// tot_psbl_qty
@@ -6956,7 +7126,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 선물옵션 주문가능 API입니다. 주문가능 내역과 수량을 확인하실 수 있습니다.
     pub async fn inquire_psbl_order(
@@ -6967,14 +7137,20 @@ impl Trading {
             crate::client::KisEnv::Real => "TTTO5105R",
             crate::client::KisEnv::Vts => "VTTO5105R",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/trading/inquire-psbl-order", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/trading/inquire-psbl-order",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// (야간)선물옵션 주문체결 내역조회
-    /// 
+    ///
     /// - TR_ID: Real=JTCE5005R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-ngt-ccnl
-    /// 
+    ///
     /// [국내선물옵션] 주문/계좌
     /// (야간)선물옵션 주문체결 내역조회 [국내선물-009]
     /// tot_ord_qty
@@ -7009,7 +7185,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// (야간)선물옵션 주문체결 내역조회 API입니다.
     ///
@@ -7028,14 +7204,20 @@ impl Trading {
             crate::client::KisEnv::Real => "JTCE5005R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/trading/inquire-ngt-ccnl", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/trading/inquire-ngt-ccnl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// (야간)선물옵션 잔고현황
-    /// 
+    ///
     /// - TR_ID: Real=JTCE6001R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-ngt-balance
-    /// 
+    ///
     /// [국내선물옵션] 주문/계좌
     /// (야간)선물옵션 잔고현황 [국내선물-010]
     /// dnca_cash
@@ -7090,7 +7272,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// (야간)선물옵션 잔고현황 API입니다.
     pub async fn inquire_ngt_balance(
@@ -7101,14 +7283,20 @@ impl Trading {
             crate::client::KisEnv::Real => "JTCE6001R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/trading/inquire-ngt-balance", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/trading/inquire-ngt-balance",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// (야간)선물옵션 주문가능 조회
-    /// 
+    ///
     /// - TR_ID: Real=JTCE1004R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-psbl-ngt-order
-    /// 
+    ///
     /// [국내선물옵션] 주문/계좌
     /// (야간)선물옵션 주문가능 조회 [국내선물-011]
     /// max_ord_psbl_qty
@@ -7121,7 +7309,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// (야간)선물옵션 주문가능 조회 API입니다.
     pub async fn inquire_psbl_ngt_order(
@@ -7132,14 +7320,20 @@ impl Trading {
             crate::client::KisEnv::Real => "JTCE1004R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/trading/inquire-psbl-ngt-order", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/trading/inquire-psbl-ngt-order",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// (야간)선물옵션 증거금 상세
-    /// 
+    ///
     /// - TR_ID: Real=JTCE6003R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/ngt-margin-detail
-    /// 
+    ///
     /// [국내선물옵션] 주문/계좌
     /// (야간)선물옵션 증거금 상세 [국내선물-024]
     /// cash_amt
@@ -7226,7 +7420,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// (야간)선물옵션 증거금상세 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [2537] 야간선물옵션 증거금상세 화면 의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -7238,14 +7432,20 @@ impl Trading {
             crate::client::KisEnv::Real => "JTCE6003R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/trading/ngt-margin-detail", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/trading/ngt-margin-detail",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 선물옵션 잔고정산손익내역
-    /// 
+    ///
     /// - TR_ID: Real=CTFO6117R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-balance-settlement-pl
-    /// 
+    ///
     /// [국내선물옵션] 주문/계좌
     /// 선물옵션 잔고정산손익내역[v1_국내선물-013]
     /// nxdy_dnca
@@ -7274,7 +7474,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 선물옵션 잔고정산손익내역 API입니다.
     pub async fn inquire_balance_settlement_pl(
@@ -7285,14 +7485,20 @@ impl Trading {
             crate::client::KisEnv::Real => "CTFO6117R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/trading/inquire-balance-settlement-pl", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/trading/inquire-balance-settlement-pl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 선물옵션 총자산현황
-    /// 
+    ///
     /// - TR_ID: Real=CTRP6550R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-deposit
-    /// 
+    ///
     /// [국내선물옵션] 주문/계좌
     /// 선물옵션 총자산현황[v1_국내선물-014]
     /// dnca_tota
@@ -7328,7 +7534,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 선물옵션 총자산현황 API 입니다.
     pub async fn inquire_deposit(
@@ -7339,14 +7545,20 @@ impl Trading {
             crate::client::KisEnv::Real => "CTRP6550R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/trading/inquire-deposit", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/trading/inquire-deposit",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 선물옵션 잔고평가손익내역
-    /// 
+    ///
     /// - TR_ID: Real=CTFO6159R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-balance-valuation-pl
-    /// 
+    ///
     /// [국내선물옵션] 주문/계좌
     /// 선물옵션 잔고평가손익내역[v1_국내선물-015]
     /// dnca_cash
@@ -7395,7 +7607,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 선물옵션 잔고평가손익내역 API입니다.
     pub async fn inquire_balance_valuation_pl(
@@ -7406,14 +7618,20 @@ impl Trading {
             crate::client::KisEnv::Real => "CTFO6159R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/trading/inquire-balance-valuation-pl", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/trading/inquire-balance-valuation-pl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 선물옵션 기준일체결내역
-    /// 
+    ///
     /// - TR_ID: Real=CTFO5139R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-ccnl-bstime
-    /// 
+    ///
     /// [국내선물옵션] 주문/계좌
     /// 선물옵션 기준일체결내역[v1_국내선물-016]
     /// prdt_name
@@ -7431,7 +7649,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 선물옵션 기준일체결내역 API입니다.
     pub async fn inquire_ccnl_bstime(
@@ -7442,14 +7660,20 @@ impl Trading {
             crate::client::KisEnv::Real => "CTFO5139R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/trading/inquire-ccnl-bstime", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/trading/inquire-ccnl-bstime",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 선물옵션기간약정수수료일별
-    /// 
+    ///
     /// - TR_ID: Real=CTFO6119R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-daily-amount-fee
-    /// 
+    ///
     /// [국내선물옵션] 주문/계좌
     /// 선물옵션기간약정수수료일별[v1_국내선물-017]
     /// ord_dt
@@ -7488,7 +7712,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 선물옵션기간약정수수료일별 API입니다.
     pub async fn inquire_daily_amount_fee(
@@ -7499,14 +7723,20 @@ impl Trading {
             crate::client::KisEnv::Real => "CTFO6119R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-futureoption/v1/trading/inquire-daily-amount-fee", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-futureoption/v1/trading/inquire-daily-amount-fee",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외주식 주문
-    /// 
+    ///
     /// - TR_ID: Real=TTTT1002U / VTS=VTTT1002U
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order
-    /// 
+    ///
     /// [해외주식] 주문/계좌
     /// 해외주식 주문[v1_해외주식-001]
     /// KRX_FWDG_ORD_ORGNO
@@ -7515,7 +7745,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 주문 API입니다.
     ///
@@ -7540,22 +7770,21 @@ impl Trading {
     ///
     /// ※ 종목코드 마스터파일 파이썬 정제코드는 한국투자증권 Github 참고 부탁드립니다.
     /// https://github.com/koreainvestment/open-trading-api/tree/main/stocks_info
-    pub async fn order_next(
-        &self,
-        req: OrderNextRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn order_next(&self, req: OrderNextRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTT1002U",
             crate::client::KisEnv::Vts => "VTTT1002U",
         };
-        self.0.post("/uapi/overseas-stock/v1/trading/order", tr_id, req).await
+        self.0
+            .post("/uapi/overseas-stock/v1/trading/order", tr_id, req)
+            .await
     }
 
     /// 해외주식 정정취소주문
-    /// 
+    ///
     /// - TR_ID: Real=TTTT1004U / VTS=VTTT1004U
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order-rvsecncl
-    /// 
+    ///
     /// [해외주식] 주문/계좌
     /// 해외주식 정정취소주문[v1_해외주식-003]
     /// KRX_FWDG_ORD_ORGNO
@@ -7564,7 +7793,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 접수된 해외주식 주문을 정정하거나 취소하기 위한 API입니다.
     /// (해외주식주문 시 Return 받은 ODNO를 참고하여 API를 호출하세요.)
@@ -7590,14 +7819,16 @@ impl Trading {
             crate::client::KisEnv::Real => "TTTT1004U",
             crate::client::KisEnv::Vts => "VTTT1004U",
         };
-        self.0.post("/uapi/overseas-stock/v1/trading/order-rvsecncl", tr_id, req).await
+        self.0
+            .post("/uapi/overseas-stock/v1/trading/order-rvsecncl", tr_id, req)
+            .await
     }
 
     /// 해외주식 예약주문접수
-    /// 
+    ///
     /// - TR_ID: Real=TTTT3014U / VTS=VTTT3014U
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv
-    /// 
+    ///
     /// [해외주식] 주문/계좌
     /// 해외주식 예약주문접수[v1_해외주식-002]
     /// RSVN_ORD_RCIT_DT
@@ -7606,7 +7837,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 미국거래소 운영시간 외 미국주식을 예약 매매하기 위한 API입니다.
     ///
@@ -7658,14 +7889,16 @@ impl Trading {
             crate::client::KisEnv::Real => "TTTT3014U",
             crate::client::KisEnv::Vts => "VTTT3014U",
         };
-        self.0.post("/uapi/overseas-stock/v1/trading/order-resv", tr_id, req).await
+        self.0
+            .post("/uapi/overseas-stock/v1/trading/order-resv", tr_id, req)
+            .await
     }
 
     /// 해외주식 예약주문접수취소
-    /// 
+    ///
     /// - TR_ID: Real=TTTT3017U / VTS=VTTT3017U
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv-ccnl
-    /// 
+    ///
     /// [해외주식] 주문/계좌
     /// 해외주식 예약주문접수취소[v1_해외주식-004]
     /// OVRS_RSVN_ODNO
@@ -7673,7 +7906,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 접수된 미국주식 예약주문을 취소하기 위한 API입니다.
     /// (해외주식 예약주문접수 시 Return 받은 ODNO를 참고하여 API를 호출하세요.)
@@ -7691,14 +7924,20 @@ impl Trading {
             crate::client::KisEnv::Real => "TTTT3017U",
             crate::client::KisEnv::Vts => "VTTT3017U",
         };
-        self.0.post("/uapi/overseas-stock/v1/trading/order-resv-ccnl", tr_id, req).await
+        self.0
+            .post(
+                "/uapi/overseas-stock/v1/trading/order-resv-ccnl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외주식 매수가능금액조회
-    /// 
+    ///
     /// - TR_ID: Real=TTTS3007R / VTS=VTTS3007R
     /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-psamount
-    /// 
+    ///
     /// [해외주식] 주문/계좌
     /// 해외주식 매수가능금액조회[v1_해외주식-014]
     /// tr_crcy_cd
@@ -7715,7 +7954,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 매수가능금액조회 API입니다.
     ///
@@ -7729,14 +7968,20 @@ impl Trading {
             crate::client::KisEnv::Real => "TTTS3007R",
             crate::client::KisEnv::Vts => "VTTS3007R",
         };
-        self.0.get("/uapi/overseas-stock/v1/trading/inquire-psamount", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-stock/v1/trading/inquire-psamount",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외주식 미체결내역
-    /// 
+    ///
     /// - TR_ID: Real=TTTS3018R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-nccs
-    /// 
+    ///
     /// [해외주식] 주문/계좌
     /// 해외주식 미체결내역[v1_해외주식-005]
     /// ord_dt
@@ -7770,7 +8015,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 접수된 해외주식 주문 중 체결되지 않은 미체결 내역을 조회하는 API입니다.
     /// 실전계좌의 경우, 한 번의 호출에 최대 40건까지 확인 가능하며, 이후의 값은 연속조회를 통해 확인하실 수 있습니다.
@@ -7796,14 +8041,16 @@ impl Trading {
             crate::client::KisEnv::Real => "TTTS3018R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/trading/inquire-nccs", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-stock/v1/trading/inquire-nccs", tr_id, req)
+            .await
     }
 
     /// 해외주식 잔고
-    /// 
+    ///
     /// - TR_ID: Real=TTTS3012R / VTS=VTTS3012R
     /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-balance
-    /// 
+    ///
     /// [해외주식] 주문/계좌
     /// 해외주식 잔고[v1_해외주식-006]
     /// acnt_prdt_cd
@@ -7836,7 +8083,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 잔고를 조회하는 API 입니다.
     /// 한국투자 HTS(eFriend Plus) > [7600] 해외주식 종합주문 화면의 좌측 하단 '실시간잔고' 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -7857,14 +8104,20 @@ impl Trading {
             crate::client::KisEnv::Real => "TTTS3012R",
             crate::client::KisEnv::Vts => "VTTS3012R",
         };
-        self.0.get("/uapi/overseas-stock/v1/trading/inquire-balance", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-stock/v1/trading/inquire-balance",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외주식 주문체결내역
-    /// 
+    ///
     /// - TR_ID: Real=TTTS3035R / VTS=VTTS3035R
     /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-ccnl
-    /// 
+    ///
     /// [해외주식] 주문/계좌
     /// 해외주식 주문체결내역[v1_해외주식-007]
     /// ord_dt
@@ -7901,7 +8154,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 일정 기간의 해외주식 주문 체결 내역을 확인하는 API입니다.
     /// 실전계좌의 경우, 한 번의 호출에 최대 20건까지 확인 가능하며, 이후의 값은 연속조회를 통해 확인하실 수 있습니다.
@@ -7925,14 +8178,16 @@ impl Trading {
             crate::client::KisEnv::Real => "TTTS3035R",
             crate::client::KisEnv::Vts => "VTTS3035R",
         };
-        self.0.get("/uapi/overseas-stock/v1/trading/inquire-ccnl", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-stock/v1/trading/inquire-ccnl", tr_id, req)
+            .await
     }
 
     /// 해외주식 체결기준현재잔고
-    /// 
+    ///
     /// - TR_ID: Real=CTRP6504R / VTS=VTRP6504R
     /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-present-balance
-    /// 
+    ///
     /// [해외주식] 주문/계좌
     /// 해외주식 체결기준현재잔고[v1_해외주식-008]
     /// prdt_name
@@ -8000,7 +8255,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 잔고를 체결 기준으로 확인하는 API 입니다.
     ///
@@ -8040,14 +8295,20 @@ impl Trading {
             crate::client::KisEnv::Real => "CTRP6504R",
             crate::client::KisEnv::Vts => "VTRP6504R",
         };
-        self.0.get("/uapi/overseas-stock/v1/trading/inquire-present-balance", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-stock/v1/trading/inquire-present-balance",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외주식 예약주문조회
-    /// 
+    ///
     /// - TR_ID: Real=TTTT3039R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv-list
-    /// 
+    ///
     /// [해외주식] 주문/계좌
     /// 해외주식 예약주문조회[v1_해외주식-013]
     /// cncl_yn
@@ -8076,7 +8337,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 예약주문 조회 API입니다.
     /// ※ 모의투자는 사용 불가합니다.
@@ -8091,14 +8352,20 @@ impl Trading {
             crate::client::KisEnv::Real => "TTTT3039R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/trading/order-resv-list", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-stock/v1/trading/order-resv-list",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외주식 결제기준잔고
-    /// 
+    ///
     /// - TR_ID: Real=CTRP6010R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-paymt-stdr-balance
-    /// 
+    ///
     /// [해외주식] 주문/계좌
     /// 해외주식 결제기준잔고 [해외주식-064]
     /// prdt_name
@@ -8142,7 +8409,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 결제기준잔고 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0829] 해외 결제기준잔고 화면 의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -8159,14 +8426,20 @@ impl Trading {
             crate::client::KisEnv::Real => "CTRP6010R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/trading/inquire-paymt-stdr-balance", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-stock/v1/trading/inquire-paymt-stdr-balance",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외주식 일별거래내역
-    /// 
+    ///
     /// - TR_ID: Real=CTOS4001R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-period-trans
-    /// 
+    ///
     /// [해외주식] 주문/계좌
     /// 해외주식 일별거래내역 [해외주식-063]
     /// trad_dt
@@ -8199,7 +8472,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 일별거래내역 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0828] 해외증권 일별거래내역 화면 의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -8214,14 +8487,20 @@ impl Trading {
             crate::client::KisEnv::Real => "CTOS4001R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/trading/inquire-period-trans", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-stock/v1/trading/inquire-period-trans",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외주식 기간손익
-    /// 
+    ///
     /// - TR_ID: Real=TTTS3039R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-period-profit
-    /// 
+    ///
     /// [해외주식] 주문/계좌
     /// 해외주식 기간손익[v1_해외주식-032]
     /// trad_day
@@ -8247,7 +8526,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 기간손익 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7717] 해외 기간손익 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -8270,14 +8549,20 @@ impl Trading {
             crate::client::KisEnv::Real => "TTTS3039R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/trading/inquire-period-profit", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-stock/v1/trading/inquire-period-profit",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외증거금 통화별조회
-    /// 
+    ///
     /// - TR_ID: Real=TTTC2101R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/trading/foreign-margin
-    /// 
+    ///
     /// [해외주식] 주문/계좌
     /// 해외증거금 통화별조회 [해외주식-035]
     /// natn_name
@@ -8295,7 +8580,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외증거금 통화별조회 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [7718] 해외주식 증거금상세 화면 의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -8307,14 +8592,16 @@ impl Trading {
             crate::client::KisEnv::Real => "TTTC2101R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/trading/foreign-margin", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-stock/v1/trading/foreign-margin", tr_id, req)
+            .await
     }
 
     /// 해외주식 미국주간주문
-    /// 
+    ///
     /// - TR_ID: Real=TTTS6036U / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/trading/daytime-order
-    /// 
+    ///
     /// [해외주식] 주문/계좌
     /// 해외주식 미국주간주문[v1_해외주식-026]
     /// KRX_FWDG_ORD_ORGNO
@@ -8323,7 +8610,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 미국주간주문 API입니다.
     ///
@@ -8354,14 +8641,16 @@ impl Trading {
             crate::client::KisEnv::Real => "TTTS6036U",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.post("/uapi/overseas-stock/v1/trading/daytime-order", tr_id, req).await
+        self.0
+            .post("/uapi/overseas-stock/v1/trading/daytime-order", tr_id, req)
+            .await
     }
 
     /// 해외주식 미국주간정정취소
-    /// 
+    ///
     /// - TR_ID: Real=TTTS6038U / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/trading/daytime-order-rvsecncl
-    /// 
+    ///
     /// [해외주식] 주문/계좌
     /// 해외주식 미국주간정정취소[v1_해외주식-027]
     /// KRX_FWDG_ORD_ORGNO
@@ -8370,7 +8659,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 미국주간정정취소 API입니다.
     ///
@@ -8401,14 +8690,20 @@ impl Trading {
             crate::client::KisEnv::Real => "TTTS6038U",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.post("/uapi/overseas-stock/v1/trading/daytime-order-rvsecncl", tr_id, req).await
+        self.0
+            .post(
+                "/uapi/overseas-stock/v1/trading/daytime-order-rvsecncl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외주식 지정가주문번호조회
-    /// 
+    ///
     /// - TR_ID: Real=TTTS6058R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/trading/algo-ordno
-    /// 
+    ///
     /// [해외주식] 주문/계좌
     /// 해외주식 지정가주문번호조회 [해외주식-071]
     /// trad_dvsn_name
@@ -8422,25 +8717,24 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// TWAP, VWAP 주문에 대한 주문번호를 조회하는 API
-    pub async fn algo_ordno(
-        &self,
-        req: AlgoOrdnoRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn algo_ordno(&self, req: AlgoOrdnoRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTS6058R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/trading/algo-ordno", tr_id, req).await
+        self.0
+            .get("/uapi/overseas-stock/v1/trading/algo-ordno", tr_id, req)
+            .await
     }
 
     /// 해외주식 지정가체결내역조회
-    /// 
+    ///
     /// - TR_ID: Real=TTTS6059R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-algo-ccnl
-    /// 
+    ///
     /// [해외주식] 주문/계좌
     /// 해외주식 지정가체결내역조회 [해외주식-070]
     /// CCLD_SEQ
@@ -8464,7 +8758,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외주식 TWAP, VWAP 주문에 대한 체결내역 조회 API로 지정가 주문번호조회 API를 수행 후 조회해야합니다
     pub async fn inquire_algo_ccnl(
@@ -8475,14 +8769,20 @@ impl Trading {
             crate::client::KisEnv::Real => "TTTS6059R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-stock/v1/trading/inquire-algo-ccnl", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-stock/v1/trading/inquire-algo-ccnl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물옵션 주문
-    /// 
+    ///
     /// - TR_ID: Real=OTFM3001U / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/trading/order
-    /// 
+    ///
     /// [해외선물옵션] 주문/계좌
     /// 해외선물옵션 주문 [v1_해외선물-001]
     /// ORD_DT
@@ -8490,7 +8790,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물옵션 주문 API 입니다.
     ///
@@ -8507,14 +8807,16 @@ impl Trading {
             crate::client::KisEnv::Real => "OTFM3001U",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.post("/uapi/overseas-futureoption/v1/trading/order", tr_id, req).await
+        self.0
+            .post("/uapi/overseas-futureoption/v1/trading/order", tr_id, req)
+            .await
     }
 
     /// 해외선물옵션 정정취소주문
-    /// 
+    ///
     /// - TR_ID: Real=OTFM3002U / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/trading/order-rvsecncl
-    /// 
+    ///
     /// [해외선물옵션] 주문/계좌
     /// 해외선물옵션 정정취소주문 [v1_해외선물-002, 003]
     /// ORD_DT
@@ -8522,7 +8824,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물옵션 정정취소주문 API 입니다.
     ///
@@ -8536,14 +8838,20 @@ impl Trading {
             crate::client::KisEnv::Real => "OTFM3002U",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.post("/uapi/overseas-futureoption/v1/trading/order-rvsecncl", tr_id, req).await
+        self.0
+            .post(
+                "/uapi/overseas-futureoption/v1/trading/order-rvsecncl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물옵션 당일주문내역조회
-    /// 
+    ///
     /// - TR_ID: Real=OTFM3116R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/trading/inquire-ccld
-    /// 
+    ///
     /// [해외선물옵션] 주문/계좌
     /// 해외선물옵션 당일주문내역조회 [v1_해외선물-004]
     /// acnt_prdt_cd
@@ -8578,7 +8886,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물옵션 당일주문내역조회 API입니다.
     pub async fn inquire_ccld(
@@ -8589,14 +8897,20 @@ impl Trading {
             crate::client::KisEnv::Real => "OTFM3116R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/trading/inquire-ccld", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/trading/inquire-ccld",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물옵션 미결제내역조회(잔고)
-    /// 
+    ///
     /// - TR_ID: Real=OTFM1412R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/trading/inquire-unpd
-    /// 
+    ///
     /// [해외선물옵션] 주문/계좌
     /// 해외선물옵션 미결제내역조회(잔고) [v1_해외선물-005]
     /// acnt_prdt_cd
@@ -8617,7 +8931,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물옵션 미결제내역조회(잔고) API입니다.
     pub async fn inquire_unpd(
@@ -8628,14 +8942,20 @@ impl Trading {
             crate::client::KisEnv::Real => "OTFM1412R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/trading/inquire-unpd", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/trading/inquire-unpd",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물옵션 주문가능조회
-    /// 
+    ///
     /// - TR_ID: Real=OTFM3304R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/trading/inquire-psamount
-    /// 
+    ///
     /// [해외선물옵션] 주문/계좌
     /// 해외선물옵션 주문가능조회 [v1_해외선물-006]
     /// acnt_prdt_cd
@@ -8651,7 +8971,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물옵션 주문가능조회 API입니다.
     pub async fn inquire_psamount_next(
@@ -8662,14 +8982,20 @@ impl Trading {
             crate::client::KisEnv::Real => "OTFM3304R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/trading/inquire-psamount", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/trading/inquire-psamount",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물옵션 기간계좌손익 일별
-    /// 
+    ///
     /// - TR_ID: Real=OTFM3118R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/trading/inquire-period-ccld
-    /// 
+    ///
     /// [해외선물옵션] 주문/계좌
     /// 해외선물옵션 기간계좌손익 일별[해외선물-010]
     /// acnt_prdt_cd
@@ -8706,7 +9032,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물옵션 기간계좌손익 일별 API입니다.
     pub async fn inquire_period_ccld(
@@ -8717,14 +9043,20 @@ impl Trading {
             crate::client::KisEnv::Real => "OTFM3118R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/trading/inquire-period-ccld", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/trading/inquire-period-ccld",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물옵션 일별 체결내역
-    /// 
+    ///
     /// - TR_ID: Real=OTFM3122R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/trading/inquire-daily-ccld
-    /// 
+    ///
     /// [해외선물옵션] 주문/계좌
     /// 해외선물옵션 일별 체결내역[해외선물-011]
     /// fm_tot_ccld_qty
@@ -8748,7 +9080,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물옵션 일별 체결내역 API입니다.
     /// 거래소 체결 내역에 따라 , output1에 동일한 주문번호의 데이터들이 수신될 수 있습니다.
@@ -8760,14 +9092,20 @@ impl Trading {
             crate::client::KisEnv::Real => "OTFM3122R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/trading/inquire-daily-ccld", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/trading/inquire-daily-ccld",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물옵션 예수금현황
-    /// 
+    ///
     /// - TR_ID: Real=OTFM1411R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/trading/inquire-deposit
-    /// 
+    ///
     /// [해외선물옵션] 주문/계좌
     /// 해외선물옵션 예수금현황[해외선물-012]
     /// fm_nxdy_dncl_amt
@@ -8798,7 +9136,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물옵션 예수금현황 API입니다.
     pub async fn inquire_deposit_next(
@@ -8809,14 +9147,20 @@ impl Trading {
             crate::client::KisEnv::Real => "OTFM1411R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/trading/inquire-deposit", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/trading/inquire-deposit",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물옵션 일별 주문내역
-    /// 
+    ///
     /// - TR_ID: Real=OTFM3120R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/trading/inquire-daily-order
-    /// 
+    ///
     /// [해외선물옵션] 주문/계좌
     /// 해외선물옵션 일별 주문내역[해외선물-013]
     /// acnt_prdt_cd
@@ -8847,7 +9191,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물옵션 일별 주문내역 API입니다.
     pub async fn inquire_daily_order(
@@ -8858,14 +9202,20 @@ impl Trading {
             crate::client::KisEnv::Real => "OTFM3120R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/trading/inquire-daily-order", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/trading/inquire-daily-order",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물옵션 기간계좌거래내역
-    /// 
+    ///
     /// - TR_ID: Real=OTFM3114R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/trading/inquire-period-trans
-    /// 
+    ///
     /// [해외선물옵션] 주문/계좌
     /// 해외선물옵션 기간계좌거래내역[해외선물-014]
     /// bass_dt
@@ -8888,7 +9238,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물옵션 기간계좌거래내역 API입니다.
     pub async fn inquire_period_trans_next(
@@ -8899,14 +9249,20 @@ impl Trading {
             crate::client::KisEnv::Real => "OTFM3114R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/trading/inquire-period-trans", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/trading/inquire-period-trans",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 해외선물옵션 증거금상세
-    /// 
+    ///
     /// - TR_ID: Real=OTFM3115R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-futureoption/v1/trading/margin-detail
-    /// 
+    ///
     /// [해외선물옵션] 주문/계좌
     /// 해외선물옵션 증거금상세 [해외선물-032]
     /// acnt_prdt_cd
@@ -8961,7 +9317,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 해외선물옵션 증거금상세 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [2711] 해외선물옵션 증거금상세 화면 의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -9001,14 +9357,20 @@ impl Trading {
             crate::client::KisEnv::Real => "OTFM3115R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/overseas-futureoption/v1/trading/margin-detail", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/overseas-futureoption/v1/trading/margin-detail",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 장내채권 매수주문
-    /// 
+    ///
     /// - TR_ID: Real=TTTC0952U / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-bond/v1/trading/buy
-    /// 
+    ///
     /// [장내채권] 주문/계좌
     /// 장내채권 매수주문 [국내주식-124]
     /// krx_fwdg_ord_orgno
@@ -9017,26 +9379,25 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 장내채권 매수주문 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0978] 장내채권주문 '채권매수' 탭의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
-    pub async fn buy(
-        &self,
-        req: BuyRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn buy(&self, req: BuyRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC0952U",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.post("/uapi/domestic-bond/v1/trading/buy", tr_id, req).await
+        self.0
+            .post("/uapi/domestic-bond/v1/trading/buy", tr_id, req)
+            .await
     }
 
     /// 장내채권 매도주문
-    /// 
+    ///
     /// - TR_ID: Real=TTTC0958U / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-bond/v1/trading/sell
-    /// 
+    ///
     /// [장내채권] 주문/계좌
     /// 장내채권 매도주문 [국내주식-123]
     /// krx_fwdg_ord_orgno
@@ -9045,26 +9406,25 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 장내채권 매도주문 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0978] 장내채권주문 '채권매도' 탭의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
-    pub async fn sell(
-        &self,
-        req: SellRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    pub async fn sell(&self, req: SellRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC0958U",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.post("/uapi/domestic-bond/v1/trading/sell", tr_id, req).await
+        self.0
+            .post("/uapi/domestic-bond/v1/trading/sell", tr_id, req)
+            .await
     }
 
     /// 장내채권 정정취소주문
-    /// 
+    ///
     /// - TR_ID: Real=TTTC0953U / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-bond/v1/trading/order-rvsecncl
-    /// 
+    ///
     /// [장내채권] 주문/계좌
     /// 장내채권 정정취소주문 [국내주식-125]
     /// krx_fwdg_ord_orgno
@@ -9073,7 +9433,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 장내채권 정정취소주문 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0978] 장내채권주문 '채권정정/취소' 탭의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -9085,14 +9445,16 @@ impl Trading {
             crate::client::KisEnv::Real => "TTTC0953U",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.post("/uapi/domestic-bond/v1/trading/order-rvsecncl", tr_id, req).await
+        self.0
+            .post("/uapi/domestic-bond/v1/trading/order-rvsecncl", tr_id, req)
+            .await
     }
 
     /// 채권정정취소가능주문조회
-    /// 
+    ///
     /// - TR_ID: Real=CTSC8035R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-bond/v1/trading/inquire-psbl-rvsecncl
-    /// 
+    ///
     /// [장내채권] 주문/계좌
     /// 채권정정취소가능주문조회 [국내주식-126]
     /// rvse_cncl_dvsn_name
@@ -9112,7 +9474,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 채권정정취소가능주문조회 API입니다.
     /// 정정취소가능한 채권주문 목록을 확인할 수 있습니다.
@@ -9124,14 +9486,20 @@ impl Trading {
             crate::client::KisEnv::Real => "CTSC8035R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-bond/v1/trading/inquire-psbl-rvsecncl", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-bond/v1/trading/inquire-psbl-rvsecncl",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 장내채권 주문체결내역
-    /// 
+    ///
     /// - TR_ID: Real=CTSC8013R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-bond/v1/trading/inquire-daily-ccld
-    /// 
+    ///
     /// [장내채권] 주문/계좌
     /// 장내채권 주문체결내역 [국내주식-127]
     /// tot_ord_qty
@@ -9162,7 +9530,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 장내채권 주문체결내역 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0978] 장내채권주문 '채권주문체결' 탭의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -9174,14 +9542,20 @@ impl Trading {
             crate::client::KisEnv::Real => "CTSC8013R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-bond/v1/trading/inquire-daily-ccld", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-bond/v1/trading/inquire-daily-ccld",
+                tr_id,
+                req,
+            )
+            .await
     }
 
     /// 장내채권 잔고조회
-    /// 
+    ///
     /// - TR_ID: Real=CTSC8407R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-bond/v1/trading/inquire-balance
-    /// 
+    ///
     /// [장내채권] 주문/계좌
     /// 장내채권 잔고조회 [국내주식-198]
     /// prdt_name
@@ -9198,7 +9572,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 장내채권 잔고조회 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0979] 장내채권종합주문 화면의 "왼쪽 하단 잔고" 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -9210,14 +9584,16 @@ impl Trading {
             crate::client::KisEnv::Real => "CTSC8407R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-bond/v1/trading/inquire-balance", tr_id, req).await
+        self.0
+            .get("/uapi/domestic-bond/v1/trading/inquire-balance", tr_id, req)
+            .await
     }
 
     /// 장내채권 매수가능조회
-    /// 
+    ///
     /// - TR_ID: Real=TTTC8910R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-bond/v1/trading/inquire-psbl-order
-    /// 
+    ///
     /// [장내채권] 주문/계좌
     /// 장내채권 매수가능조회 [국내주식-199]
     /// ord_psbl_cash
@@ -9231,7 +9607,7 @@ impl Trading {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    /// 
+    ///
     /// # Example (Scraped)
     /// 장내채권 매수가능조회 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0978] 장내채권주문 화면의 "왼쪽 하단 증거금 사용가능 내역 / 주문가능금액 및 수량" 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
@@ -9245,8 +9621,12 @@ impl Trading {
             crate::client::KisEnv::Real => "TTTC8910R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
-        self.0.get("/uapi/domestic-bond/v1/trading/inquire-psbl-order", tr_id, req).await
+        self.0
+            .get(
+                "/uapi/domestic-bond/v1/trading/inquire-psbl-order",
+                tr_id,
+                req,
+            )
+            .await
     }
-
 }
-

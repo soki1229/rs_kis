@@ -289,7 +289,7 @@ mod tests {
             cache_path: None,
         });
         let client = KisClient { inner };
-        assert_eq!(client.ws_url(), "wss://ops.koreainvestment.com:21000");
+        assert_eq!(client.ws_url(), "ws://ops.koreainvestment.com:21000");
     }
 
     #[test]
@@ -304,6 +304,6 @@ mod tests {
             cache_path: None,
         });
         let client = KisClient { inner };
-        assert_eq!(client.ws_url(), "wss://ops.koreainvestment.com:31000");
+        assert_eq!(client.ws_url(), "ws://ops.koreainvestment.com:31000");
     }
 }

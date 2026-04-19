@@ -1,6 +1,6 @@
 #![allow(clippy::doc_lazy_continuation)]
-use serde::{Deserialize, Serialize};
 use rust_decimal::Decimal;
+use serde::{Deserialize, Serialize};
 
 /// [접근토큰발급(P)] 요청 구조체
 /// OAuth인증
