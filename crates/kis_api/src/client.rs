@@ -199,6 +199,11 @@ impl KisClient {
         &self.inner.app_key
     }
 
+    /// 현재 액세스 토큰의 만료 시각 반환. 미발급 시 None.
+    pub async fn token_expires_at(&self) -> Option<DateTime<Utc>> {
+        *self.inner.token_expires_at.lock().await
+    }
+
     pub async fn post<R, B>(&self, path: &str, tr_id: &str, body: B) -> Result<R, KisError>
     where
         R: for<'de> Deserialize<'de> + Default,
