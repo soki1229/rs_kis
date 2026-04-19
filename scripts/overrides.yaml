@@ -1,0 +1,14 @@
+# Manual patches for incorrect portal data
+apis:
+  # Example: Correcting a misspelled endpoint or adding missing info
+  - endpoint: "/uapi/domestic-stock/v1/trading/order-cash"
+    name: "주식주문(현금)"
+    patch:
+      description: "국내주식 현금 주문을 수행하는 API입니다. (매수/매도)"
+
+# Global replacements in descriptions
+replacements:
+  - search: "appkey"
+    replace: "`app_key`"
+  - search: "appsecret"
+    replace: "`app_secret`"

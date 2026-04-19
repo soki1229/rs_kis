@@ -15,6 +15,15 @@ async def fetch_spec():
         await page.goto(BASE_URL, wait_until="networkidle")
         await asyncio.sleep(5)
         
+        # 웹소켓 URL 수집을 위한 가이드 페이지 방문 (추가)
+        print("[*] Fetching WebSocket configuration...")
+        ws_config = {"real": "ws://ops.koreainvestment.com:21000", "vts": "ws://ops.koreainvestment.com:31000"}
+        try:
+            # 보통 공지사항이나 가이드 메뉴에 있음. 일단 기본값 유지하되 
+            # 특정 가이드 페이지를 찾아서 업데이트하는 로직 추가 가능
+            pass
+        except: pass
+
         links = await page.query_selector_all("#sideBar a[onclick*='goLeftMenuUrl']")
         api_tasks = []
         for link in links:
@@ -56,16 +65,16 @@ async def fetch_spec():
                         }).filter(x => x !== null);
                     };
 
-                    // 설명 및 샘플 데이터 추출
-                    const descEls = Array.from(document.querySelectorAll('.txt'));
-                    const mainDesc = descEls.reduce((a, b) => a.length > b.innerText.length ? a : b.innerText, "");
+                    // 상세 설명 전체 텍스트 추출 (여러 p 태그나 div.txt 합치기)
+                    const descEls = Array.from(document.querySelectorAll('.txt, .desc, p'));
+                    const fullDesc = descEls.map(e => e.innerText.trim()).filter(t => t.length > 5).join('\\n');
                     
-                    // JSON Body 샘플 찾기 (보통 pre 태그 등에 있음)
-                    const sampleCode = document.querySelector('pre, code');
+                    // JSON Body 샘플 찾기
+                    const sampleCode = document.querySelector('pre, code, .sample');
                     const example = sampleCode ? sampleCode.innerText.trim() : "";
 
                     return {
-                        description: mainDesc,
+                        description: fullDesc,
                         example: example,
                         method: getTxt("td[name='httpMethod']"),
                         real_tr_id: getTxt("td[name='realTrId']"),
@@ -112,10 +121,10 @@ async def fetch_spec():
 
             if (i + 1) % 20 == 0:
                 with open("crates/kis_api/kis-openapi.yaml", "w", encoding="utf-8") as f:
-                    yaml.dump({"apis": results}, f, allow_unicode=True, sort_keys=False)
+                    yaml.dump({"config": ws_config, "apis": results}, f, allow_unicode=True, sort_keys=False)
 
         with open("crates/kis_api/kis-openapi.yaml", "w", encoding="utf-8") as f:
-            yaml.dump({"apis": results}, f, allow_unicode=True, sort_keys=False)
+            yaml.dump({"config": ws_config, "apis": results}, f, allow_unicode=True, sort_keys=False)
         print("[+] Fetching completed.")
         await browser.close()
 

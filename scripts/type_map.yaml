@@ -1,0 +1,28 @@
+# Pattern-based type mapping for KIS fields
+patterns:
+  # Decimal mapping
+  - pattern: ".*_(qty|amt|pric|unpr|rt|rate|vol|val|amt[0-9]*)$"
+    type: "Decimal"
+    import: "rust_decimal::Decimal"
+  - pattern: "^(qty|amt|price|rt|rate|volume|value)$"
+    type: "Decimal"
+    import: "rust_decimal::Decimal"
+  
+  # Integer mapping
+  - pattern: ".*_cnt$"
+    type: "i64"
+  - pattern: ".*_no$"
+    type: "String" # Keep as string for leading zeros
+    
+  # Date/Time mapping
+  - pattern: ".*_(date|dt)$"
+    type: "String" # For now, keep as string or use NaiveDate later
+  - pattern: ".*_time$"
+    type: "String"
+
+# Explicit field-level overrides
+fields:
+  - name: "cano"
+    type: "String"
+  - name: "acnt_prdt_cd"
+    type: "String"

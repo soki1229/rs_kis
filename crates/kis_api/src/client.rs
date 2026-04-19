@@ -189,8 +189,8 @@ impl KisClient {
     /// 이 클라이언트 환경에 맞는 WebSocket URL 반환.
     pub fn ws_url(&self) -> &'static str {
         match self.env() {
-            KisEnv::Real => "wss://ops.koreainvestment.com:21000",
-            KisEnv::Vts => "wss://ops.koreainvestment.com:31000",
+            KisEnv::Real => crate::generated::config::REAL_WS_URL,
+            KisEnv::Vts => crate::generated::config::VTS_WS_URL,
         }
     }
 
