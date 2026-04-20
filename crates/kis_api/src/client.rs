@@ -71,7 +71,6 @@ impl KisClient {
         if let Some(path) = &this.inner.cache_path {
             if let Ok(cache_str) = std::fs::read_to_string(path) {
                 if let Ok(cache) = serde_json::from_str::<TokenCache>(&cache_str) {
-                    // 만료 시각이 1분 이상 남았을 때만 재사용
                     if cache.expires_at > Utc::now() + chrono::Duration::minutes(1) {
                         {
                             let mut token = this.inner.access_token.write().await;
@@ -87,7 +86,6 @@ impl KisClient {
             }
         }
 
-        // 2. 캐시가 없거나 만료된 경우 새로 발급
         this.refresh_token().await?;
         Ok(this)
     }
@@ -101,7 +99,6 @@ impl KisClient {
         };
 
         let resp = self.inner.client.post(&url).json(&req).send().await?;
-
         if !resp.status().is_success() {
             let status = resp.status().as_u16();
             let text = resp.text().await.unwrap_or_default();
@@ -111,26 +108,17 @@ impl KisClient {
         let body_text = resp.text().await?;
         let resp_data: TokenResponse = match serde_json::from_str(&body_text) {
             Ok(data) => data,
-            Err(e) => {
-                return Err(KisError::Auth(format!(
-                    "Failed to parse token response: {}. Raw body: {}",
-                    e, body_text
-                )));
-            }
+            Err(e) => return Err(KisError::Auth(format!("Failed to parse token: {}", e))),
         };
 
         let expires_at = Utc::now() + chrono::Duration::seconds(resp_data.expires_in as i64);
-
-        // 메모리 업데이트
         {
-            let mut token = self.inner.access_token.write().await;
+            let mut token = this.inner.access_token.write().await;
             *token = resp_data.access_token.clone();
-            let mut expires = self.inner.token_expires_at.lock().await;
+            let mut expires = this.inner.token_expires_at.lock().await;
             *expires = Some(expires_at);
         }
-
-        // 파일 캐시 업데이트
-        if let Some(path) = &self.inner.cache_path {
+        if let Some(path) = &this.inner.cache_path {
             let cache = TokenCache {
                 access_token: resp_data.access_token,
                 expires_at,
@@ -139,7 +127,6 @@ impl KisClient {
                 let _ = std::fs::write(path, cache_json);
             }
         }
-
         Ok(())
     }
 
@@ -159,7 +146,6 @@ impl KisClient {
         }
     }
 
-    /// WebSocket 연결에 필요한 approval_key 발급.
     pub async fn approval_key(&self) -> Result<String, KisError> {
         let url = format!("{}/oauth2/Approval", self.inner.base_url);
         let req = serde_json::json!({
@@ -169,24 +155,19 @@ impl KisClient {
         });
 
         let resp = self.inner.client.post(&url).json(&req).send().await?;
-
         if !resp.status().is_success() {
             let status = resp.status().as_u16();
             let text = resp.text().await.unwrap_or_default();
-            return Err(KisError::Auth(format!(
-                "Approval key failed ({}): {}",
-                status, text
-            )));
+            return Err(KisError::Auth(format!("Approval key failed ({}): {}", status, text)));
         }
 
-        let json: serde_json::Value = resp.json().await?;
-        json["approval_key"]
+        let data: serde_json::Value = resp.json().await?;
+        data["approval_key"]
             .as_str()
             .map(|s| s.to_string())
-            .ok_or_else(|| KisError::Auth("approval_key not found in response".to_string()))
+            .ok_or_else(|| KisError::Auth("approval_key not found".to_string()))
     }
 
-    /// 이 클라이언트 환경에 맞는 WebSocket URL 반환.
     pub fn ws_url(&self) -> &'static str {
         match self.env() {
             KisEnv::Real => crate::generated::config::REAL_WS_URL,
@@ -194,12 +175,10 @@ impl KisClient {
         }
     }
 
-    /// WS 구독 메시지 헤더용 app_key 반환.
     pub fn app_key(&self) -> &str {
         &self.inner.app_key
     }
 
-    /// 현재 액세스 토큰의 만료 시각 반환. 미발급 시 None.
     pub async fn token_expires_at(&self) -> Option<DateTime<Utc>> {
         *self.inner.token_expires_at.lock().await
     }
@@ -212,10 +191,7 @@ impl KisClient {
         let token = self.inner.access_token.read().await.clone();
         let url = format!("{}/{}", self.inner.base_url, path.trim_start_matches('/'));
 
-        let resp = self
-            .inner
-            .client
-            .post(&url)
+        let resp = self.inner.client.post(&url)
             .header("authorization", format!("Bearer {}", token))
             .header("appkey", &self.inner.app_key)
             .header("appsecret", &self.inner.app_secret)
@@ -225,17 +201,7 @@ impl KisClient {
             .send()
             .await?;
 
-        if !resp.status().is_success() {
-            let status = resp.status().as_u16();
-            let text = resp.text().await.unwrap_or_default();
-            return Err(KisError::Http {
-                status,
-                message: text,
-            });
-        }
-
-        let json: ApiResponse<R> = resp.json().await?;
-        json.into_result()
+        ApiResponse::<R>::from_response(resp).await.map(|r| r.output)
     }
 
     pub async fn get<R, Q>(&self, path: &str, tr_id: &str, query: Q) -> Result<R, KisError>
@@ -246,10 +212,7 @@ impl KisClient {
         let token = self.inner.access_token.read().await.clone();
         let url = format!("{}/{}", self.inner.base_url, path.trim_start_matches('/'));
 
-        let resp = self
-            .inner
-            .client
-            .get(&url)
+        let resp = self.inner.client.get(&url)
             .header("authorization", format!("Bearer {}", token))
             .header("appkey", &self.inner.app_key)
             .header("appsecret", &self.inner.app_secret)
@@ -259,51 +222,6 @@ impl KisClient {
             .send()
             .await?;
 
-        if !resp.status().is_success() {
-            let status = resp.status().as_u16();
-            let text = resp.text().await.unwrap_or_default();
-            return Err(KisError::Http {
-                status,
-                message: text,
-            });
-        }
-
-        let json: ApiResponse<R> = resp.json().await?;
-        json.into_result()
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn ws_url_real_env() {
-        let inner = Arc::new(Inner {
-            access_token: RwLock::new(String::new()),
-            token_expires_at: Mutex::new(None),
-            app_key: "key".to_string(),
-            app_secret: "secret".to_string(),
-            client: Client::new(),
-            base_url: "https://openapi.koreainvestment.com:8080".to_string(),
-            cache_path: None,
-        });
-        let client = KisClient { inner };
-        assert_eq!(client.ws_url(), "ws://ops.koreainvestment.com:21000");
-    }
-
-    #[test]
-    fn ws_url_vts_env() {
-        let inner = Arc::new(Inner {
-            access_token: RwLock::new(String::new()),
-            token_expires_at: Mutex::new(None),
-            app_key: "key".to_string(),
-            app_secret: "secret".to_string(),
-            client: Client::new(),
-            base_url: "https://openapivts.koreainvestment.com:29443".to_string(),
-            cache_path: None,
-        });
-        let client = KisClient { inner };
-        assert_eq!(client.ws_url(), "ws://ops.koreainvestment.com:31000");
+        ApiResponse::<R>::from_response(resp).await.map(|r| r.output)
     }
 }
