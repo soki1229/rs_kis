@@ -50,7 +50,7 @@ class TypeMapper:
     def __init__(self, config_path):
         with open(config_path, "r", encoding="utf-8") as f:
             self.config = yaml.safe_load(f)
-        self.patterns = [(re.compile(p['pattern'], re.I), p['type'], p.get('import')) 
+        self.patterns = [(re.compile(p['pattern']), p['type'], p.get('import')) 
                          for p in self.config.get('patterns', [])]
         self.explicit = {f['name']: (f['type'], f.get('import')) 
                          for f in self.config.get('fields', [])}
@@ -65,7 +65,7 @@ class TypeMapper:
         
         # 2. Check pattern matching
         for pattern, rtype, imp in self.patterns:
-            if pattern.match(field_name):
+            if pattern.fullmatch(field_name):
                 if imp: self.required_imports.add(imp)
                 return rtype
         
@@ -121,8 +121,12 @@ class CodeGenerator:
             namespace = self._get_namespace(api)
             
             struct_base = to_struct_name(api)
-            while struct_base in seen_structs: struct_base += "Next"
+            counter = 2
+            while struct_base in seen_structs:
+                struct_base = f"{to_struct_name(api)}_{counter}"
+                counter += 1
             seen_structs.add(struct_base)
+
             api['generated_struct'] = struct_base
             
             self.grouped_apis[category][namespace].append(api)
@@ -226,11 +230,15 @@ class CodeGenerator:
             code += f"#[allow(non_snake_case)]\nimpl {ns_camel} {{\n"
             seen_methods = set()
             for api in apis:
-                method_name = api['endpoint'].split('/')[-1].replace('-', '_')
-                if not method_name: method_name = api['endpoint'].split('/')[-2].replace('-', '_')
-                
-                method_full = method_name
-                while method_full in seen_methods: method_full += "_next"
+                method_base = api['endpoint'].split('/')[-1].replace('-', '_')
+                if not method_base:
+                    method_base = api['endpoint'].split('/')[-2].replace('-', '_')
+
+                method_full = method_base
+                counter = 2
+                while method_full in seen_methods:
+                    method_full = f"{method_base}_{counter}"
+                    counter += 1
                 seen_methods.add(method_full)
                 
                 real_tr_id_str = api.get('real_tr_id', ""); vts_tr_id_str = api.get('vts_tr_id', "")
