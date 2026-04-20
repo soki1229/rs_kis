@@ -233,7 +233,7 @@ class CodeGenerator:
 
     def _write_mod_rs(self):
         with open(os.path.join(OUTPUT_DIR, "mod.rs"), "w") as f:
-            f.write("pub mod models;\npub mod stock;\npub mod overseas;\n")
+            f.write("pub mod models;\npub mod stock;\npub mod overseas;\npub mod config;\npub mod tests;\n")
 
 if __name__ == "__main__":
     generator = CodeGenerator()
