@@ -15,19 +15,16 @@ OUTPUT_DIR = "crates/kis_api/src/generated"
 
 def to_struct_name(api):
     # 경로 전체를 활용하여 고유한 이름 생성
-    # /uapi/domestic-stock/v1/trading/order-cash -> StockTradingOrderCash
+    # /uapi/overseas-stock/v1/trading/order -> OverseasStockV1TradingOrder
     parts = api['endpoint'].strip('/').split('/')
     
-    # 카테고리 추출
-    category = "Stock" if "domestic-stock" in api['endpoint'] else "Overseas"
+    # 불필요한 공통 접두사 'uapi'만 제거
+    useful_parts = [p for p in parts if p not in ["uapi"]]
     
-    # 네임스페이스 및 기능 추출 (v1, v2 등 버전 제외)
-    useful_parts = [p for p in parts if p not in ["uapi", "domestic-stock", "overseas-stock", "v1", "v2", "v3", "quotations", "trading"]]
-    
-    name_parts = [category] + [inflection.camelize(p.replace('-', '_')) for p in useful_parts]
+    name_parts = [inflection.camelize(p.replace('-', '_')) for p in useful_parts]
     name = "".join(name_parts)
     
-    if len(name) < 10: # 너무 짧으면 보완
+    if len(name) < 10:
         clean_name = re.sub(r'\(.*?\)', '', api['name'])
         clean_name = re.sub(r'[^\w\s]', '', clean_name)
         name += inflection.camelize(inflection.underscore(clean_name.strip().replace(' ', '_')))
