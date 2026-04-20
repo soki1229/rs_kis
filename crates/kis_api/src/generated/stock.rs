@@ -60,7 +60,10 @@ impl Trading {
     ///
     /// ※ 종목코드 마스터파일 파이썬 정제코드는 한국투자증권 Github 참고 부탁드립니다.
     /// https://github.com/koreainvestment/open-trading-api/tree/main/stocks_info
-    pub async fn order_cash(&self, req: OrderCashRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn order_cash(
+        &self,
+        req: StockOrderCashRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC0011U",
             crate::client::KisEnv::Vts => "VTTC0011U",
@@ -92,7 +95,7 @@ impl Trading {
     /// (EX. "CANO" : "12345678", "ACNT_PRDT_CD": "01",...)
     pub async fn order_credit(
         &self,
-        req: OrderCreditRequest,
+        req: StockOrderCreditRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC0051U",
@@ -128,7 +131,7 @@ impl Trading {
     /// (EX. "CANO" : "12345678", "ACNT_PRDT_CD": "01",...)
     pub async fn order_rvsecncl(
         &self,
-        req: OrderRvsecnclRequest,
+        req: StockOrderRvsecnclRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC0013U",
@@ -176,7 +179,7 @@ impl Trading {
     /// ※ 주식주문(정정취소) 호출 전에 반드시 주식정정취소가능주문조회 호출을 통해 정정취소가능수량(output > psbl_qty)을 확인하신 후 정정취소주문 내시기 바랍니다.
     pub async fn inquire_psbl_rvsecncl(
         &self,
-        req: InquirePsblRvsecnclRequest,
+        req: StockInquirePsblRvsecnclRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC0084R",
@@ -254,7 +257,7 @@ impl Trading {
     /// 권유드립니다.
     pub async fn inquire_daily_ccld(
         &self,
-        req: InquireDailyCcldRequest,
+        req: StockInquireDailyCcldRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC0081R",
@@ -339,7 +342,7 @@ impl Trading {
     /// ※ 중요 : 해당 API는 제공 정보량이 많아 조회속도가 느린 API입니다. 주문 준비를 위해서는 주식매수/매도가능수량 조회 TR 사용을 권장 드립니다.
     pub async fn inquire_balance(
         &self,
-        req: InquireBalanceRequest,
+        req: StockInquireBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC8434R",
@@ -398,7 +401,7 @@ impl Trading {
     /// . 미수 사용 O: ORD_DVSN:01(시장가) or 특정 주문구분(ex.IOC)로 지정하여 max_buy_qty(최대매수수량) 확인
     pub async fn inquire_psbl_order(
         &self,
-        req: InquirePsblOrderRequest,
+        req: StockInquirePsblOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC8908R",
@@ -445,7 +448,7 @@ impl Trading {
     /// output > ord_psbl_qty(주문가능수량) 확인하실 수 있습니다.
     pub async fn inquire_psbl_sell(
         &self,
-        req: InquirePsblSellRequest,
+        req: StockInquirePsblSellRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC8408R",
@@ -489,7 +492,7 @@ impl Trading {
     /// 신용매수주문 시 주문가능수량과 금액을 확인하실 수 있습니다.
     pub async fn inquire_credit_psamount(
         &self,
-        req: InquireCreditPsamountRequest,
+        req: StockInquireCreditPsamountRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC8909R",
@@ -551,7 +554,10 @@ impl Trading {
     ///
     /// 6. 영업일 장 시작 후 [기간예약주문] 내역 취소는 해당시점 이후의 예약주문이 취소되는 것으로,
     /// 일반주문으로 이미 전환된 주문에는 영향을 미치지 않습니다. 반드시 장 시작전 주문처리결과를 확인하시기 바랍니다.
-    pub async fn order_resv(&self, req: OrderResvRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn order_resv(
+        &self,
+        req: StockOrderResvRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTSC0008U",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -583,7 +589,7 @@ impl Trading {
     /// (EX. "CANO" : "12345678", "ACNT_PRDT_CD": "01",...)
     pub async fn order_resv_rvsecncl(
         &self,
-        req: OrderResvRvsecnclRequest,
+        req: StockOrderResvRvsecnclRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTSC0009U",
@@ -636,7 +642,7 @@ impl Trading {
     /// 실전계좌/모의계좌의 경우, 한 번의 호출에 최대 20건까지 확인 가능하며, 이후의 값은 연속조회를 통해 확인하실 수 있습니다.
     pub async fn order_resv_ccnl(
         &self,
-        req: OrderResvCcnlRequest,
+        req: StockOrderResvCcnlRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTSC0004R",
@@ -684,7 +690,7 @@ impl Trading {
     /// KIS Developers API의 경우 HTS ID에 반드시 연결되어있어야만 API 신청 및 앱정보 발급이 가능한 서비스로 개발되어서 실물계좌가 아닌 55번 계좌는 API 이용이 불가능한 점 양해 부탁드립니다.
     pub async fn inquire_present_balance(
         &self,
-        req: InquirePresentBalanceRequest,
+        req: StockPensionInquirePresentBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC2202R",
@@ -734,7 +740,7 @@ impl Trading {
     /// KIS Developers API의 경우 HTS ID에 반드시 연결되어있어야만 API 신청 및 앱정보 발급이 가능한 서비스로 개발되어서 실물계좌가 아닌 55번 계좌는 API 이용이 불가능한 점 양해 부탁드립니다.
     pub async fn inquire_daily_ccld_v2(
         &self,
-        req: InquireDailyCcldV2Request,
+        req: StockPensionInquireDailyCcldRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC2201R",
@@ -771,7 +777,7 @@ impl Trading {
     /// KIS Developers API의 경우 HTS ID에 반드시 연결되어있어야만 API 신청 및 앱정보 발급이 가능한 서비스로 개발되어서 실물계좌가 아닌 55번 계좌는 API 이용이 불가능한 점 양해 부탁드립니다.
     pub async fn inquire_psbl_order_v2(
         &self,
-        req: InquirePsblOrderV2Request,
+        req: StockPensionInquirePsblOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC0503R",
@@ -807,7 +813,7 @@ impl Trading {
     /// KIS Developers API의 경우 HTS ID에 반드시 연결되어있어야만 API 신청 및 앱정보 발급이 가능한 서비스로 개발되어서 실물계좌가 아닌 55번 계좌는 API 이용이 불가능한 점 양해 부탁드립니다.
     pub async fn inquire_deposit(
         &self,
-        req: InquireDepositRequest,
+        req: StockPensionInquireDepositRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC0506R",
@@ -861,7 +867,7 @@ impl Trading {
     /// KIS Developers API의 경우 HTS ID에 반드시 연결되어있어야만 API 신청 및 앱정보 발급이 가능한 서비스로 개발되어서 실물계좌가 아닌 55번 계좌는 API 이용이 불가능한 점 양해 부탁드립니다.
     pub async fn inquire_balance_v2(
         &self,
-        req: InquireBalanceV2Request,
+        req: StockPensionInquireBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC2208R",
@@ -943,7 +949,7 @@ impl Trading {
     /// (참고: 포럼 - 공지사항 - 신규 API 추가 안내(주식잔고조회_실현손익 외 1건))
     pub async fn inquire_balance_rlz_pl(
         &self,
-        req: InquireBalanceRlzPlRequest,
+        req: StockInquireBalanceRlzPlRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC8494R",
@@ -1007,7 +1013,7 @@ impl Trading {
     /// output1은 한국투자 HTS(eFriend Plus) > [0891] 계좌 자산비중(결제기준) 화면 아래 테이블의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn inquire_account_balance(
         &self,
-        req: InquireAccountBalanceRequest,
+        req: StockInquireAccountBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTRP6548R",
@@ -1065,7 +1071,7 @@ impl Trading {
     /// 한국투자 HTS(eFriend Plus) > [0856] 기간별 매매손익 화면 에서 "일별" 클릭 시의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn inquire_period_profit(
         &self,
-        req: InquirePeriodProfitRequest,
+        req: StockInquirePeriodProfitRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC8708R",
@@ -1130,7 +1136,7 @@ impl Trading {
     /// 한국투자 HTS(eFriend Plus) > [0856] 기간별 매매손익 화면 에서 "종목별" 클릭 시의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn inquire_period_trade_profit(
         &self,
-        req: InquirePeriodTradeProfitRequest,
+        req: StockInquirePeriodTradeProfitRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC8715R",
@@ -1269,7 +1275,7 @@ impl Trading {
     /// ※ 해외 국가별 상세한 증거금현황을 원하시면 [해외주식] 주문/계좌 > 해외증거금 통화별조회 API를 이용하여 주시기 바랍니다.
     pub async fn intgr_margin(
         &self,
-        req: IntgrMarginRequest,
+        req: StockIntgrMarginRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC0869R",
@@ -1325,7 +1331,7 @@ impl Trading {
     /// 한국투자 HTS(eFriend Plus) > [7344] 권리유형별 현황조회 화면을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn period_rights(
         &self,
-        req: PeriodRightsRequest,
+        req: StockPeriodRightsRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTRGA011R",
@@ -1435,7 +1441,7 @@ impl Quotations {
     /// https://github.com/koreainvestment/open-trading-api/tree/main/stocks_info
     pub async fn inquire_price(
         &self,
-        req: InquirePriceRequest,
+        req: StockInquirePriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST01010100",
@@ -1520,7 +1526,7 @@ impl Quotations {
     /// 주식현재가 시세2 API입니다.
     pub async fn inquire_price_2(
         &self,
-        req: InquirePrice2Request,
+        req: StockInquirePrice2Request,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01010000",
@@ -1562,7 +1568,7 @@ impl Quotations {
     /// (FID_INPUT_HOUR_1 를 이용하여 과거시간대 체결데이터 확인 가능)
     pub async fn inquire_ccnl(
         &self,
-        req: InquireCcnlRequest,
+        req: StockInquireCcnlRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST01010300",
@@ -1607,7 +1613,7 @@ impl Quotations {
     /// 주식현재가 일자별 API입니다. 일/주/월별 주가를 확인할 수 있으며 최근 30일(주,별)로 제한되어 있습니다.
     pub async fn inquire_daily_price(
         &self,
-        req: InquireDailyPriceRequest,
+        req: StockInquireDailyPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST01010400",
@@ -1704,7 +1710,7 @@ impl Quotations {
     /// 주식현재가 호가 예상체결 API입니다. 매수 매도 호가를 확인하실 수 있습니다. 실시간 데이터를 원하신다면 웹소켓 API를 활용하세요.
     pub async fn inquire_asking_price_exp_ccn(
         &self,
-        req: InquireAskingPriceExpCcnRequest,
+        req: StockInquireAskingPriceExpCcnRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST01010200",
@@ -1761,7 +1767,7 @@ impl Quotations {
     /// - 당일 데이터는 장 종료 후 제공됩니다.
     pub async fn inquire_investor(
         &self,
-        req: InquireInvestorRequest,
+        req: StockInquireInvestorRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST01010900",
@@ -1859,7 +1865,7 @@ impl Quotations {
     /// 주식 현재가 회원사 API입니다. 회원사의 투자 정보를 확인할 수 있습니다.
     pub async fn inquire_member(
         &self,
-        req: InquireMemberRequest,
+        req: StockInquireMemberRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST01010600",
@@ -1928,7 +1934,7 @@ impl Quotations {
     /// 실전계좌/모의계좌의 경우, 한 번의 호출에 최대 100건까지 확인 가능합니다.
     pub async fn inquire_daily_itemchartprice(
         &self,
-        req: InquireDailyItemchartpriceRequest,
+        req: StockInquireDailyItemchartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST03010100",
@@ -1984,7 +1990,7 @@ impl Quotations {
     /// 해당 분봉의 첫 체결이 발생되면 해당 이전분 체결량이 두번째 배열로 이동되면서 새로운 체결량으로 업데이트됩니다.
     pub async fn inquire_time_itemchartprice(
         &self,
-        req: InquireTimeItemchartpriceRequest,
+        req: StockInquireTimeItemchartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST03010200",
@@ -2036,7 +2042,7 @@ impl Quotations {
     /// ※ 과거 분봉 조회 시, 당사 서버에서 보관하고 있는 만큼의 데이터만 확인이 가능합니다. (최대 1년 분봉 보관)
     pub async fn inquire_time_dailychartprice(
         &self,
-        req: InquireTimeDailychartpriceRequest,
+        req: StockInquireTimeDailychartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST03010230",
@@ -2083,7 +2089,7 @@ impl Quotations {
     /// * FID_INPUT_HOUR_1 를 이용하여 과거시간대 체결데이터 확인 가능
     pub async fn inquire_time_itemconclusion(
         &self,
-        req: InquireTimeItemconclusionRequest,
+        req: StockInquireTimeItemconclusionRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01060000",
@@ -2143,7 +2149,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0232] 시간외 일자별주가의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn inquire_daily_overtimeprice(
         &self,
-        req: InquireDailyOvertimepriceRequest,
+        req: StockInquireDailyOvertimepriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST02320000",
@@ -2200,7 +2206,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0231] 시간외 시간별체결의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn inquire_time_overtimeconclusion(
         &self,
-        req: InquireTimeOvertimeconclusionRequest,
+        req: StockInquireTimeOvertimeconclusionRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST02310000",
@@ -2265,7 +2271,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0230] 시간외 현재가 화면의 좌측 상단기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn inquire_overtime_price(
         &self,
-        req: InquireOvertimePriceRequest,
+        req: StockInquireOvertimePriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST02300000",
@@ -2371,7 +2377,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0230] 시간외 현재가 화면의 '호가' 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn inquire_overtime_asking_price(
         &self,
-        req: InquireOvertimeAskingPriceRequest,
+        req: StockInquireOvertimeAskingPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST02300400",
@@ -2412,7 +2418,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0183] 장마감 예상체결가 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn exp_closing_price(
         &self,
-        req: ExpClosingPriceRequest,
+        req: StockExpClosingPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST117300C0",
@@ -2477,7 +2483,7 @@ impl Quotations {
     /// ELW 현재가 시세 API입니다. ELW 관련 정보를 얻을 수 있습니다.
     pub async fn inquire_elw_price(
         &self,
-        req: InquireElwPriceRequest,
+        req: StockInquireElwPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKEW15010000",
@@ -2545,7 +2551,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0210] 업종 현재지수 화면 의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn inquire_index_price(
         &self,
-        req: InquireIndexPriceRequest,
+        req: StockInquireIndexPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPUP02100000",
@@ -2610,7 +2616,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0212] 업종 일자별지수 화면 의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn inquire_index_daily_price(
         &self,
-        req: InquireIndexDailyPriceRequest,
+        req: StockInquireIndexDailyPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPUP02120000",
@@ -2650,7 +2656,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0211] 업종 시간별지수 화면에서 우측 '10초' 선택 시의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn inquire_index_tickprice(
         &self,
-        req: InquireIndexTickpriceRequest,
+        req: StockInquireIndexTickpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPUP02110100",
@@ -2690,7 +2696,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0211] 업종 시간별지수 화면에서 우측 '1분' 선택 시의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn inquire_index_timeprice(
         &self,
-        req: InquireIndexTimepriceRequest,
+        req: StockInquireIndexTimepriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPUP02110200",
@@ -2747,7 +2753,7 @@ impl Quotations {
     /// 실전계좌의 경우, 한 번의 호출에 최대 102건까지 확인 가능합니다.
     pub async fn inquire_time_indexchartprice(
         &self,
-        req: InquireTimeIndexchartpriceRequest,
+        req: StockInquireTimeIndexchartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKUP03500200",
@@ -2802,7 +2808,7 @@ impl Quotations {
     /// 실전계좌/모의계좌의 경우, 한 번의 호출에 최대 50건까지 확인 가능합니다.
     pub async fn inquire_daily_indexchartprice(
         &self,
-        req: InquireDailyIndexchartpriceRequest,
+        req: StockInquireDailyIndexchartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKUP03500100",
@@ -2864,7 +2870,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0214] 업종 전체시세 화면 의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn inquire_index_category_price(
         &self,
-        req: InquireIndexCategoryPriceRequest,
+        req: StockInquireIndexCategoryPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPUP02140000",
@@ -2903,7 +2909,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0184] 예상체결지수 추이 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn exp_index_trend(
         &self,
-        req: ExpIndexTrendRequest,
+        req: StockExpIndexTrendRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01840000",
@@ -2954,7 +2960,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0185] 예상체결 전체지수 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn exp_total_index(
         &self,
-        req: ExpTotalIndexRequest,
+        req: StockExpTotalIndexRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKUP11750000",
@@ -3000,7 +3006,7 @@ impl Quotations {
     /// 최근 30건까지 확인 가능합니다.
     pub async fn inquire_vi_status(
         &self,
-        req: InquireViStatusRequest,
+        req: StockInquireViStatusRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01390000",
@@ -3048,7 +3054,7 @@ impl Quotations {
     /// ※ 11:30 이후에 신규데이터가 수신되는 점 참고하시기 바랍니다.
     pub async fn comp_interest(
         &self,
-        req: CompInterestRequest,
+        req: StockCompInterestRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST07020000",
@@ -3084,7 +3090,10 @@ impl Quotations {
     /// # Example (Scraped)
     /// 종합 시황/공시(제목) API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0601] 종합 시황/공시 화면의 "우측 상단 리스트" 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
-    pub async fn news_title(&self, req: NewsTitleRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn news_title(
+        &self,
+        req: StockNewsTitleRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST01011800",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -3119,7 +3128,10 @@ impl Quotations {
     /// 국내휴장일조회 API입니다.
     /// 영업일, 거래일, 개장일, 결제일 여부를 조회할 수 있습니다.
     /// 주문을 넣을 수 있는지 확인하고자 하실 경우 개장일여부(opnd_yn)을 사용하시면 됩니다.
-    pub async fn chk_holiday(&self, req: ChkHolidayRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn chk_holiday(
+        &self,
+        req: StockChkHolidayRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTCA0903R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -3187,7 +3199,10 @@ impl Quotations {
     /// KIS Developers COPYRIGHTS
     /// 2021-12-29 11:22:33
     /// 0.0.0.0
-    pub async fn search_info(&self, req: SearchInfoRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn search_info(
+        &self,
+        req: StockSearchInfoRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTPF1604R",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -3278,7 +3293,7 @@ impl Quotations {
     /// 국내주식 종목의 종목상세정보를 확인할 수 있습니다.
     pub async fn search_stock_info(
         &self,
-        req: SearchStockInfoRequest,
+        req: StockSearchStockInfoRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTPF1002R",
@@ -3314,7 +3329,7 @@ impl Quotations {
     /// 최대 100건 확인 가능하며, 다음 조회가 불가합니다.
     pub async fn credit_by_company(
         &self,
-        req: CreditByCompanyRequest,
+        req: StockCreditByCompanyRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST04770000",
@@ -3355,7 +3370,7 @@ impl Quotations {
     /// ※ 종목별 수익추정은 리서치본부에서 매월 발표되는 거래소, 코스닥 160여개 기업에 한정합니다. 구체적인 종목 리스트는 추정종목리스트를 참고하기 바랍니다.
     pub async fn estimate_perform(
         &self,
-        req: EstimatePerformRequest,
+        req: StockEstimatePerformRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKST668300C0",
@@ -3403,7 +3418,7 @@ impl Quotations {
     /// ※ 본 API는 다음조회가 불가합니다.
     pub async fn lendable_by_company(
         &self,
-        req: LendableByCompanyRequest,
+        req: StockLendableByCompanyRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTSC2702R",
@@ -3448,7 +3463,7 @@ impl Quotations {
     /// 한 번의 호출에 100건까지 조회가 가능하기에, 일자 파라미터(FID_INPUT_DATE_1, FID_INPUT_DATE_2)를 조절하여 다음 데이터 조회하시기 바랍니다.
     pub async fn invest_opinion(
         &self,
-        req: InvestOpinionRequest,
+        req: StockInvestOpinionRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST663300C0",
@@ -3497,7 +3512,7 @@ impl Quotations {
     /// 한 번의 호출에 20건까지 조회가 가능하기에, 일자 파라미터(FID_INPUT_DATE_1, FID_INPUT_DATE_2)를 조절하여 다음 데이터 조회하시기 바랍니다.
     pub async fn invest_opbysec(
         &self,
-        req: InvestOpbysecRequest,
+        req: StockInvestOpbysecRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST663400C0",
@@ -3539,7 +3554,7 @@ impl Quotations {
     /// → HTS(efriend Plus) [0110] 조건검색 화면에서 조건을 등록하신 후, 왼쪽 하단의 "사용자조건 서버저장" 클릭하셔서 등록한 조건들을 서버로 보낸 후 다시 API 호출 시도 부탁드립니다.
     pub async fn psearch_title(
         &self,
-        req: PsearchTitleRequest,
+        req: StockPsearchTitleRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKST03900300",
@@ -3596,7 +3611,7 @@ impl Quotations {
     /// → 조건검색 결과 검색된 종목이 0개인 경우 위 응답값을 수신하게 됩니다.
     pub async fn psearch_result(
         &self,
-        req: PsearchResultRequest,
+        req: StockPsearchResultRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKST03900400",
@@ -3640,7 +3655,7 @@ impl Quotations {
     /// https://github.com/koreainvestment/open-trading-api/blob/main/rest/get_interest_stocks_price.py
     pub async fn intstock_grouplist(
         &self,
-        req: IntstockGrouplistRequest,
+        req: StockIntstockGrouplistRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKCM113004C7",
@@ -3701,7 +3716,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0161] 관심종목 화면 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn intstock_multprice(
         &self,
-        req: IntstockMultpriceRequest,
+        req: StockIntstockMultpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST11300006",
@@ -3751,7 +3766,7 @@ impl Quotations {
     /// https://github.com/koreainvestment/open-trading-api/blob/main/rest/get_interest_stocks_price.py
     pub async fn intstock_stocklist_by_group(
         &self,
-        req: IntstockStocklistByGroupRequest,
+        req: StockIntstockStocklistByGroupRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKCM113004C6",
@@ -3814,7 +3829,7 @@ impl Quotations {
     /// 입력한 시간은 ±10분정도 차이가 발생할 수 있으며, 장운영 사정에 다라 변동될 수 있습니다.
     pub async fn foreign_institution_total(
         &self,
-        req: ForeignInstitutionTotalRequest,
+        req: StockForeignInstitutionTotalRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPTJ04400000",
@@ -3856,7 +3871,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0430] 외국계 매매종목 가집계 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn frgnmem_trade_estimate(
         &self,
-        req: FrgnmemTradeEstimateRequest,
+        req: StockFrgnmemTradeEstimateRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST644100C0",
@@ -4002,7 +4017,7 @@ impl Quotations {
     /// 추가로 API를 통한 00:00 ~ 15:40 이외의 시간은 당일 조회가 제한되는 점 이용에 참고 부탁드립니다.
     pub async fn investor_trade_by_stock_daily(
         &self,
-        req: InvestorTradeByStockDailyRequest,
+        req: StockInvestorTradeByStockDailyRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPTJ04160001",
@@ -4106,7 +4121,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0403] 시장별 시간동향 의 상단 표 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn inquire_investor_time_by_market(
         &self,
-        req: InquireInvestorTimeByMarketRequest,
+        req: StockInquireInvestorTimeByMarketRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPTJ04030000",
@@ -4177,7 +4192,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0404] 시장별 일별동향 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn inquire_investor_daily_by_market(
         &self,
-        req: InquireInvestorDailyByMarketRequest,
+        req: StockInquireInvestorDailyByMarketRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPTJ04040000",
@@ -4219,7 +4234,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0433] 종목별 외국계 순매수추이 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn frgnmem_pchs_trend(
         &self,
-        req: FrgnmemPchsTrendRequest,
+        req: StockFrgnmemPchsTrendRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST644400C0",
@@ -4265,7 +4280,7 @@ impl Quotations {
     /// 최근 100건까지 데이터 조회 가능합니다.
     pub async fn frgnmem_trade_trend(
         &self,
-        req: FrgnmemTradeTrendRequest,
+        req: StockFrgnmemTradeTrendRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST04320000",
@@ -4306,7 +4321,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0454] 증권사 종목매매동향 화면을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn inquire_member_daily(
         &self,
-        req: InquireMemberDailyRequest,
+        req: StockInquireMemberDailyRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST04540000",
@@ -4353,7 +4368,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0465] 종목별 프로그램 매매추이 화면(혹은 한국투자 MTS > 국내 현재가 > 기타수급 > 프로그램) 의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn program_trade_by_stock(
         &self,
-        req: ProgramTradeByStockRequest,
+        req: StockProgramTradeByStockRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPPG04650101",
@@ -4400,7 +4415,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0465] 종목별 프로그램 매매추이 화면(혹은 한국투자 MTS > 국내 현재가 > 기타수급 > 프로그램) 의 "일자별" 클릭 시 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn program_trade_by_stock_daily(
         &self,
-        req: ProgramTradeByStockDailyRequest,
+        req: StockProgramTradeByStockDailyRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPPG04650201",
@@ -4440,7 +4455,7 @@ impl Quotations {
     /// 입력시간은 외국인 09:30, 11:20, 13:20, 14:30 / 기관종합 10:00, 11:20, 13:20, 14:30 이며, 사정에 따라 변동될 수 있습니다.
     pub async fn investor_trend_estimate(
         &self,
-        req: InvestorTrendEstimateRequest,
+        req: StockInvestorTrendEstimateRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHPTJ04160200",
@@ -4477,7 +4492,7 @@ impl Quotations {
     /// 국내주식 종목의 일별 매수체결량, 매도체결량 데이터를 확인할 수 있습니다.
     pub async fn inquire_daily_trade_volume(
         &self,
-        req: InquireDailyTradeVolumeRequest,
+        req: StockInquireDailyTradeVolumeRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST03010800",
@@ -4530,7 +4545,7 @@ impl Quotations {
     /// ※ 장시간(09:00~15:30) 이후에는 bsop_hour 에 153000 ~ 170000 까지의 시간데이터가 출력되지만 데이터는 모두 동일한 장마감 데이터인 점 유의 부탁드립니다.
     pub async fn comp_program_trade_today(
         &self,
-        req: CompProgramTradeTodayRequest,
+        req: StockCompProgramTradeTodayRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPPG04600101",
@@ -4664,7 +4679,7 @@ impl Quotations {
     /// * 8개월 이상 과거 조회는 불가하며 에러메시지가 발생합니다.
     pub async fn comp_program_trade_daily(
         &self,
-        req: CompProgramTradeDailyRequest,
+        req: StockCompProgramTradeDailyRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPPG04600001",
@@ -4716,7 +4731,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0466] 프로그램매매 투자자별 동향 화면 의 "당일동향" 표의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn investor_program_trade_today(
         &self,
-        req: InvestorProgramTradeTodayRequest,
+        req: StockInvestorProgramTradeTodayRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHPPG046600C1",
@@ -4777,7 +4792,7 @@ impl Quotations {
     /// ※ 상환수량은 "매도상환수량+현금상환수량"의 합계 수치입니다.
     pub async fn daily_credit_balance(
         &self,
-        req: DailyCreditBalanceRequest,
+        req: StockDailyCreditBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST04760000",
@@ -4824,7 +4839,7 @@ impl Quotations {
     /// 최대 30건 확인 가능하며, 다음 조회가 불가합니다.
     pub async fn exp_price_trend(
         &self,
-        req: ExpPriceTrendRequest,
+        req: StockExpPriceTrendRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01810000",
@@ -4879,7 +4894,7 @@ impl Quotations {
     /// 0.0.0.0
     pub async fn daily_short_sale(
         &self,
-        req: DailyShortSaleRequest,
+        req: StockDailyShortSaleRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST04830000",
@@ -4922,7 +4937,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0135] 체결금액별 매매비중 화면의 "상단 표" 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn tradprt_byamt(
         &self,
-        req: TradprtByamtRequest,
+        req: StockTradprtByamtRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST111900C0",
@@ -4972,7 +4987,7 @@ impl Quotations {
     ///
     /// ※ 해당자료는 금융투자협회의 자료를 제공하고 있으며, 오류와 지연이 발생할 수 있습니다.
     /// ※ 위 정보에 의한 투자판단의 최종책임은 정보이용자에게 있으며, 당사와 한국금융투자협회는 어떠한 법적인 책임도 지지 않사오니 투자에 참고로만 이용하시기 바랍니다.
-    pub async fn mktfunds(&self, req: MktfundsRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn mktfunds(&self, req: StockMktfundsRequest) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST649100C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -5010,7 +5025,7 @@ impl Quotations {
     /// 한 번의 조회에 최대 100건까지 조회 가능하며, start_date, end_date 를 수정하여 다음 조회가 가능합니다.
     pub async fn daily_loan_trans(
         &self,
-        req: DailyLoanTransRequest,
+        req: StockDailyLoanTransRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHPST074500C0",
@@ -5059,7 +5074,7 @@ impl Quotations {
     /// 한국투자 HTS(eFriend Plus) > [0917] 실시간 상하한가 포착 화면 의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn capture_uplowprice(
         &self,
-        req: CaptureUplowpriceRequest,
+        req: StockCaptureUplowpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST130000C0",
@@ -5104,7 +5119,10 @@ impl Quotations {
     /// # Example (Scraped)
     /// 국내주식 매물대/거래비중 API입니다.
     /// 한국투자 HTS(eFriend Plus) > [0113] 당일가격대별 매물대 화면의 데이터 중 일부를 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
-    pub async fn pbar_tratio(&self, req: PbarTratioRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn pbar_tratio(
+        &self,
+        req: StockPbarTratioRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01130000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -5158,7 +5176,7 @@ impl Quotations {
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
     pub async fn volume_rank(
         &self,
-        req: VolumeRankV2Request,
+        req: StockVolumeRankRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01710000",
@@ -5197,7 +5215,7 @@ impl Finance {
     /// 한국투자 HTS(eFriend Plus) > [0635] 재무분석종합 화면의 하단 '1. 대차대조표' 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn balance_sheet(
         &self,
-        req: BalanceSheetRequest,
+        req: StockFinanceBalanceSheetRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST66430100",
@@ -5238,7 +5256,7 @@ impl Finance {
     /// 한국투자 HTS(eFriend Plus) > [0635] 재무분석종합 화면의 하단 '2. 손익계산서' 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn income_statement(
         &self,
-        req: IncomeStatementRequest,
+        req: StockFinanceIncomeStatementRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST66430200",
@@ -5276,7 +5294,7 @@ impl Finance {
     /// 한국투자 HTS(eFriend Plus) > [0635] 재무분석종합 화면의 우측의 '재무 비율' 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn financial_ratio(
         &self,
-        req: FinancialRatioRequest,
+        req: StockFinanceFinancialRatioRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST66430300",
@@ -5313,7 +5331,7 @@ impl Finance {
     /// 한국투자 HTS(eFriend Plus) > [0635] 재무분석종합 화면의 하단 '4. 수익성비율' 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn profit_ratio(
         &self,
-        req: ProfitRatioRequest,
+        req: StockFinanceProfitRatioRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST66430400",
@@ -5345,7 +5363,7 @@ impl Finance {
     /// 한국투자 HTS(eFriend Plus) > [0635] 재무분석종합 화면의 하단 '9. 기타주요비율' 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn other_major_ratios(
         &self,
-        req: OtherMajorRatiosRequest,
+        req: StockFinanceOtherMajorRatiosRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST66430500",
@@ -5382,7 +5400,7 @@ impl Finance {
     /// 한국투자 HTS(eFriend Plus) > [0635] 재무분석종합 화면의 하단 '5. 안정성비율' 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn stability_ratio(
         &self,
-        req: StabilityRatioRequest,
+        req: StockFinanceStabilityRatioRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST66430600",
@@ -5418,7 +5436,7 @@ impl Finance {
     /// 한국투자 HTS(eFriend Plus) > [0635] 재무분석종합 화면의 하단 '7.성장성비율' 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn growth_ratio(
         &self,
-        req: GrowthRatioRequest,
+        req: StockFinanceGrowthRatioRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST66430800",
@@ -5463,7 +5481,10 @@ impl Ksdinfo {
     ///
     /// ※ 예탁원에서 제공한 자료이므로 정보용으로만 사용하시기 바랍니다.
     /// '주식배당지급일'은 배당주식의 주식교부일자를 말합니다. 배당주식의 계좌입고는 배당주식 상장일인데 일반적으로 주권교부일의 익영업일입니다.
-    pub async fn dividend(&self, req: DividendRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn dividend(
+        &self,
+        req: StockKsdinfoDividendRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669102C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -5499,7 +5520,10 @@ impl Ksdinfo {
     /// 한국투자 HTS(eFriend Plus) > [0663] 주식매수청구 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     ///
     /// ※ 예탁원에서 제공한 자료이므로 정보용으로만 사용하시기 바랍니다.
-    pub async fn purreq(&self, req: PurreqRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn purreq(
+        &self,
+        req: StockKsdinfoPurreqRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669103C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -5541,7 +5565,7 @@ impl Ksdinfo {
     /// ※ 예탁원에서 제공한 자료이므로 정보용으로만 사용하시기 바랍니다.
     pub async fn merger_split(
         &self,
-        req: MergerSplitRequest,
+        req: StockKsdinfoMergerSplitRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669104C0",
@@ -5576,7 +5600,10 @@ impl Ksdinfo {
     /// 한국투자 HTS(eFriend Plus) > [0657] 액면교체 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     ///
     /// ※ 예탁원에서 제공한 자료이므로 정보용으로만 사용하시기 바랍니다.
-    pub async fn rev_split(&self, req: RevSplitRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn rev_split(
+        &self,
+        req: StockKsdinfoRevSplitRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669105C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -5612,7 +5639,10 @@ impl Ksdinfo {
     /// 한국투자 HTS(eFriend Plus) > [0665] 자본감소 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     ///
     /// ※ 예탁원에서 제공한 자료이므로 정보용으로만 사용하시기 바랍니다.
-    pub async fn cap_dcrs(&self, req: CapDcrsRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn cap_dcrs(
+        &self,
+        req: StockKsdinfoCapDcrsRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669106C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -5647,7 +5677,10 @@ impl Ksdinfo {
     /// 한국투자 HTS(eFriend Plus) > [0666] 상장정보 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     ///
     /// ※ 예탁원에서 제공한 자료이므로 정보용으로만 사용하시기 바랍니다.
-    pub async fn list_info(&self, req: ListInfoRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn list_info(
+        &self,
+        req: StockKsdinfoListInfoRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669107C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -5687,7 +5720,10 @@ impl Ksdinfo {
     /// 한국투자 HTS(eFriend Plus) > [0667] 공모주청약 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     ///
     /// ※ 예탁원에서 제공한 자료이므로 정보용으로만 사용하시기 바랍니다.
-    pub async fn pub_offer(&self, req: PubOfferRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn pub_offer(
+        &self,
+        req: StockKsdinfoPubOfferRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669108C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -5723,7 +5759,10 @@ impl Ksdinfo {
     /// 한국투자 HTS(eFriend Plus) > [0668] 실권주 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     ///
     /// ※ 예탁원에서 제공한 자료이므로 정보용으로만 사용하시기 바랍니다.
-    pub async fn forfeit(&self, req: ForfeitRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn forfeit(
+        &self,
+        req: StockKsdinfoForfeitRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669109C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -5758,7 +5797,7 @@ impl Ksdinfo {
     /// ※ 예탁원에서 제공한 자료이므로 정보용으로만 사용하시기 바랍니다.
     pub async fn mand_deposit(
         &self,
-        req: MandDepositRequest,
+        req: StockKsdinfoMandDepositRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669110C0",
@@ -5801,7 +5840,7 @@ impl Ksdinfo {
     /// ※ 예탁원에서 제공한 자료이므로 정보용으로만 사용하시기 바랍니다.
     pub async fn paidin_capin(
         &self,
-        req: PaidinCapinRequest,
+        req: StockKsdinfoPaidinCapinRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669100C0",
@@ -5840,7 +5879,10 @@ impl Ksdinfo {
     /// 한국투자 HTS(eFriend Plus) > [0656] 무상증자 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     ///
     /// ※ 예탁원에서 제공한 자료이므로 정보용으로만 사용하시기 바랍니다.
-    pub async fn bonus_issue(&self, req: BonusIssueRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn bonus_issue(
+        &self,
+        req: StockKsdinfoBonusIssueRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669101C0",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -5876,7 +5918,7 @@ impl Ksdinfo {
     /// ※ 예탁원에서 제공한 자료이므로 정보용으로만 사용하시기 바랍니다.
     pub async fn sharehld_meet(
         &self,
-        req: SharehldMeetRequest,
+        req: StockKsdinfoSharehldMeetRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669111C0",
@@ -5920,7 +5962,7 @@ impl Ranking {
     /// 한국투자 HTS(eFriend Plus) > [0236] 시간외 예상체결등락률 화면의 기능을 API로 개발한 사항으로, 해당 화면을 참고하시면 기능을 이해하기 쉽습니다.
     pub async fn overtime_exp_trans_fluct(
         &self,
-        req: OvertimeExpTransFluctRequest,
+        req: StockRankingOvertimeExpTransFluctRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST11860000",
@@ -5981,7 +6023,7 @@ impl Ranking {
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
     pub async fn fluctuation(
         &self,
-        req: FluctuationRequest,
+        req: StockRankingFluctuationRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01700000",
@@ -6027,7 +6069,7 @@ impl Ranking {
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
     pub async fn quote_balance(
         &self,
-        req: QuoteBalanceRequest,
+        req: StockRankingQuoteBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01720000",
@@ -6078,7 +6120,7 @@ impl Ranking {
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
     pub async fn profit_asset_index(
         &self,
-        req: ProfitAssetIndexRequest,
+        req: StockRankingProfitAssetIndexRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01730000",
@@ -6124,7 +6166,10 @@ impl Ranking {
     /// ※ 30건 이상의 목록 조회가 필요한 경우, 대안으로 종목조건검색 API를 이용해서 원하는 종목 100개까지 검색할 수 있는 기능을 제공하고 있습니다.
     /// 종목조건검색 API는 HTS(efriend Plus) [0110] 조건검색에서 등록 및 서버저장한 나의 조건 목록을 확인할 수 있는 API로,
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
-    pub async fn market_cap(&self, req: MarketCapRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn market_cap(
+        &self,
+        req: StockRankingMarketCapRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01740000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -6181,7 +6226,7 @@ impl Ranking {
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
     pub async fn finance_ratio(
         &self,
-        req: FinanceRatioRequest,
+        req: StockRankingFinanceRatioRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01750000",
@@ -6225,7 +6270,7 @@ impl Ranking {
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
     pub async fn after_hour_balance(
         &self,
-        req: AfterHourBalanceRequest,
+        req: StockRankingAfterHourBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01760000",
@@ -6278,7 +6323,7 @@ impl Ranking {
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
     pub async fn prefer_disparate_ratio(
         &self,
-        req: PreferDisparateRatioRequest,
+        req: StockRankingPreferDisparateRatioRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01770000",
@@ -6326,7 +6371,10 @@ impl Ranking {
     /// ※ 30건 이상의 목록 조회가 필요한 경우, 대안으로 종목조건검색 API를 이용해서 원하는 종목 100개까지 검색할 수 있는 기능을 제공하고 있습니다.
     /// 종목조건검색 API는 HTS(efriend Plus) [0110] 조건검색에서 등록 및 서버저장한 나의 조건 목록을 확인할 수 있는 API로,
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
-    pub async fn disparity(&self, req: DisparityRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn disparity(
+        &self,
+        req: StockRankingDisparityRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01780000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -6372,7 +6420,7 @@ impl Ranking {
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
     pub async fn market_value(
         &self,
-        req: MarketValueRequest,
+        req: StockRankingMarketValueRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01790000",
@@ -6416,7 +6464,7 @@ impl Ranking {
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
     pub async fn volume_power(
         &self,
-        req: VolumePowerRequest,
+        req: StockRankingVolumePowerRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01680000",
@@ -6460,7 +6508,7 @@ impl Ranking {
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
     pub async fn top_interest_stock(
         &self,
-        req: TopInterestStockRequest,
+        req: StockRankingTopInterestStockRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01800000",
@@ -6510,7 +6558,7 @@ impl Ranking {
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
     pub async fn exp_trans_updown(
         &self,
-        req: ExpTransUpdownRequest,
+        req: StockRankingExpTransUpdownRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01820000",
@@ -6559,7 +6607,7 @@ impl Ranking {
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
     pub async fn traded_by_company(
         &self,
-        req: TradedByCompanyRequest,
+        req: StockRankingTradedByCompanyRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01860000",
@@ -6610,7 +6658,7 @@ impl Ranking {
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
     pub async fn near_new_highlow(
         &self,
-        req: NearNewHighlowRequest,
+        req: StockRankingNearNewHighlowRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01870000",
@@ -6653,7 +6701,7 @@ impl Ranking {
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
     pub async fn dividend_rate(
         &self,
-        req: DividendRateRequest,
+        req: StockRankingDividendRateRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB13470100",
@@ -6697,7 +6745,7 @@ impl Ranking {
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
     pub async fn bulk_trans_num(
         &self,
-        req: BulkTransNumRequest,
+        req: StockRankingBulkTransNumRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST190900C0",
@@ -6749,7 +6797,7 @@ impl Ranking {
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
     pub async fn credit_balance(
         &self,
-        req: CreditBalanceRequest,
+        req: StockRankingCreditBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST17010000",
@@ -6795,7 +6843,10 @@ impl Ranking {
     /// ※ 30건 이상의 목록 조회가 필요한 경우, 대안으로 종목조건검색 API를 이용해서 원하는 종목 100개까지 검색할 수 있는 기능을 제공하고 있습니다.
     /// 종목조건검색 API는 HTS(efriend Plus) [0110] 조건검색에서 등록 및 서버저장한 나의 조건 목록을 확인할 수 있는 API로,
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
-    pub async fn short_sale(&self, req: ShortSaleRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn short_sale(
+        &self,
+        req: StockRankingShortSaleRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST04820000",
             crate::client::KisEnv::Vts => "모의투자 미지원",
@@ -6848,7 +6899,7 @@ impl Ranking {
     /// 최대 30건 확인 가능하며, 다음 조회가 불가합니다.
     pub async fn overtime_fluctuation(
         &self,
-        req: OvertimeFluctuationRequest,
+        req: StockRankingOvertimeFluctuationRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST02340000",
@@ -6897,7 +6948,7 @@ impl Ranking {
     /// 최대 30건 확인 가능하며, 다음 조회가 불가합니다.
     pub async fn overtime_volume(
         &self,
-        req: OvertimeVolumeRequest,
+        req: StockRankingOvertimeVolumeRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST02350000",

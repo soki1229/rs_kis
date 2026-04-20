@@ -14,20 +14,32 @@ OUTPUT_DIR = "crates/kis_api/src/generated"
 # --- Utility Functions ---
 
 def to_struct_name(api):
-    parts = api['endpoint'].split('/')
-    base = parts[-1] if parts[-1] else parts[-2]
-    name = inflection.camelize(inflection.underscore(base.replace('-', '_')))
-    if len(name) < 3:
+    # 경로 전체를 활용하여 고유한 이름 생성
+    # /uapi/domestic-stock/v1/trading/order-cash -> StockTradingOrderCash
+    parts = api['endpoint'].strip('/').split('/')
+    
+    # 카테고리 추출
+    category = "Stock" if "domestic-stock" in api['endpoint'] else "Overseas"
+    
+    # 네임스페이스 및 기능 추출 (v1, v2 등 버전 제외)
+    useful_parts = [p for p in parts if p not in ["uapi", "domestic-stock", "overseas-stock", "v1", "v2", "v3", "quotations", "trading"]]
+    
+    name_parts = [category] + [inflection.camelize(p.replace('-', '_')) for p in useful_parts]
+    name = "".join(name_parts)
+    
+    if len(name) < 10: # 너무 짧으면 보완
         clean_name = re.sub(r'\(.*?\)', '', api['name'])
         clean_name = re.sub(r'[^\w\s]', '', clean_name)
-        name = inflection.camelize(inflection.underscore(clean_name.strip().replace(' ', '_')))
+        name += inflection.camelize(inflection.underscore(clean_name.strip().replace(' ', '_')))
+        
     return name
 
 def to_safe_snake(text):
-    text = re.sub(r'[^\w\s]', '', text)
-    snake = inflection.underscore(text.strip().replace(' ', '_'))
+    # 필드명 처리: KIS 필드명은 대문자인 경우가 많으므로 소문자 스네이크 케이스로 변환
+    snake = inflection.underscore(text.strip())
+    snake = re.sub(r'[^\w\s]', '', snake).replace(' ', '_')
     snake = re.sub(r'_+', '_', snake)
-    if snake in ["type", "mod", "struct", "enum", "fn", "use"]:
+    if snake in ["type", "mod", "struct", "enum", "fn", "use", "loop", "match"]:
         snake = f"r#{snake}"
     return snake
 
@@ -58,15 +70,16 @@ class TypeMapper:
         self.required_imports = set()
 
     def get_rust_type(self, field_name):
+        field_name_lower = field_name.lower()
         # 1. Check explicit overrides
-        if field_name in self.explicit:
-            rtype, imp = self.explicit[field_name]
+        if field_name_lower in self.explicit:
+            rtype, imp = self.explicit[field_name_lower]
             if imp: self.required_imports.add(imp)
             return rtype
         
         # 2. Check pattern matching
         for pattern, rtype, imp in self.patterns:
-            if pattern.fullmatch(field_name):
+            if pattern.fullmatch(field_name_lower):
                 if imp: self.required_imports.add(imp)
                 return rtype
         
