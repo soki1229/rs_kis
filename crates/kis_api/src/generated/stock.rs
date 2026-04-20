@@ -732,9 +732,9 @@ impl Trading {
     /// # Example (Scraped)
     /// ​※ 55번 계좌(DC가입자계좌)의 경우 해당 API 이용이 불가합니다.
     /// KIS Developers API의 경우 HTS ID에 반드시 연결되어있어야만 API 신청 및 앱정보 발급이 가능한 서비스로 개발되어서 실물계좌가 아닌 55번 계좌는 API 이용이 불가능한 점 양해 부탁드립니다.
-    pub async fn inquire_daily_ccld_next(
+    pub async fn inquire_daily_ccld_v2(
         &self,
-        req: InquireDailyCcldNextRequest,
+        req: InquireDailyCcldV2Request,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC2201R",
@@ -769,9 +769,9 @@ impl Trading {
     /// # Example (Scraped)
     /// ​※ 55번 계좌(DC가입자계좌)의 경우 해당 API 이용이 불가합니다.
     /// KIS Developers API의 경우 HTS ID에 반드시 연결되어있어야만 API 신청 및 앱정보 발급이 가능한 서비스로 개발되어서 실물계좌가 아닌 55번 계좌는 API 이용이 불가능한 점 양해 부탁드립니다.
-    pub async fn inquire_psbl_order_next(
+    pub async fn inquire_psbl_order_v2(
         &self,
-        req: InquirePsblOrderNextRequest,
+        req: InquirePsblOrderV2Request,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC0503R",
@@ -859,9 +859,9 @@ impl Trading {
     ///
     /// ​※ 55번 계좌(DC가입자계좌)의 경우 해당 API 이용이 불가합니다.
     /// KIS Developers API의 경우 HTS ID에 반드시 연결되어있어야만 API 신청 및 앱정보 발급이 가능한 서비스로 개발되어서 실물계좌가 아닌 55번 계좌는 API 이용이 불가능한 점 양해 부탁드립니다.
-    pub async fn inquire_balance_next(
+    pub async fn inquire_balance_v2(
         &self,
-        req: InquireBalanceNextRequest,
+        req: InquireBalanceV2Request,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC2208R",
@@ -5158,7 +5158,7 @@ impl Quotations {
     /// 자세한 사용 방법은 공지사항 - [조건검색 필독] 조건검색 API 이용안내 참고 부탁드립니다.
     pub async fn volume_rank(
         &self,
-        req: VolumeRankNextRequest,
+        req: VolumeRankV2Request,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01710000",

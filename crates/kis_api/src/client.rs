@@ -113,12 +113,12 @@ impl KisClient {
 
         let expires_at = Utc::now() + chrono::Duration::seconds(resp_data.expires_in as i64);
         {
-            let mut token = this.inner.access_token.write().await;
+            let mut token = self.inner.access_token.write().await;
             *token = resp_data.access_token.clone();
-            let mut expires = this.inner.token_expires_at.lock().await;
+            let mut expires = self.inner.token_expires_at.lock().await;
             *expires = Some(expires_at);
         }
-        if let Some(path) = &this.inner.cache_path {
+        if let Some(path) = &self.inner.cache_path {
             let cache = TokenCache {
                 access_token: resp_data.access_token,
                 expires_at,
@@ -158,7 +158,10 @@ impl KisClient {
         if !resp.status().is_success() {
             let status = resp.status().as_u16();
             let text = resp.text().await.unwrap_or_default();
-            return Err(KisError::Auth(format!("Approval key failed ({}): {}", status, text)));
+            return Err(KisError::Auth(format!(
+                "Approval key failed ({}): {}",
+                status, text
+            )));
         }
 
         let data: serde_json::Value = resp.json().await?;
@@ -191,7 +194,10 @@ impl KisClient {
         let token = self.inner.access_token.read().await.clone();
         let url = format!("{}/{}", self.inner.base_url, path.trim_start_matches('/'));
 
-        let resp = self.inner.client.post(&url)
+        let resp = self
+            .inner
+            .client
+            .post(&url)
             .header("authorization", format!("Bearer {}", token))
             .header("appkey", &self.inner.app_key)
             .header("appsecret", &self.inner.app_secret)
@@ -201,7 +207,7 @@ impl KisClient {
             .send()
             .await?;
 
-        ApiResponse::<R>::from_response(resp).await.map(|r| r.output)
+        ApiResponse::<R>::from_response(resp).await?.into_result()
     }
 
     pub async fn get<R, Q>(&self, path: &str, tr_id: &str, query: Q) -> Result<R, KisError>
@@ -212,7 +218,10 @@ impl KisClient {
         let token = self.inner.access_token.read().await.clone();
         let url = format!("{}/{}", self.inner.base_url, path.trim_start_matches('/'));
 
-        let resp = self.inner.client.get(&url)
+        let resp = self
+            .inner
+            .client
+            .get(&url)
             .header("authorization", format!("Bearer {}", token))
             .header("appkey", &self.inner.app_key)
             .header("appsecret", &self.inner.app_secret)
@@ -222,6 +231,6 @@ impl KisClient {
             .send()
             .await?;
 
-        ApiResponse::<R>::from_response(resp).await.map(|r| r.output)
+        ApiResponse::<R>::from_response(resp).await?.into_result()
     }
 }

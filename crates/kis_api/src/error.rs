@@ -36,6 +36,25 @@ pub struct ApiResponse<T> {
 }
 
 impl<T> ApiResponse<T> {
+    pub async fn from_response(resp: reqwest::Response) -> Result<Self, KisError>
+    where
+        T: for<'de> serde::Deserialize<'de> + Default,
+    {
+        if !resp.status().is_success() {
+            let status = resp.status().as_u16();
+            let message = resp.text().await.unwrap_or_default();
+            return Err(KisError::Http { status, message });
+        }
+
+        let body_text = resp.text().await?;
+        serde_json::from_str(&body_text).map_err(|e| {
+            KisError::Auth(format!(
+                "Failed to parse API response: {}. Body: {}",
+                e, body_text
+            ))
+        })
+    }
+
     pub fn into_result(self) -> Result<T, KisError>
     where
         T: Default + serde::de::DeserializeOwned,

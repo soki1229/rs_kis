@@ -54,6 +54,7 @@ class TypeMapper:
                          for p in self.config.get('patterns', [])]
         self.explicit = {f['name']: (f['type'], f.get('import')) 
                          for f in self.config.get('fields', [])}
+
         self.required_imports = set()
 
     def get_rust_type(self, field_name):
@@ -123,7 +124,7 @@ class CodeGenerator:
             struct_base = to_struct_name(api)
             counter = 2
             while struct_base in seen_structs:
-                struct_base = f"{to_struct_name(api)}_{counter}"
+                struct_base = f"{to_struct_name(api)}V{counter}"
                 counter += 1
             seen_structs.add(struct_base)
 
@@ -237,7 +238,7 @@ class CodeGenerator:
                 method_full = method_base
                 counter = 2
                 while method_full in seen_methods:
-                    method_full = f"{method_base}_{counter}"
+                    method_full = f"{method_base}_v{counter}"
                     counter += 1
                 seen_methods.add(method_full)
                 

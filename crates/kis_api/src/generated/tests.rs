@@ -90,10 +90,10 @@ mod real {
 
             #[tokio::test]
             #[ignore]
-            async fn test_inquire_daily_ccld_next() {
+            async fn test_inquire_daily_ccld_v2() {
                 let client = super::super::super::get_test_client().await;
-                let arg = InquireDailyCcldNextRequest::default();
-                let result = client.stock().trading().inquire_daily_ccld_next(arg).await;
+                let arg = InquireDailyCcldV2Request::default();
+                let result = client.stock().trading().inquire_daily_ccld_v2(arg).await;
                 println!(
                     "API 퇴직연금 미체결내역 status: {:?}",
                     result.is_ok() || result.is_err()
@@ -102,10 +102,10 @@ mod real {
 
             #[tokio::test]
             #[ignore]
-            async fn test_inquire_psbl_order_next() {
+            async fn test_inquire_psbl_order_v2() {
                 let client = super::super::super::get_test_client().await;
-                let arg = InquirePsblOrderNextRequest::default();
-                let result = client.stock().trading().inquire_psbl_order_next(arg).await;
+                let arg = InquirePsblOrderV2Request::default();
+                let result = client.stock().trading().inquire_psbl_order_v2(arg).await;
                 println!(
                     "API 퇴직연금 매수가능조회 status: {:?}",
                     result.is_ok() || result.is_err()
@@ -126,10 +126,10 @@ mod real {
 
             #[tokio::test]
             #[ignore]
-            async fn test_inquire_balance_next() {
+            async fn test_inquire_balance_v2() {
                 let client = super::super::super::get_test_client().await;
-                let arg = InquireBalanceNextRequest::default();
-                let result = client.stock().trading().inquire_balance_next(arg).await;
+                let arg = InquireBalanceV2Request::default();
+                let result = client.stock().trading().inquire_balance_v2(arg).await;
                 println!(
                     "API 퇴직연금 잔고조회 status: {:?}",
                     result.is_ok() || result.is_err()
@@ -939,7 +939,7 @@ mod real {
             #[ignore]
             async fn test_volume_rank() {
                 let client = super::super::super::get_test_client().await;
-                let arg = VolumeRankNextRequest::default();
+                let arg = VolumeRankV2Request::default();
                 let result = client.stock().quotations().volume_rank(arg).await;
                 println!(
                     "API 거래량순위 status: {:?}",
