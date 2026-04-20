@@ -1,10 +1,10 @@
 # Pattern-based type mapping for KIS fields
 patterns:
   # Decimal mapping
-  - pattern: ".*_(qty|amt|pric|unpr|rt|rate|vol|val|amt[0-9]*)$"
+  - pattern: ".*_(qty|amt|pric|unpr|rt|rate|vol|val|amt[0-9]*|unpr[0-9]*|oprc|hgpr|lwpr|clpr|prpr|prvs)$"
     type: "Decimal"
     import: "rust_decimal::Decimal"
-  - pattern: "^(qty|amt|price|rt|rate|volume|value)$"
+  - pattern: "^(qty|amt|price|rt|rate|volume|value|oprc|hgpr|lwpr|clpr|prpr|prvs)$"
     type: "Decimal"
     import: "rust_decimal::Decimal"
   
