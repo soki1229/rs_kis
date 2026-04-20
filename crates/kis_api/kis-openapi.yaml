@@ -148,17 +148,17 @@ apis:
   request:
   - name: grant_type
     korean_name: 권한부여타입
-    type: String
+    type: ''
     required: Y
     description: '"client_credentials"'
   - name: appkey
     korean_name: 앱키
-    type: String
+    type: ''
     required: Y
     description: 한국투자증권 홈페이지에서 발급받은 appkey (절대 노출되지 않도록 주의해주세요.)
   - name: secretkey
     korean_name: 시크릿키
-    type: String
+    type: ''
     required: Y
     description: '한국투자증권 홈페이지에서 발급받은 appsecret (절대 노출되지 않도록 주의해주세요.)
 
@@ -22811,54 +22811,54 @@ apis:
   request:
   - name: CANO
     korean_name: 종합계좌번호
-    type: String
+    type: ''
     required: Y
     description: 계좌번호 체계(8-2)의 앞 8자리
   - name: ACNT_PRDT_CD
     korean_name: 계좌상품코드
-    type: String
+    type: ''
     required: Y
     description: 계좌번호 체계(8-2)의 뒤 2자리
   - name: OVRS_EXCG_CD
     korean_name: 해외거래소코드
-    type: String
+    type: ''
     required: Y
     description: NASD:나스닥 / NYSE:뉴욕 / AMEX:아멕스
   - name: PDNO
     korean_name: 상품번호
-    type: String
+    type: ''
     required: Y
     description: 종목코드
   - name: ORD_QTY
     korean_name: 주문수량
-    type: String
+    type: ''
     required: Y
     description: 해외거래소 별 최소 주문수량 및 주문단위 확인 필요
   - name: OVRS_ORD_UNPR
     korean_name: 해외주문단가
-    type: String
+    type: ''
     required: Y
     description: '소수점 포함, 1주당 가격
 
       * 시장가의 경우 1주당 가격을 공란으로 비우지 않음 "0"으로 입력'
   - name: CTAC_TLNO
     korean_name: 연락전화번호
-    type: String
+    type: ''
     required: N
     description: '" "'
   - name: MGCO_APTM_ODNO
     korean_name: 운용사지정주문번호
-    type: String
+    type: ''
     required: N
     description: '" "'
   - name: ORD_SVR_DVSN_CD
     korean_name: 주문서버구분코드
-    type: String
+    type: ''
     required: Y
     description: '"0"'
   - name: ORD_DVSN
     korean_name: 주문구분
-    type: String
+    type: ''
     required: Y
     description: '[미국 매수/매도 주문]
 

@@ -85,15 +85,15 @@ pub struct HashkeyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct ApprovalRequest {
-    /// 권한부여타입 (String, 필수)
+    /// 권한부여타입 (, 필수)
     /// "client_credentials"
     #[serde(rename = "grant_type")]
     pub grant_type: String,
-    /// 앱키 (String, 필수)
+    /// 앱키 (, 필수)
     /// 한국투자증권 홈페이지에서 발급받은 appkey (절대 노출되지 않도록 주의해주세요.)
     #[serde(rename = "appkey")]
     pub appkey: String,
-    /// 시크릿키 (String, 필수)
+    /// 시크릿키 (, 필수)
     /// 한국투자증권 홈페이지에서 발급받은 appsecret (절대 노출되지 않도록 주의해주세요.)
     /// * 주의 : appsecret와 secretkey는 동일하오니 착오없으시기 바랍니다. (용어가 다른점 양해 부탁드립니다.)
     #[serde(rename = "secretkey")]
@@ -13075,44 +13075,44 @@ pub struct ForeignMarginRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DaytimeOrderRequest {
-    /// 종합계좌번호 (String, 필수)
+    /// 종합계좌번호 (, 필수)
     /// 계좌번호 체계(8-2)의 앞 8자리
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// 계좌상품코드 (String, 필수)
+    /// 계좌상품코드 (, 필수)
     /// 계좌번호 체계(8-2)의 뒤 2자리
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// 해외거래소코드 (String, 필수)
+    /// 해외거래소코드 (, 필수)
     /// NASD:나스닥 / NYSE:뉴욕 / AMEX:아멕스
     #[serde(rename = "OVRS_EXCG_CD")]
     pub ovrs_excg_cd: String,
-    /// 상품번호 (String, 필수)
+    /// 상품번호 (, 필수)
     /// 종목코드
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// 주문수량 (String, 필수)
+    /// 주문수량 (, 필수)
     /// 해외거래소 별 최소 주문수량 및 주문단위 확인 필요
     #[serde(rename = "ORD_QTY")]
     pub ord_qty: String,
-    /// 해외주문단가 (String, 필수)
+    /// 해외주문단가 (, 필수)
     /// 소수점 포함, 1주당 가격
     /// * 시장가의 경우 1주당 가격을 공란으로 비우지 않음 "0"으로 입력
     #[serde(rename = "OVRS_ORD_UNPR")]
     pub ovrs_ord_unpr: String,
-    /// 연락전화번호 (String, 선택)
+    /// 연락전화번호 (, 선택)
     /// " "
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
-    /// 운용사지정주문번호 (String, 선택)
+    /// 운용사지정주문번호 (, 선택)
     /// " "
     #[serde(rename = "MGCO_APTM_ODNO")]
     pub mgco_aptm_odno: String,
-    /// 주문서버구분코드 (String, 필수)
+    /// 주문서버구분코드 (, 필수)
     /// "0"
     #[serde(rename = "ORD_SVR_DVSN_CD")]
     pub ord_svr_dvsn_cd: String,
-    /// 주문구분 (String, 필수)
+    /// 주문구분 (, 필수)
     /// [미국 매수/매도 주문]
     /// 00 : 지정가
     /// * 주간거래는 지정가만 가능
