@@ -35,7 +35,6 @@ impl StockTrading {
     /// 주식주문(현금)[v1_국내주식-001]
     /// - TR_ID: Real=(매도) TTTC0011U (매수) TTTC0012U / VTS=(매도) VTTC0011U (매수) VTTC0012U
     /// - Endpoint: /uapi/domestic-stock/v1/trading/order-cash
-    /// [국내주식-001 v1] 주식주문(현금)
     pub async fn domestic_stock_v1_trading_order_cash(
         &self,
         req: (),
@@ -52,7 +51,6 @@ impl StockTrading {
     /// 주식주문(신용)[v1_국내주식-002]
     /// - TR_ID: Real=(매도) TTTC0051U (매수) TTTC0052U / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-stock/v1/trading/order-credit
-    /// [국내주식-002 v1] 주식주문(신용)
     pub async fn domestic_stock_v1_trading_order_credit(
         &self,
         req: (),
@@ -69,7 +67,6 @@ impl StockTrading {
     /// 주식주문(정정취소)[v1_국내주식-003]
     /// - TR_ID: Real=TTTC0013U / VTS=VTTC0013U
     /// - Endpoint: /uapi/domestic-stock/v1/trading/order-rvsecncl
-    /// [국내주식-003 v1] 주식주문(정정취소)
     pub async fn domestic_stock_v1_trading_order_rvsecncl(
         &self,
         req: (),
@@ -86,7 +83,6 @@ impl StockTrading {
     /// 주식정정취소가능주문조회[v1_국내주식-004]
     /// - TR_ID: Real=TTTC0084R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-stock/v1/trading/inquire-psbl-rvsecncl
-    /// [국내주식-004 v1] 주식정정취소가능주문조회
     pub async fn domestic_stock_v1_trading_inquire_psbl_rvsecncl(
         &self,
         req: (),
@@ -107,7 +103,6 @@ impl StockTrading {
     /// 주식일별주문체결조회[v1_국내주식-005]
     /// - TR_ID: Real=(3개월이내) TTTC0081R (3개월이전) CTSC9215R / VTS=(3개월이내) VTTC0081R (3개월이전) VTSC9215R
     /// - Endpoint: /uapi/domestic-stock/v1/trading/inquire-daily-ccld
-    /// [국내주식-005 v1] 주식일별주문체결조회
     pub async fn domestic_stock_v1_trading_inquire_daily_ccld(
         &self,
         req: (),
@@ -128,7 +123,6 @@ impl StockTrading {
     /// 주식잔고조회[v1_국내주식-006]
     /// - TR_ID: Real=TTTC8434R / VTS=VTTC8434R
     /// - Endpoint: /uapi/domestic-stock/v1/trading/inquire-balance
-    /// [국내주식-006 v1] 주식잔고조회
     pub async fn domestic_stock_v1_trading_inquire_balance(
         &self,
         req: (),
@@ -149,7 +143,6 @@ impl StockTrading {
     /// 매수가능조회[v1_국내주식-007]
     /// - TR_ID: Real=TTTC8908R / VTS=VTTC8908R
     /// - Endpoint: /uapi/domestic-stock/v1/trading/inquire-psbl-order
-    /// [국내주식-007 v1] 매수가능조회
     pub async fn domestic_stock_v1_trading_inquire_psbl_order(
         &self,
         req: (),
@@ -210,7 +203,6 @@ impl StockTrading {
     /// 주식예약주문[v1_국내주식-017]
     /// - TR_ID: Real=CTSC0008U / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-stock/v1/trading/order-resv
-    /// [국내주식-017 v1] 주식예약주문
     pub async fn domestic_stock_v1_trading_order_resv(
         &self,
         req: (),
@@ -227,7 +219,6 @@ impl StockTrading {
     /// 주식예약주문정정취소[v1_국내주식-018,019]
     /// - TR_ID: Real=(예약취소) CTSC0009U (예약정정) CTSC0013U / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-stock/v1/trading/order-resv-rvsecncl
-    /// [국내주식-018,019 v1] 주식예약주문정정취소
     pub async fn domestic_stock_v1_trading_order_resv_rvsecncl(
         &self,
         req: (),
@@ -248,7 +239,6 @@ impl StockTrading {
     /// 주식예약주문조회[v1_국내주식-020]
     /// - TR_ID: Real=CTSC0004R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-stock/v1/trading/order-resv-ccnl
-    /// [국내주식-020 v1] 주식예약주문조회
     pub async fn domestic_stock_v1_trading_order_resv_ccnl(
         &self,
         req: (),
@@ -269,7 +259,6 @@ impl StockTrading {
     /// 퇴직연금 체결기준잔고[v1_국내주식-032]
     /// - TR_ID: Real=TTTC2202R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-stock/v1/trading/pension/inquire-present-balance
-    /// 퇴직연금 체결기준잔고[v1_국내주식-032]
     pub async fn domestic_stock_v1_trading_pension_inquire_present_balance(
         &self,
         req: (),
@@ -350,7 +339,6 @@ impl StockTrading {
     /// 퇴직연금 잔고조회[v1_국내주식-036]
     /// - TR_ID: Real=TTTC2208R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-stock/v1/trading/pension/inquire-balance
-    /// 퇴직연금 잔고조회[v1_국내주식-036]
     pub async fn domestic_stock_v1_trading_pension_inquire_balance(
         &self,
         req: (),
@@ -483,7 +471,6 @@ impl StockTrading {
     /// 선물옵션 주문[v1_국내선물-001]
     /// - TR_ID: Real=(주간 매수/매도) TTTO1101U (야간 매수/매도) (구) JTCE1001U (신) STTN1101U / VTS=(주간 매수/매도) VTTO1101U (야간은 모의투자 미제공)
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/order
-    /// [국내선물-001 v1] 선물옵션주문
     pub async fn domestic_futureoption_v1_trading_order(
         &self,
         req: (),
@@ -502,7 +489,6 @@ impl StockTrading {
     /// 선물옵션 정정취소주문[v1_국내선물-002]
     /// - TR_ID: Real=(주간 정정/취소) TTTO1103U (야간 정정/취소) (구) JTCE1002U (신) STTN1103U / VTS=(주간 정정/취소) VTTO1103U (야간은 모의투자 미제공)
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/order-rvsecncl
-    /// [국내선물-002 v1] 선물옵션정정취소주문
     pub async fn domestic_futureoption_v1_trading_order_rvsecncl(
         &self,
         req: (),
@@ -525,7 +511,6 @@ impl StockTrading {
     /// 선물옵션 주문체결내역조회[v1_국내선물-003]
     /// - TR_ID: Real=TTTO5201R / VTS=VTTO5201R
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-ccnl
-    /// [국내선물-003 v1] 선물옵션주문체결내역조회
     pub async fn domestic_futureoption_v1_trading_inquire_ccnl(
         &self,
         req: (),
@@ -546,7 +531,6 @@ impl StockTrading {
     /// 선물옵션 잔고현황[v1_국내선물-004]
     /// - TR_ID: Real=CTFO6118R / VTS=VTFO6118R
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-balance
-    /// [국내선물-004 v1] 선물옵션 잔고현황
     pub async fn domestic_futureoption_v1_trading_inquire_balance(
         &self,
         req: (),
@@ -567,7 +551,6 @@ impl StockTrading {
     /// 선물옵션 주문가능[v1_국내선물-005]
     /// - TR_ID: Real=TTTO5105R / VTS=VTTO5105R
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-psbl-order
-    /// [국내선물-005 v1] 선물옵션 주문가능
     pub async fn domestic_futureoption_v1_trading_inquire_psbl_order(
         &self,
         req: (),
@@ -588,7 +571,6 @@ impl StockTrading {
     /// (야간)선물옵션 주문체결 내역조회 [국내선물-009]
     /// - TR_ID: Real=(구) JTCE5005R (신) STTN5201R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-ngt-ccnl
-    /// (야간)선물옵션 주문체결 내역조회 [국내선물-009]
     pub async fn domestic_futureoption_v1_trading_inquire_ngt_ccnl(
         &self,
         req: (),
@@ -609,7 +591,6 @@ impl StockTrading {
     /// (야간)선물옵션 잔고현황 [국내선물-010]
     /// - TR_ID: Real=(구) JTCE6001R (신) CTFN6118R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-ngt-balance
-    /// (야간)선물옵션 잔고현황 [국내선물-010]
     pub async fn domestic_futureoption_v1_trading_inquire_ngt_balance(
         &self,
         req: (),
@@ -630,7 +611,6 @@ impl StockTrading {
     /// (야간)선물옵션 주문가능 조회 [국내선물-011]
     /// - TR_ID: Real=(구) JTCE1004R (신) STTN5105R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-psbl-ngt-order
-    /// (야간)선물옵션 주문가능 조회 [국내선물-011]
     pub async fn domestic_futureoption_v1_trading_inquire_psbl_ngt_order(
         &self,
         req: (),
@@ -774,7 +754,6 @@ impl StockQuotations {
     /// 주식현재가 시세[v1_국내주식-008]
     /// - TR_ID: Real=FHKST01010100 / VTS=FHKST01010100
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-price
-    /// [국내주식-008 v1] 주식현재가 시세
     pub async fn domestic_stock_v1_quotations_inquire_price(
         &self,
         req: (),
@@ -815,7 +794,6 @@ impl StockQuotations {
     /// 주식현재가 체결[v1_국내주식-009]
     /// - TR_ID: Real=FHKST01010300 / VTS=FHKST01010300
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-ccnl
-    /// [국내주식-009 v1] 주식현재가 체결
     pub async fn domestic_stock_v1_quotations_inquire_ccnl(
         &self,
         req: (),
@@ -836,7 +814,6 @@ impl StockQuotations {
     /// 주식현재가 일자별[v1_국내주식-010]
     /// - TR_ID: Real=FHKST01010400 / VTS=FHKST01010400
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-daily-price
-    /// [국내주식-010 v1] 주식현재가 일자별
     pub async fn domestic_stock_v1_quotations_inquire_daily_price(
         &self,
         req: (),
@@ -857,7 +834,6 @@ impl StockQuotations {
     /// 주식현재가 호가/예상체결[v1_국내주식-011]
     /// - TR_ID: Real=FHKST01010200 / VTS=FHKST01010200
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-asking-price-exp-ccn
-    /// [국내주식-011 v1] 주식현재가 호가 예상체결
     pub async fn domestic_stock_v1_quotations_inquire_asking_price_exp_ccn(
         &self,
         req: (),
@@ -878,7 +854,6 @@ impl StockQuotations {
     /// 주식현재가 투자자[v1_국내주식-012]
     /// - TR_ID: Real=FHKST01010900 / VTS=FHKST01010900
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-investor
-    /// [국내주식-012 v1] 주식현재가 투자자
     pub async fn domestic_stock_v1_quotations_inquire_investor(
         &self,
         req: (),
@@ -899,7 +874,6 @@ impl StockQuotations {
     /// 주식현재가 회원사[v1_국내주식-013]
     /// - TR_ID: Real=FHKST01010600 / VTS=FHKST01010600
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-member
-    /// [국내주식-013 v1] 주식현재가 회원사
     pub async fn domestic_stock_v1_quotations_inquire_member(
         &self,
         req: (),
@@ -920,7 +894,6 @@ impl StockQuotations {
     /// 국내주식기간별시세(일/주/월/년)[v1_국내주식-016]
     /// - TR_ID: Real=FHKST03010100 / VTS=FHKST03010100
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice
-    /// [국내주식-016 v1] 국내주식기간별시세(일/주/월/년)
     pub async fn domestic_stock_v1_quotations_inquire_daily_itemchartprice(
         &self,
         req: (),
@@ -941,7 +914,6 @@ impl StockQuotations {
     /// 주식당일분봉조회[v1_국내주식-022]
     /// - TR_ID: Real=FHKST03010200 / VTS=FHKST03010200
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-time-itemchartprice
-    /// 주식당일분봉조회[v1_국내주식-022]
     pub async fn domestic_stock_v1_quotations_inquire_time_itemchartprice(
         &self,
         req: (),
@@ -982,7 +954,6 @@ impl StockQuotations {
     /// 주식현재가 당일시간대별체결[v1_국내주식-023]
     /// - TR_ID: Real=FHPST01060000 / VTS=FHPST01060000
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-time-itemconclusion
-    /// 주식현재가 당일시간대별체결[v1_국내주식-023]
     pub async fn domestic_stock_v1_quotations_inquire_time_itemconclusion(
         &self,
         req: (),
@@ -1003,7 +974,6 @@ impl StockQuotations {
     /// 주식현재가 시간외일자별주가[v1_국내주식-026]
     /// - TR_ID: Real=FHPST02320000 / VTS=FHPST02320000
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-daily-overtimeprice
-    /// 주식현재가 시간외일자별주가[v1_국내주식-026]
     pub async fn domestic_stock_v1_quotations_inquire_daily_overtimeprice(
         &self,
         req: (),
@@ -1024,7 +994,6 @@ impl StockQuotations {
     /// 주식현재가 시간외시간별체결[v1_국내주식-025]
     /// - TR_ID: Real=FHPST02310000 / VTS=FHPST02310000
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-time-overtimeconclusion
-    /// 주식현재가 시간외시간별체결[v1_국내주식-025]
     pub async fn domestic_stock_v1_quotations_inquire_time_overtimeconclusion(
         &self,
         req: (),
@@ -1105,7 +1074,6 @@ impl StockQuotations {
     /// ELW 현재가 시세[v1_국내주식-014]
     /// - TR_ID: Real=FHKEW15010000 / VTS=FHKEW15010000
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-elw-price
-    /// ELW 현재가 시세
     pub async fn domestic_stock_v1_quotations_inquire_elw_price(
         &self,
         req: (),
@@ -1226,7 +1194,6 @@ impl StockQuotations {
     /// 국내주식업종기간별시세(일/주/월/년)[v1_국내주식-021]
     /// - TR_ID: Real=FHKUP03500100 / VTS=FHKUP03500100
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice
-    /// [국내주식-021 v1] 업종기간별시세(일/주/월/년)
     pub async fn domestic_stock_v1_quotations_inquire_daily_indexchartprice(
         &self,
         req: (),
@@ -1631,7 +1598,6 @@ impl StockQuotations {
     /// 국내기관_외국인 매매종목가집계[국내주식-037]
     /// - TR_ID: Real=FHPTJ04400000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/foreign-institution-total
-    /// 국내기관_외국인 매매종목가집계[국내주식-037]
     pub async fn domestic_stock_v1_quotations_foreign_institution_total(
         &self,
         req: (),
@@ -2120,7 +2086,6 @@ impl StockQuotations {
     /// 선물옵션 시세[v1_국내선물-006]
     /// - TR_ID: Real=FHMIF10000000 / VTS=FHMIF10000000
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/inquire-price
-    /// [국내선물-006 v1] 선물옵션 시세
     pub async fn domestic_futureoption_v1_quotations_inquire_price(
         &self,
         req: (),
@@ -2141,7 +2106,6 @@ impl StockQuotations {
     /// 선물옵션 시세호가[v1_국내선물-007]
     /// - TR_ID: Real=FHMIF10010000 / VTS=FHMIF10010000
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/inquire-asking-price
-    /// [국내선물-007 v1] 선물옵션 시세호가
     pub async fn domestic_futureoption_v1_quotations_inquire_asking_price(
         &self,
         req: (),
@@ -2162,7 +2126,6 @@ impl StockQuotations {
     /// 선물옵션기간별시세(일/주/월/년)[v1_국내선물-008]
     /// - TR_ID: Real=FHKIF03020100 / VTS=FHKIF03020100
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/inquire-daily-fuopchartprice
-    /// [국내선물-008 v1] 선물옵션기간별시세(일/주/월/년)
     pub async fn domestic_futureoption_v1_quotations_inquire_daily_fuopchartprice(
         &self,
         req: (),

@@ -11,12 +11,9 @@ OUTPUT_DIR = "crates/kis_api/src/generated"
 # --- Utility Functions ---
 
 def to_struct_name(api):
-    # 경로 전체를 활용하여 고유한 이름 생성
-    # /uapi/overseas-stock/v1/trading/order -> OverseasStockV1TradingOrder
     endpoint = api.get('accessUrl', '')
     parts = [p for p in endpoint.strip('/').split('/') if p != "uapi"]
     
-    # rs_kis_server 기대치에 정확히 맞춘 접두사 결정
     if "domestic-stock" in endpoint:
         prefix = "DomesticStock"
     elif "overseas-stock" in endpoint:
@@ -40,7 +37,7 @@ def to_struct_name(api):
     return name
 
 def to_safe_snake(text):
-    snake = inflection.underscore(text.strip())
+    snake = inflection.underscore(str(text).strip())
     snake = re.sub(r'[^\w\s]', '', snake).replace(' ', '_')
     snake = re.sub(r'_+', '_', snake)
     if snake in ["type", "mod", "struct", "enum", "fn", "use", "loop", "match"]:
@@ -52,20 +49,37 @@ def format_doc(text, indent=""):
     lines = str(text).strip().split('\n')
     return "\n".join([f"{indent}/// {line}" for line in lines])
 
+def _extract_params(children_json):
+    params = []
+    try:
+        children = json.loads(children_json)
+        for child in children:
+            if child.get('key') in ['OAuth.Common.Policy.Config', 'ugwswgg.InBound.Parameter.Config', 'ugwswgg.OutBound.Parameter.Config']:
+                for param in child.get('paramList', []):
+                    # KIS raw data uses 'name' for field key and 'value' for description/details
+                    params.append({
+                        'name': param.get('name'),
+                        'korean_name': param.get('description', param.get('name')),
+                        'type': 'String', # Defaulting to String, type_mapper will override
+                        'required': 'Y' if param.get('required') else 'N',
+                        'description': param.get('value')
+                    })
+            if child.get('children'):
+                params.extend(_extract_params(json.dumps(child.get('children'))))
+    except:
+        pass
+    return params
+
 # --- Type Mapper ---
 
 class TypeMapper:
     def __init__(self, config_path):
         with open(config_path, 'r') as f:
             self.config = yaml.safe_load(f)
-        
         self.patterns = []
         for p in self.config.get('patterns', []):
             self.patterns.append((re.compile(p['pattern']), p['type'], p.get('import')))
-            
-        self.explicit = {str(f['name']).lower(): (f['type'], f.get('import')) 
-                         for f in self.config.get('fields', [])}
-
+        self.explicit = {str(f['name']).lower(): (f['type'], f.get('import')) for f in self.config.get('fields', [])}
         self.required_imports = set()
 
     def get_rust_type(self, field_name):
@@ -74,12 +88,10 @@ class TypeMapper:
             rtype, imp = self.explicit[field_name_lower]
             if imp: self.required_imports.add(imp)
             return rtype
-        
         for pattern, rtype, imp in self.patterns:
             if pattern.fullmatch(field_name_lower):
                 if imp: self.required_imports.add(imp)
                 return rtype
-        
         return "String"
 
 # --- Generator ---
@@ -87,7 +99,22 @@ class TypeMapper:
 class CodeGenerator:
     def __init__(self):
         with open(RAW_DATA_FILE, 'r') as f:
-            self.spec = json.load(f)
+            raw_data = json.load(f)
+        
+        # Normalize APIs
+        self.spec = []
+        for api in raw_data:
+            self.spec.append({
+                'name': api.get('name'),
+                'accessUrl': api.get('accessUrl'),
+                'realTrId': api.get('realTrId', ''),
+                'virtualTrId': api.get('virtualTrId', ''),
+                'method': 'POST', # Default to POST for KIS
+                'description': api.get('description', ''),
+                'request': _extract_params(api.get('children', '[]')),
+                'response': [] # Response parsing can be added later if needed
+            })
+            
         self.type_mapper = TypeMapper("scripts/type_map.yaml")
         os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -100,12 +127,7 @@ class CodeGenerator:
     def _write_models(self):
         output = ["#![allow(clippy::doc_lazy_continuation)]"]
         for api in self.spec:
-            req_fields = api.get('request', [])
-            if isinstance(req_fields, list):
-                for f in req_fields: self.type_mapper.get_rust_type(f.get('name', ''))
-            res_fields = api.get('response', [])
-            if isinstance(res_fields, list):
-                for f in res_fields: self.type_mapper.get_rust_type(f.get('name', ''))
+            for f in api.get('request', []): self.type_mapper.get_rust_type(f.get('name', ''))
         
         for imp in sorted(list(self.type_mapper.required_imports)):
             output.append(f"use {imp};")
@@ -124,7 +146,7 @@ class CodeGenerator:
             api['generated_struct'] = struct_base
 
             req_fields = api.get('request', [])
-            if isinstance(req_fields, list) and len(req_fields) > 0:
+            if req_fields:
                 output.append(f"/// [{api.get('name', 'Unknown')}] 요청 구조체")
                 output.append(format_doc(api.get('description', '')))
                 output.append("#[derive(Serialize, Deserialize, Debug, Clone, Default)]")
@@ -134,8 +156,6 @@ class CodeGenerator:
                     fname = f.get('name', 'unknown')
                     rtype = self.type_mapper.get_rust_type(fname)
                     output.append(f"    /// {f.get('korean_name', fname)} ({f.get('type', 'String')}, {'필수' if f.get('required') == 'Y' else '선택'})")
-                    if f.get('description'):
-                        output.append(format_doc(f['description'], "    "))
                     output.append(f'    #[serde(rename = "{fname}")]')
                     output.append(f"    pub {to_safe_snake(fname)}: {rtype},")
                 output.append("}\n")
@@ -174,7 +194,6 @@ class CodeGenerator:
             groups[group_name].append(api)
 
         module_prefix = "Stock" if module_name == "stock" else "Overseas"
-        
         for group in groups:
             struct_name = f"{module_prefix}{group}"
             output.append(f"#[allow(dead_code)]\npub struct {struct_name}(pub(crate) KisClient);\n")
@@ -183,7 +202,7 @@ class CodeGenerator:
         output.append(f"impl {target_endpoint_type} {{")
         for group in groups:
             struct_name = f"{module_prefix}{group}"
-            method_name = inflection.underscore(group)
+            method_name = group.lower()
             output.append(f"    pub fn {method_name}(&self) -> {struct_name} {{ {struct_name}(self.0.clone()) }}")
         output.append("}\n")
 
@@ -193,18 +212,14 @@ class CodeGenerator:
             output.append(f"impl {struct_name} {{")
             for api in apis:
                 endpoint = api.get('accessUrl', '')
-                # 중복 메서드 방지를 위해 전체 경로를 메서드 명으로 사용 (uapi 제외)
                 parts = [p for p in endpoint.strip('/').split('/') if p != "uapi"]
                 method_name = to_safe_snake("_".join(parts))
                 if method_name.startswith("r#"): method_name = method_name[2:]
                 
-                req_fields = api.get('request', [])
-                req_struct = f"{api['generated_struct']}Request" if isinstance(req_fields, list) and len(req_fields) > 0 else "()"
-                
+                req_struct = f"{api['generated_struct']}Request" if api.get('request') else "()"
                 output.append(format_doc(api.get('name', 'Unknown'), "    "))
                 output.append(f"    /// - TR_ID: Real={api.get('realTrId', '')} / VTS={api.get('virtualTrId', '')}")
                 output.append(f"    /// - Endpoint: {endpoint}")
-                if api.get('description'): output.append(format_doc(api['description'], "    "))
                 
                 output.append(f"    pub async fn {method_name}(&self, req: {req_struct}) -> Result<serde_json::Value, KisError> {{")
                 output.append("        let tr_id = match self.0.env() {")

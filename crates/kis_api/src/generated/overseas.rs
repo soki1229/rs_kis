@@ -35,7 +35,10 @@ impl OverseasCommon {
     /// 접근토큰발급(P)[인증-001]
     /// - TR_ID: Real= / VTS=
     /// - Endpoint: /oauth2/tokenP
-    pub async fn oauth2_token_p(&self, req: ()) -> Result<serde_json::Value, KisError> {
+    pub async fn oauth2_token_p(
+        &self,
+        req: AuthOauth2TokenPRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "",
             crate::client::KisEnv::Vts => "",
@@ -46,7 +49,10 @@ impl OverseasCommon {
     /// 접근토큰폐기(P)[인증-002]
     /// - TR_ID: Real=None / VTS=None
     /// - Endpoint: /oauth2/revokeP
-    pub async fn oauth2_revoke_p(&self, req: ()) -> Result<serde_json::Value, KisError> {
+    pub async fn oauth2_revoke_p(
+        &self,
+        req: AuthOauth2RevokePRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "None",
             crate::client::KisEnv::Vts => "None",
@@ -68,7 +74,10 @@ impl OverseasCommon {
     /// 실시간 (웹소켓) 접속키 발급[실시간-000]
     /// - TR_ID: Real=None / VTS=None
     /// - Endpoint: /oauth2/Approval
-    pub async fn oauth2_approval(&self, req: ()) -> Result<serde_json::Value, KisError> {
+    pub async fn oauth2_approval(
+        &self,
+        req: AuthOauth2ApprovalRequest,
+    ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "None",
             crate::client::KisEnv::Vts => "None",
@@ -82,7 +91,6 @@ impl OverseasTrading {
     /// 해외주식 주문[v1_해외주식-001]
     /// - TR_ID: Real=(미국매수) TTTT1002U  (미국매도) TTTT1006U (아시아 국가 하단 규격서 참고) / VTS=(미국매수) VTTT1002U  (미국매도) VTTT1001U  (아시아 국가 하단 규격서 참고)
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order
-    /// [해외주식-001 v1] 해외주식 주문
     pub async fn overseas_stock_v1_trading_order(
         &self,
         req: (),
@@ -103,7 +111,6 @@ impl OverseasTrading {
     /// 해외주식 정정취소주문[v1_해외주식-003]
     /// - TR_ID: Real=(미국 정정·취소) TTTT1004U (아시아 국가 하단 규격서 참고) / VTS=(미국 정정·취소) VTTT1004U (아시아 국가 하단 규격서 참고)
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order-rvsecncl
-    /// [해외주식-003 v1] 해외주식 정정취소주문
     pub async fn overseas_stock_v1_trading_order_rvsecncl(
         &self,
         req: (),
@@ -124,7 +131,6 @@ impl OverseasTrading {
     /// 해외주식 예약주문접수[v1_해외주식-002]
     /// - TR_ID: Real=(미국예약매수) TTTT3014U  (미국예약매도) TTTT3016U   (중국/홍콩/일본/베트남 예약주문) TTTS3013U / VTS=(미국예약매수) VTTT3014U  (미국예약매도) VTTT3016U   (중국/홍콩/일본/베트남 예약주문) VTTS3013U
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv
-    /// [해외주식-002 v1] 해외주식 예약주문접수
     pub async fn overseas_stock_v1_trading_order_resv(
         &self,
         req: (),
@@ -141,7 +147,6 @@ impl OverseasTrading {
     /// 해외주식 예약주문접수취소[v1_해외주식-004]
     /// - TR_ID: Real=(미국 예약주문 취소접수) TTTT3017U (아시아국가 미제공) / VTS=(미국 예약주문 취소접수) VTTT3017U (아시아국가 미제공)
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv-ccnl
-    /// [해외주식-004 v1] 해외주식 예약주문접수취소
     pub async fn overseas_stock_v1_trading_order_resv_ccnl(
         &self,
         req: (),
@@ -162,7 +167,6 @@ impl OverseasTrading {
     /// 해외주식 매수가능금액조회[v1_해외주식-014]
     /// - TR_ID: Real=TTTS3007R / VTS=VTTS3007R
     /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-psamount
-    /// [v1_해외주식-014]해외주식 매수가능금액조회
     pub async fn overseas_stock_v1_trading_inquire_psamount(
         &self,
         req: (),
@@ -183,7 +187,6 @@ impl OverseasTrading {
     /// 해외주식 미체결내역[v1_해외주식-005]
     /// - TR_ID: Real=TTTS3018R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-nccs
-    /// [해외주식-005 v1] 해외주식 미체결내역
     pub async fn overseas_stock_v1_trading_inquire_nccs(
         &self,
         req: (),
@@ -200,7 +203,6 @@ impl OverseasTrading {
     /// 해외주식 잔고[v1_해외주식-006]
     /// - TR_ID: Real=TTTS3012R / VTS=VTTS3012R
     /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-balance
-    /// [해외주식-006 v1] 해외주식 잔고
     pub async fn overseas_stock_v1_trading_inquire_balance(
         &self,
         req: (),
@@ -221,7 +223,6 @@ impl OverseasTrading {
     /// 해외주식 주문체결내역[v1_해외주식-007]
     /// - TR_ID: Real=TTTS3035R / VTS=VTTS3035R
     /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-ccnl
-    /// [해외주식-007 v1] 해외주식 주문체결내역
     pub async fn overseas_stock_v1_trading_inquire_ccnl(
         &self,
         req: (),
@@ -238,7 +239,6 @@ impl OverseasTrading {
     /// 해외주식 체결기준현재잔고[v1_해외주식-008]
     /// - TR_ID: Real=CTRP6504R / VTS=VTRP6504R
     /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-present-balance
-    /// [해외주식-008 v1] 해외주식 체결기준현재잔고
     pub async fn overseas_stock_v1_trading_inquire_present_balance(
         &self,
         req: (),
@@ -259,7 +259,6 @@ impl OverseasTrading {
     /// 해외주식 예약주문조회[v1_해외주식-013]
     /// - TR_ID: Real=(미국) TTTT3039R (일본/중국/홍콩/베트남) TTTS3014R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv-list
-    /// [v1_해외주식-013]해외주식 예약주문조회
     pub async fn overseas_stock_v1_trading_order_resv_list(
         &self,
         req: (),
@@ -471,7 +470,6 @@ impl OverseasQuotations {
     /// 해외주식 현재체결가[v1_해외주식-009]
     /// - TR_ID: Real=HHDFS00000300 / VTS=HHDFS00000300
     /// - Endpoint: /uapi/overseas-price/v1/quotations/price
-    /// [해외주식-009 v1] 해외주식 현재체결가
     pub async fn overseas_price_v1_quotations_price(
         &self,
         req: (),
@@ -548,7 +546,6 @@ impl OverseasQuotations {
     /// 해외주식 기간별시세[v1_해외주식-010]
     /// - TR_ID: Real=HHDFS76240000 / VTS=HHDFS76240000
     /// - Endpoint: /uapi/overseas-price/v1/quotations/dailyprice
-    /// [해외주식-010 v1] 해외주식 기간별시세
     pub async fn overseas_price_v1_quotations_dailyprice(
         &self,
         req: (),
@@ -565,7 +562,6 @@ impl OverseasQuotations {
     /// 해외주식 종목/지수/환율기간별시세(일/주/월/년)[v1_해외주식-012]
     /// - TR_ID: Real=FHKST03030100 / VTS=FHKST03030100
     /// - Endpoint: /uapi/overseas-price/v1/quotations/inquire-daily-chartprice
-    /// [v1_해외주식-012] 해외지수/환율기간별시세(일/주/월/년)
     pub async fn overseas_price_v1_quotations_inquire_daily_chartprice(
         &self,
         req: (),
@@ -586,7 +582,6 @@ impl OverseasQuotations {
     /// 해외주식조건검색[v1_해외주식-015]
     /// - TR_ID: Real=HHDFS76410000 / VTS=HHDFS76410000
     /// - Endpoint: /uapi/overseas-price/v1/quotations/inquire-search
-    /// 해외주식조건검색[v1_해외주식-015]
     pub async fn overseas_price_v1_quotations_inquire_search(
         &self,
         req: (),
