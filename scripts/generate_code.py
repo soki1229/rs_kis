@@ -11,12 +11,26 @@ OUTPUT_DIR = "crates/kis_api/src/generated"
 # --- Utility Functions ---
 
 def to_struct_name(api):
-    # 경로 전체를 활용하여 고유한 이름 생성
-    # /uapi/overseas-stock/v1/trading/order -> OverseasStockV1TradingOrder
     endpoint = api.get('endpoint', '')
+    # v1, v2 등 버전 정보 포함하여 완전한 경로 기반 이름 생성
     parts = [p for p in endpoint.strip('/').split('/') if p != "uapi"]
     
-    name_parts = [inflection.camelize(p.replace('-', '_')) for p in parts]
+    # 카테고리 매핑 보정 (rs_kis_server 기대치에 맞춤)
+    if "domestic-stock" in endpoint:
+        prefix = "DomesticStock"
+    elif "overseas-stock" in endpoint:
+        prefix = "OverseasStock"
+    elif "domestic-futureoption" in endpoint:
+        prefix = "DomesticFutureoption"
+    elif "overseas-price" in endpoint:
+        prefix = "OverseasPrice"
+    else:
+        prefix = "Auth"
+        
+    # 이미 prefix에 포함된 정보는 parts에서 제거
+    useful_parts = [p for p in parts if p not in ["domestic-stock", "overseas-stock", "domestic-futureoption", "overseas-price"]]
+    
+    name_parts = [prefix] + [inflection.camelize(p.replace('-', '_')) for p in useful_parts]
     name = "".join(name_parts)
     
     if len(name) < 10:
@@ -166,7 +180,6 @@ class CodeGenerator:
         output.append(f"impl {target_endpoint_type} {{")
         for group in groups:
             struct_name = f"{module_prefix}{group}"
-            # explicitly lowercase for accessor methods
             method_name = group.lower()
             output.append(f"    pub fn {method_name}(&self) -> {struct_name} {{ {struct_name}(self.0.clone()) }}")
         output.append("}\n")
@@ -184,16 +197,10 @@ class CodeGenerator:
                 req_struct = f"{api['generated_struct']}Request" if isinstance(req_fields, list) and len(req_fields) > 0 else "()"
                 
                 output.append(format_doc(api.get('name', 'Unknown'), "    "))
-                output.append("    ///")
                 output.append(f"    /// - TR_ID: Real={api.get('tr_id_real', '')} / VTS={api.get('tr_id_vts', '')}")
                 output.append(f"    /// - Endpoint: {endpoint}")
-                output.append("    ///")
                 if api.get('description'): output.append(format_doc(api['description'], "    "))
-                output.append("    ///")
-                output.append("    /// # Example (Scraped)")
-                if api.get('example_request'):
-                    output.append(format_doc(json.dumps(api['example_request'], indent=2, ensure_ascii=False), "    "))
-
+                
                 output.append(f"    pub async fn {method_name}(&self, req: {req_struct}) -> Result<serde_json::Value, KisError> {{")
                 output.append("        let tr_id = match self.0.env() {")
                 output.append(f'            crate::client::KisEnv::Real => "{api.get("tr_id_real", "")}",')
