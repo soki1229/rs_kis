@@ -54,7 +54,7 @@ def _parse_params_recursive(data):
     if isinstance(data, dict):
         for k, v in data.items():
             params.append({
-                'name': k,
+                'name': k, # Original Case
                 'korean_name': k,
                 'type': 'String',
                 'required': 'N',
@@ -93,7 +93,7 @@ def _extract_params(api):
                     pvalue = param.get('value', '')
                     if pname and pname.lower() not in ['tr_id', 'custtype', 'content-type', 'authorization', 'appkey', 'appsecret']:
                         res.append({
-                            'name': pname,
+                            'name': pname, # Original Case
                             'korean_name': param.get('description', pname),
                             'type': 'String',
                             'required': 'Y' if param.get('required') else 'N',
@@ -108,7 +108,7 @@ def _extract_params(api):
         params.extend(walk_children(children))
     except: pass
 
-    # Deduplicate by lowercase name
+    # Deduplicate by lowercase name to keep one variant but preserve original casing for rename
     seen = set()
     unique_params = []
     for p in params:
