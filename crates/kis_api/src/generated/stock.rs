@@ -37,7 +37,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/order-cash
     pub async fn domestic_stock_v1_trading_order_cash(
         &self,
-        req: (),
+        req: DomesticStockV1TradingOrderCashRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "(매도) TTTC0011U (매수) TTTC0012U",
@@ -53,7 +53,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/order-credit
     pub async fn domestic_stock_v1_trading_order_credit(
         &self,
-        req: (),
+        req: DomesticStockV1TradingOrderCreditRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "(매도) TTTC0051U (매수) TTTC0052U",
@@ -69,7 +69,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/order-rvsecncl
     pub async fn domestic_stock_v1_trading_order_rvsecncl(
         &self,
-        req: (),
+        req: DomesticStockV1TradingOrderRvsecnclRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC0013U",
@@ -85,7 +85,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/inquire-psbl-rvsecncl
     pub async fn domestic_stock_v1_trading_inquire_psbl_rvsecncl(
         &self,
-        req: (),
+        req: DomesticStockV1TradingInquirePsblRvsecnclRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC0084R",
@@ -105,7 +105,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/inquire-daily-ccld
     pub async fn domestic_stock_v1_trading_inquire_daily_ccld(
         &self,
-        req: (),
+        req: DomesticStockV1TradingInquireDailyCcldRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "(3개월이내) TTTC0081R (3개월이전) CTSC9215R",
@@ -125,7 +125,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/inquire-balance
     pub async fn domestic_stock_v1_trading_inquire_balance(
         &self,
-        req: (),
+        req: DomesticStockV1TradingInquireBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC8434R",
@@ -145,7 +145,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/inquire-psbl-order
     pub async fn domestic_stock_v1_trading_inquire_psbl_order(
         &self,
-        req: (),
+        req: DomesticStockV1TradingInquirePsblOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC8908R",
@@ -165,7 +165,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/inquire-psbl-sell
     pub async fn domestic_stock_v1_trading_inquire_psbl_sell(
         &self,
-        req: (),
+        req: DomesticStockV1TradingInquirePsblSellRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC8408R",
@@ -185,7 +185,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/inquire-credit-psamount
     pub async fn domestic_stock_v1_trading_inquire_credit_psamount(
         &self,
-        req: (),
+        req: DomesticStockV1TradingInquireCreditPsamountRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC8909R",
@@ -205,7 +205,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/order-resv
     pub async fn domestic_stock_v1_trading_order_resv(
         &self,
-        req: (),
+        req: DomesticStockV1TradingOrderResvRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTSC0008U",
@@ -221,7 +221,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/order-resv-rvsecncl
     pub async fn domestic_stock_v1_trading_order_resv_rvsecncl(
         &self,
-        req: (),
+        req: DomesticStockV1TradingOrderResvRvsecnclRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "(예약취소) CTSC0009U (예약정정) CTSC0013U",
@@ -241,7 +241,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/order-resv-ccnl
     pub async fn domestic_stock_v1_trading_order_resv_ccnl(
         &self,
-        req: (),
+        req: DomesticStockV1TradingOrderResvCcnlRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTSC0004R",
@@ -261,7 +261,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/pension/inquire-present-balance
     pub async fn domestic_stock_v1_trading_pension_inquire_present_balance(
         &self,
-        req: (),
+        req: DomesticStockV1TradingPensionInquirePresentBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC2202R",
@@ -281,7 +281,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/pension/inquire-daily-ccld
     pub async fn domestic_stock_v1_trading_pension_inquire_daily_ccld(
         &self,
-        req: (),
+        req: DomesticStockV1TradingPensionInquireDailyCcldRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC2201R(기존 KRX만 가능), TTTC2210R (KRX,NXT/SOR)",
@@ -301,7 +301,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/pension/inquire-psbl-order
     pub async fn domestic_stock_v1_trading_pension_inquire_psbl_order(
         &self,
-        req: (),
+        req: DomesticStockV1TradingPensionInquirePsblOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC0503R",
@@ -321,7 +321,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/pension/inquire-deposit
     pub async fn domestic_stock_v1_trading_pension_inquire_deposit(
         &self,
-        req: (),
+        req: DomesticStockV1TradingPensionInquireDepositRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC0506R",
@@ -341,7 +341,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/pension/inquire-balance
     pub async fn domestic_stock_v1_trading_pension_inquire_balance(
         &self,
-        req: (),
+        req: DomesticStockV1TradingPensionInquireBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC2208R",
@@ -361,7 +361,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/inquire-balance-rlz-pl
     pub async fn domestic_stock_v1_trading_inquire_balance_rlz_pl(
         &self,
-        req: (),
+        req: DomesticStockV1TradingInquireBalanceRlzPlRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC8494R",
@@ -381,7 +381,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/inquire-account-balance
     pub async fn domestic_stock_v1_trading_inquire_account_balance(
         &self,
-        req: (),
+        req: DomesticStockV1TradingInquireAccountBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTRP6548R",
@@ -401,7 +401,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/inquire-period-profit
     pub async fn domestic_stock_v1_trading_inquire_period_profit(
         &self,
-        req: (),
+        req: DomesticStockV1TradingInquirePeriodProfitRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC8708R",
@@ -421,7 +421,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/inquire-period-trade-profit
     pub async fn domestic_stock_v1_trading_inquire_period_trade_profit(
         &self,
-        req: (),
+        req: DomesticStockV1TradingInquirePeriodTradeProfitRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC8715R",
@@ -441,7 +441,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/intgr-margin
     pub async fn domestic_stock_v1_trading_intgr_margin(
         &self,
-        req: (),
+        req: DomesticStockV1TradingIntgrMarginRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTC0869R",
@@ -457,7 +457,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-stock/v1/trading/period-rights
     pub async fn domestic_stock_v1_trading_period_rights(
         &self,
-        req: (),
+        req: DomesticStockV1TradingPeriodRightsRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTRGA011R",
@@ -473,7 +473,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/order
     pub async fn domestic_futureoption_v1_trading_order(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1TradingOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => {
@@ -491,7 +491,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/order-rvsecncl
     pub async fn domestic_futureoption_v1_trading_order_rvsecncl(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1TradingOrderRvsecnclRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => {
@@ -513,7 +513,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-ccnl
     pub async fn domestic_futureoption_v1_trading_inquire_ccnl(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1TradingInquireCcnlRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTO5201R",
@@ -533,7 +533,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-balance
     pub async fn domestic_futureoption_v1_trading_inquire_balance(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1TradingInquireBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTFO6118R",
@@ -553,7 +553,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-psbl-order
     pub async fn domestic_futureoption_v1_trading_inquire_psbl_order(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1TradingInquirePsblOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTO5105R",
@@ -573,7 +573,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-ngt-ccnl
     pub async fn domestic_futureoption_v1_trading_inquire_ngt_ccnl(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1TradingInquireNgtCcnlRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "(구) JTCE5005R (신) STTN5201R",
@@ -593,7 +593,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-ngt-balance
     pub async fn domestic_futureoption_v1_trading_inquire_ngt_balance(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1TradingInquireNgtBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "(구) JTCE6001R (신) CTFN6118R",
@@ -613,7 +613,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-psbl-ngt-order
     pub async fn domestic_futureoption_v1_trading_inquire_psbl_ngt_order(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1TradingInquirePsblNgtOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "(구) JTCE1004R (신) STTN5105R",
@@ -633,7 +633,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/ngt-margin-detail
     pub async fn domestic_futureoption_v1_trading_ngt_margin_detail(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1TradingNgtMarginDetailRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "(구) JTCE6003R (신) CTFN7107R",
@@ -653,7 +653,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-balance-settlement-pl
     pub async fn domestic_futureoption_v1_trading_inquire_balance_settlement_pl(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1TradingInquireBalanceSettlementPlRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTFO6117R",
@@ -673,7 +673,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-deposit
     pub async fn domestic_futureoption_v1_trading_inquire_deposit(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1TradingInquireDepositRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTRP6550R",
@@ -693,7 +693,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-balance-valuation-pl
     pub async fn domestic_futureoption_v1_trading_inquire_balance_valuation_pl(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1TradingInquireBalanceValuationPlRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTFO6159R",
@@ -713,7 +713,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-ccnl-bstime
     pub async fn domestic_futureoption_v1_trading_inquire_ccnl_bstime(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1TradingInquireCcnlBstimeRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTFO5139R",
@@ -733,7 +733,7 @@ impl StockTrading {
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-daily-amount-fee
     pub async fn domestic_futureoption_v1_trading_inquire_daily_amount_fee(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1TradingInquireDailyAmountFeeRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTFO6119R",
@@ -756,7 +756,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-price
     pub async fn domestic_stock_v1_quotations_inquire_price(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquirePriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST01010100",
@@ -776,7 +776,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-price-2
     pub async fn domestic_stock_v1_quotations_inquire_price_2(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquirePrice2Request,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01010000",
@@ -796,7 +796,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-ccnl
     pub async fn domestic_stock_v1_quotations_inquire_ccnl(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireCcnlRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST01010300",
@@ -816,7 +816,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-daily-price
     pub async fn domestic_stock_v1_quotations_inquire_daily_price(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireDailyPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST01010400",
@@ -836,7 +836,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-asking-price-exp-ccn
     pub async fn domestic_stock_v1_quotations_inquire_asking_price_exp_ccn(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireAskingPriceExpCcnRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST01010200",
@@ -856,7 +856,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-investor
     pub async fn domestic_stock_v1_quotations_inquire_investor(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireInvestorRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST01010900",
@@ -876,7 +876,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-member
     pub async fn domestic_stock_v1_quotations_inquire_member(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireMemberRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST01010600",
@@ -896,7 +896,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice
     pub async fn domestic_stock_v1_quotations_inquire_daily_itemchartprice(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireDailyItemchartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST03010100",
@@ -916,7 +916,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-time-itemchartprice
     pub async fn domestic_stock_v1_quotations_inquire_time_itemchartprice(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireTimeItemchartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST03010200",
@@ -936,7 +936,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-time-dailychartprice
     pub async fn domestic_stock_v1_quotations_inquire_time_dailychartprice(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireTimeDailychartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST03010230",
@@ -956,7 +956,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-time-itemconclusion
     pub async fn domestic_stock_v1_quotations_inquire_time_itemconclusion(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireTimeItemconclusionRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01060000",
@@ -976,7 +976,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-daily-overtimeprice
     pub async fn domestic_stock_v1_quotations_inquire_daily_overtimeprice(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireDailyOvertimepriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST02320000",
@@ -996,7 +996,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-time-overtimeconclusion
     pub async fn domestic_stock_v1_quotations_inquire_time_overtimeconclusion(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireTimeOvertimeconclusionRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST02310000",
@@ -1016,7 +1016,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-overtime-price
     pub async fn domestic_stock_v1_quotations_inquire_overtime_price(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireOvertimePriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST02300000",
@@ -1036,7 +1036,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-overtime-asking-price
     pub async fn domestic_stock_v1_quotations_inquire_overtime_asking_price(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireOvertimeAskingPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST02300400",
@@ -1056,7 +1056,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/exp-closing-price
     pub async fn domestic_stock_v1_quotations_exp_closing_price(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsExpClosingPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST117300C0",
@@ -1076,7 +1076,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-elw-price
     pub async fn domestic_stock_v1_quotations_inquire_elw_price(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireElwPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKEW15010000",
@@ -1096,7 +1096,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-index-price
     pub async fn domestic_stock_v1_quotations_inquire_index_price(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireIndexPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPUP02100000",
@@ -1116,7 +1116,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-index-daily-price
     pub async fn domestic_stock_v1_quotations_inquire_index_daily_price(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireIndexDailyPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPUP02120000",
@@ -1136,7 +1136,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-index-tickprice
     pub async fn domestic_stock_v1_quotations_inquire_index_tickprice(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireIndexTickpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPUP02110100",
@@ -1156,7 +1156,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-index-timeprice
     pub async fn domestic_stock_v1_quotations_inquire_index_timeprice(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireIndexTimepriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPUP02110200",
@@ -1176,7 +1176,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-time-indexchartprice
     pub async fn domestic_stock_v1_quotations_inquire_time_indexchartprice(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireTimeIndexchartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKUP03500200",
@@ -1196,7 +1196,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice
     pub async fn domestic_stock_v1_quotations_inquire_daily_indexchartprice(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireDailyIndexchartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKUP03500100",
@@ -1216,7 +1216,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-index-category-price
     pub async fn domestic_stock_v1_quotations_inquire_index_category_price(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireIndexCategoryPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPUP02140000",
@@ -1236,7 +1236,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/exp-index-trend
     pub async fn domestic_stock_v1_quotations_exp_index_trend(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsExpIndexTrendRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01840000",
@@ -1256,7 +1256,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/exp-total-index
     pub async fn domestic_stock_v1_quotations_exp_total_index(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsExpTotalIndexRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKUP11750000",
@@ -1276,7 +1276,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-vi-status
     pub async fn domestic_stock_v1_quotations_inquire_vi_status(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireViStatusRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01390000",
@@ -1296,7 +1296,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/comp-interest
     pub async fn domestic_stock_v1_quotations_comp_interest(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsCompInterestRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST07020000",
@@ -1316,7 +1316,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/news-title
     pub async fn domestic_stock_v1_quotations_news_title(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsNewsTitleRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST01011800",
@@ -1332,7 +1332,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/chk-holiday
     pub async fn domestic_stock_v1_quotations_chk_holiday(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsChkHolidayRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTCA0903R",
@@ -1348,7 +1348,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/market-time
     pub async fn domestic_stock_v1_quotations_market_time(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsMarketTimeRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHMCM000002C0",
@@ -1364,7 +1364,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/search-info
     pub async fn domestic_stock_v1_quotations_search_info(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsSearchInfoRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTPF1604R",
@@ -1380,7 +1380,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/search-stock-info
     pub async fn domestic_stock_v1_quotations_search_stock_info(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsSearchStockInfoRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTPF1002R",
@@ -1400,7 +1400,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/credit-by-company
     pub async fn domestic_stock_v1_quotations_credit_by_company(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsCreditByCompanyRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST04770000",
@@ -1420,7 +1420,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/estimate-perform
     pub async fn domestic_stock_v1_quotations_estimate_perform(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsEstimatePerformRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKST668300C0",
@@ -1440,7 +1440,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/lendable-by-company
     pub async fn domestic_stock_v1_quotations_lendable_by_company(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsLendableByCompanyRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "CTSC2702R",
@@ -1460,7 +1460,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/invest-opinion
     pub async fn domestic_stock_v1_quotations_invest_opinion(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInvestOpinionRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST663300C0",
@@ -1480,7 +1480,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/invest-opbysec
     pub async fn domestic_stock_v1_quotations_invest_opbysec(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInvestOpbysecRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST663400C0",
@@ -1500,7 +1500,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/psearch-title
     pub async fn domestic_stock_v1_quotations_psearch_title(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsPsearchTitleRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKST03900300",
@@ -1520,7 +1520,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/psearch-result
     pub async fn domestic_stock_v1_quotations_psearch_result(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsPsearchResultRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKST03900400",
@@ -1540,7 +1540,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/intstock-grouplist
     pub async fn domestic_stock_v1_quotations_intstock_grouplist(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsIntstockGrouplistRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKCM113004C7",
@@ -1560,7 +1560,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/intstock-multprice
     pub async fn domestic_stock_v1_quotations_intstock_multprice(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsIntstockMultpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST11300006",
@@ -1580,7 +1580,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/intstock-stocklist-by-group
     pub async fn domestic_stock_v1_quotations_intstock_stocklist_by_group(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsIntstockStocklistByGroupRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKCM113004C6",
@@ -1600,7 +1600,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/foreign-institution-total
     pub async fn domestic_stock_v1_quotations_foreign_institution_total(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsForeignInstitutionTotalRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPTJ04400000",
@@ -1620,7 +1620,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/frgnmem-trade-estimate
     pub async fn domestic_stock_v1_quotations_frgnmem_trade_estimate(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsFrgnmemTradeEstimateRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST644100C0",
@@ -1640,7 +1640,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/investor-trade-by-stock-daily
     pub async fn domestic_stock_v1_quotations_investor_trade_by_stock_daily(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInvestorTradeByStockDailyRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPTJ04160001",
@@ -1660,7 +1660,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-investor-time-by-market
     pub async fn domestic_stock_v1_quotations_inquire_investor_time_by_market(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireInvestorTimeByMarketRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPTJ04030000",
@@ -1680,7 +1680,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-investor-daily-by-market
     pub async fn domestic_stock_v1_quotations_inquire_investor_daily_by_market(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireInvestorDailyByMarketRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPTJ04040000",
@@ -1700,7 +1700,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/frgnmem-pchs-trend
     pub async fn domestic_stock_v1_quotations_frgnmem_pchs_trend(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsFrgnmemPchsTrendRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST644400C0",
@@ -1720,7 +1720,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/frgnmem-trade-trend
     pub async fn domestic_stock_v1_quotations_frgnmem_trade_trend(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsFrgnmemTradeTrendRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST04320000",
@@ -1740,7 +1740,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-member-daily
     pub async fn domestic_stock_v1_quotations_inquire_member_daily(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireMemberDailyRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST04540000",
@@ -1760,7 +1760,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/program-trade-by-stock
     pub async fn domestic_stock_v1_quotations_program_trade_by_stock(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsProgramTradeByStockRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPPG04650101",
@@ -1780,7 +1780,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/program-trade-by-stock-daily
     pub async fn domestic_stock_v1_quotations_program_trade_by_stock_daily(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsProgramTradeByStockDailyRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPPG04650201",
@@ -1800,7 +1800,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/investor-trend-estimate
     pub async fn domestic_stock_v1_quotations_investor_trend_estimate(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInvestorTrendEstimateRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHPTJ04160200",
@@ -1820,7 +1820,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-daily-trade-volume
     pub async fn domestic_stock_v1_quotations_inquire_daily_trade_volume(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInquireDailyTradeVolumeRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST03010800",
@@ -1840,7 +1840,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/comp-program-trade-today
     pub async fn domestic_stock_v1_quotations_comp_program_trade_today(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsCompProgramTradeTodayRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPPG04600101",
@@ -1860,7 +1860,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/comp-program-trade-daily
     pub async fn domestic_stock_v1_quotations_comp_program_trade_daily(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsCompProgramTradeDailyRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPPG04600001",
@@ -1880,7 +1880,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/investor-program-trade-today
     pub async fn domestic_stock_v1_quotations_investor_program_trade_today(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsInvestorProgramTradeTodayRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHPPG046600C1",
@@ -1900,7 +1900,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/daily-credit-balance
     pub async fn domestic_stock_v1_quotations_daily_credit_balance(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsDailyCreditBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST04760000",
@@ -1920,7 +1920,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/exp-price-trend
     pub async fn domestic_stock_v1_quotations_exp_price_trend(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsExpPriceTrendRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01810000",
@@ -1940,7 +1940,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/daily-short-sale
     pub async fn domestic_stock_v1_quotations_daily_short_sale(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsDailyShortSaleRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST04830000",
@@ -1960,7 +1960,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/tradprt-byamt
     pub async fn domestic_stock_v1_quotations_tradprt_byamt(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsTradprtByamtRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST111900C0",
@@ -1980,7 +1980,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/mktfunds
     pub async fn domestic_stock_v1_quotations_mktfunds(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsMktfundsRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST649100C0",
@@ -1996,7 +1996,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/daily-loan-trans
     pub async fn domestic_stock_v1_quotations_daily_loan_trans(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsDailyLoanTransRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHPST074500C0",
@@ -2016,7 +2016,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/capture-uplowprice
     pub async fn domestic_stock_v1_quotations_capture_uplowprice(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsCaptureUplowpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST130000C0",
@@ -2036,7 +2036,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/pbar-tratio
     pub async fn domestic_stock_v1_quotations_pbar_tratio(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsPbarTratioRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01130000",
@@ -2052,7 +2052,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/volume-rank
     pub async fn domestic_stock_v1_quotations_volume_rank(
         &self,
-        req: (),
+        req: DomesticStockV1QuotationsVolumeRankRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01710000",
@@ -2068,7 +2068,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/margin-rate
     pub async fn domestic_futureoption_v1_quotations_margin_rate(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1QuotationsMarginRateRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "TTTO6032R",
@@ -2088,7 +2088,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/inquire-price
     pub async fn domestic_futureoption_v1_quotations_inquire_price(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1QuotationsInquirePriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHMIF10000000",
@@ -2108,7 +2108,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/inquire-asking-price
     pub async fn domestic_futureoption_v1_quotations_inquire_asking_price(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1QuotationsInquireAskingPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHMIF10010000",
@@ -2128,7 +2128,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/inquire-daily-fuopchartprice
     pub async fn domestic_futureoption_v1_quotations_inquire_daily_fuopchartprice(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1QuotationsInquireDailyFuopchartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKIF03020100",
@@ -2148,7 +2148,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/inquire-time-fuopchartprice
     pub async fn domestic_futureoption_v1_quotations_inquire_time_fuopchartprice(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1QuotationsInquireTimeFuopchartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKIF03020200",
@@ -2168,7 +2168,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/display-board-option-list
     pub async fn domestic_futureoption_v1_quotations_display_board_option_list(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1QuotationsDisplayBoardOptionListRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPIO056104C0",
@@ -2188,7 +2188,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/display-board-top
     pub async fn domestic_futureoption_v1_quotations_display_board_top(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1QuotationsDisplayBoardTopRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPIF05030000",
@@ -2208,7 +2208,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/display-board-callput
     pub async fn domestic_futureoption_v1_quotations_display_board_callput(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1QuotationsDisplayBoardCallputRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPIF05030100",
@@ -2228,7 +2228,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/display-board-futures
     pub async fn domestic_futureoption_v1_quotations_display_board_futures(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1QuotationsDisplayBoardFuturesRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPIF05030200",
@@ -2248,7 +2248,7 @@ impl StockQuotations {
     /// - Endpoint: /uapi/domestic-futureoption/v1/quotations/exp-price-trend
     pub async fn domestic_futureoption_v1_quotations_exp_price_trend(
         &self,
-        req: (),
+        req: DomesticFutureoptionV1QuotationsExpPriceTrendRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPIF05110100",
@@ -2271,7 +2271,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/finance/balance-sheet
     pub async fn domestic_stock_v1_finance_balance_sheet(
         &self,
-        req: (),
+        req: DomesticStockV1FinanceBalanceSheetRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST66430100",
@@ -2287,7 +2287,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/finance/income-statement
     pub async fn domestic_stock_v1_finance_income_statement(
         &self,
-        req: (),
+        req: DomesticStockV1FinanceIncomeStatementRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST66430200",
@@ -2307,7 +2307,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/finance/financial-ratio
     pub async fn domestic_stock_v1_finance_financial_ratio(
         &self,
-        req: (),
+        req: DomesticStockV1FinanceFinancialRatioRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST66430300",
@@ -2327,7 +2327,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/finance/profit-ratio
     pub async fn domestic_stock_v1_finance_profit_ratio(
         &self,
-        req: (),
+        req: DomesticStockV1FinanceProfitRatioRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST66430400",
@@ -2343,7 +2343,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/finance/other-major-ratios
     pub async fn domestic_stock_v1_finance_other_major_ratios(
         &self,
-        req: (),
+        req: DomesticStockV1FinanceOtherMajorRatiosRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST66430500",
@@ -2363,7 +2363,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/finance/stability-ratio
     pub async fn domestic_stock_v1_finance_stability_ratio(
         &self,
-        req: (),
+        req: DomesticStockV1FinanceStabilityRatioRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST66430600",
@@ -2383,7 +2383,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/finance/growth-ratio
     pub async fn domestic_stock_v1_finance_growth_ratio(
         &self,
-        req: (),
+        req: DomesticStockV1FinanceGrowthRatioRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST66430800",
@@ -2399,7 +2399,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/ksdinfo/dividend
     pub async fn domestic_stock_v1_ksdinfo_dividend(
         &self,
-        req: (),
+        req: DomesticStockV1KsdinfoDividendRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669102C0",
@@ -2415,7 +2415,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/ksdinfo/purreq
     pub async fn domestic_stock_v1_ksdinfo_purreq(
         &self,
-        req: (),
+        req: DomesticStockV1KsdinfoPurreqRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669103C0",
@@ -2431,7 +2431,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/ksdinfo/merger-split
     pub async fn domestic_stock_v1_ksdinfo_merger_split(
         &self,
-        req: (),
+        req: DomesticStockV1KsdinfoMergerSplitRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669104C0",
@@ -2447,7 +2447,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/ksdinfo/rev-split
     pub async fn domestic_stock_v1_ksdinfo_rev_split(
         &self,
-        req: (),
+        req: DomesticStockV1KsdinfoRevSplitRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669105C0",
@@ -2463,7 +2463,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/ksdinfo/cap-dcrs
     pub async fn domestic_stock_v1_ksdinfo_cap_dcrs(
         &self,
-        req: (),
+        req: DomesticStockV1KsdinfoCapDcrsRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669106C0",
@@ -2479,7 +2479,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/ksdinfo/list-info
     pub async fn domestic_stock_v1_ksdinfo_list_info(
         &self,
-        req: (),
+        req: DomesticStockV1KsdinfoListInfoRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669107C0",
@@ -2495,7 +2495,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/ksdinfo/pub-offer
     pub async fn domestic_stock_v1_ksdinfo_pub_offer(
         &self,
-        req: (),
+        req: DomesticStockV1KsdinfoPubOfferRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669108C0",
@@ -2511,7 +2511,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/ksdinfo/forfeit
     pub async fn domestic_stock_v1_ksdinfo_forfeit(
         &self,
-        req: (),
+        req: DomesticStockV1KsdinfoForfeitRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669109C0",
@@ -2527,7 +2527,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/ksdinfo/mand-deposit
     pub async fn domestic_stock_v1_ksdinfo_mand_deposit(
         &self,
-        req: (),
+        req: DomesticStockV1KsdinfoMandDepositRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669110C0",
@@ -2543,7 +2543,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/ksdinfo/paidin-capin
     pub async fn domestic_stock_v1_ksdinfo_paidin_capin(
         &self,
-        req: (),
+        req: DomesticStockV1KsdinfoPaidinCapinRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669100C0",
@@ -2559,7 +2559,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/ksdinfo/bonus-issue
     pub async fn domestic_stock_v1_ksdinfo_bonus_issue(
         &self,
-        req: (),
+        req: DomesticStockV1KsdinfoBonusIssueRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669101C0",
@@ -2575,7 +2575,7 @@ impl StockCommon {
     /// - Endpoint: /uapi/domestic-stock/v1/ksdinfo/sharehld-meet
     pub async fn domestic_stock_v1_ksdinfo_sharehld_meet(
         &self,
-        req: (),
+        req: DomesticStockV1KsdinfoSharehldMeetRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB669111C0",
@@ -2594,7 +2594,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/overtime-exp-trans-fluct
     pub async fn domestic_stock_v1_ranking_overtime_exp_trans_fluct(
         &self,
-        req: (),
+        req: DomesticStockV1RankingOvertimeExpTransFluctRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST11860000",
@@ -2614,7 +2614,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/fluctuation
     pub async fn domestic_stock_v1_ranking_fluctuation(
         &self,
-        req: (),
+        req: DomesticStockV1RankingFluctuationRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01700000",
@@ -2630,7 +2630,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/quote-balance
     pub async fn domestic_stock_v1_ranking_quote_balance(
         &self,
-        req: (),
+        req: DomesticStockV1RankingQuoteBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01720000",
@@ -2646,7 +2646,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/profit-asset-index
     pub async fn domestic_stock_v1_ranking_profit_asset_index(
         &self,
-        req: (),
+        req: DomesticStockV1RankingProfitAssetIndexRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01730000",
@@ -2666,7 +2666,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/market-cap
     pub async fn domestic_stock_v1_ranking_market_cap(
         &self,
-        req: (),
+        req: DomesticStockV1RankingMarketCapRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01740000",
@@ -2682,7 +2682,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/finance-ratio
     pub async fn domestic_stock_v1_ranking_finance_ratio(
         &self,
-        req: (),
+        req: DomesticStockV1RankingFinanceRatioRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01750000",
@@ -2698,7 +2698,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/after-hour-balance
     pub async fn domestic_stock_v1_ranking_after_hour_balance(
         &self,
-        req: (),
+        req: DomesticStockV1RankingAfterHourBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01760000",
@@ -2718,7 +2718,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/prefer-disparate-ratio
     pub async fn domestic_stock_v1_ranking_prefer_disparate_ratio(
         &self,
-        req: (),
+        req: DomesticStockV1RankingPreferDisparateRatioRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01770000",
@@ -2738,7 +2738,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/disparity
     pub async fn domestic_stock_v1_ranking_disparity(
         &self,
-        req: (),
+        req: DomesticStockV1RankingDisparityRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01780000",
@@ -2754,7 +2754,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/market-value
     pub async fn domestic_stock_v1_ranking_market_value(
         &self,
-        req: (),
+        req: DomesticStockV1RankingMarketValueRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01790000",
@@ -2770,7 +2770,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/volume-power
     pub async fn domestic_stock_v1_ranking_volume_power(
         &self,
-        req: (),
+        req: DomesticStockV1RankingVolumePowerRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01680000",
@@ -2786,7 +2786,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/top-interest-stock
     pub async fn domestic_stock_v1_ranking_top_interest_stock(
         &self,
-        req: (),
+        req: DomesticStockV1RankingTopInterestStockRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01800000",
@@ -2806,7 +2806,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/exp-trans-updown
     pub async fn domestic_stock_v1_ranking_exp_trans_updown(
         &self,
-        req: (),
+        req: DomesticStockV1RankingExpTransUpdownRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01820000",
@@ -2826,7 +2826,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/traded-by-company
     pub async fn domestic_stock_v1_ranking_traded_by_company(
         &self,
-        req: (),
+        req: DomesticStockV1RankingTradedByCompanyRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01860000",
@@ -2846,7 +2846,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/near-new-highlow
     pub async fn domestic_stock_v1_ranking_near_new_highlow(
         &self,
-        req: (),
+        req: DomesticStockV1RankingNearNewHighlowRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST01870000",
@@ -2866,7 +2866,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/dividend-rate
     pub async fn domestic_stock_v1_ranking_dividend_rate(
         &self,
-        req: (),
+        req: DomesticStockV1RankingDividendRateRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHKDB13470100",
@@ -2882,7 +2882,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/bulk-trans-num
     pub async fn domestic_stock_v1_ranking_bulk_trans_num(
         &self,
-        req: (),
+        req: DomesticStockV1RankingBulkTransNumRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST190900C0",
@@ -2898,7 +2898,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/credit-balance
     pub async fn domestic_stock_v1_ranking_credit_balance(
         &self,
-        req: (),
+        req: DomesticStockV1RankingCreditBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHKST17010000",
@@ -2914,7 +2914,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/short-sale
     pub async fn domestic_stock_v1_ranking_short_sale(
         &self,
-        req: (),
+        req: DomesticStockV1RankingShortSaleRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST04820000",
@@ -2930,7 +2930,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/overtime-fluctuation
     pub async fn domestic_stock_v1_ranking_overtime_fluctuation(
         &self,
-        req: (),
+        req: DomesticStockV1RankingOvertimeFluctuationRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST02340000",
@@ -2950,7 +2950,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/overtime-volume
     pub async fn domestic_stock_v1_ranking_overtime_volume(
         &self,
-        req: (),
+        req: DomesticStockV1RankingOvertimeVolumeRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "FHPST02350000",
@@ -2970,7 +2970,7 @@ impl StockRanking {
     /// - Endpoint: /uapi/domestic-stock/v1/ranking/hts-top-view
     pub async fn domestic_stock_v1_ranking_hts_top_view(
         &self,
-        req: (),
+        req: DomesticStockV1RankingHtsTopViewRequest,
     ) -> Result<serde_json::Value, KisError> {
         let tr_id = match self.0.env() {
             crate::client::KisEnv::Real => "HHMCM000100C0",

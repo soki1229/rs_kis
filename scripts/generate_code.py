@@ -49,40 +49,72 @@ def format_doc(text, indent=""):
     lines = str(text).strip().split('\n')
     return "\n".join([f"{indent}/// {line}" for line in lines])
 
-def _extract_params(children_data):
+def _parse_params_from_json(json_str):
     params = []
+    if not json_str: return params
+    try:
+        data = json.loads(json_str)
+        if isinstance(data, dict):
+            for k, v in data.items():
+                params.append({
+                    'name': k,
+                    'korean_name': k,
+                    'type': 'String',
+                    'required': 'N',
+                    'description': str(v)
+                })
+    except:
+        pass
+    return params
+
+def _extract_params(children_data, extra_param=None):
+    params = []
+    
+    # 1. Extract from extraParam
+    if extra_param:
+        params.extend(_parse_params_from_json(extra_param))
+
+    # 2. Recursive extraction from children
     if not children_data: return params
     
     try:
         if isinstance(children_data, str):
-            try:
-                children = json.loads(children_data)
-            except:
-                return params
+            children = json.loads(children_data)
         else:
             children = children_data
             
         for child in children:
-            key = child.get('key', '')
-            # Extract from any key that looks like a parameter config
-            if any(k in key for k in ['Config', 'Parameter']):
-                for param in child.get('paramList', []):
-                    pname = param.get('name')
-                    if pname and pname.lower() not in ['tr_id', 'custtype', 'content-type', 'authorization', 'appkey', 'appsecret']:
-                        params.append({
-                            'name': pname,
-                            'korean_name': param.get('description', pname),
-                            'type': 'String',
-                            'required': 'Y' if param.get('required') else 'N',
-                            'description': param.get('value')
-                        })
+            for param in child.get('paramList', []):
+                pname = param.get('name')
+                pvalue = param.get('value', '')
+                
+                # Check for nested JSON in 'value' (often named jsonBody or jsonResponse)
+                if pname in ['jsonBody', 'jsonResponse'] and isinstance(pvalue, str) and pvalue.startswith('{'):
+                    params.extend(_parse_params_from_json(pvalue))
+                elif pname and pname.lower() not in ['tr_id', 'custtype', 'content-type', 'authorization', 'appkey', 'appsecret']:
+                    params.append({
+                        'name': pname,
+                        'korean_name': param.get('description', pname),
+                        'type': 'String',
+                        'required': 'Y' if param.get('required') else 'N',
+                        'description': pvalue
+                    })
             
             inner_children = child.get('children')
             if inner_children:
                 params.extend(_extract_params(inner_children))
     except:
         pass
-    return params
+        
+    # Deduplicate by name
+    seen = set()
+    unique_params = []
+    for p in params:
+        if p['name'] not in seen:
+            unique_params.append(p)
+            seen.add(p['name'])
+            
+    return unique_params
 
 # --- Type Mapper ---
 
@@ -124,7 +156,7 @@ class CodeGenerator:
                 'virtualTrId': api.get('virtualTrId', ''),
                 'method': 'POST',
                 'description': api.get('description', ''),
-                'request': _extract_params(api.get('children', '[]')),
+                'request': _extract_params(api.get('children', '[]'), api.get('extraParam')),
                 'response': []
             })
             
