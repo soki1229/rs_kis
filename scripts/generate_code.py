@@ -179,7 +179,8 @@ class CodeGenerator:
         output.append(f"impl {target_endpoint_type} {{")
         for group in groups:
             struct_name = f"{module_prefix}{group}"
-            method_name = group.lower()
+            # explicitly underscore for accessor methods
+            method_name = inflection.underscore(group)
             output.append(f"    pub fn {method_name}(&self) -> {struct_name} {{ {struct_name}(self.0.clone()) }}")
         output.append("}\n")
 
