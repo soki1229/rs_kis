@@ -49,23 +49,37 @@ def format_doc(text, indent=""):
     lines = str(text).strip().split('\n')
     return "\n".join([f"{indent}/// {line}" for line in lines])
 
-def _extract_params(children_json):
+def _extract_params(children_data):
     params = []
+    if not children_data: return params
+    
     try:
-        children = json.loads(children_json)
+        # children_data could be a string or a list
+        if isinstance(children_data, str):
+            try:
+                children = json.loads(children_data)
+            except:
+                return params
+        else:
+            children = children_data
+            
         for child in children:
-            if child.get('key') in ['OAuth.Common.Policy.Config', 'ugwswgg.InBound.Parameter.Config', 'ugwswgg.OutBound.Parameter.Config']:
+            key = child.get('key', '')
+            # Extract from InBound (Request) and OutBound (Response) configurations
+            if any(k in key for k in ['OAuth.Common.Policy.Config', 'Parameter.Config']):
                 for param in child.get('paramList', []):
-                    # KIS raw data uses 'name' for field key and 'value' for description/details
-                    params.append({
-                        'name': param.get('name'),
-                        'korean_name': param.get('description', param.get('name')),
-                        'type': 'String', # Defaulting to String, type_mapper will override
-                        'required': 'Y' if param.get('required') else 'N',
-                        'description': param.get('value')
-                    })
+                    pname = param.get('name')
+                    if pname:
+                        params.append({
+                            'name': pname,
+                            'korean_name': param.get('description', pname),
+                            'type': 'String',
+                            'required': 'Y' if param.get('required') else 'N',
+                            'description': param.get('value')
+                        })
+            # Recursively dig into children (they might be objects, not strings here)
             if child.get('children'):
-                params.extend(_extract_params(json.dumps(child.get('children'))))
+                params.extend(_extract_params(child.get('children')))
     except:
         pass
     return params
@@ -101,7 +115,6 @@ class CodeGenerator:
         with open(RAW_DATA_FILE, 'r') as f:
             raw_data = json.load(f)
         
-        # Normalize APIs
         self.spec = []
         for api in raw_data:
             self.spec.append({
@@ -109,10 +122,10 @@ class CodeGenerator:
                 'accessUrl': api.get('accessUrl'),
                 'realTrId': api.get('realTrId', ''),
                 'virtualTrId': api.get('virtualTrId', ''),
-                'method': 'POST', # Default to POST for KIS
+                'method': 'POST', # KIS post is more common
                 'description': api.get('description', ''),
                 'request': _extract_params(api.get('children', '[]')),
-                'response': [] # Response parsing can be added later if needed
+                'response': []
             })
             
         self.type_mapper = TypeMapper("scripts/type_map.yaml")
