@@ -11,9 +11,12 @@ OUTPUT_DIR = "crates/kis_api/src/generated"
 # --- Utility Functions ---
 
 def to_struct_name(api):
+    # 경로 전체를 활용하여 고유한 이름 생성
+    # /uapi/overseas-stock/v1/trading/order -> OverseasStockV1TradingOrder
     endpoint = api.get('accessUrl', '')
     parts = [p for p in endpoint.strip('/').split('/') if p != "uapi"]
     
+    # rs_kis_server 기대치에 정확히 맞춘 접두사 결정
     if "domestic-stock" in endpoint:
         prefix = "DomesticStock"
     elif "overseas-stock" in endpoint:
@@ -190,11 +193,9 @@ class CodeGenerator:
             output.append(f"impl {struct_name} {{")
             for api in apis:
                 endpoint = api.get('accessUrl', '')
-                # 중복 메서드 방지를 위해 전체 경로의 주요 부분을 메서드 명으로 사용
+                # 중복 메서드 방지를 위해 전체 경로를 메서드 명으로 사용 (uapi 제외)
                 parts = [p for p in endpoint.strip('/').split('/') if p != "uapi"]
-                # 마지막 2~3개 세그먼트 결합 (예: v1/trading/order-cash -> v1_trading_order_cash)
-                useful_parts = parts[-3:] if len(parts) >= 3 else parts
-                method_name = to_safe_snake("_".join(useful_parts))
+                method_name = to_safe_snake("_".join(parts))
                 if method_name.startswith("r#"): method_name = method_name[2:]
                 
                 req_fields = api.get('request', [])
@@ -225,4 +226,4 @@ class CodeGenerator:
 if __name__ == "__main__":
     generator = CodeGenerator()
     generator.generate()
-    print("[+] Structured SDK generated with Smart Type Mapping and Robust Unique Methods.")
+    print("[+] Structured SDK generated with Smart Type Mapping and Truly Unique Methods.")
