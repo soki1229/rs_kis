@@ -37,6 +37,7 @@ def to_struct_name(api):
     return name
 
 def to_safe_snake(text):
+    # KIS API 필드명은 대소문자가 섞여 있으므로 스네이크 케이스로 변환하되 예약어 충돌 방지
     snake = inflection.underscore(str(text).strip())
     snake = re.sub(r'[^\w\s]', '', snake).replace(' ', '_')
     snake = re.sub(r'_+', '_', snake)
@@ -58,7 +59,7 @@ def _parse_params_from_json(json_str):
         if isinstance(data, dict):
             for k, v in data.items():
                 params.append({
-                    'name': k.upper(), # Keep KIS original casing for #[serde(rename)]
+                    'name': k, # Original case for #[serde(rename)]
                     'korean_name': k,
                     'type': 'String',
                     'required': 'N',
@@ -67,7 +68,7 @@ def _parse_params_from_json(json_str):
         elif isinstance(data, list) and len(data) > 0 and isinstance(data[0], dict):
             for k, v in data[0].items():
                 params.append({
-                    'name': k.upper(),
+                    'name': k,
                     'korean_name': k,
                     'type': 'String',
                     'required': 'N',
@@ -80,17 +81,7 @@ def _parse_params_from_json(json_str):
 def _extract_params(api):
     params = []
     
-    # 1. Primary Source: reqExample (Most reliable for keys)
-    req_example = api.get('reqExample')
-    if req_example:
-        params.extend(_parse_params_from_json(req_example))
-        
-    # 2. Secondary Source: extraParam
-    extra_param = api.get('extraParam')
-    if extra_param:
-        params.extend(_parse_params_from_json(extra_param))
-
-    # 3. Tertiary Source: Deep children search
+    # 1. PRIMARY: children parsing (Most accurate field list)
     children_data = api.get('children', '[]')
     try:
         children = json.loads(children_data) if isinstance(children_data, str) else children_data
@@ -104,7 +95,7 @@ def _extract_params(api):
                         res.extend(_parse_params_from_json(pvalue))
                     elif pname and pname.lower() not in ['tr_id', 'custtype', 'content-type', 'authorization', 'appkey', 'appsecret']:
                         res.append({
-                            'name': pname.upper(),
+                            'name': pname,
                             'korean_name': param.get('description', pname),
                             'type': 'String',
                             'required': 'Y' if param.get('required') else 'N',
@@ -116,16 +107,25 @@ def _extract_params(api):
         params.extend(walk_children(children))
     except:
         pass
+
+    # 2. SECONDARY: reqExample (Backup for missed fields)
+    req_example = api.get('reqExample')
+    if req_example:
+        params.extend(_parse_params_from_json(req_example))
         
-    # Deduplicate by name
+    # 3. TERTIARY: extraParam
+    extra_param = api.get('extraParam')
+    if extra_param:
+        params.extend(_parse_params_from_json(extra_param))
+
+    # Deduplicate by lowercase name to ensure all variants are captured once
     seen = set()
     unique_params = []
     for p in params:
-        pname_upper = p['name'].upper()
-        if pname_upper not in seen:
-            p['name'] = pname_upper # Force uppercase for KIS consistency
+        pname_lower = p['name'].lower()
+        if pname_lower not in seen:
             unique_params.append(p)
-            seen.add(pname_upper)
+            seen.add(pname_lower)
             
     return unique_params
 

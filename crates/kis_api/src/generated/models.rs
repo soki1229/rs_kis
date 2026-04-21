@@ -7,44 +7,44 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOauth2TokenPRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// grant_type (String, 선택)
-    #[serde(rename = "GRANT_TYPE")]
+    #[serde(rename = "grant_type")]
     pub grant_type: String,
     /// appkey (String, 선택)
-    #[serde(rename = "APPKEY")]
+    #[serde(rename = "appkey")]
     pub appkey: String,
     /// appsecret (String, 선택)
-    #[serde(rename = "APPSECRET")]
+    #[serde(rename = "appsecret")]
     pub appsecret: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
     /// access_token (String, 선택)
-    #[serde(rename = "ACCESS_TOKEN")]
+    #[serde(rename = "access_token")]
     pub access_token: String,
     /// token_type (String, 선택)
-    #[serde(rename = "TOKEN_TYPE")]
+    #[serde(rename = "token_type")]
     pub token_type: String,
     /// expires_in (String, 선택)
-    #[serde(rename = "EXPIRES_IN")]
+    #[serde(rename = "expires_in")]
     pub expires_in: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -53,41 +53,41 @@ pub struct AuthOauth2TokenPRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOauth2RevokePRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// appkey (String, 선택)
-    #[serde(rename = "APPKEY")]
+    #[serde(rename = "appkey")]
     pub appkey: String,
     /// appsecret (String, 선택)
-    #[serde(rename = "APPSECRET")]
+    #[serde(rename = "appsecret")]
     pub appsecret: String,
     /// token (String, 선택)
-    #[serde(rename = "TOKEN")]
+    #[serde(rename = "token")]
     pub token: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
     /// code (String, 선택)
-    #[serde(rename = "CODE")]
+    #[serde(rename = "code")]
     pub code: String,
     /// message (String, 선택)
-    #[serde(rename = "MESSAGE")]
+    #[serde(rename = "message")]
     pub message: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -96,24 +96,60 @@ pub struct AuthOauth2RevokePRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthHashkeyRequest {
-    /// ORD_PRCS_DVSN_CD (String, 선택)
-    #[serde(rename = "ORD_PRCS_DVSN_CD")]
-    pub ord_prcs_dvsn_cd: String,
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
     /// ACNT_PRDT_CD (String, 선택)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
+    /// PDNO (String, 선택)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// ORD_DVSN (String, 선택)
+    #[serde(rename = "ORD_DVSN")]
+    pub ord_dvsn: String,
+    /// ORD_QTY (String, 선택)
+    #[serde(rename = "ORD_QTY")]
+    pub ord_qty: Decimal,
+    /// ORD_UNPR (String, 선택)
+    #[serde(rename = "ORD_UNPR")]
+    pub ord_unpr: Decimal,
+    /// CTAC_TLNO (String, 선택)
+    #[serde(rename = "CTAC_TLNO")]
+    pub ctac_tlno: String,
+    /// BODY (String, 선택)
+    #[serde(rename = "BODY")]
+    pub body: String,
+    /// HASH (String, 선택)
+    #[serde(rename = "HASH")]
+    pub hash: String,
+    /// ORD_PRCS_DVSN_CD (String, 선택)
+    #[serde(rename = "ORD_PRCS_DVSN_CD")]
+    pub ord_prcs_dvsn_cd: String,
     /// SLL_BUY_DVSN_CD (String, 선택)
     #[serde(rename = "SLL_BUY_DVSN_CD")]
     pub sll_buy_dvsn_cd: String,
     /// SHTN_PDNO (String, 선택)
     #[serde(rename = "SHTN_PDNO")]
     pub shtn_pdno: String,
-    /// ORD_QTY (String, 선택)
-    #[serde(rename = "ORD_QTY")]
-    pub ord_qty: Decimal,
     /// UNIT_PRICE (String, 선택)
     #[serde(rename = "UNIT_PRICE")]
     pub unit_price: String,
@@ -123,48 +159,12 @@ pub struct AuthHashkeyRequest {
     /// KRX_NMPR_CNDT_CD (String, 선택)
     #[serde(rename = "KRX_NMPR_CNDT_CD")]
     pub krx_nmpr_cndt_cd: String,
-    /// CTAC_TLNO (String, 선택)
-    #[serde(rename = "CTAC_TLNO")]
-    pub ctac_tlno: String,
     /// FUOP_ITEM_DVSN_CD (String, 선택)
     #[serde(rename = "FUOP_ITEM_DVSN_CD")]
     pub fuop_item_dvsn_cd: String,
     /// ORD_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_DVSN_CD")]
     pub ord_dvsn_cd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// PDNO (String, 선택)
-    #[serde(rename = "PDNO")]
-    pub pdno: String,
-    /// ORD_DVSN (String, 선택)
-    #[serde(rename = "ORD_DVSN")]
-    pub ord_dvsn: String,
-    /// ORD_UNPR (String, 선택)
-    #[serde(rename = "ORD_UNPR")]
-    pub ord_unpr: Decimal,
-    /// BODY (String, 선택)
-    #[serde(rename = "BODY")]
-    pub body: String,
-    /// HASH (String, 선택)
-    #[serde(rename = "HASH")]
-    pub hash: String,
 }
 
 /// [실시간 (웹소켓) 접속키 발급[실시간-000]] 요청 구조체
@@ -172,42 +172,42 @@ pub struct AuthHashkeyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOauth2ApprovalRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// grant_type (String, 선택)
-    #[serde(rename = "GRANT_TYPE")]
+    #[serde(rename = "grant_type")]
     pub grant_type: String,
     /// appkey (String, 선택)
-    #[serde(rename = "APPKEY")]
+    #[serde(rename = "appkey")]
     pub appkey: String,
     /// secretkey (String, 선택)
-    #[serde(rename = "SECRETKEY")]
+    #[serde(rename = "secretkey")]
     pub secretkey: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [주식주문(현금)[v1_국내주식-001]] 요청 구조체
@@ -215,6 +215,24 @@ pub struct AuthOauth2ApprovalRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingOrderCashRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -233,32 +251,14 @@ pub struct DomesticStockV1TradingOrderCashRequest {
     /// ORD_UNPR (String, 선택)
     #[serde(rename = "ORD_UNPR")]
     pub ord_unpr: Decimal,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -267,6 +267,24 @@ pub struct DomesticStockV1TradingOrderCashRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingOrderCreditRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -291,38 +309,20 @@ pub struct DomesticStockV1TradingOrderCreditRequest {
     /// ORD_UNPR (String, 선택)
     #[serde(rename = "ORD_UNPR")]
     pub ord_unpr: Decimal,
-    /// RSVN_ORD_YN (String, 선택)
-    #[serde(rename = "RSVN_ORD_YN")]
-    pub rsvn_ord_yn: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
+    /// RSVN_ORD_YN (String, 선택)
+    #[serde(rename = "RSVN_ORD_YN")]
+    pub rsvn_ord_yn: String,
     /// EMGC_ORD_YN (String, 선택)
     #[serde(rename = "EMGC_ORD_YN")]
     pub emgc_ord_yn: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -331,6 +331,24 @@ pub struct DomesticStockV1TradingOrderCreditRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingOrderRvsecnclRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -343,12 +361,12 @@ pub struct DomesticStockV1TradingOrderRvsecnclRequest {
     /// ORGN_ODNO (String, 선택)
     #[serde(rename = "ORGN_ODNO")]
     pub orgn_odno: String,
-    /// ORD_DVSN (String, 선택)
-    #[serde(rename = "ORD_DVSN")]
-    pub ord_dvsn: String,
     /// RVSE_CNCL_DVSN_CD (String, 선택)
     #[serde(rename = "RVSE_CNCL_DVSN_CD")]
     pub rvse_cncl_dvsn_cd: String,
+    /// ORD_DVSN (String, 선택)
+    #[serde(rename = "ORD_DVSN")]
+    pub ord_dvsn: String,
     /// ORD_QTY (String, 선택)
     #[serde(rename = "ORD_QTY")]
     pub ord_qty: Decimal,
@@ -358,32 +376,14 @@ pub struct DomesticStockV1TradingOrderRvsecnclRequest {
     /// QTY_ALL_ORD_YN (String, 선택)
     #[serde(rename = "QTY_ALL_ORD_YN")]
     pub qty_all_ord_yn: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -392,6 +392,33 @@ pub struct DomesticStockV1TradingOrderRvsecnclRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquirePsblRvsecnclRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// ACNT_PRDT_CD (String, 선택)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
@@ -410,33 +437,6 @@ pub struct DomesticStockV1TradingInquirePsblRvsecnclRequest {
     /// INQR_DVSN_2 (String, 선택)
     #[serde(rename = "INQR_DVSN_2")]
     pub inqr_dvsn_2: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [주식일별주문체결조회[v1_국내주식-005]] 요청 구조체
@@ -444,6 +444,33 @@ pub struct DomesticStockV1TradingInquirePsblRvsecnclRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquireDailyCcldRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -486,33 +513,6 @@ pub struct DomesticStockV1TradingInquireDailyCcldRequest {
     /// CTX_AREA_NK100 (String, 선택)
     #[serde(rename = "CTX_AREA_NK100")]
     pub ctx_area_nk100: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [주식잔고조회[v1_국내주식-006]] 요청 구조체
@@ -520,6 +520,33 @@ pub struct DomesticStockV1TradingInquireDailyCcldRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquireBalanceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -553,33 +580,6 @@ pub struct DomesticStockV1TradingInquireBalanceRequest {
     /// CTX_AREA_NK100 (String, 선택)
     #[serde(rename = "CTX_AREA_NK100")]
     pub ctx_area_nk100: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [매수가능조회[v1_국내주식-007]] 요청 구조체
@@ -587,6 +587,33 @@ pub struct DomesticStockV1TradingInquireBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquirePsblOrderRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -608,33 +635,6 @@ pub struct DomesticStockV1TradingInquirePsblOrderRequest {
     /// OVRS_ICLD_YN (String, 선택)
     #[serde(rename = "OVRS_ICLD_YN")]
     pub ovrs_icld_yn: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [매도가능수량조회 [국내주식-165]] 요청 구조체
@@ -643,31 +643,31 @@ pub struct DomesticStockV1TradingInquirePsblOrderRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquirePsblSellRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -676,6 +676,33 @@ pub struct DomesticStockV1TradingInquirePsblSellRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquireCreditPsamountRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -700,33 +727,6 @@ pub struct DomesticStockV1TradingInquireCreditPsamountRequest {
     /// OVRS_ICLD_YN (String, 선택)
     #[serde(rename = "OVRS_ICLD_YN")]
     pub ovrs_icld_yn: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [주식예약주문[v1_국내주식-017]] 요청 구조체
@@ -734,6 +734,24 @@ pub struct DomesticStockV1TradingInquireCreditPsamountRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingOrderResvRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -764,24 +782,6 @@ pub struct DomesticStockV1TradingOrderResvRequest {
     /// RSVN_ORD_END_DT (String, 선택)
     #[serde(rename = "RSVN_ORD_END_DT")]
     pub rsvn_ord_end_dt: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
@@ -795,19 +795,19 @@ pub struct DomesticStockV1TradingOrderResvRequest {
     #[serde(rename = "RSVN_ORD_SEQ")]
     pub rsvn_ord_seq: String,
     /// rt_cd (String, 선택)
-    #[serde(rename = "RT_CD")]
+    #[serde(rename = "rt_cd")]
     pub rt_cd: String,
     /// msg_cd (String, 선택)
-    #[serde(rename = "MSG_CD")]
+    #[serde(rename = "msg_cd")]
     pub msg_cd: String,
     /// msg1 (String, 선택)
-    #[serde(rename = "MSG1")]
+    #[serde(rename = "msg1")]
     pub msg1: String,
     /// output (String, 선택)
-    #[serde(rename = "OUTPUT")]
+    #[serde(rename = "output")]
     pub output: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -817,25 +817,25 @@ pub struct DomesticStockV1TradingOrderResvRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingOrderResvRvsecnclRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// _comment (String, 선택)
-    #[serde(rename = "_COMMENT")]
+    #[serde(rename = "_comment")]
     pub _comment: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
@@ -880,19 +880,19 @@ pub struct DomesticStockV1TradingOrderResvRvsecnclRequest {
     #[serde(rename = "RSVN_ORD_ORD_DT")]
     pub rsvn_ord_ord_dt: String,
     /// rt_cd (String, 선택)
-    #[serde(rename = "RT_CD")]
+    #[serde(rename = "rt_cd")]
     pub rt_cd: String,
     /// msg_cd (String, 선택)
-    #[serde(rename = "MSG_CD")]
+    #[serde(rename = "msg_cd")]
     pub msg_cd: String,
     /// msg1 (String, 선택)
-    #[serde(rename = "MSG1")]
+    #[serde(rename = "msg1")]
     pub msg1: String,
     /// output (String, 선택)
-    #[serde(rename = "OUTPUT")]
+    #[serde(rename = "output")]
     pub output: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -901,6 +901,45 @@ pub struct DomesticStockV1TradingOrderResvRvsecnclRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingOrderResvCcnlRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
+    /// enabled (String, 선택)
+    #[serde(rename = "enabled")]
+    pub enabled: String,
+    /// byAppKey (String, 선택)
+    #[serde(rename = "byAppKey")]
+    pub by_app_key: String,
+    /// refreshTimeUnit (String, 선택)
+    #[serde(rename = "refreshTimeUnit")]
+    pub refresh_time_unit: String,
+    /// requestLimit (String, 선택)
+    #[serde(rename = "requestLimit")]
+    pub request_limit: String,
     /// RSVN_ORD_ORD_DT (String, 선택)
     #[serde(rename = "RSVN_ORD_ORD_DT")]
     pub rsvn_ord_ord_dt: String,
@@ -937,45 +976,6 @@ pub struct DomesticStockV1TradingOrderResvCcnlRequest {
     /// CTX_AREA_NK200 (String, 선택)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
-    /// enabled (String, 선택)
-    #[serde(rename = "ENABLED")]
-    pub enabled: String,
-    /// byAppKey (String, 선택)
-    #[serde(rename = "BYAPPKEY")]
-    pub byappkey: String,
-    /// refreshTimeUnit (String, 선택)
-    #[serde(rename = "REFRESHTIMEUNIT")]
-    pub refreshtimeunit: String,
-    /// requestLimit (String, 선택)
-    #[serde(rename = "REQUESTLIMIT")]
-    pub requestlimit: String,
 }
 
 /// [퇴직연금 체결기준잔고[v1_국내주식-032]] 요청 구조체
@@ -983,6 +983,45 @@ pub struct DomesticStockV1TradingOrderResvCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingPensionInquirePresentBalanceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
+    /// enabled (String, 선택)
+    #[serde(rename = "enabled")]
+    pub enabled: String,
+    /// byAppKey (String, 선택)
+    #[serde(rename = "byAppKey")]
+    pub by_app_key: String,
+    /// refreshTimeUnit (String, 선택)
+    #[serde(rename = "refreshTimeUnit")]
+    pub refresh_time_unit: String,
+    /// requestLimit (String, 선택)
+    #[serde(rename = "requestLimit")]
+    pub request_limit: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -998,45 +1037,6 @@ pub struct DomesticStockV1TradingPensionInquirePresentBalanceRequest {
     /// CTX_AREA_NK100 (String, 선택)
     #[serde(rename = "CTX_AREA_NK100")]
     pub ctx_area_nk100: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
-    /// enabled (String, 선택)
-    #[serde(rename = "ENABLED")]
-    pub enabled: String,
-    /// byAppKey (String, 선택)
-    #[serde(rename = "BYAPPKEY")]
-    pub byappkey: String,
-    /// refreshTimeUnit (String, 선택)
-    #[serde(rename = "REFRESHTIMEUNIT")]
-    pub refreshtimeunit: String,
-    /// requestLimit (String, 선택)
-    #[serde(rename = "REQUESTLIMIT")]
-    pub requestlimit: String,
 }
 
 /// [퇴직연금 미체결내역[v1_국내주식-033]] 요청 구조체
@@ -1044,6 +1044,33 @@ pub struct DomesticStockV1TradingPensionInquirePresentBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingPensionInquireDailyCcldRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -1068,33 +1095,6 @@ pub struct DomesticStockV1TradingPensionInquireDailyCcldRequest {
     /// CTX_AREA_NK100 (String, 선택)
     #[serde(rename = "CTX_AREA_NK100")]
     pub ctx_area_nk100: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [퇴직연금 매수가능조회[v1_국내주식-034]] 요청 구조체
@@ -1102,6 +1102,33 @@ pub struct DomesticStockV1TradingPensionInquireDailyCcldRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingPensionInquirePsblOrderRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -1123,33 +1150,6 @@ pub struct DomesticStockV1TradingPensionInquirePsblOrderRequest {
     /// ACCA_DVSN_CD (String, 선택)
     #[serde(rename = "ACCA_DVSN_CD")]
     pub acca_dvsn_cd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [퇴직연금 예수금조회[v1_국내주식-035]] 요청 구조체
@@ -1157,6 +1157,33 @@ pub struct DomesticStockV1TradingPensionInquirePsblOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingPensionInquireDepositRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -1166,33 +1193,6 @@ pub struct DomesticStockV1TradingPensionInquireDepositRequest {
     /// ACCA_DVSN_CD (String, 선택)
     #[serde(rename = "ACCA_DVSN_CD")]
     pub acca_dvsn_cd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [퇴직연금 잔고조회[v1_국내주식-036]] 요청 구조체
@@ -1200,6 +1200,33 @@ pub struct DomesticStockV1TradingPensionInquireDepositRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingPensionInquireBalanceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -1218,33 +1245,6 @@ pub struct DomesticStockV1TradingPensionInquireBalanceRequest {
     /// CTX_AREA_NK100 (String, 선택)
     #[serde(rename = "CTX_AREA_NK100")]
     pub ctx_area_nk100: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [주식잔고조회_실현손익[v1_국내주식-041]] 요청 구조체
@@ -1252,6 +1252,33 @@ pub struct DomesticStockV1TradingPensionInquireBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquireBalanceRlzPlRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -1288,33 +1315,6 @@ pub struct DomesticStockV1TradingInquireBalanceRlzPlRequest {
     /// CTX_AREA_NK100 (String, 선택)
     #[serde(rename = "CTX_AREA_NK100")]
     pub ctx_area_nk100: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [투자계좌자산현황조회[v1_국내주식-048]] 요청 구조체
@@ -1323,31 +1323,31 @@ pub struct DomesticStockV1TradingInquireBalanceRlzPlRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquireAccountBalanceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -1356,6 +1356,33 @@ pub struct DomesticStockV1TradingInquireAccountBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquirePeriodProfitRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -1386,33 +1413,6 @@ pub struct DomesticStockV1TradingInquirePeriodProfitRequest {
     /// CTX_AREA_NK100 (String, 선택)
     #[serde(rename = "CTX_AREA_NK100")]
     pub ctx_area_nk100: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [기간별매매손익현황조회[v1_국내주식-060]] 요청 구조체
@@ -1421,31 +1421,31 @@ pub struct DomesticStockV1TradingInquirePeriodProfitRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquirePeriodTradeProfitRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -1455,31 +1455,31 @@ pub struct DomesticStockV1TradingInquirePeriodTradeProfitRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingIntgrMarginRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -1489,31 +1489,31 @@ pub struct DomesticStockV1TradingIntgrMarginRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingPeriodRightsRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -1522,39 +1522,39 @@ pub struct DomesticStockV1TradingPeriodRightsRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquirePriceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [주식현재가 시세2[v1_국내주식-054]] 요청 구조체
@@ -1562,39 +1562,39 @@ pub struct DomesticStockV1QuotationsInquirePriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquirePrice2Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [주식현재가 체결[v1_국내주식-009]] 요청 구조체
@@ -1602,39 +1602,39 @@ pub struct DomesticStockV1QuotationsInquirePrice2Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireCcnlRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [주식현재가 일자별[v1_국내주식-010]] 요청 구조체
@@ -1642,45 +1642,45 @@ pub struct DomesticStockV1QuotationsInquireCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireDailyPriceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_org_adj_prc (String, 선택)
-    #[serde(rename = "FID_ORG_ADJ_PRC")]
+    #[serde(rename = "fid_org_adj_prc")]
     pub fid_org_adj_prc: String,
     /// fid_period_div_code (String, 선택)
-    #[serde(rename = "FID_PERIOD_DIV_CODE")]
+    #[serde(rename = "fid_period_div_code")]
     pub fid_period_div_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [주식현재가 호가/예상체결[v1_국내주식-011]] 요청 구조체
@@ -1688,39 +1688,39 @@ pub struct DomesticStockV1QuotationsInquireDailyPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireAskingPriceExpCcnRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [주식현재가 투자자[v1_국내주식-012]] 요청 구조체
@@ -1728,39 +1728,39 @@ pub struct DomesticStockV1QuotationsInquireAskingPriceExpCcnRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireInvestorRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [주식현재가 회원사[v1_국내주식-013]] 요청 구조체
@@ -1768,39 +1768,39 @@ pub struct DomesticStockV1QuotationsInquireInvestorRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireMemberRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식기간별시세(일/주/월/년)[v1_국내주식-016]] 요청 구조체
@@ -1809,31 +1809,31 @@ pub struct DomesticStockV1QuotationsInquireMemberRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireDailyItemchartpriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -1842,48 +1842,48 @@ pub struct DomesticStockV1QuotationsInquireDailyItemchartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireTimeItemchartpriceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_etc_cls_code (String, 선택)
-    #[serde(rename = "FID_ETC_CLS_CODE")]
+    #[serde(rename = "fid_etc_cls_code")]
     pub fid_etc_cls_code: String,
     /// fid_input_hour_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_HOUR_1")]
+    #[serde(rename = "fid_input_hour_1")]
     pub fid_input_hour_1: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_pw_data_incu_yn (String, 선택)
-    #[serde(rename = "FID_PW_DATA_INCU_YN")]
+    #[serde(rename = "fid_pw_data_incu_yn")]
     pub fid_pw_data_incu_yn: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [주식일별분봉조회 [국내주식-213]] 요청 구조체
@@ -1892,31 +1892,31 @@ pub struct DomesticStockV1QuotationsInquireTimeItemchartpriceRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireTimeDailychartpriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -1926,31 +1926,31 @@ pub struct DomesticStockV1QuotationsInquireTimeDailychartpriceRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireTimeItemconclusionRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -1960,31 +1960,31 @@ pub struct DomesticStockV1QuotationsInquireTimeItemconclusionRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireDailyOvertimepriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -1994,31 +1994,31 @@ pub struct DomesticStockV1QuotationsInquireDailyOvertimepriceRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireTimeOvertimeconclusionRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2028,31 +2028,31 @@ pub struct DomesticStockV1QuotationsInquireTimeOvertimeconclusionRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireOvertimePriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2062,31 +2062,31 @@ pub struct DomesticStockV1QuotationsInquireOvertimePriceRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireOvertimeAskingPriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2096,31 +2096,31 @@ pub struct DomesticStockV1QuotationsInquireOvertimeAskingPriceRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsExpClosingPriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2129,39 +2129,39 @@ pub struct DomesticStockV1QuotationsExpClosingPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthEtfetnV1QuotationsInquirePriceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [ETF 구성종목시세[국내주식-073]] 요청 구조체
@@ -2170,31 +2170,31 @@ pub struct AuthEtfetnV1QuotationsInquirePriceRequest {
 #[allow(non_snake_case)]
 pub struct AuthEtfetnV1QuotationsInquireComponentStockPriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2203,39 +2203,39 @@ pub struct AuthEtfetnV1QuotationsInquireComponentStockPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthEtfetnV1QuotationsNavComparisonTrendRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [NAV 비교추이(일)[v1_국내주식-071]] 요청 구조체
@@ -2243,45 +2243,45 @@ pub struct AuthEtfetnV1QuotationsNavComparisonTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthEtfetnV1QuotationsNavComparisonDailyTrendRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_input_date_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_DATE_1")]
+    #[serde(rename = "fid_input_date_1")]
     pub fid_input_date_1: String,
     /// fid_input_date_2 (String, 선택)
-    #[serde(rename = "FID_INPUT_DATE_2")]
+    #[serde(rename = "fid_input_date_2")]
     pub fid_input_date_2: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [NAV 비교추이(분)[v1_국내주식-070]] 요청 구조체
@@ -2289,42 +2289,42 @@ pub struct AuthEtfetnV1QuotationsNavComparisonDailyTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthEtfetnV1QuotationsNavComparisonTimeTrendRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_hour_cls_code (String, 선택)
-    #[serde(rename = "FID_HOUR_CLS_CODE")]
+    #[serde(rename = "fid_hour_cls_code")]
     pub fid_hour_cls_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [ELW 현재가 시세[v1_국내주식-014]] 요청 구조체
@@ -2332,39 +2332,39 @@ pub struct AuthEtfetnV1QuotationsNavComparisonTimeTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireElwPriceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [ELW 신규상장종목 [국내주식-181]] 요청 구조체
@@ -2373,31 +2373,31 @@ pub struct DomesticStockV1QuotationsInquireElwPriceRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsNewlyListedRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2407,31 +2407,31 @@ pub struct AuthElwV1QuotationsNewlyListedRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1RankingSensitivityRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2441,31 +2441,31 @@ pub struct AuthElwV1RankingSensitivityRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsUdrlAssetPriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2475,31 +2475,31 @@ pub struct AuthElwV1QuotationsUdrlAssetPriceRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsCondSearchRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2509,31 +2509,31 @@ pub struct AuthElwV1QuotationsCondSearchRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1RankingQuickChangeRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2543,31 +2543,31 @@ pub struct AuthElwV1RankingQuickChangeRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsUdrlAssetListRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2577,31 +2577,31 @@ pub struct AuthElwV1QuotationsUdrlAssetListRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsCompareStocksRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2611,31 +2611,31 @@ pub struct AuthElwV1QuotationsCompareStocksRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsLpTradeTrendRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2645,31 +2645,31 @@ pub struct AuthElwV1QuotationsLpTradeTrendRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsIndicatorTrendCcnlRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2679,31 +2679,31 @@ pub struct AuthElwV1QuotationsIndicatorTrendCcnlRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsIndicatorTrendMinuteRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2713,31 +2713,31 @@ pub struct AuthElwV1QuotationsIndicatorTrendMinuteRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsIndicatorTrendDailyRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2747,31 +2747,31 @@ pub struct AuthElwV1QuotationsIndicatorTrendDailyRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsVolatilityTrendTickRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2781,31 +2781,31 @@ pub struct AuthElwV1QuotationsVolatilityTrendTickRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsVolatilityTrendCcnlRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2815,31 +2815,31 @@ pub struct AuthElwV1QuotationsVolatilityTrendCcnlRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsVolatilityTrendDailyRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2849,31 +2849,31 @@ pub struct AuthElwV1QuotationsVolatilityTrendDailyRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsSensitivityTrendCcnlRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2883,31 +2883,31 @@ pub struct AuthElwV1QuotationsSensitivityTrendCcnlRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsVolatilityTrendMinuteRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2917,31 +2917,31 @@ pub struct AuthElwV1QuotationsVolatilityTrendMinuteRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsSensitivityTrendDailyRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2951,31 +2951,31 @@ pub struct AuthElwV1QuotationsSensitivityTrendDailyRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsExpirationStocksRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -2985,31 +2985,31 @@ pub struct AuthElwV1QuotationsExpirationStocksRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1RankingIndicatorRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -3019,31 +3019,31 @@ pub struct AuthElwV1RankingIndicatorRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1RankingUpdownRateRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -3053,31 +3053,31 @@ pub struct AuthElwV1RankingUpdownRateRequest {
 #[allow(non_snake_case)]
 pub struct AuthElwV1RankingVolumeRankRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -3087,31 +3087,31 @@ pub struct AuthElwV1RankingVolumeRankRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireIndexPriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -3121,31 +3121,31 @@ pub struct DomesticStockV1QuotationsInquireIndexPriceRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireIndexDailyPriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -3155,31 +3155,31 @@ pub struct DomesticStockV1QuotationsInquireIndexDailyPriceRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireIndexTickpriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -3189,31 +3189,31 @@ pub struct DomesticStockV1QuotationsInquireIndexTickpriceRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireIndexTimepriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -3222,6 +3222,33 @@ pub struct DomesticStockV1QuotationsInquireIndexTimepriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireTimeIndexchartpriceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// FID_COND_MRKT_DIV_CODE (String, 선택)
     #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
@@ -3237,33 +3264,6 @@ pub struct DomesticStockV1QuotationsInquireTimeIndexchartpriceRequest {
     /// FID_ETC_CLS_CODE (String, 선택)
     #[serde(rename = "FID_ETC_CLS_CODE")]
     pub fid_etc_cls_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식업종기간별시세(일/주/월/년)[v1_국내주식-021]] 요청 구조체
@@ -3272,31 +3272,31 @@ pub struct DomesticStockV1QuotationsInquireTimeIndexchartpriceRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireDailyIndexchartpriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -3305,48 +3305,48 @@ pub struct DomesticStockV1QuotationsInquireDailyIndexchartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireIndexCategoryPriceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    #[serde(rename = "fid_cond_scr_div_code")]
     pub fid_cond_scr_div_code: String,
     /// fid_mrkt_cls_code (String, 선택)
-    #[serde(rename = "FID_MRKT_CLS_CODE")]
+    #[serde(rename = "fid_mrkt_cls_code")]
     pub fid_mrkt_cls_code: String,
     /// fid_blng_cls_code (String, 선택)
-    #[serde(rename = "FID_BLNG_CLS_CODE")]
+    #[serde(rename = "fid_blng_cls_code")]
     pub fid_blng_cls_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 예상체결지수 추이[국내주식-121]] 요청 구조체
@@ -3355,31 +3355,31 @@ pub struct DomesticStockV1QuotationsInquireIndexCategoryPriceRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsExpIndexTrendRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -3388,48 +3388,48 @@ pub struct DomesticStockV1QuotationsExpIndexTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsExpTotalIndexRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    #[serde(rename = "fid_cond_scr_div_code")]
     pub fid_cond_scr_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_mkop_cls_code (String, 선택)
-    #[serde(rename = "FID_MKOP_CLS_CODE")]
+    #[serde(rename = "fid_mkop_cls_code")]
     pub fid_mkop_cls_code: String,
     /// fid_mrkt_cls_code (String, 선택)
-    #[serde(rename = "FID_MRKT_CLS_CODE")]
+    #[serde(rename = "fid_mrkt_cls_code")]
     pub fid_mrkt_cls_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [변동성완화장치(VI) 현황 [v1_국내주식-055]] 요청 구조체
@@ -3437,57 +3437,57 @@ pub struct DomesticStockV1QuotationsExpTotalIndexRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireViStatusRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    #[serde(rename = "fid_cond_scr_div_code")]
     pub fid_cond_scr_div_code: String,
     /// fid_mrkt_cls_code (String, 선택)
-    #[serde(rename = "FID_MRKT_CLS_CODE")]
+    #[serde(rename = "fid_mrkt_cls_code")]
     pub fid_mrkt_cls_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_rank_sort_cls_code (String, 선택)
-    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    #[serde(rename = "fid_rank_sort_cls_code")]
     pub fid_rank_sort_cls_code: String,
     /// fid_input_date_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_DATE_1")]
+    #[serde(rename = "fid_input_date_1")]
     pub fid_input_date_1: String,
     /// fid_trgt_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_CLS_CODE")]
+    #[serde(rename = "fid_trgt_cls_code")]
     pub fid_trgt_cls_code: String,
     /// fid_trgt_exls_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_EXLS_CLS_CODE")]
+    #[serde(rename = "fid_trgt_exls_cls_code")]
     pub fid_trgt_exls_cls_code: String,
     /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "FID_DIV_CLS_CODE")]
+    #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [금리 종합(국내채권/금리) [국내주식-155]] 요청 구조체
@@ -3496,31 +3496,31 @@ pub struct DomesticStockV1QuotationsInquireViStatusRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsCompInterestRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -3530,31 +3530,31 @@ pub struct DomesticStockV1QuotationsCompInterestRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsNewsTitleRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -3563,6 +3563,33 @@ pub struct DomesticStockV1QuotationsNewsTitleRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsChkHolidayRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// BASS_DT (String, 선택)
     #[serde(rename = "BASS_DT")]
     pub bass_dt: String,
@@ -3572,33 +3599,6 @@ pub struct DomesticStockV1QuotationsChkHolidayRequest {
     /// CTX_AREA_FK (String, 선택)
     #[serde(rename = "CTX_AREA_FK")]
     pub ctx_area_fk: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내선물 영업일조회 [국내주식-160]] 요청 구조체
@@ -3607,31 +3607,31 @@ pub struct DomesticStockV1QuotationsChkHolidayRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsMarketTimeRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -3640,39 +3640,39 @@ pub struct DomesticStockV1QuotationsMarketTimeRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsSearchInfoRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// PDNO (String, 선택)
     #[serde(rename = "PDNO")]
     pub pdno: String,
     /// PRDT_TYPE_CD (String, 선택)
     #[serde(rename = "PRDT_TYPE_CD")]
     pub prdt_type_cd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [주식기본조회[v1_국내주식-067]] 요청 구조체
@@ -3680,39 +3680,39 @@ pub struct DomesticStockV1QuotationsSearchInfoRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsSearchStockInfoRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// PDNO (String, 선택)
     #[serde(rename = "PDNO")]
     pub pdno: String,
     /// PRDT_TYPE_CD (String, 선택)
     #[serde(rename = "PRDT_TYPE_CD")]
     pub prdt_type_cd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 대차대조표[v1_국내주식-078]] 요청 구조체
@@ -3720,42 +3720,42 @@ pub struct DomesticStockV1QuotationsSearchStockInfoRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceBalanceSheetRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "FID_DIV_CLS_CODE")]
+    #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 손익계산서[v1_국내주식-079]] 요청 구조체
@@ -3763,42 +3763,42 @@ pub struct DomesticStockV1FinanceBalanceSheetRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceIncomeStatementRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "FID_DIV_CLS_CODE")]
+    #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 재무비율[v1_국내주식-080]] 요청 구조체
@@ -3806,42 +3806,42 @@ pub struct DomesticStockV1FinanceIncomeStatementRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceFinancialRatioRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "FID_DIV_CLS_CODE")]
+    #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 수익성비율[v1_국내주식-081]] 요청 구조체
@@ -3849,42 +3849,42 @@ pub struct DomesticStockV1FinanceFinancialRatioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceProfitRatioRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "FID_DIV_CLS_CODE")]
+    #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 기타주요비율[v1_국내주식-082]] 요청 구조체
@@ -3892,42 +3892,42 @@ pub struct DomesticStockV1FinanceProfitRatioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceOtherMajorRatiosRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "FID_DIV_CLS_CODE")]
+    #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 안정성비율[v1_국내주식-083]] 요청 구조체
@@ -3935,42 +3935,42 @@ pub struct DomesticStockV1FinanceOtherMajorRatiosRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceStabilityRatioRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "FID_DIV_CLS_CODE")]
+    #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 성장성비율[v1_국내주식-085]] 요청 구조체
@@ -3978,42 +3978,42 @@ pub struct DomesticStockV1FinanceStabilityRatioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceGrowthRatioRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "FID_DIV_CLS_CODE")]
+    #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 당사 신용가능종목[국내주식-111]] 요청 구조체
@@ -4021,48 +4021,48 @@ pub struct DomesticStockV1FinanceGrowthRatioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsCreditByCompanyRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    #[serde(rename = "fid_cond_scr_div_code")]
     pub fid_cond_scr_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_slct_yn (String, 선택)
-    #[serde(rename = "FID_SLCT_YN")]
+    #[serde(rename = "fid_slct_yn")]
     pub fid_slct_yn: String,
     /// fid_rank_sort_cls_code (String, 선택)
-    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    #[serde(rename = "fid_rank_sort_cls_code")]
     pub fid_rank_sort_cls_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [예탁원정보(배당일정)[국내주식-145]] 요청 구조체
@@ -4071,31 +4071,31 @@ pub struct DomesticStockV1QuotationsCreditByCompanyRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoDividendRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4105,31 +4105,31 @@ pub struct DomesticStockV1KsdinfoDividendRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoPurreqRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4139,31 +4139,31 @@ pub struct DomesticStockV1KsdinfoPurreqRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoMergerSplitRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4173,31 +4173,31 @@ pub struct DomesticStockV1KsdinfoMergerSplitRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoRevSplitRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4207,31 +4207,31 @@ pub struct DomesticStockV1KsdinfoRevSplitRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoCapDcrsRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4241,31 +4241,31 @@ pub struct DomesticStockV1KsdinfoCapDcrsRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoListInfoRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4275,31 +4275,31 @@ pub struct DomesticStockV1KsdinfoListInfoRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoPubOfferRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4309,31 +4309,31 @@ pub struct DomesticStockV1KsdinfoPubOfferRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoForfeitRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4343,31 +4343,31 @@ pub struct DomesticStockV1KsdinfoForfeitRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoMandDepositRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4377,31 +4377,31 @@ pub struct DomesticStockV1KsdinfoMandDepositRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoPaidinCapinRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4411,31 +4411,31 @@ pub struct DomesticStockV1KsdinfoPaidinCapinRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoBonusIssueRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4445,31 +4445,31 @@ pub struct DomesticStockV1KsdinfoBonusIssueRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoSharehldMeetRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4479,31 +4479,31 @@ pub struct DomesticStockV1KsdinfoSharehldMeetRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsEstimatePerformRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4513,31 +4513,31 @@ pub struct DomesticStockV1QuotationsEstimatePerformRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsLendableByCompanyRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4547,31 +4547,31 @@ pub struct DomesticStockV1QuotationsLendableByCompanyRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInvestOpinionRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4581,31 +4581,31 @@ pub struct DomesticStockV1QuotationsInvestOpinionRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInvestOpbysecRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4614,36 +4614,36 @@ pub struct DomesticStockV1QuotationsInvestOpbysecRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsPsearchTitleRequest {
-    /// user_id (String, 선택)
-    #[serde(rename = "USER_ID")]
-    pub user_id: String,
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
+    /// user_id (String, 선택)
+    #[serde(rename = "user_id")]
+    pub user_id: String,
 }
 
 /// [종목조건검색조회 [국내주식-039]] 요청 구조체
@@ -4651,39 +4651,39 @@ pub struct DomesticStockV1QuotationsPsearchTitleRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsPsearchResultRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// user_id (String, 선택)
-    #[serde(rename = "USER_ID")]
+    #[serde(rename = "user_id")]
     pub user_id: String,
     /// seq (String, 선택)
-    #[serde(rename = "SEQ")]
+    #[serde(rename = "seq")]
     pub seq: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [관심종목 그룹조회 [국내주식-204]] 요청 구조체
@@ -4692,31 +4692,31 @@ pub struct DomesticStockV1QuotationsPsearchResultRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsIntstockGrouplistRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4726,31 +4726,31 @@ pub struct DomesticStockV1QuotationsIntstockGrouplistRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsIntstockMultpriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4760,31 +4760,31 @@ pub struct DomesticStockV1QuotationsIntstockMultpriceRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsIntstockStocklistByGroupRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4794,31 +4794,31 @@ pub struct DomesticStockV1QuotationsIntstockStocklistByGroupRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsForeignInstitutionTotalRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4828,31 +4828,31 @@ pub struct DomesticStockV1QuotationsForeignInstitutionTotalRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsFrgnmemTradeEstimateRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4862,31 +4862,31 @@ pub struct DomesticStockV1QuotationsFrgnmemTradeEstimateRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInvestorTradeByStockDailyRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4895,39 +4895,39 @@ pub struct DomesticStockV1QuotationsInvestorTradeByStockDailyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireInvestorTimeByMarketRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// FID_INPUT_ISCD (String, 선택)
     #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
     /// FID_INPUT_ISCD_2 (String, 선택)
     #[serde(rename = "FID_INPUT_ISCD_2")]
     pub fid_input_iscd_2: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [시장별 투자자매매동향(일별) [국내주식-075]] 요청 구조체
@@ -4936,31 +4936,31 @@ pub struct DomesticStockV1QuotationsInquireInvestorTimeByMarketRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireInvestorDailyByMarketRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -4970,31 +4970,31 @@ pub struct DomesticStockV1QuotationsInquireInvestorDailyByMarketRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsFrgnmemPchsTrendRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -5004,31 +5004,31 @@ pub struct DomesticStockV1QuotationsFrgnmemPchsTrendRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsFrgnmemTradeTrendRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -5038,31 +5038,31 @@ pub struct DomesticStockV1QuotationsFrgnmemTradeTrendRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireMemberDailyRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -5072,31 +5072,31 @@ pub struct DomesticStockV1QuotationsInquireMemberDailyRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsProgramTradeByStockRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -5106,31 +5106,31 @@ pub struct DomesticStockV1QuotationsProgramTradeByStockRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsProgramTradeByStockDailyRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -5139,36 +5139,36 @@ pub struct DomesticStockV1QuotationsProgramTradeByStockDailyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInvestorTrendEstimateRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// MKSC_SHRN_ISCD (String, 선택)
     #[serde(rename = "MKSC_SHRN_ISCD")]
     pub mksc_shrn_iscd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [종목별일별매수매도체결량 [v1_국내주식-056]] 요청 구조체
@@ -5176,48 +5176,48 @@ pub struct DomesticStockV1QuotationsInvestorTrendEstimateRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireDailyTradeVolumeRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_input_date_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_DATE_1")]
+    #[serde(rename = "fid_input_date_1")]
     pub fid_input_date_1: String,
     /// fid_input_date_2 (String, 선택)
-    #[serde(rename = "FID_INPUT_DATE_2")]
+    #[serde(rename = "fid_input_date_2")]
     pub fid_input_date_2: String,
     /// fid_period_div_code (String, 선택)
-    #[serde(rename = "FID_PERIOD_DIV_CODE")]
+    #[serde(rename = "fid_period_div_code")]
     pub fid_period_div_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [프로그램매매 종합현황(시간) [국내주식-114]] 요청 구조체
@@ -5226,31 +5226,31 @@ pub struct DomesticStockV1QuotationsInquireDailyTradeVolumeRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsCompProgramTradeTodayRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -5260,31 +5260,31 @@ pub struct DomesticStockV1QuotationsCompProgramTradeTodayRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsCompProgramTradeDailyRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -5294,31 +5294,31 @@ pub struct DomesticStockV1QuotationsCompProgramTradeDailyRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInvestorProgramTradeTodayRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -5327,45 +5327,45 @@ pub struct DomesticStockV1QuotationsInvestorProgramTradeTodayRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsDailyCreditBalanceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    #[serde(rename = "fid_cond_scr_div_code")]
     pub fid_cond_scr_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_input_date_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_DATE_1")]
+    #[serde(rename = "fid_input_date_1")]
     pub fid_input_date_1: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 예상체결가 추이[국내주식-118]] 요청 구조체
@@ -5373,42 +5373,42 @@ pub struct DomesticStockV1QuotationsDailyCreditBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsExpPriceTrendRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_mkop_cls_code (String, 선택)
-    #[serde(rename = "FID_MKOP_CLS_CODE")]
+    #[serde(rename = "fid_mkop_cls_code")]
     pub fid_mkop_cls_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 공매도 일별추이[국내주식-134]] 요청 구조체
@@ -5417,31 +5417,31 @@ pub struct DomesticStockV1QuotationsExpPriceTrendRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsDailyShortSaleRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -5451,31 +5451,31 @@ pub struct DomesticStockV1QuotationsDailyShortSaleRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingOvertimeExpTransFluctRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -5485,31 +5485,31 @@ pub struct DomesticStockV1RankingOvertimeExpTransFluctRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsTradprtByamtRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -5519,31 +5519,31 @@ pub struct DomesticStockV1QuotationsTradprtByamtRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsMktfundsRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -5553,31 +5553,31 @@ pub struct DomesticStockV1QuotationsMktfundsRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsDailyLoanTransRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -5587,31 +5587,31 @@ pub struct DomesticStockV1QuotationsDailyLoanTransRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsCaptureUplowpriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -5621,31 +5621,31 @@ pub struct DomesticStockV1QuotationsCaptureUplowpriceRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsPbarTratioRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -5654,6 +5654,33 @@ pub struct DomesticStockV1QuotationsPbarTratioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsVolumeRankRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// FID_COND_MRKT_DIV_CODE (String, 선택)
     #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
@@ -5687,33 +5714,6 @@ pub struct DomesticStockV1QuotationsVolumeRankRequest {
     /// FID_INPUT_DATE_1 (String, 선택)
     #[serde(rename = "FID_INPUT_DATE_1")]
     pub fid_input_date_1: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 등락률 순위[v1_국내주식-088]] 요청 구조체
@@ -5721,75 +5721,75 @@ pub struct DomesticStockV1QuotationsVolumeRankRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingFluctuationRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    #[serde(rename = "fid_cond_scr_div_code")]
     pub fid_cond_scr_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_rank_sort_cls_code (String, 선택)
-    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    #[serde(rename = "fid_rank_sort_cls_code")]
     pub fid_rank_sort_cls_code: String,
     /// fid_input_cnt_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_CNT_1")]
+    #[serde(rename = "fid_input_cnt_1")]
     pub fid_input_cnt_1: String,
     /// fid_prc_cls_code (String, 선택)
-    #[serde(rename = "FID_PRC_CLS_CODE")]
+    #[serde(rename = "fid_prc_cls_code")]
     pub fid_prc_cls_code: String,
     /// fid_input_price_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_PRICE_1")]
+    #[serde(rename = "fid_input_price_1")]
     pub fid_input_price_1: String,
     /// fid_input_price_2 (String, 선택)
-    #[serde(rename = "FID_INPUT_PRICE_2")]
+    #[serde(rename = "fid_input_price_2")]
     pub fid_input_price_2: String,
     /// fid_vol_cnt (String, 선택)
-    #[serde(rename = "FID_VOL_CNT")]
+    #[serde(rename = "fid_vol_cnt")]
     pub fid_vol_cnt: i64,
     /// fid_trgt_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_CLS_CODE")]
+    #[serde(rename = "fid_trgt_cls_code")]
     pub fid_trgt_cls_code: String,
     /// fid_trgt_exls_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_EXLS_CLS_CODE")]
+    #[serde(rename = "fid_trgt_exls_cls_code")]
     pub fid_trgt_exls_cls_code: String,
     /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "FID_DIV_CLS_CODE")]
+    #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
     /// fid_rsfl_rate1 (String, 선택)
-    #[serde(rename = "FID_RSFL_RATE1")]
+    #[serde(rename = "fid_rsfl_rate1")]
     pub fid_rsfl_rate1: String,
     /// fid_rsfl_rate2 (String, 선택)
-    #[serde(rename = "FID_RSFL_RATE2")]
+    #[serde(rename = "fid_rsfl_rate2")]
     pub fid_rsfl_rate2: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 호가잔량 순위[국내주식-089]] 요청 구조체
@@ -5797,63 +5797,63 @@ pub struct DomesticStockV1RankingFluctuationRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingQuoteBalanceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    #[serde(rename = "fid_cond_scr_div_code")]
     pub fid_cond_scr_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_rank_sort_cls_code (String, 선택)
-    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    #[serde(rename = "fid_rank_sort_cls_code")]
     pub fid_rank_sort_cls_code: String,
     /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "FID_DIV_CLS_CODE")]
+    #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
     /// fid_trgt_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_CLS_CODE")]
+    #[serde(rename = "fid_trgt_cls_code")]
     pub fid_trgt_cls_code: String,
     /// fid_trgt_exls_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_EXLS_CLS_CODE")]
+    #[serde(rename = "fid_trgt_exls_cls_code")]
     pub fid_trgt_exls_cls_code: String,
     /// fid_input_price_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_PRICE_1")]
+    #[serde(rename = "fid_input_price_1")]
     pub fid_input_price_1: String,
     /// fid_input_price_2 (String, 선택)
-    #[serde(rename = "FID_INPUT_PRICE_2")]
+    #[serde(rename = "fid_input_price_2")]
     pub fid_input_price_2: String,
     /// fid_vol_cnt (String, 선택)
-    #[serde(rename = "FID_VOL_CNT")]
+    #[serde(rename = "fid_vol_cnt")]
     pub fid_vol_cnt: i64,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 수익자산지표 순위[v1_국내주식-090]] 요청 구조체
@@ -5862,31 +5862,31 @@ pub struct DomesticStockV1RankingQuoteBalanceRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingProfitAssetIndexRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -5896,31 +5896,31 @@ pub struct DomesticStockV1RankingProfitAssetIndexRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingMarketCapRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -5929,72 +5929,72 @@ pub struct DomesticStockV1RankingMarketCapRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingFinanceRatioRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    #[serde(rename = "fid_cond_scr_div_code")]
     pub fid_cond_scr_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "FID_DIV_CLS_CODE")]
+    #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
     /// fid_input_price_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_PRICE_1")]
+    #[serde(rename = "fid_input_price_1")]
     pub fid_input_price_1: String,
     /// fid_input_price_2 (String, 선택)
-    #[serde(rename = "FID_INPUT_PRICE_2")]
+    #[serde(rename = "fid_input_price_2")]
     pub fid_input_price_2: String,
     /// fid_vol_cnt (String, 선택)
-    #[serde(rename = "FID_VOL_CNT")]
+    #[serde(rename = "fid_vol_cnt")]
     pub fid_vol_cnt: i64,
     /// fid_input_option_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_OPTION_1")]
+    #[serde(rename = "fid_input_option_1")]
     pub fid_input_option_1: String,
     /// fid_input_option_2 (String, 선택)
-    #[serde(rename = "FID_INPUT_OPTION_2")]
+    #[serde(rename = "fid_input_option_2")]
     pub fid_input_option_2: String,
     /// fid_rank_sort_cls_code (String, 선택)
-    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    #[serde(rename = "fid_rank_sort_cls_code")]
     pub fid_rank_sort_cls_code: String,
     /// fid_blng_cls_code (String, 선택)
-    #[serde(rename = "FID_BLNG_CLS_CODE")]
+    #[serde(rename = "fid_blng_cls_code")]
     pub fid_blng_cls_code: String,
     /// fid_trgt_exls_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_EXLS_CLS_CODE")]
+    #[serde(rename = "fid_trgt_exls_cls_code")]
     pub fid_trgt_exls_cls_code: String,
     /// fid_trgt_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_CLS_CODE")]
+    #[serde(rename = "fid_trgt_cls_code")]
     pub fid_trgt_cls_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 시간외잔량 순위[v1_국내주식-093]] 요청 구조체
@@ -6003,31 +6003,31 @@ pub struct DomesticStockV1RankingFinanceRatioRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingAfterHourBalanceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -6037,31 +6037,31 @@ pub struct DomesticStockV1RankingAfterHourBalanceRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingPreferDisparateRatioRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -6070,66 +6070,66 @@ pub struct DomesticStockV1RankingPreferDisparateRatioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingDisparityRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    #[serde(rename = "fid_cond_scr_div_code")]
     pub fid_cond_scr_div_code: String,
     /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "FID_DIV_CLS_CODE")]
+    #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
     /// fid_rank_sort_cls_code (String, 선택)
-    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    #[serde(rename = "fid_rank_sort_cls_code")]
     pub fid_rank_sort_cls_code: String,
     /// fid_hour_cls_code (String, 선택)
-    #[serde(rename = "FID_HOUR_CLS_CODE")]
+    #[serde(rename = "fid_hour_cls_code")]
     pub fid_hour_cls_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_trgt_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_CLS_CODE")]
+    #[serde(rename = "fid_trgt_cls_code")]
     pub fid_trgt_cls_code: String,
     /// fid_trgt_exls_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_EXLS_CLS_CODE")]
+    #[serde(rename = "fid_trgt_exls_cls_code")]
     pub fid_trgt_exls_cls_code: String,
     /// fid_input_price_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_PRICE_1")]
+    #[serde(rename = "fid_input_price_1")]
     pub fid_input_price_1: String,
     /// fid_input_price_2 (String, 선택)
-    #[serde(rename = "FID_INPUT_PRICE_2")]
+    #[serde(rename = "fid_input_price_2")]
     pub fid_input_price_2: String,
     /// fid_vol_cnt (String, 선택)
-    #[serde(rename = "FID_VOL_CNT")]
+    #[serde(rename = "fid_vol_cnt")]
     pub fid_vol_cnt: i64,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 시장가치 순위[v1_국내주식-096]] 요청 구조체
@@ -6137,72 +6137,72 @@ pub struct DomesticStockV1RankingDisparityRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingMarketValueRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    #[serde(rename = "fid_cond_scr_div_code")]
     pub fid_cond_scr_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "FID_DIV_CLS_CODE")]
+    #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
     /// fid_input_price_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_PRICE_1")]
+    #[serde(rename = "fid_input_price_1")]
     pub fid_input_price_1: String,
     /// fid_input_price_2 (String, 선택)
-    #[serde(rename = "FID_INPUT_PRICE_2")]
+    #[serde(rename = "fid_input_price_2")]
     pub fid_input_price_2: String,
     /// fid_vol_cnt (String, 선택)
-    #[serde(rename = "FID_VOL_CNT")]
+    #[serde(rename = "fid_vol_cnt")]
     pub fid_vol_cnt: i64,
     /// fid_input_option_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_OPTION_1")]
+    #[serde(rename = "fid_input_option_1")]
     pub fid_input_option_1: String,
     /// fid_input_option_2 (String, 선택)
-    #[serde(rename = "FID_INPUT_OPTION_2")]
+    #[serde(rename = "fid_input_option_2")]
     pub fid_input_option_2: String,
     /// fid_rank_sort_cls_code (String, 선택)
-    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    #[serde(rename = "fid_rank_sort_cls_code")]
     pub fid_rank_sort_cls_code: String,
     /// fid_blng_cls_code (String, 선택)
-    #[serde(rename = "FID_BLNG_CLS_CODE")]
+    #[serde(rename = "fid_blng_cls_code")]
     pub fid_blng_cls_code: String,
     /// fid_trgt_exls_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_EXLS_CLS_CODE")]
+    #[serde(rename = "fid_trgt_exls_cls_code")]
     pub fid_trgt_exls_cls_code: String,
     /// fid_trgt_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_CLS_CODE")]
+    #[serde(rename = "fid_trgt_cls_code")]
     pub fid_trgt_cls_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 체결강도 상위[v1_국내주식-101]] 요청 구조체
@@ -6210,60 +6210,60 @@ pub struct DomesticStockV1RankingMarketValueRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingVolumePowerRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    #[serde(rename = "fid_cond_scr_div_code")]
     pub fid_cond_scr_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "FID_DIV_CLS_CODE")]
+    #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
     /// fid_input_price_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_PRICE_1")]
+    #[serde(rename = "fid_input_price_1")]
     pub fid_input_price_1: String,
     /// fid_input_price_2 (String, 선택)
-    #[serde(rename = "FID_INPUT_PRICE_2")]
+    #[serde(rename = "fid_input_price_2")]
     pub fid_input_price_2: String,
     /// fid_vol_cnt (String, 선택)
-    #[serde(rename = "FID_VOL_CNT")]
+    #[serde(rename = "fid_vol_cnt")]
     pub fid_vol_cnt: i64,
     /// fid_trgt_exls_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_EXLS_CLS_CODE")]
+    #[serde(rename = "fid_trgt_exls_cls_code")]
     pub fid_trgt_exls_cls_code: String,
     /// fid_trgt_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_CLS_CODE")]
+    #[serde(rename = "fid_trgt_cls_code")]
     pub fid_trgt_cls_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 관심종목등록 상위[v1_국내주식-102]] 요청 구조체
@@ -6271,66 +6271,66 @@ pub struct DomesticStockV1RankingVolumePowerRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingTopInterestStockRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    #[serde(rename = "fid_cond_scr_div_code")]
     pub fid_cond_scr_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_trgt_exls_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_EXLS_CLS_CODE")]
+    #[serde(rename = "fid_trgt_exls_cls_code")]
     pub fid_trgt_exls_cls_code: String,
     /// fid_trgt_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_CLS_CODE")]
+    #[serde(rename = "fid_trgt_cls_code")]
     pub fid_trgt_cls_code: String,
     /// fid_input_price_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_PRICE_1")]
+    #[serde(rename = "fid_input_price_1")]
     pub fid_input_price_1: String,
     /// fid_input_price_2 (String, 선택)
-    #[serde(rename = "FID_INPUT_PRICE_2")]
+    #[serde(rename = "fid_input_price_2")]
     pub fid_input_price_2: String,
     /// fid_vol_cnt (String, 선택)
-    #[serde(rename = "FID_VOL_CNT")]
+    #[serde(rename = "fid_vol_cnt")]
     pub fid_vol_cnt: i64,
     /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "FID_DIV_CLS_CODE")]
+    #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
     /// fid_input_iscd_2 (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD_2")]
+    #[serde(rename = "fid_input_iscd_2")]
     pub fid_input_iscd_2: String,
     /// fid_input_cnt_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_CNT_1")]
+    #[serde(rename = "fid_input_cnt_1")]
     pub fid_input_cnt_1: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 예상체결 상승/하락상위[v1_국내주식-103]] 요청 구조체
@@ -6338,63 +6338,63 @@ pub struct DomesticStockV1RankingTopInterestStockRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingExpTransUpdownRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    #[serde(rename = "fid_cond_scr_div_code")]
     pub fid_cond_scr_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "FID_DIV_CLS_CODE")]
+    #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
     /// fid_aply_rang_prc_1 (String, 선택)
-    #[serde(rename = "FID_APLY_RANG_PRC_1")]
+    #[serde(rename = "fid_aply_rang_prc_1")]
     pub fid_aply_rang_prc_1: String,
     /// fid_vol_cnt (String, 선택)
-    #[serde(rename = "FID_VOL_CNT")]
+    #[serde(rename = "fid_vol_cnt")]
     pub fid_vol_cnt: i64,
     /// fid_pbmn (String, 선택)
-    #[serde(rename = "FID_PBMN")]
+    #[serde(rename = "fid_pbmn")]
     pub fid_pbmn: String,
     /// fid_blng_cls_code (String, 선택)
-    #[serde(rename = "FID_BLNG_CLS_CODE")]
+    #[serde(rename = "fid_blng_cls_code")]
     pub fid_blng_cls_code: String,
     /// fid_mkop_cls_code (String, 선택)
-    #[serde(rename = "FID_MKOP_CLS_CODE")]
+    #[serde(rename = "fid_mkop_cls_code")]
     pub fid_mkop_cls_code: String,
     /// fid_rank_sort_cls_code (String, 선택)
-    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    #[serde(rename = "fid_rank_sort_cls_code")]
     pub fid_rank_sort_cls_code: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 당사매매종목 상위[v1_국내주식-104]] 요청 구조체
@@ -6402,69 +6402,69 @@ pub struct DomesticStockV1RankingExpTransUpdownRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingTradedByCompanyRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    #[serde(rename = "fid_cond_scr_div_code")]
     pub fid_cond_scr_div_code: String,
     /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "FID_DIV_CLS_CODE")]
+    #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
     /// fid_rank_sort_cls_code (String, 선택)
-    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    #[serde(rename = "fid_rank_sort_cls_code")]
     pub fid_rank_sort_cls_code: String,
     /// fid_input_date_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_DATE_1")]
+    #[serde(rename = "fid_input_date_1")]
     pub fid_input_date_1: String,
     /// fid_input_date_2 (String, 선택)
-    #[serde(rename = "FID_INPUT_DATE_2")]
+    #[serde(rename = "fid_input_date_2")]
     pub fid_input_date_2: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_trgt_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_CLS_CODE")]
+    #[serde(rename = "fid_trgt_cls_code")]
     pub fid_trgt_cls_code: String,
     /// fid_trgt_exls_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_EXLS_CLS_CODE")]
+    #[serde(rename = "fid_trgt_exls_cls_code")]
     pub fid_trgt_exls_cls_code: String,
     /// fid_aply_rang_prc_1 (String, 선택)
-    #[serde(rename = "FID_APLY_RANG_PRC_1")]
+    #[serde(rename = "fid_aply_rang_prc_1")]
     pub fid_aply_rang_prc_1: String,
     /// fid_aply_rang_prc_2 (String, 선택)
-    #[serde(rename = "FID_APLY_RANG_PRC_2")]
+    #[serde(rename = "fid_aply_rang_prc_2")]
     pub fid_aply_rang_prc_2: String,
     /// fid_aply_rang_vol (String, 선택)
-    #[serde(rename = "FID_APLY_RANG_VOL")]
+    #[serde(rename = "fid_aply_rang_vol")]
     pub fid_aply_rang_vol: Decimal,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 신고/신저근접종목 상위[v1_국내주식-105]] 요청 구조체
@@ -6472,69 +6472,69 @@ pub struct DomesticStockV1RankingTradedByCompanyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingNearNewHighlowRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    #[serde(rename = "fid_cond_scr_div_code")]
     pub fid_cond_scr_div_code: String,
     /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "FID_DIV_CLS_CODE")]
+    #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
     /// fid_input_cnt_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_CNT_1")]
+    #[serde(rename = "fid_input_cnt_1")]
     pub fid_input_cnt_1: String,
     /// fid_input_cnt_2 (String, 선택)
-    #[serde(rename = "FID_INPUT_CNT_2")]
+    #[serde(rename = "fid_input_cnt_2")]
     pub fid_input_cnt_2: String,
     /// fid_prc_cls_code (String, 선택)
-    #[serde(rename = "FID_PRC_CLS_CODE")]
+    #[serde(rename = "fid_prc_cls_code")]
     pub fid_prc_cls_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
     /// fid_trgt_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_CLS_CODE")]
+    #[serde(rename = "fid_trgt_cls_code")]
     pub fid_trgt_cls_code: String,
     /// fid_trgt_exls_cls_code (String, 선택)
-    #[serde(rename = "FID_TRGT_EXLS_CLS_CODE")]
+    #[serde(rename = "fid_trgt_exls_cls_code")]
     pub fid_trgt_exls_cls_code: String,
     /// fid_aply_rang_prc_1 (String, 선택)
-    #[serde(rename = "FID_APLY_RANG_PRC_1")]
+    #[serde(rename = "fid_aply_rang_prc_1")]
     pub fid_aply_rang_prc_1: String,
     /// fid_aply_rang_prc_2 (String, 선택)
-    #[serde(rename = "FID_APLY_RANG_PRC_2")]
+    #[serde(rename = "fid_aply_rang_prc_2")]
     pub fid_aply_rang_prc_2: String,
     /// fid_aply_rang_vol (String, 선택)
-    #[serde(rename = "FID_APLY_RANG_VOL")]
+    #[serde(rename = "fid_aply_rang_vol")]
     pub fid_aply_rang_vol: Decimal,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 배당률 상위[국내주식-106]] 요청 구조체
@@ -6543,31 +6543,31 @@ pub struct DomesticStockV1RankingNearNewHighlowRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingDividendRateRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -6576,45 +6576,45 @@ pub struct DomesticStockV1RankingDividendRateRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingBulkTransNumRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// output (String, 선택)
-    #[serde(rename = "OUTPUT")]
+    #[serde(rename = "output")]
     pub output: String,
     /// rt_cd (String, 선택)
-    #[serde(rename = "RT_CD")]
+    #[serde(rename = "rt_cd")]
     pub rt_cd: String,
     /// msg_cd (String, 선택)
-    #[serde(rename = "MSG_CD")]
+    #[serde(rename = "msg_cd")]
     pub msg_cd: String,
     /// msg1 (String, 선택)
-    #[serde(rename = "MSG1")]
+    #[serde(rename = "msg1")]
     pub msg1: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 신용잔고 상위[국내주식-109]] 요청 구조체
@@ -6623,31 +6623,31 @@ pub struct DomesticStockV1RankingBulkTransNumRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingCreditBalanceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -6657,31 +6657,31 @@ pub struct DomesticStockV1RankingCreditBalanceRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingShortSaleRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -6691,31 +6691,31 @@ pub struct DomesticStockV1RankingShortSaleRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingOvertimeFluctuationRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -6725,31 +6725,31 @@ pub struct DomesticStockV1RankingOvertimeFluctuationRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingOvertimeVolumeRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -6759,31 +6759,31 @@ pub struct DomesticStockV1RankingOvertimeVolumeRequest {
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingHtsTopViewRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -6792,51 +6792,51 @@ pub struct DomesticStockV1RankingHtsTopViewRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STCNT0Request {
-    /// header (String, 선택)
-    #[serde(rename = "HEADER")]
-    pub header: String,
-    /// body (String, 선택)
-    #[serde(rename = "BODY")]
-    pub body: String,
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// appkey (String, 선택)
-    #[serde(rename = "APPKEY")]
+    #[serde(rename = "appkey")]
     pub appkey: String,
     /// appsecret (String, 선택)
-    #[serde(rename = "APPSECRET")]
+    #[serde(rename = "appsecret")]
     pub appsecret: String,
     /// personalseckey (String, 선택)
-    #[serde(rename = "PERSONALSECKEY")]
+    #[serde(rename = "personalseckey")]
     pub personalseckey: String,
     /// custtype (String, 선택)
-    #[serde(rename = "CUSTTYPE")]
+    #[serde(rename = "custtype")]
     pub custtype: String,
     /// tr_type (String, 선택)
-    #[serde(rename = "TR_TYPE")]
+    #[serde(rename = "tr_type")]
     pub tr_type: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
 }
 
 /// [국내주식 실시간호가 (KRX) [실시간-004]] 요청 구조체
@@ -6844,36 +6844,36 @@ pub struct AuthTryitoutH0STCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STASP0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 실시간체결통보 [실시간-005]] 요청 구조체
@@ -6881,36 +6881,36 @@ pub struct AuthTryitoutH0STASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STCNI0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 실시간예상체결 (KRX) [실시간-041]] 요청 구조체
@@ -6918,39 +6918,39 @@ pub struct AuthTryitoutH0STCNI0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STANC0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 실시간회원사 (KRX) [실시간-047]] 요청 구조체
@@ -6959,10 +6959,10 @@ pub struct AuthTryitoutH0STANC0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STMBC0Request {
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
 }
 
@@ -6971,39 +6971,39 @@ pub struct AuthTryitoutH0STMBC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STPGM0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 장운영정보 (KRX) [실시간-049]] 요청 구조체
@@ -7011,39 +7011,39 @@ pub struct AuthTryitoutH0STPGM0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STMKO0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 시간외 실시간호가 (KRX) [실시간-025]] 요청 구조체
@@ -7051,39 +7051,39 @@ pub struct AuthTryitoutH0STMKO0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STOAA0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 시간외 실시간체결가 (KRX) [실시간-042]] 요청 구조체
@@ -7091,39 +7091,39 @@ pub struct AuthTryitoutH0STOAA0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STOUP0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 시간외 실시간예상체결 (KRX) [실시간-024]] 요청 구조체
@@ -7131,39 +7131,39 @@ pub struct AuthTryitoutH0STOUP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STOAC0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내지수 실시간체결 [실시간-026]] 요청 구조체
@@ -7171,39 +7171,39 @@ pub struct AuthTryitoutH0STOAC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UPCNT0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내지수 실시간예상체결 [실시간-027]] 요청 구조체
@@ -7211,39 +7211,39 @@ pub struct AuthTryitoutH0UPCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UPANC0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내지수 실시간프로그램매매 [실시간-028]] 요청 구조체
@@ -7251,39 +7251,39 @@ pub struct AuthTryitoutH0UPANC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UPPGM0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [ELW 실시간호가 [실시간-062]] 요청 구조체
@@ -7291,39 +7291,39 @@ pub struct AuthTryitoutH0UPPGM0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EWASP0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [ELW 실시간체결가 [실시간-061]] 요청 구조체
@@ -7331,39 +7331,39 @@ pub struct AuthTryitoutH0EWASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EWCNT0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [ELW 실시간예상체결 [실시간-063]] 요청 구조체
@@ -7371,39 +7371,39 @@ pub struct AuthTryitoutH0EWCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EWANC0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내ETF NAV추이 [실시간-051]] 요청 구조체
@@ -7411,39 +7411,39 @@ pub struct AuthTryitoutH0EWANC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STNAV0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [국내주식 실시간체결가 (통합)] 요청 구조체
@@ -7452,31 +7452,31 @@ pub struct AuthTryitoutH0STNAV0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UNCNT0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -7486,31 +7486,31 @@ pub struct AuthTryitoutH0UNCNT0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UNASP0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -7520,31 +7520,31 @@ pub struct AuthTryitoutH0UNASP0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UNANC0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -7554,31 +7554,31 @@ pub struct AuthTryitoutH0UNANC0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UNMBC0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -7588,31 +7588,31 @@ pub struct AuthTryitoutH0UNMBC0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UNPGM0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -7622,31 +7622,31 @@ pub struct AuthTryitoutH0UNPGM0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UNMKO0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -7656,31 +7656,31 @@ pub struct AuthTryitoutH0UNMKO0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0NXCNT0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -7690,31 +7690,31 @@ pub struct AuthTryitoutH0NXCNT0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0NXASP0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -7724,31 +7724,31 @@ pub struct AuthTryitoutH0NXASP0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0NXANC0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -7758,31 +7758,31 @@ pub struct AuthTryitoutH0NXANC0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0NXMBC0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -7792,31 +7792,31 @@ pub struct AuthTryitoutH0NXMBC0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0NXPGM0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -7826,31 +7826,31 @@ pub struct AuthTryitoutH0NXPGM0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0NXMKO0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -7859,6 +7859,24 @@ pub struct AuthTryitoutH0NXMKO0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingOrderRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// ORD_PRCS_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_PRCS_DVSN_CD")]
     pub ord_prcs_dvsn_cd: String,
@@ -7895,29 +7913,11 @@ pub struct DomesticFutureoptionV1TradingOrderRequest {
     /// ORD_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_DVSN_CD")]
     pub ord_dvsn_cd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -7926,6 +7926,24 @@ pub struct DomesticFutureoptionV1TradingOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingOrderRvsecnclRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// ORD_PRCS_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_PRCS_DVSN_CD")]
     pub ord_prcs_dvsn_cd: String,
@@ -7965,29 +7983,11 @@ pub struct DomesticFutureoptionV1TradingOrderRvsecnclRequest {
     /// ORD_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_DVSN_CD")]
     pub ord_dvsn_cd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -7996,6 +7996,33 @@ pub struct DomesticFutureoptionV1TradingOrderRvsecnclRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireCcnlRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -8032,33 +8059,6 @@ pub struct DomesticFutureoptionV1TradingInquireCcnlRequest {
     /// CTX_AREA_NK200 (String, 선택)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [선물옵션 잔고현황[v1_국내선물-004]] 요청 구조체
@@ -8066,6 +8066,33 @@ pub struct DomesticFutureoptionV1TradingInquireCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireBalanceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -8084,33 +8111,6 @@ pub struct DomesticFutureoptionV1TradingInquireBalanceRequest {
     /// CTX_AREA_NK200 (String, 선택)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [선물옵션 주문가능[v1_국내선물-005]] 요청 구조체
@@ -8118,6 +8118,33 @@ pub struct DomesticFutureoptionV1TradingInquireBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquirePsblOrderRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -8136,33 +8163,6 @@ pub struct DomesticFutureoptionV1TradingInquirePsblOrderRequest {
     /// ORD_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_DVSN_CD")]
     pub ord_dvsn_cd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [(야간)선물옵션 주문체결 내역조회 [국내선물-009]] 요청 구조체
@@ -8170,6 +8170,33 @@ pub struct DomesticFutureoptionV1TradingInquirePsblOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireNgtCcnlRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -8212,33 +8239,6 @@ pub struct DomesticFutureoptionV1TradingInquireNgtCcnlRequest {
     /// CTX_AREA_NK200 (String, 선택)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [(야간)선물옵션 잔고현황 [국내선물-010]] 요청 구조체
@@ -8246,6 +8246,33 @@ pub struct DomesticFutureoptionV1TradingInquireNgtCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireNgtBalanceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -8267,33 +8294,6 @@ pub struct DomesticFutureoptionV1TradingInquireNgtBalanceRequest {
     /// CTX_AREA_NK200 (String, 선택)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [(야간)선물옵션 주문가능 조회 [국내선물-011]] 요청 구조체
@@ -8301,6 +8301,33 @@ pub struct DomesticFutureoptionV1TradingInquireNgtBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquirePsblNgtOrderRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -8322,33 +8349,6 @@ pub struct DomesticFutureoptionV1TradingInquirePsblNgtOrderRequest {
     /// ORD_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_DVSN_CD")]
     pub ord_dvsn_cd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [(야간)선물옵션 증거금 상세 [국내선물-024]] 요청 구조체
@@ -8357,31 +8357,31 @@ pub struct DomesticFutureoptionV1TradingInquirePsblNgtOrderRequest {
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingNgtMarginDetailRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -8390,6 +8390,33 @@ pub struct DomesticFutureoptionV1TradingNgtMarginDetailRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireBalanceSettlementPlRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -8405,33 +8432,6 @@ pub struct DomesticFutureoptionV1TradingInquireBalanceSettlementPlRequest {
     /// CTX_AREA_NK200 (String, 선택)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [선물옵션 총자산현황[v1_국내선물-014]] 요청 구조체
@@ -8440,31 +8440,31 @@ pub struct DomesticFutureoptionV1TradingInquireBalanceSettlementPlRequest {
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireDepositRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -8473,6 +8473,33 @@ pub struct DomesticFutureoptionV1TradingInquireDepositRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireBalanceValuationPlRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -8491,33 +8518,6 @@ pub struct DomesticFutureoptionV1TradingInquireBalanceValuationPlRequest {
     /// CTX_AREA_NK200 (String, 선택)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [선물옵션 기준일체결내역[v1_국내선물-016]] 요청 구조체
@@ -8526,31 +8526,31 @@ pub struct DomesticFutureoptionV1TradingInquireBalanceValuationPlRequest {
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireCcnlBstimeRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -8559,6 +8559,33 @@ pub struct DomesticFutureoptionV1TradingInquireCcnlBstimeRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireDailyAmountFeeRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -8577,33 +8604,6 @@ pub struct DomesticFutureoptionV1TradingInquireDailyAmountFeeRequest {
     /// CTX_AREA_NK200 (String, 선택)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [선물옵션 증거금률] 요청 구조체
@@ -8612,44 +8612,44 @@ pub struct DomesticFutureoptionV1TradingInquireDailyAmountFeeRequest {
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsMarginRateRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
     /// enabled (String, 선택)
-    #[serde(rename = "ENABLED")]
+    #[serde(rename = "enabled")]
     pub enabled: String,
     /// byAppKey (String, 선택)
-    #[serde(rename = "BYAPPKEY")]
-    pub byappkey: String,
+    #[serde(rename = "byAppKey")]
+    pub by_app_key: String,
     /// refreshTimeUnit (String, 선택)
-    #[serde(rename = "REFRESHTIMEUNIT")]
-    pub refreshtimeunit: String,
+    #[serde(rename = "refreshTimeUnit")]
+    pub refresh_time_unit: String,
     /// requestLimit (String, 선택)
-    #[serde(rename = "REQUESTLIMIT")]
-    pub requestlimit: String,
+    #[serde(rename = "requestLimit")]
+    pub request_limit: String,
 }
 
 /// [선물옵션 시세[v1_국내선물-006]] 요청 구조체
@@ -8657,39 +8657,39 @@ pub struct DomesticFutureoptionV1QuotationsMarginRateRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsInquirePriceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [선물옵션 시세호가[v1_국내선물-007]] 요청 구조체
@@ -8697,39 +8697,39 @@ pub struct DomesticFutureoptionV1QuotationsInquirePriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsInquireAskingPriceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
     /// fid_input_iscd (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [선물옵션기간별시세(일/주/월/년)[v1_국내선물-008]] 요청 구조체
@@ -8738,31 +8738,31 @@ pub struct DomesticFutureoptionV1QuotationsInquireAskingPriceRequest {
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsInquireDailyFuopchartpriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -8772,44 +8772,44 @@ pub struct DomesticFutureoptionV1QuotationsInquireDailyFuopchartpriceRequest {
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsInquireTimeFuopchartpriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
     /// enabled (String, 선택)
-    #[serde(rename = "ENABLED")]
+    #[serde(rename = "enabled")]
     pub enabled: String,
     /// byAppKey (String, 선택)
-    #[serde(rename = "BYAPPKEY")]
-    pub byappkey: String,
+    #[serde(rename = "byAppKey")]
+    pub by_app_key: String,
     /// refreshTimeUnit (String, 선택)
-    #[serde(rename = "REFRESHTIMEUNIT")]
-    pub refreshtimeunit: String,
+    #[serde(rename = "refreshTimeUnit")]
+    pub refresh_time_unit: String,
     /// requestLimit (String, 선택)
-    #[serde(rename = "REQUESTLIMIT")]
-    pub requestlimit: String,
+    #[serde(rename = "requestLimit")]
+    pub request_limit: String,
 }
 
 /// [국내옵션전광판_옵션월물리스트[국내선물-020]] 요청 구조체
@@ -8818,31 +8818,31 @@ pub struct DomesticFutureoptionV1QuotationsInquireTimeFuopchartpriceRequest {
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsDisplayBoardOptionListRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -8852,31 +8852,31 @@ pub struct DomesticFutureoptionV1QuotationsDisplayBoardOptionListRequest {
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsDisplayBoardTopRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -8886,31 +8886,31 @@ pub struct DomesticFutureoptionV1QuotationsDisplayBoardTopRequest {
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsDisplayBoardCallputRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -8920,31 +8920,31 @@ pub struct DomesticFutureoptionV1QuotationsDisplayBoardCallputRequest {
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsDisplayBoardFuturesRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -8954,31 +8954,31 @@ pub struct DomesticFutureoptionV1QuotationsDisplayBoardFuturesRequest {
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsExpPriceTrendRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -8988,31 +8988,31 @@ pub struct DomesticFutureoptionV1QuotationsExpPriceTrendRequest {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0IFASP0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -9022,31 +9022,31 @@ pub struct AuthTryitoutH0IFASP0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0IFCNT0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -9056,31 +9056,31 @@ pub struct AuthTryitoutH0IFCNT0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0IOASP0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -9090,31 +9090,31 @@ pub struct AuthTryitoutH0IOASP0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0IOCNT0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -9123,39 +9123,39 @@ pub struct AuthTryitoutH0IOCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0IFCNI0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [상품선물 실시간호가[실시간-023]] 요청 구조체
@@ -9164,31 +9164,31 @@ pub struct AuthTryitoutH0IFCNI0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0CFASP0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -9198,31 +9198,31 @@ pub struct AuthTryitoutH0CFASP0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0CFCNT0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -9231,39 +9231,39 @@ pub struct AuthTryitoutH0CFCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0ZFASP0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [주식선물 실시간체결가 [실시간-029]] 요청 구조체
@@ -9271,39 +9271,39 @@ pub struct AuthTryitoutH0ZFASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0ZFCNT0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [주식선물 실시간예상체결 [실시간-031]] 요청 구조체
@@ -9312,31 +9312,31 @@ pub struct AuthTryitoutH0ZFCNT0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0ZFANC0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -9345,39 +9345,39 @@ pub struct AuthTryitoutH0ZFANC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0ZOASP0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [주식옵션 실시간체결가 [실시간-044]] 요청 구조체
@@ -9385,39 +9385,39 @@ pub struct AuthTryitoutH0ZOASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0ZOCNT0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [주식옵션 실시간예상체결 [실시간-046]] 요청 구조체
@@ -9426,31 +9426,31 @@ pub struct AuthTryitoutH0ZOCNT0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0ZOANC0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -9459,39 +9459,39 @@ pub struct AuthTryitoutH0ZOANC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EUASP0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [KRX야간옵션 실시간체결가 [실시간-032]] 요청 구조체
@@ -9499,39 +9499,39 @@ pub struct AuthTryitoutH0EUASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EUCNT0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [KRX야간옵션실시간예상체결 [실시간-034]] 요청 구조체
@@ -9539,39 +9539,39 @@ pub struct AuthTryitoutH0EUCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EUANC0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [KRX야간옵션실시간체결통보 [실시간-067]] 요청 구조체
@@ -9579,39 +9579,39 @@ pub struct AuthTryitoutH0EUANC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EUCNI0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [KRX야간선물 실시간호가 [실시간-065]] 요청 구조체
@@ -9619,39 +9619,39 @@ pub struct AuthTryitoutH0EUCNI0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0MFASP0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [KRX야간선물 실시간종목체결 [실시간-064]] 요청 구조체
@@ -9659,39 +9659,39 @@ pub struct AuthTryitoutH0MFASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0MFCNT0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [KRX야간선물 실시간체결통보 [실시간-066]] 요청 구조체
@@ -9700,31 +9700,31 @@ pub struct AuthTryitoutH0MFCNT0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0MFCNI0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -9733,6 +9733,24 @@ pub struct AuthTryitoutH0MFCNI0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingOrderRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -9760,42 +9778,24 @@ pub struct OverseasStockV1TradingOrderRequest {
     /// ORD_SVR_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_SVR_DVSN_CD")]
     pub ord_svr_dvsn_cd: String,
+    /// rt_cd (String, 선택)
+    #[serde(rename = "rt_cd")]
+    pub rt_cd: String,
+    /// msg_cd (String, 선택)
+    #[serde(rename = "msg_cd")]
+    pub msg_cd: String,
+    /// msg1 (String, 선택)
+    #[serde(rename = "msg1")]
+    pub msg1: String,
+    /// output (String, 선택)
+    #[serde(rename = "output")]
+    pub output: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// ORD_DVSN (String, 선택)
     #[serde(rename = "ORD_DVSN")]
     pub ord_dvsn: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// rt_cd (String, 선택)
-    #[serde(rename = "RT_CD")]
-    pub rt_cd: String,
-    /// msg_cd (String, 선택)
-    #[serde(rename = "MSG_CD")]
-    pub msg_cd: String,
-    /// msg1 (String, 선택)
-    #[serde(rename = "MSG1")]
-    pub msg1: String,
-    /// output (String, 선택)
-    #[serde(rename = "OUTPUT")]
-    pub output: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [해외주식 정정취소주문[v1_해외주식-003]] 요청 구조체
@@ -9803,6 +9803,24 @@ pub struct OverseasStockV1TradingOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingOrderRvsecnclRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -9836,29 +9854,11 @@ pub struct OverseasStockV1TradingOrderRvsecnclRequest {
     /// ORD_SVR_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_SVR_DVSN_CD")]
     pub ord_svr_dvsn_cd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -9867,6 +9867,24 @@ pub struct OverseasStockV1TradingOrderRvsecnclRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingOrderResvRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -9885,24 +9903,6 @@ pub struct OverseasStockV1TradingOrderResvRequest {
     /// FT_ORD_UNPR3 (String, 선택)
     #[serde(rename = "FT_ORD_UNPR3")]
     pub ft_ord_unpr3: Decimal,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
@@ -9913,10 +9913,10 @@ pub struct OverseasStockV1TradingOrderResvRequest {
     #[serde(rename = "ORD_SVR_DVSN_CD")]
     pub ord_svr_dvsn_cd: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -9925,6 +9925,24 @@ pub struct OverseasStockV1TradingOrderResvRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingOrderResvCcnlRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -9937,29 +9955,11 @@ pub struct OverseasStockV1TradingOrderResvCcnlRequest {
     /// OVRS_RSVN_ODNO (String, 선택)
     #[serde(rename = "OVRS_RSVN_ODNO")]
     pub ovrs_rsvn_odno: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -9969,58 +9969,58 @@ pub struct OverseasStockV1TradingOrderResvCcnlRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquirePsamountRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// echm_af_ord_psbl_amt (String, 선택)
-    #[serde(rename = "ECHM_AF_ORD_PSBL_AMT")]
+    #[serde(rename = "echm_af_ord_psbl_amt")]
     pub echm_af_ord_psbl_amt: Decimal,
     /// echm_af_ord_psbl_qty (String, 선택)
-    #[serde(rename = "ECHM_AF_ORD_PSBL_QTY")]
+    #[serde(rename = "echm_af_ord_psbl_qty")]
     pub echm_af_ord_psbl_qty: Decimal,
     /// exrt (String, 선택)
-    #[serde(rename = "EXRT")]
+    #[serde(rename = "exrt")]
     pub exrt: String,
     /// frcr_ord_psbl_amt1 (String, 선택)
-    #[serde(rename = "FRCR_ORD_PSBL_AMT1")]
+    #[serde(rename = "frcr_ord_psbl_amt1")]
     pub frcr_ord_psbl_amt1: Decimal,
     /// max_ord_psbl_qty (String, 선택)
-    #[serde(rename = "MAX_ORD_PSBL_QTY")]
+    #[serde(rename = "max_ord_psbl_qty")]
     pub max_ord_psbl_qty: Decimal,
     /// ord_psbl_frcr_amt (String, 선택)
-    #[serde(rename = "ORD_PSBL_FRCR_AMT")]
+    #[serde(rename = "ord_psbl_frcr_amt")]
     pub ord_psbl_frcr_amt: Decimal,
     /// ord_psbl_qty (String, 선택)
-    #[serde(rename = "ORD_PSBL_QTY")]
+    #[serde(rename = "ord_psbl_qty")]
     pub ord_psbl_qty: Decimal,
     /// ovrs_max_ord_psbl_qty (String, 선택)
-    #[serde(rename = "OVRS_MAX_ORD_PSBL_QTY")]
+    #[serde(rename = "ovrs_max_ord_psbl_qty")]
     pub ovrs_max_ord_psbl_qty: Decimal,
     /// ovrs_ord_psbl_amt (String, 선택)
-    #[serde(rename = "OVRS_ORD_PSBL_AMT")]
+    #[serde(rename = "ovrs_ord_psbl_amt")]
     pub ovrs_ord_psbl_amt: Decimal,
     /// sll_ruse_psbl_amt (String, 선택)
-    #[serde(rename = "SLL_RUSE_PSBL_AMT")]
+    #[serde(rename = "sll_ruse_psbl_amt")]
     pub sll_ruse_psbl_amt: Decimal,
     /// tr_crcy_cd (String, 선택)
-    #[serde(rename = "TR_CRCY_CD")]
+    #[serde(rename = "tr_crcy_cd")]
     pub tr_crcy_cd: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -10029,6 +10029,33 @@ pub struct OverseasStockV1TradingInquirePsamountRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquireNccsRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -10047,33 +10074,6 @@ pub struct OverseasStockV1TradingInquireNccsRequest {
     /// CTX_AREA_NK200 (String, 선택)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [해외주식 잔고[v1_해외주식-006]] 요청 구조체
@@ -10081,6 +10081,33 @@ pub struct OverseasStockV1TradingInquireNccsRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquireBalanceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -10099,33 +10126,6 @@ pub struct OverseasStockV1TradingInquireBalanceRequest {
     /// CTX_AREA_NK200 (String, 선택)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [해외주식 주문체결내역[v1_해외주식-007]] 요청 구조체
@@ -10134,31 +10134,31 @@ pub struct OverseasStockV1TradingInquireBalanceRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquireCcnlRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -10167,6 +10167,33 @@ pub struct OverseasStockV1TradingInquireCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquirePresentBalanceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -10185,33 +10212,6 @@ pub struct OverseasStockV1TradingInquirePresentBalanceRequest {
     /// INQR_DVSN_CD (String, 선택)
     #[serde(rename = "INQR_DVSN_CD")]
     pub inqr_dvsn_cd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [해외주식 예약주문조회[v1_해외주식-013]] 요청 구조체
@@ -10220,28 +10220,28 @@ pub struct OverseasStockV1TradingInquirePresentBalanceRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingOrderResvListRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -10251,31 +10251,31 @@ pub struct OverseasStockV1TradingOrderResvListRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquirePaymtStdrBalanceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -10285,31 +10285,31 @@ pub struct OverseasStockV1TradingInquirePaymtStdrBalanceRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquirePeriodTransRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -10319,31 +10319,31 @@ pub struct OverseasStockV1TradingInquirePeriodTransRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquirePeriodProfitRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -10353,31 +10353,31 @@ pub struct OverseasStockV1TradingInquirePeriodProfitRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingForeignMarginRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -10387,31 +10387,31 @@ pub struct OverseasStockV1TradingForeignMarginRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingDaytimeOrderRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -10420,6 +10420,33 @@ pub struct OverseasStockV1TradingDaytimeOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingDaytimeOrderRvsecnclRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -10453,33 +10480,6 @@ pub struct OverseasStockV1TradingDaytimeOrderRvsecnclRequest {
     /// ORD_SVR_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_SVR_DVSN_CD")]
     pub ord_svr_dvsn_cd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [해외주식 지정가주문번호조회  [해외주식-071]] 요청 구조체
@@ -10488,31 +10488,31 @@ pub struct OverseasStockV1TradingDaytimeOrderRvsecnclRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingAlgoOrdnoRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -10522,31 +10522,31 @@ pub struct OverseasStockV1TradingAlgoOrdnoRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquireAlgoCcnlRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -10555,6 +10555,33 @@ pub struct OverseasStockV1TradingInquireAlgoCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsPriceDetailRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// AUTH (String, 선택)
     #[serde(rename = "AUTH")]
     pub auth: String,
@@ -10564,33 +10591,6 @@ pub struct OverseasPriceV1QuotationsPriceDetailRequest {
     /// SYMB (String, 선택)
     #[serde(rename = "SYMB")]
     pub symb: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [해외주식 현재가 호가 [해외주식-033]] 요청 구조체
@@ -10599,31 +10599,31 @@ pub struct OverseasPriceV1QuotationsPriceDetailRequest {
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsInquireAskingPriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -10632,6 +10632,33 @@ pub struct OverseasPriceV1QuotationsInquireAskingPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsPriceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// AUTH (String, 선택)
     #[serde(rename = "AUTH")]
     pub auth: String,
@@ -10641,33 +10668,6 @@ pub struct OverseasPriceV1QuotationsPriceRequest {
     /// SYMB (String, 선택)
     #[serde(rename = "SYMB")]
     pub symb: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [해외주식 체결추이[해외주식-037]] 요청 구조체
@@ -10676,31 +10676,31 @@ pub struct OverseasPriceV1QuotationsPriceRequest {
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsInquireCcnlRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -10709,6 +10709,33 @@ pub struct OverseasPriceV1QuotationsInquireCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsInquireTimeItemchartpriceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// AUTH (String, 선택)
     #[serde(rename = "AUTH")]
     pub auth: String,
@@ -10736,33 +10763,6 @@ pub struct OverseasPriceV1QuotationsInquireTimeItemchartpriceRequest {
     /// KEYB (String, 선택)
     #[serde(rename = "KEYB")]
     pub keyb: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [해외지수분봉조회[v1_해외주식-031]] 요청 구조체
@@ -10770,6 +10770,33 @@ pub struct OverseasPriceV1QuotationsInquireTimeItemchartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsInquireTimeIndexchartpriceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// FID_COND_MRKT_DIV_CODE (String, 선택)
     #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
@@ -10782,33 +10809,6 @@ pub struct OverseasPriceV1QuotationsInquireTimeIndexchartpriceRequest {
     /// FID_PW_DATA_INCU_YN (String, 선택)
     #[serde(rename = "FID_PW_DATA_INCU_YN")]
     pub fid_pw_data_incu_yn: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [해외주식 기간별시세[v1_해외주식-010]] 요청 구조체
@@ -10816,6 +10816,33 @@ pub struct OverseasPriceV1QuotationsInquireTimeIndexchartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsDailypriceRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// AUTH (String, 선택)
     #[serde(rename = "AUTH")]
     pub auth: String,
@@ -10834,33 +10861,6 @@ pub struct OverseasPriceV1QuotationsDailypriceRequest {
     /// MODP (String, 선택)
     #[serde(rename = "MODP")]
     pub modp: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [해외주식 종목/지수/환율기간별시세(일/주/월/년)[v1_해외주식-012]] 요청 구조체
@@ -10869,31 +10869,31 @@ pub struct OverseasPriceV1QuotationsDailypriceRequest {
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsInquireDailyChartpriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// output1 (String, 선택)
-    #[serde(rename = "OUTPUT1")]
+    #[serde(rename = "output1")]
     pub output1: String,
     /// output2 (String, 선택)
-    #[serde(rename = "OUTPUT2")]
+    #[serde(rename = "output2")]
     pub output2: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -10903,34 +10903,34 @@ pub struct OverseasPriceV1QuotationsInquireDailyChartpriceRequest {
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsInquireSearchRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// output1 (String, 선택)
-    #[serde(rename = "OUTPUT1")]
+    #[serde(rename = "output1")]
     pub output1: String,
     /// output2 (String, 선택)
-    #[serde(rename = "OUTPUT2")]
+    #[serde(rename = "output2")]
     pub output2: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -10939,6 +10939,33 @@ pub struct OverseasPriceV1QuotationsInquireSearchRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1QuotationsCountriesHolidayRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// TRAD_DT (String, 선택)
     #[serde(rename = "TRAD_DT")]
     pub trad_dt: String,
@@ -10948,33 +10975,6 @@ pub struct OverseasStockV1QuotationsCountriesHolidayRequest {
     /// CTX_AREA_FK (String, 선택)
     #[serde(rename = "CTX_AREA_FK")]
     pub ctx_area_fk: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [해외주식 상품기본정보[v1_해외주식-034]] 요청 구조체
@@ -10982,39 +10982,39 @@ pub struct OverseasStockV1QuotationsCountriesHolidayRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsSearchInfoRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// PDNO (String, 선택)
     #[serde(rename = "PDNO")]
     pub pdno: String,
     /// PRDT_TYPE_CD (String, 선택)
     #[serde(rename = "PRDT_TYPE_CD")]
     pub prdt_type_cd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [해외주식 업종별시세[해외주식-048]] 요청 구조체
@@ -11023,31 +11023,31 @@ pub struct OverseasPriceV1QuotationsSearchInfoRequest {
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsIndustryThemeRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11057,31 +11057,31 @@ pub struct OverseasPriceV1QuotationsIndustryThemeRequest {
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsIndustryPriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11091,31 +11091,31 @@ pub struct OverseasPriceV1QuotationsIndustryPriceRequest {
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsMultpriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11125,31 +11125,31 @@ pub struct OverseasPriceV1QuotationsMultpriceRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingPriceFluctRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11159,31 +11159,31 @@ pub struct OverseasStockV1RankingPriceFluctRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingVolumeSurgeRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11193,31 +11193,31 @@ pub struct OverseasStockV1RankingVolumeSurgeRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingVolumePowerRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11227,31 +11227,31 @@ pub struct OverseasStockV1RankingVolumePowerRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingUpdownRateRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11261,31 +11261,31 @@ pub struct OverseasStockV1RankingUpdownRateRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingNewHighlowRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11295,31 +11295,31 @@ pub struct OverseasStockV1RankingNewHighlowRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingTradeVolRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11329,31 +11329,31 @@ pub struct OverseasStockV1RankingTradeVolRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingTradePbmnRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11363,31 +11363,31 @@ pub struct OverseasStockV1RankingTradePbmnRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingTradeGrowthRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11397,31 +11397,31 @@ pub struct OverseasStockV1RankingTradeGrowthRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingTradeTurnoverRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11431,31 +11431,31 @@ pub struct OverseasStockV1RankingTradeTurnoverRequest {
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingMarketCapRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11465,31 +11465,31 @@ pub struct OverseasStockV1RankingMarketCapRequest {
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsPeriodRightsRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11499,31 +11499,31 @@ pub struct OverseasPriceV1QuotationsPeriodRightsRequest {
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsNewsTitleRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11533,31 +11533,31 @@ pub struct OverseasPriceV1QuotationsNewsTitleRequest {
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsRightsByIceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11567,31 +11567,31 @@ pub struct OverseasPriceV1QuotationsRightsByIceRequest {
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsColableByCompanyRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11601,31 +11601,31 @@ pub struct OverseasPriceV1QuotationsColableByCompanyRequest {
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsBrknewsTitleRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11634,39 +11634,39 @@ pub struct OverseasPriceV1QuotationsBrknewsTitleRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutHDFSASP0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [해외주식 지연호가(아시아)[실시간-008]] 요청 구조체
@@ -11675,31 +11675,31 @@ pub struct AuthTryitoutHDFSASP0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutHDFSASP1Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11709,31 +11709,31 @@ pub struct AuthTryitoutHDFSASP1Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutHDFSCNT0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11742,39 +11742,39 @@ pub struct AuthTryitoutHDFSCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0GSCNI0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [해외선물옵션 주문 [v1_해외선물-001]] 요청 구조체
@@ -11782,6 +11782,24 @@ pub struct AuthTryitoutH0GSCNI0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingOrderRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -11827,44 +11845,26 @@ pub struct AuthOverseasFutureoptionV1TradingOrderRequest {
     /// ECIS_RSVN_ORD_YN (String, 선택)
     #[serde(rename = "ECIS_RSVN_ORD_YN")]
     pub ecis_rsvn_ord_yn: String,
-    /// FM_HDGE_ORD_SCRN_YN (String, 선택)
-    #[serde(rename = "FM_HDGE_ORD_SCRN_YN")]
-    pub fm_hdge_ord_scrn_yn: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
+    /// FM_HDGE_ORD_SCRN_YN (String, 선택)
+    #[serde(rename = "FM_HDGE_ORD_SCRN_YN")]
+    pub fm_hdge_ord_scrn_yn: String,
     /// rt_cd (String, 선택)
-    #[serde(rename = "RT_CD")]
+    #[serde(rename = "rt_cd")]
     pub rt_cd: String,
     /// msg_cd (String, 선택)
-    #[serde(rename = "MSG_CD")]
+    #[serde(rename = "msg_cd")]
     pub msg_cd: String,
     /// msg1 (String, 선택)
-    #[serde(rename = "MSG1")]
+    #[serde(rename = "msg1")]
     pub msg1: String,
     /// output (String, 선택)
-    #[serde(rename = "OUTPUT")]
+    #[serde(rename = "output")]
     pub output: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11873,6 +11873,24 @@ pub struct AuthOverseasFutureoptionV1TradingOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingOrderRvsecnclRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -11885,30 +11903,6 @@ pub struct AuthOverseasFutureoptionV1TradingOrderRvsecnclRequest {
     /// ORGN_ODNO (String, 선택)
     #[serde(rename = "ORGN_ODNO")]
     pub orgn_odno: String,
-    /// FM_MKPR_CVSN_YN (String, 선택)
-    #[serde(rename = "FM_MKPR_CVSN_YN")]
-    pub fm_mkpr_cvsn_yn: String,
-    /// FM_HDGE_ORD_SCRN_YN (String, 선택)
-    #[serde(rename = "FM_HDGE_ORD_SCRN_YN")]
-    pub fm_hdge_ord_scrn_yn: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
     /// FM_LIMIT_ORD_PRIC (String, 선택)
     #[serde(rename = "FM_LIMIT_ORD_PRIC")]
     pub fm_limit_ord_pric: Decimal,
@@ -11924,21 +11918,27 @@ pub struct AuthOverseasFutureoptionV1TradingOrderRvsecnclRequest {
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
+    /// FM_HDGE_ORD_SCRN_YN (String, 선택)
+    #[serde(rename = "FM_HDGE_ORD_SCRN_YN")]
+    pub fm_hdge_ord_scrn_yn: String,
     /// rt_cd (String, 선택)
-    #[serde(rename = "RT_CD")]
+    #[serde(rename = "rt_cd")]
     pub rt_cd: String,
     /// msg_cd (String, 선택)
-    #[serde(rename = "MSG_CD")]
+    #[serde(rename = "msg_cd")]
     pub msg_cd: String,
     /// msg1 (String, 선택)
-    #[serde(rename = "MSG1")]
+    #[serde(rename = "msg1")]
     pub msg1: String,
     /// output (String, 선택)
-    #[serde(rename = "OUTPUT")]
+    #[serde(rename = "output")]
     pub output: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
+    /// FM_MKPR_CVSN_YN (String, 선택)
+    #[serde(rename = "FM_MKPR_CVSN_YN")]
+    pub fm_mkpr_cvsn_yn: String,
 }
 
 /// [해외선물옵션 당일주문내역조회 [v1_해외선물-004]] 요청 구조체
@@ -11947,31 +11947,31 @@ pub struct AuthOverseasFutureoptionV1TradingOrderRvsecnclRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingInquireCcldRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -11981,31 +11981,31 @@ pub struct AuthOverseasFutureoptionV1TradingInquireCcldRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingInquireUnpdRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12014,6 +12014,33 @@ pub struct AuthOverseasFutureoptionV1TradingInquireUnpdRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingInquirePsamountRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -12032,33 +12059,6 @@ pub struct AuthOverseasFutureoptionV1TradingInquirePsamountRequest {
     /// ECIS_RSVN_ORD_YN (String, 선택)
     #[serde(rename = "ECIS_RSVN_ORD_YN")]
     pub ecis_rsvn_ord_yn: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [해외선물옵션 기간계좌손익 일별[해외선물-010]] 요청 구조체
@@ -12067,31 +12067,31 @@ pub struct AuthOverseasFutureoptionV1TradingInquirePsamountRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingInquirePeriodCcldRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12101,31 +12101,31 @@ pub struct AuthOverseasFutureoptionV1TradingInquirePeriodCcldRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingInquireDailyCcldRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12135,31 +12135,31 @@ pub struct AuthOverseasFutureoptionV1TradingInquireDailyCcldRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingInquireDepositRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12169,31 +12169,31 @@ pub struct AuthOverseasFutureoptionV1TradingInquireDepositRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingInquireDailyOrderRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12202,6 +12202,33 @@ pub struct AuthOverseasFutureoptionV1TradingInquireDailyOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingInquirePeriodTransRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// INQR_TERM_FROM_DT (String, 선택)
     #[serde(rename = "INQR_TERM_FROM_DT")]
     pub inqr_term_from_dt: String,
@@ -12229,33 +12256,6 @@ pub struct AuthOverseasFutureoptionV1TradingInquirePeriodTransRequest {
     /// PWD_CHK_YN (String, 선택)
     #[serde(rename = "PWD_CHK_YN")]
     pub pwd_chk_yn: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [해외선물옵션 증거금상세 [해외선물-032]] 요청 구조체
@@ -12264,31 +12264,31 @@ pub struct AuthOverseasFutureoptionV1TradingInquirePeriodTransRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingMarginDetailRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12298,31 +12298,31 @@ pub struct AuthOverseasFutureoptionV1TradingMarginDetailRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsInquirePriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12331,36 +12331,36 @@ pub struct AuthOverseasFutureoptionV1QuotationsInquirePriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsStockDetailRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// SRS_CD (String, 선택)
     #[serde(rename = "SRS_CD")]
     pub srs_cd: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [해외선물 호가 [해외선물-031]] 요청 구조체
@@ -12369,31 +12369,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsStockDetailRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsInquireAskingPriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12403,31 +12403,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsInquireAskingPriceRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsInquireTimeFuturechartpriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12437,31 +12437,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsInquireTimeFuturechartpriceReques
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsTickCcnlRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12471,31 +12471,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsTickCcnlRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsWeeklyCcnlRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12505,31 +12505,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsWeeklyCcnlRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsDailyCcnlRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12539,31 +12539,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsDailyCcnlRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsMonthlyCcnlRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12573,31 +12573,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsMonthlyCcnlRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsSearchContractDetailRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12607,31 +12607,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsSearchContractDetailRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsInvestorUnpdTrendRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12641,31 +12641,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsInvestorUnpdTrendRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsOptPriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12675,31 +12675,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsOptPriceRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsOptDetailRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12709,31 +12709,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsOptDetailRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsOptAskingPriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12743,31 +12743,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsOptAskingPriceRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsInquireTimeOptchartpriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12777,31 +12777,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsInquireTimeOptchartpriceRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsOptTickCcnlRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12811,31 +12811,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsOptTickCcnlRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsOptDailyCcnlRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12845,31 +12845,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsOptDailyCcnlRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsOptWeeklyCcnlRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12879,31 +12879,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsOptWeeklyCcnlRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsOptMonthlyCcnlRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12913,31 +12913,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsOptMonthlyCcnlRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsSearchOptDetailRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12947,31 +12947,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsSearchOptDetailRequest {
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsMarketTimeRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -12981,31 +12981,31 @@ pub struct AuthOverseasFutureoptionV1QuotationsMarketTimeRequest {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutHDFFF020Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -13015,31 +13015,31 @@ pub struct AuthTryitoutHDFFF020Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutHDFFF010Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -13049,31 +13049,31 @@ pub struct AuthTryitoutHDFFF010Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutHDFFF1C0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -13083,31 +13083,31 @@ pub struct AuthTryitoutHDFFF1C0Request {
 #[allow(non_snake_case)]
 pub struct AuthTryitoutHDFFF2C0Request {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -13116,6 +13116,33 @@ pub struct AuthTryitoutHDFFF2C0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1TradingBuyRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -13149,33 +13176,6 @@ pub struct AuthDomesticBondV1TradingBuyRequest {
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [장내채권 매도주문 [국내주식-123]] 요청 구조체
@@ -13183,6 +13183,33 @@ pub struct AuthDomesticBondV1TradingBuyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1TradingSellRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -13228,33 +13255,6 @@ pub struct AuthDomesticBondV1TradingSellRequest {
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [장내채권 정정취소주문 [국내주식-125]] 요청 구조체
@@ -13262,6 +13262,33 @@ pub struct AuthDomesticBondV1TradingSellRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1TradingOrderRvsecnclRequest {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -13295,33 +13322,6 @@ pub struct AuthDomesticBondV1TradingOrderRvsecnclRequest {
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [채권정정취소가능주문조회  [국내주식-126]] 요청 구조체
@@ -13330,31 +13330,31 @@ pub struct AuthDomesticBondV1TradingOrderRvsecnclRequest {
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1TradingInquirePsblRvsecnclRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -13364,31 +13364,31 @@ pub struct AuthDomesticBondV1TradingInquirePsblRvsecnclRequest {
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1TradingInquireDailyCcldRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -13398,31 +13398,31 @@ pub struct AuthDomesticBondV1TradingInquireDailyCcldRequest {
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1TradingInquireBalanceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -13432,31 +13432,31 @@ pub struct AuthDomesticBondV1TradingInquireBalanceRequest {
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1TradingInquirePsblOrderRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -13466,31 +13466,31 @@ pub struct AuthDomesticBondV1TradingInquirePsblOrderRequest {
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1QuotationsInquireAskingPriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -13500,31 +13500,31 @@ pub struct AuthDomesticBondV1QuotationsInquireAskingPriceRequest {
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1QuotationsInquirePriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -13534,31 +13534,31 @@ pub struct AuthDomesticBondV1QuotationsInquirePriceRequest {
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1QuotationsInquireCcnlRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -13568,31 +13568,31 @@ pub struct AuthDomesticBondV1QuotationsInquireCcnlRequest {
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1QuotationsInquireDailyPriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -13602,31 +13602,31 @@ pub struct AuthDomesticBondV1QuotationsInquireDailyPriceRequest {
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1QuotationsInquireDailyItemchartpriceRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -13636,31 +13636,31 @@ pub struct AuthDomesticBondV1QuotationsInquireDailyItemchartpriceRequest {
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1QuotationsAvgUnitRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -13670,31 +13670,31 @@ pub struct AuthDomesticBondV1QuotationsAvgUnitRequest {
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1QuotationsIssueInfoRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -13704,31 +13704,31 @@ pub struct AuthDomesticBondV1QuotationsIssueInfoRequest {
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1QuotationsSearchBondInfoRequest {
     /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
     /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
+    #[serde(rename = "methodList")]
+    pub method_list: String,
     /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
     /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
+    #[serde(rename = "pathList")]
+    pub path_list: String,
     /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
     /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
+    #[serde(rename = "address")]
     pub address: String,
 }
 
@@ -13737,39 +13737,39 @@ pub struct AuthDomesticBondV1QuotationsSearchBondInfoRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0BJCNT0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [일반채권 실시간호가 [실시간-053]] 요청 구조체
@@ -13777,39 +13777,39 @@ pub struct AuthTryitoutH0BJCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0BJASP0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
 
 /// [채권지수 실시간체결가 [실시간-060]] 요청 구조체
@@ -13817,37 +13817,37 @@ pub struct AuthTryitoutH0BJASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0BICNT0Request {
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
     /// header (String, 선택)
-    #[serde(rename = "HEADER")]
+    #[serde(rename = "header")]
     pub header: String,
     /// body (String, 선택)
-    #[serde(rename = "BODY")]
+    #[serde(rename = "body")]
     pub body: String,
-    /// headerMap (String, 선택)
-    #[serde(rename = "HEADERMAP")]
-    pub headermap: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "METHODLIST")]
-    pub methodlist: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "CONTENTTYPELIST")]
-    pub contenttypelist: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "PATHLIST")]
-    pub pathlist: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "QUERYMAP")]
-    pub querymap: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "FORMMAP")]
-    pub formmap: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "JSONBODY")]
-    pub jsonbody: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "JSONRESPONSE")]
-    pub jsonresponse: String,
-    /// address (String, 선택)
-    #[serde(rename = "ADDRESS")]
-    pub address: String,
 }
