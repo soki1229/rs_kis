@@ -1,4 +1,4 @@
-#![allow(clippy::doc_lazy_continuation)]
+#![allow(clippy::doc_lazy_continuation, clippy::tabs_in_doc_comments)]
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 
@@ -4177,7 +4177,7 @@ pub struct DomesticStockV1QuotationsInquireDailyIndexchartpriceRequest {
     /// 조회 종료일자 (String, 필수)
     #[serde(rename = "FID_INPUT_DATE_2")]
     pub fid_input_date_2: String,
-    /// '	기간분류코드' (String, 필수)
+    /// ' 기간분류코드' (String, 필수)
     #[serde(rename = "FID_PERIOD_DIV_CODE")]
     pub fid_period_div_code: String,
     /// headerMap (String, 선택)
@@ -9230,7 +9230,7 @@ pub struct AuthTryitoutH0STOUP0Request {
     /// 거래ID (String, 필수)
     #[serde(rename = "tr_id")]
     pub tr_id: String,
-    /// 구분값	 (String, 필수)
+    /// 구분값  (String, 필수)
     #[serde(rename = "tr_key")]
     pub tr_key: String,
     /// header (String, 선택)
