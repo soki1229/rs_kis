@@ -3,4 +3,4 @@ use crate::client::KisClient;
 use crate::error::KisError;
 use crate::models::*;
 
-impl crate::endpoints::Stock {}
+impl crate::client::Stock {}
