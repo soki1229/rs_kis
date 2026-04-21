@@ -166,8 +166,7 @@ class CodeGenerator:
             output.append(f"#[allow(dead_code)]\npub struct {group}(pub(crate) KisClient);\n")
 
         # 2. Implement Accessors on the top-level Stock/Overseas types
-        # Note: crate::client::Stock and crate::client::Overseas are the target types
-        target_type = "crate::client::Stock" if module_name == "stock" else "crate::client::Overseas"
+        target_type = "crate::endpoints::Stock" if module_name == "stock" else "crate::endpoints::Overseas"
         output.append(f"impl {target_type} {{")
         for group in groups:
             method_name = inflection.underscore(group)
