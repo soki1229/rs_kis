@@ -37,7 +37,6 @@ def to_struct_name(api):
     return name
 
 def to_safe_snake(text):
-    # KIS API 필드명은 대소문자가 섞여 있으므로 스네이크 케이스로 변환하되 예약어 충돌 방지
     snake = inflection.underscore(str(text).strip())
     snake = re.sub(r'[^\w\s]', '', snake).replace(' ', '_')
     snake = re.sub(r'_+', '_', snake)
@@ -59,7 +58,7 @@ def _parse_params_from_json(json_str):
         if isinstance(data, dict):
             for k, v in data.items():
                 params.append({
-                    'name': k, # Original case for #[serde(rename)]
+                    'name': k, # Original Case
                     'korean_name': k,
                     'type': 'String',
                     'required': 'N',
@@ -68,7 +67,7 @@ def _parse_params_from_json(json_str):
         elif isinstance(data, list) and len(data) > 0 and isinstance(data[0], dict):
             for k, v in data[0].items():
                 params.append({
-                    'name': k,
+                    'name': k, # Original Case
                     'korean_name': k,
                     'type': 'String',
                     'required': 'N',
@@ -95,7 +94,7 @@ def _extract_params(api):
                         res.extend(_parse_params_from_json(pvalue))
                     elif pname and pname.lower() not in ['tr_id', 'custtype', 'content-type', 'authorization', 'appkey', 'appsecret']:
                         res.append({
-                            'name': pname,
+                            'name': pname, # Original Case
                             'korean_name': param.get('description', pname),
                             'type': 'String',
                             'required': 'Y' if param.get('required') else 'N',
@@ -118,7 +117,7 @@ def _extract_params(api):
     if extra_param:
         params.extend(_parse_params_from_json(extra_param))
 
-    # Deduplicate by lowercase name to ensure all variants are captured once
+    # Deduplicate by lowercase name to keep one variant but preserve original casing for rename
     seen = set()
     unique_params = []
     for p in params:
