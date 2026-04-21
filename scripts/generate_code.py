@@ -97,10 +97,6 @@ class CodeGenerator:
     def _write_models(self):
         output = ["#![allow(clippy::doc_lazy_continuation)]"]
         for api in self.spec:
-            # Map request/response from 'request' and 'response' keys if present
-            # but raw data has them in children/paramList... 
-            # (Assuming fetch_spec.py already normalized it to 'request'/'response' lists)
-            # If not, I need to check how they are stored.
             req_fields = api.get('request', [])
             if isinstance(req_fields, list):
                 for f in req_fields: self.type_mapper.get_rust_type(f.get('name', ''))
@@ -194,7 +190,11 @@ class CodeGenerator:
             output.append(f"impl {struct_name} {{")
             for api in apis:
                 endpoint = api.get('accessUrl', '')
-                method_name = to_safe_snake(endpoint.split('/')[-1])
+                # 중복 메서드 방지를 위해 전체 경로의 주요 부분을 메서드 명으로 사용
+                parts = [p for p in endpoint.strip('/').split('/') if p != "uapi"]
+                # 마지막 2~3개 세그먼트 결합 (예: v1/trading/order-cash -> v1_trading_order_cash)
+                useful_parts = parts[-3:] if len(parts) >= 3 else parts
+                method_name = to_safe_snake("_".join(useful_parts))
                 if method_name.startswith("r#"): method_name = method_name[2:]
                 
                 req_fields = api.get('request', [])
@@ -225,4 +225,4 @@ class CodeGenerator:
 if __name__ == "__main__":
     generator = CodeGenerator()
     generator.generate()
-    print("[+] Structured SDK generated with Smart Type Mapping and Robust Accessors.")
+    print("[+] Structured SDK generated with Smart Type Mapping and Robust Unique Methods.")
