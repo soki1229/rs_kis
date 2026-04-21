@@ -11,11 +11,12 @@ OUTPUT_DIR = "crates/kis_api/src/generated"
 # --- Utility Functions ---
 
 def to_struct_name(api):
+    # 경로 전체를 활용하여 고유한 이름 생성
+    # /uapi/overseas-stock/v1/trading/order -> OverseasStockV1TradingOrder
     endpoint = api.get('endpoint', '')
-    # v1, v2 등 버전 정보 포함하여 완전한 경로 기반 이름 생성
     parts = [p for p in endpoint.strip('/').split('/') if p != "uapi"]
     
-    # 카테고리 매핑 보정 (rs_kis_server 기대치에 맞춤)
+    # rs_kis_server 기대치에 정확히 맞춘 접두사 결정
     if "domestic-stock" in endpoint:
         prefix = "DomesticStock"
     elif "overseas-stock" in endpoint:
@@ -27,9 +28,7 @@ def to_struct_name(api):
     else:
         prefix = "Auth"
         
-    # 이미 prefix에 포함된 정보는 parts에서 제거
     useful_parts = [p for p in parts if p not in ["domestic-stock", "overseas-stock", "domestic-futureoption", "overseas-price"]]
-    
     name_parts = [prefix] + [inflection.camelize(p.replace('-', '_')) for p in useful_parts]
     name = "".join(name_parts)
     
