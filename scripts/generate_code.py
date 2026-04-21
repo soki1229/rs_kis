@@ -69,26 +69,15 @@ def _parse_params_from_json(json_str):
 
 def _extract_params(children_data, extra_param=None):
     params = []
-    
-    # 1. Extract from extraParam
-    if extra_param:
-        params.extend(_parse_params_from_json(extra_param))
-
-    # 2. Recursive extraction from children
+    if extra_param: params.extend(_parse_params_from_json(extra_param))
     if not children_data: return params
     
     try:
-        if isinstance(children_data, str):
-            children = json.loads(children_data)
-        else:
-            children = children_data
-            
+        children = json.loads(children_data) if isinstance(children_data, str) else children_data
         for child in children:
             for param in child.get('paramList', []):
                 pname = param.get('name')
                 pvalue = param.get('value', '')
-                
-                # Check for nested JSON in 'value' (often named jsonBody or jsonResponse)
                 if pname in ['jsonBody', 'jsonResponse'] and isinstance(pvalue, str) and pvalue.startswith('{'):
                     params.extend(_parse_params_from_json(pvalue))
                 elif pname and pname.lower() not in ['tr_id', 'custtype', 'content-type', 'authorization', 'appkey', 'appsecret']:
@@ -99,21 +88,15 @@ def _extract_params(children_data, extra_param=None):
                         'required': 'Y' if param.get('required') else 'N',
                         'description': pvalue
                     })
-            
             inner_children = child.get('children')
-            if inner_children:
-                params.extend(_extract_params(inner_children))
-    except:
-        pass
-        
-    # Deduplicate by name
+            if inner_children: params.extend(_extract_params(inner_children))
+    except: pass
     seen = set()
     unique_params = []
     for p in params:
         if p['name'] not in seen:
             unique_params.append(p)
             seen.add(p['name'])
-            
     return unique_params
 
 # --- Type Mapper ---
@@ -146,7 +129,6 @@ class CodeGenerator:
     def __init__(self):
         with open(RAW_DATA_FILE, 'r') as f:
             raw_data = json.load(f)
-        
         self.spec = []
         for api in raw_data:
             self.spec.append({
@@ -159,7 +141,6 @@ class CodeGenerator:
                 'request': _extract_params(api.get('children', '[]'), api.get('extraParam')),
                 'response': []
             })
-            
         self.type_mapper = TypeMapper("scripts/type_map.yaml")
         os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -173,12 +154,10 @@ class CodeGenerator:
         output = ["#![allow(clippy::doc_lazy_continuation)]"]
         for api in self.spec:
             for f in api.get('request', []): self.type_mapper.get_rust_type(f.get('name', ''))
-        
         for imp in sorted(list(self.type_mapper.required_imports)):
             output.append(f"use {imp};")
         output.append("use serde::{Deserialize, Serialize};")
         output.append("")
-
         seen_structs = set()
         for api in self.spec:
             struct_base = to_struct_name(api)
@@ -189,7 +168,6 @@ class CodeGenerator:
                 counter += 1
             seen_structs.add(struct_base)
             api['generated_struct'] = struct_base
-
             req_fields = api.get('request', [])
             if req_fields:
                 output.append(f"/// [{api.get('name', 'Unknown')}] 요청 구조체")
@@ -204,7 +182,6 @@ class CodeGenerator:
                     output.append(f'    #[serde(rename = "{fname}")]')
                     output.append(f"    pub {to_safe_snake(fname)}: {rtype},")
                 output.append("}\n")
-
         with open(os.path.join(OUTPUT_DIR, "models.rs"), "w") as f:
             f.write("\n".join(output))
 
@@ -216,17 +193,13 @@ class CodeGenerator:
             "use crate::models::*;",
             ""
         ]
-
         filtered_apis = []
         for api in self.spec:
             ep = api.get('accessUrl', '')
-            if module_name == "stock":
-                if "domestic-stock" in ep or "domestic-futureoption" in ep:
-                    filtered_apis.append(api)
-            elif module_name == "overseas":
-                if "overseas-stock" in ep or "overseas-price" in ep or "oauth2" in ep or "/uapi/hashkey" in ep:
-                    filtered_apis.append(api)
-        
+            if module_name == "stock" and ("domestic-stock" in ep or "domestic-futureoption" in ep):
+                filtered_apis.append(api)
+            elif module_name == "overseas" and ("overseas-stock" in ep or "overseas-price" in ep or "oauth2" in ep or "/uapi/hashkey" in ep):
+                filtered_apis.append(api)
         groups = {}
         for api in filtered_apis:
             parts = api.get('accessUrl', '').strip('/').split('/')
@@ -237,12 +210,10 @@ class CodeGenerator:
                     break
             if group_name not in groups: groups[group_name] = []
             groups[group_name].append(api)
-
         module_prefix = "Stock" if module_name == "stock" else "Overseas"
         for group in groups:
             struct_name = f"{module_prefix}{group}"
             output.append(f"#[allow(dead_code)]\npub struct {struct_name}(pub(crate) KisClient);\n")
-
         target_endpoint_type = f"crate::endpoints::{module_prefix}"
         output.append(f"impl {target_endpoint_type} {{")
         for group in groups:
@@ -250,7 +221,6 @@ class CodeGenerator:
             method_name = inflection.underscore(group)
             output.append(f"    pub fn {method_name}(&self) -> {struct_name} {{ {struct_name}(self.0.clone()) }}")
         output.append("}\n")
-
         for group, apis in groups.items():
             struct_name = f"{module_prefix}{group}"
             output.append("#[allow(non_snake_case)]")
@@ -260,12 +230,10 @@ class CodeGenerator:
                 parts = [p for p in endpoint.strip('/').split('/') if p != "uapi"]
                 method_name = to_safe_snake("_".join(parts))
                 if method_name.startswith("r#"): method_name = method_name[2:]
-                
                 req_struct = f"{api['generated_struct']}Request" if api.get('request') else "()"
                 output.append(format_doc(api.get('name', 'Unknown'), "    "))
                 output.append(f"    /// - TR_ID: Real={api.get('realTrId', '')} / VTS={api.get('virtualTrId', '')}")
                 output.append(f"    /// - Endpoint: {endpoint}")
-                
                 output.append(f"    pub async fn {method_name}(&self, req: {req_struct}) -> Result<serde_json::Value, KisError> {{")
                 output.append("        let tr_id = match self.0.env() {")
                 output.append(f'            crate::client::KisEnv::Real => "{api.get("realTrId", "")}",')
@@ -275,7 +243,6 @@ class CodeGenerator:
                 output.append(f'        self.0.{method_call}("{endpoint}", tr_id, req).await')
                 output.append("    }\n")
             output.append("}\n")
-
         with open(os.path.join(OUTPUT_DIR, f"{module_name}.rs"), "w") as f:
             f.write("\n".join(output))
 
@@ -286,4 +253,4 @@ class CodeGenerator:
 if __name__ == "__main__":
     generator = CodeGenerator()
     generator.generate()
-    print("[+] Structured SDK generated with Smart Type Mapping and Robust Unique Methods.")
+    print("[+] Structured SDK generated with Smart Type Mapping and Truly Unique Methods.")
