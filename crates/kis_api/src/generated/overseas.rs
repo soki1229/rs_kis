@@ -176,7 +176,7 @@ impl OverseasTrading {
             crate::client::KisEnv::Vts => "VTTS3007R",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-stock/v1/trading/inquire-psamount",
                 tr_id,
                 req,
@@ -196,7 +196,7 @@ impl OverseasTrading {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post("/uapi/overseas-stock/v1/trading/inquire-nccs", tr_id, req)
+            .get("/uapi/overseas-stock/v1/trading/inquire-nccs", tr_id, req)
             .await
     }
 
@@ -212,7 +212,7 @@ impl OverseasTrading {
             crate::client::KisEnv::Vts => "VTTS3012R",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-stock/v1/trading/inquire-balance",
                 tr_id,
                 req,
@@ -232,7 +232,7 @@ impl OverseasTrading {
             crate::client::KisEnv::Vts => "VTTS3035R",
         };
         self.0
-            .post("/uapi/overseas-stock/v1/trading/inquire-ccnl", tr_id, req)
+            .get("/uapi/overseas-stock/v1/trading/inquire-ccnl", tr_id, req)
             .await
     }
 
@@ -248,7 +248,7 @@ impl OverseasTrading {
             crate::client::KisEnv::Vts => "VTRP6504R",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-stock/v1/trading/inquire-present-balance",
                 tr_id,
                 req,
@@ -268,7 +268,7 @@ impl OverseasTrading {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-stock/v1/trading/order-resv-list",
                 tr_id,
                 req,
@@ -288,7 +288,7 @@ impl OverseasTrading {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-stock/v1/trading/inquire-paymt-stdr-balance",
                 tr_id,
                 req,
@@ -308,7 +308,7 @@ impl OverseasTrading {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-stock/v1/trading/inquire-period-trans",
                 tr_id,
                 req,
@@ -328,7 +328,7 @@ impl OverseasTrading {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-stock/v1/trading/inquire-period-profit",
                 tr_id,
                 req,
@@ -348,7 +348,7 @@ impl OverseasTrading {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post("/uapi/overseas-stock/v1/trading/foreign-margin", tr_id, req)
+            .get("/uapi/overseas-stock/v1/trading/foreign-margin", tr_id, req)
             .await
     }
 
@@ -400,7 +400,7 @@ impl OverseasTrading {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post("/uapi/overseas-stock/v1/trading/algo-ordno", tr_id, req)
+            .get("/uapi/overseas-stock/v1/trading/algo-ordno", tr_id, req)
             .await
     }
 
@@ -416,7 +416,7 @@ impl OverseasTrading {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-stock/v1/trading/inquire-algo-ccnl",
                 tr_id,
                 req,
@@ -439,7 +439,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-price/v1/quotations/price-detail",
                 tr_id,
                 req,
@@ -459,7 +459,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-price/v1/quotations/inquire-asking-price",
                 tr_id,
                 req,
@@ -479,7 +479,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "HHDFS00000300",
         };
         self.0
-            .post("/uapi/overseas-price/v1/quotations/price", tr_id, req)
+            .get("/uapi/overseas-price/v1/quotations/price", tr_id, req)
             .await
     }
 
@@ -495,7 +495,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-price/v1/quotations/inquire-ccnl",
                 tr_id,
                 req,
@@ -515,7 +515,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-price/v1/quotations/inquire-time-itemchartprice",
                 tr_id,
                 req,
@@ -535,7 +535,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-price/v1/quotations/inquire-time-indexchartprice",
                 tr_id,
                 req,
@@ -555,7 +555,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "HHDFS76240000",
         };
         self.0
-            .post("/uapi/overseas-price/v1/quotations/dailyprice", tr_id, req)
+            .get("/uapi/overseas-price/v1/quotations/dailyprice", tr_id, req)
             .await
     }
 
@@ -571,7 +571,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "FHKST03030100",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-price/v1/quotations/inquire-daily-chartprice",
                 tr_id,
                 req,
@@ -591,7 +591,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "HHDFS76410000",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-price/v1/quotations/inquire-search",
                 tr_id,
                 req,
@@ -611,7 +611,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-stock/v1/quotations/countries-holiday",
                 tr_id,
                 req,
@@ -631,7 +631,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post("/uapi/overseas-price/v1/quotations/search-info", tr_id, req)
+            .get("/uapi/overseas-price/v1/quotations/search-info", tr_id, req)
             .await
     }
 
@@ -647,7 +647,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-price/v1/quotations/industry-theme",
                 tr_id,
                 req,
@@ -667,7 +667,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-price/v1/quotations/industry-price",
                 tr_id,
                 req,
@@ -687,7 +687,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "미지원 ",
         };
         self.0
-            .post("/uapi/overseas-price/v1/quotations/multprice", tr_id, req)
+            .get("/uapi/overseas-price/v1/quotations/multprice", tr_id, req)
             .await
     }
 
@@ -703,7 +703,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-price/v1/quotations/period-rights",
                 tr_id,
                 req,
@@ -723,7 +723,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post("/uapi/overseas-price/v1/quotations/news-title", tr_id, req)
+            .get("/uapi/overseas-price/v1/quotations/news-title", tr_id, req)
             .await
     }
 
@@ -739,7 +739,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-price/v1/quotations/rights-by-ice",
                 tr_id,
                 req,
@@ -759,7 +759,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-price/v1/quotations/colable-by-company",
                 tr_id,
                 req,
@@ -779,7 +779,7 @@ impl OverseasQuotations {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post(
+            .get(
                 "/uapi/overseas-price/v1/quotations/brknews-title",
                 tr_id,
                 req,
@@ -802,7 +802,7 @@ impl OverseasRanking {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post("/uapi/overseas-stock/v1/ranking/price-fluct", tr_id, req)
+            .get("/uapi/overseas-stock/v1/ranking/price-fluct", tr_id, req)
             .await
     }
 
@@ -818,7 +818,7 @@ impl OverseasRanking {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post("/uapi/overseas-stock/v1/ranking/volume-surge", tr_id, req)
+            .get("/uapi/overseas-stock/v1/ranking/volume-surge", tr_id, req)
             .await
     }
 
@@ -834,7 +834,7 @@ impl OverseasRanking {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post("/uapi/overseas-stock/v1/ranking/volume-power", tr_id, req)
+            .get("/uapi/overseas-stock/v1/ranking/volume-power", tr_id, req)
             .await
     }
 
@@ -850,7 +850,7 @@ impl OverseasRanking {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post("/uapi/overseas-stock/v1/ranking/updown-rate", tr_id, req)
+            .get("/uapi/overseas-stock/v1/ranking/updown-rate", tr_id, req)
             .await
     }
 
@@ -866,7 +866,7 @@ impl OverseasRanking {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post("/uapi/overseas-stock/v1/ranking/new-highlow", tr_id, req)
+            .get("/uapi/overseas-stock/v1/ranking/new-highlow", tr_id, req)
             .await
     }
 
@@ -882,7 +882,7 @@ impl OverseasRanking {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post("/uapi/overseas-stock/v1/ranking/trade-vol", tr_id, req)
+            .get("/uapi/overseas-stock/v1/ranking/trade-vol", tr_id, req)
             .await
     }
 
@@ -898,7 +898,7 @@ impl OverseasRanking {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post("/uapi/overseas-stock/v1/ranking/trade-pbmn", tr_id, req)
+            .get("/uapi/overseas-stock/v1/ranking/trade-pbmn", tr_id, req)
             .await
     }
 
@@ -914,7 +914,7 @@ impl OverseasRanking {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post("/uapi/overseas-stock/v1/ranking/trade-growth", tr_id, req)
+            .get("/uapi/overseas-stock/v1/ranking/trade-growth", tr_id, req)
             .await
     }
 
@@ -930,7 +930,7 @@ impl OverseasRanking {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post("/uapi/overseas-stock/v1/ranking/trade-turnover", tr_id, req)
+            .get("/uapi/overseas-stock/v1/ranking/trade-turnover", tr_id, req)
             .await
     }
 
@@ -946,7 +946,7 @@ impl OverseasRanking {
             crate::client::KisEnv::Vts => "모의투자 미지원",
         };
         self.0
-            .post("/uapi/overseas-stock/v1/ranking/market-cap", tr_id, req)
+            .get("/uapi/overseas-stock/v1/ranking/market-cap", tr_id, req)
             .await
     }
 }

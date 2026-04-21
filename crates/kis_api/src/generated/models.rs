@@ -7,6 +7,15 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOauth2TokenPRequest {
+    /// grant_type (String, 선택)
+    #[serde(rename = "grant_type")]
+    pub grant_type: String,
+    /// appkey (String, 선택)
+    #[serde(rename = "appkey")]
+    pub appkey: String,
+    /// appsecret (String, 선택)
+    #[serde(rename = "appsecret")]
+    pub appsecret: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -25,15 +34,6 @@ pub struct AuthOauth2TokenPRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
-    /// grant_type (String, 선택)
-    #[serde(rename = "grant_type")]
-    pub grant_type: String,
-    /// appkey (String, 선택)
-    #[serde(rename = "appkey")]
-    pub appkey: String,
-    /// appsecret (String, 선택)
-    #[serde(rename = "appsecret")]
-    pub appsecret: String,
     /// access_token (String, 선택)
     #[serde(rename = "access_token")]
     pub access_token: String,
@@ -53,6 +53,15 @@ pub struct AuthOauth2TokenPRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOauth2RevokePRequest {
+    /// appkey (String, 선택)
+    #[serde(rename = "appkey")]
+    pub appkey: String,
+    /// appsecret (String, 선택)
+    #[serde(rename = "appsecret")]
+    pub appsecret: String,
+    /// token (String, 선택)
+    #[serde(rename = "token")]
+    pub token: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -71,15 +80,6 @@ pub struct AuthOauth2RevokePRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
-    /// appkey (String, 선택)
-    #[serde(rename = "appkey")]
-    pub appkey: String,
-    /// appsecret (String, 선택)
-    #[serde(rename = "appsecret")]
-    pub appsecret: String,
-    /// token (String, 선택)
-    #[serde(rename = "token")]
-    pub token: String,
     /// code (String, 선택)
     #[serde(rename = "code")]
     pub code: String,
@@ -96,6 +96,42 @@ pub struct AuthOauth2RevokePRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthHashkeyRequest {
+    /// ORD_PRCS_DVSN_CD (String, 선택)
+    #[serde(rename = "ORD_PRCS_DVSN_CD")]
+    pub ord_prcs_dvsn_cd: String,
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// SLL_BUY_DVSN_CD (String, 선택)
+    #[serde(rename = "SLL_BUY_DVSN_CD")]
+    pub sll_buy_dvsn_cd: String,
+    /// SHTN_PDNO (String, 선택)
+    #[serde(rename = "SHTN_PDNO")]
+    pub shtn_pdno: String,
+    /// ORD_QTY (String, 선택)
+    #[serde(rename = "ORD_QTY")]
+    pub ord_qty: Decimal,
+    /// UNIT_PRICE (String, 선택)
+    #[serde(rename = "UNIT_PRICE")]
+    pub unit_price: String,
+    /// NMPR_TYPE_CD (String, 선택)
+    #[serde(rename = "NMPR_TYPE_CD")]
+    pub nmpr_type_cd: String,
+    /// KRX_NMPR_CNDT_CD (String, 선택)
+    #[serde(rename = "KRX_NMPR_CNDT_CD")]
+    pub krx_nmpr_cndt_cd: String,
+    /// CTAC_TLNO (String, 선택)
+    #[serde(rename = "CTAC_TLNO")]
+    pub ctac_tlno: String,
+    /// FUOP_ITEM_DVSN_CD (String, 선택)
+    #[serde(rename = "FUOP_ITEM_DVSN_CD")]
+    pub fuop_item_dvsn_cd: String,
+    /// ORD_DVSN_CD (String, 선택)
+    #[serde(rename = "ORD_DVSN_CD")]
+    pub ord_dvsn_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -114,27 +150,15 @@ pub struct AuthHashkeyRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
-    /// CANO (String, 선택)
-    #[serde(rename = "CANO")]
-    pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
-    #[serde(rename = "ACNT_PRDT_CD")]
-    pub acnt_prdt_cd: String,
     /// PDNO (String, 선택)
     #[serde(rename = "PDNO")]
     pub pdno: String,
     /// ORD_DVSN (String, 선택)
     #[serde(rename = "ORD_DVSN")]
     pub ord_dvsn: String,
-    /// ORD_QTY (String, 선택)
-    #[serde(rename = "ORD_QTY")]
-    pub ord_qty: Decimal,
     /// ORD_UNPR (String, 선택)
     #[serde(rename = "ORD_UNPR")]
     pub ord_unpr: Decimal,
-    /// CTAC_TLNO (String, 선택)
-    #[serde(rename = "CTAC_TLNO")]
-    pub ctac_tlno: String,
     /// BODY (String, 선택)
     #[serde(rename = "BODY")]
     pub body: String,
@@ -148,6 +172,15 @@ pub struct AuthHashkeyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOauth2ApprovalRequest {
+    /// grant_type (String, 선택)
+    #[serde(rename = "grant_type")]
+    pub grant_type: String,
+    /// appkey (String, 선택)
+    #[serde(rename = "appkey")]
+    pub appkey: String,
+    /// secretkey (String, 선택)
+    #[serde(rename = "secretkey")]
+    pub secretkey: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -182,24 +215,6 @@ pub struct AuthOauth2ApprovalRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingOrderCashRequest {
-    /// headerMap (String, 선택)
-    #[serde(rename = "headerMap")]
-    pub header_map: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "methodList")]
-    pub method_list: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "contentTypeList")]
-    pub content_type_list: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "pathList")]
-    pub path_list: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "queryMap")]
-    pub query_map: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "formMap")]
-    pub form_map: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -218,22 +233,6 @@ pub struct DomesticStockV1TradingOrderCashRequest {
     /// ORD_UNPR (String, 선택)
     #[serde(rename = "ORD_UNPR")]
     pub ord_unpr: Decimal,
-    /// CTAC_TLNO (String, 선택)
-    #[serde(rename = "CTAC_TLNO")]
-    pub ctac_tlno: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "jsonResponse")]
-    pub json_response: String,
-    /// address (String, 선택)
-    #[serde(rename = "address")]
-    pub address: String,
-}
-
-/// [주식주문(신용)[v1_국내주식-002]] 요청 구조체
-/// [국내주식-002 v1] 주식주문(신용)
-#[derive(Serialize, Deserialize, Debug, Clone, Default)]
-#[allow(non_snake_case)]
-pub struct DomesticStockV1TradingOrderCreditRequest {
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -252,6 +251,22 @@ pub struct DomesticStockV1TradingOrderCreditRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// CTAC_TLNO (String, 선택)
+    #[serde(rename = "CTAC_TLNO")]
+    pub ctac_tlno: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
+}
+
+/// [주식주문(신용)[v1_국내주식-002]] 요청 구조체
+/// [국내주식-002 v1] 주식주문(신용)
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+#[allow(non_snake_case)]
+pub struct DomesticStockV1TradingOrderCreditRequest {
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -276,28 +291,9 @@ pub struct DomesticStockV1TradingOrderCreditRequest {
     /// ORD_UNPR (String, 선택)
     #[serde(rename = "ORD_UNPR")]
     pub ord_unpr: Decimal,
-    /// CTAC_TLNO (String, 선택)
-    #[serde(rename = "CTAC_TLNO")]
-    pub ctac_tlno: String,
     /// RSVN_ORD_YN (String, 선택)
     #[serde(rename = "RSVN_ORD_YN")]
     pub rsvn_ord_yn: String,
-    /// EMGC_ORD_YN (String, 선택)
-    #[serde(rename = "EMGC_ORD_YN")]
-    pub emgc_ord_yn: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "jsonResponse")]
-    pub json_response: String,
-    /// address (String, 선택)
-    #[serde(rename = "address")]
-    pub address: String,
-}
-
-/// [주식주문(정정취소)[v1_국내주식-003]] 요청 구조체
-/// [국내주식-003 v1] 주식주문(정정취소)
-#[derive(Serialize, Deserialize, Debug, Clone, Default)]
-#[allow(non_snake_case)]
-pub struct DomesticStockV1TradingOrderRvsecnclRequest {
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -316,6 +312,25 @@ pub struct DomesticStockV1TradingOrderRvsecnclRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// CTAC_TLNO (String, 선택)
+    #[serde(rename = "CTAC_TLNO")]
+    pub ctac_tlno: String,
+    /// EMGC_ORD_YN (String, 선택)
+    #[serde(rename = "EMGC_ORD_YN")]
+    pub emgc_ord_yn: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
+}
+
+/// [주식주문(정정취소)[v1_국내주식-003]] 요청 구조체
+/// [국내주식-003 v1] 주식주문(정정취소)
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+#[allow(non_snake_case)]
+pub struct DomesticStockV1TradingOrderRvsecnclRequest {
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -328,12 +343,12 @@ pub struct DomesticStockV1TradingOrderRvsecnclRequest {
     /// ORGN_ODNO (String, 선택)
     #[serde(rename = "ORGN_ODNO")]
     pub orgn_odno: String,
-    /// RVSE_CNCL_DVSN_CD (String, 선택)
-    #[serde(rename = "RVSE_CNCL_DVSN_CD")]
-    pub rvse_cncl_dvsn_cd: String,
     /// ORD_DVSN (String, 선택)
     #[serde(rename = "ORD_DVSN")]
     pub ord_dvsn: String,
+    /// RVSE_CNCL_DVSN_CD (String, 선택)
+    #[serde(rename = "RVSE_CNCL_DVSN_CD")]
+    pub rvse_cncl_dvsn_cd: String,
     /// ORD_QTY (String, 선택)
     #[serde(rename = "ORD_QTY")]
     pub ord_qty: Decimal,
@@ -343,6 +358,24 @@ pub struct DomesticStockV1TradingOrderRvsecnclRequest {
     /// QTY_ALL_ORD_YN (String, 선택)
     #[serde(rename = "QTY_ALL_ORD_YN")]
     pub qty_all_ord_yn: String,
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
@@ -359,6 +392,24 @@ pub struct DomesticStockV1TradingOrderRvsecnclRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquirePsblRvsecnclRequest {
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// CTX_AREA_FK100 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK100")]
+    pub ctx_area_fk100: String,
+    /// CTX_AREA_NK100 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK100")]
+    pub ctx_area_nk100: String,
+    /// INQR_DVSN_1 (String, 선택)
+    #[serde(rename = "INQR_DVSN_1")]
+    pub inqr_dvsn_1: String,
+    /// INQR_DVSN_2 (String, 선택)
+    #[serde(rename = "INQR_DVSN_2")]
+    pub inqr_dvsn_2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -393,6 +444,48 @@ pub struct DomesticStockV1TradingInquirePsblRvsecnclRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquireDailyCcldRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// INQR_STRT_DT (String, 선택)
+    #[serde(rename = "INQR_STRT_DT")]
+    pub inqr_strt_dt: String,
+    /// INQR_END_DT (String, 선택)
+    #[serde(rename = "INQR_END_DT")]
+    pub inqr_end_dt: String,
+    /// SLL_BUY_DVSN_CD (String, 선택)
+    #[serde(rename = "SLL_BUY_DVSN_CD")]
+    pub sll_buy_dvsn_cd: String,
+    /// INQR_DVSN (String, 선택)
+    #[serde(rename = "INQR_DVSN")]
+    pub inqr_dvsn: String,
+    /// PDNO (String, 선택)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// CCLD_DVSN (String, 선택)
+    #[serde(rename = "CCLD_DVSN")]
+    pub ccld_dvsn: String,
+    /// ORD_GNO_BRNO (String, 선택)
+    #[serde(rename = "ORD_GNO_BRNO")]
+    pub ord_gno_brno: String,
+    /// ODNO (String, 선택)
+    #[serde(rename = "ODNO")]
+    pub odno: String,
+    /// INQR_DVSN_3 (String, 선택)
+    #[serde(rename = "INQR_DVSN_3")]
+    pub inqr_dvsn_3: String,
+    /// INQR_DVSN_1 (String, 선택)
+    #[serde(rename = "INQR_DVSN_1")]
+    pub inqr_dvsn_1: String,
+    /// CTX_AREA_FK100 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK100")]
+    pub ctx_area_fk100: String,
+    /// CTX_AREA_NK100 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK100")]
+    pub ctx_area_nk100: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -427,6 +520,39 @@ pub struct DomesticStockV1TradingInquireDailyCcldRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquireBalanceRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// AFHR_FLPR_YN (String, 선택)
+    #[serde(rename = "AFHR_FLPR_YN")]
+    pub afhr_flpr_yn: String,
+    /// OFL_YN (String, 선택)
+    #[serde(rename = "OFL_YN")]
+    pub ofl_yn: String,
+    /// INQR_DVSN (String, 선택)
+    #[serde(rename = "INQR_DVSN")]
+    pub inqr_dvsn: String,
+    /// UNPR_DVSN (String, 선택)
+    #[serde(rename = "UNPR_DVSN")]
+    pub unpr_dvsn: String,
+    /// FUND_STTL_ICLD_YN (String, 선택)
+    #[serde(rename = "FUND_STTL_ICLD_YN")]
+    pub fund_sttl_icld_yn: String,
+    /// FNCG_AMT_AUTO_RDPT_YN (String, 선택)
+    #[serde(rename = "FNCG_AMT_AUTO_RDPT_YN")]
+    pub fncg_amt_auto_rdpt_yn: String,
+    /// PRCS_DVSN (String, 선택)
+    #[serde(rename = "PRCS_DVSN")]
+    pub prcs_dvsn: String,
+    /// CTX_AREA_FK100 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK100")]
+    pub ctx_area_fk100: String,
+    /// CTX_AREA_NK100 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK100")]
+    pub ctx_area_nk100: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -461,6 +587,27 @@ pub struct DomesticStockV1TradingInquireBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquirePsblOrderRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// PDNO (String, 선택)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// ORD_UNPR (String, 선택)
+    #[serde(rename = "ORD_UNPR")]
+    pub ord_unpr: Decimal,
+    /// ORD_DVSN (String, 선택)
+    #[serde(rename = "ORD_DVSN")]
+    pub ord_dvsn: String,
+    /// CMA_EVLU_AMT_ICLD_YN (String, 선택)
+    #[serde(rename = "CMA_EVLU_AMT_ICLD_YN")]
+    pub cma_evlu_amt_icld_yn: String,
+    /// OVRS_ICLD_YN (String, 선택)
+    #[serde(rename = "OVRS_ICLD_YN")]
+    pub ovrs_icld_yn: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -529,6 +676,30 @@ pub struct DomesticStockV1TradingInquirePsblSellRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquireCreditPsamountRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// PDNO (String, 선택)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// ORD_UNPR (String, 선택)
+    #[serde(rename = "ORD_UNPR")]
+    pub ord_unpr: Decimal,
+    /// ORD_DVSN (String, 선택)
+    #[serde(rename = "ORD_DVSN")]
+    pub ord_dvsn: String,
+    /// CRDT_TYPE (String, 선택)
+    #[serde(rename = "CRDT_TYPE")]
+    pub crdt_type: String,
+    /// CMA_EVLU_AMT_ICLD_YN (String, 선택)
+    #[serde(rename = "CMA_EVLU_AMT_ICLD_YN")]
+    pub cma_evlu_amt_icld_yn: String,
+    /// OVRS_ICLD_YN (String, 선택)
+    #[serde(rename = "OVRS_ICLD_YN")]
+    pub ovrs_icld_yn: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -563,24 +734,6 @@ pub struct DomesticStockV1TradingInquireCreditPsamountRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingOrderResvRequest {
-    /// headerMap (String, 선택)
-    #[serde(rename = "headerMap")]
-    pub header_map: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "methodList")]
-    pub method_list: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "contentTypeList")]
-    pub content_type_list: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "pathList")]
-    pub path_list: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "queryMap")]
-    pub query_map: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "formMap")]
-    pub form_map: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -611,6 +764,24 @@ pub struct DomesticStockV1TradingOrderResvRequest {
     /// RSVN_ORD_END_DT (String, 선택)
     #[serde(rename = "RSVN_ORD_END_DT")]
     pub rsvn_ord_end_dt: String,
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
@@ -730,6 +901,42 @@ pub struct DomesticStockV1TradingOrderResvRvsecnclRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingOrderResvCcnlRequest {
+    /// RSVN_ORD_ORD_DT (String, 선택)
+    #[serde(rename = "RSVN_ORD_ORD_DT")]
+    pub rsvn_ord_ord_dt: String,
+    /// RSVN_ORD_END_DT (String, 선택)
+    #[serde(rename = "RSVN_ORD_END_DT")]
+    pub rsvn_ord_end_dt: String,
+    /// RSVN_ORD_SEQ (String, 선택)
+    #[serde(rename = "RSVN_ORD_SEQ")]
+    pub rsvn_ord_seq: String,
+    /// TMNL_MDIA_KIND_CD (String, 선택)
+    #[serde(rename = "TMNL_MDIA_KIND_CD")]
+    pub tmnl_mdia_kind_cd: String,
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// PRCS_DVSN_CD (String, 선택)
+    #[serde(rename = "PRCS_DVSN_CD")]
+    pub prcs_dvsn_cd: String,
+    /// CNCL_YN (String, 선택)
+    #[serde(rename = "CNCL_YN")]
+    pub cncl_yn: String,
+    /// PDNO (String, 선택)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// SLL_BUY_DVSN_CD (String, 선택)
+    #[serde(rename = "SLL_BUY_DVSN_CD")]
+    pub sll_buy_dvsn_cd: String,
+    /// CTX_AREA_FK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// CTX_AREA_NK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -776,6 +983,21 @@ pub struct DomesticStockV1TradingOrderResvCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingPensionInquirePresentBalanceRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// USER_DVSN_CD (String, 선택)
+    #[serde(rename = "USER_DVSN_CD")]
+    pub user_dvsn_cd: String,
+    /// CTX_AREA_FK100 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK100")]
+    pub ctx_area_fk100: String,
+    /// CTX_AREA_NK100 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK100")]
+    pub ctx_area_nk100: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -822,6 +1044,30 @@ pub struct DomesticStockV1TradingPensionInquirePresentBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingPensionInquireDailyCcldRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// USER_DVSN_CD (String, 선택)
+    #[serde(rename = "USER_DVSN_CD")]
+    pub user_dvsn_cd: String,
+    /// SLL_BUY_DVSN_CD (String, 선택)
+    #[serde(rename = "SLL_BUY_DVSN_CD")]
+    pub sll_buy_dvsn_cd: String,
+    /// CCLD_NCCS_DVSN (String, 선택)
+    #[serde(rename = "CCLD_NCCS_DVSN")]
+    pub ccld_nccs_dvsn: String,
+    /// INQR_DVSN_3 (String, 선택)
+    #[serde(rename = "INQR_DVSN_3")]
+    pub inqr_dvsn_3: String,
+    /// CTX_AREA_FK100 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK100")]
+    pub ctx_area_fk100: String,
+    /// CTX_AREA_NK100 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK100")]
+    pub ctx_area_nk100: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -856,6 +1102,27 @@ pub struct DomesticStockV1TradingPensionInquireDailyCcldRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingPensionInquirePsblOrderRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// PDNO (String, 선택)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// ORD_UNPR (String, 선택)
+    #[serde(rename = "ORD_UNPR")]
+    pub ord_unpr: Decimal,
+    /// ORD_DVSN (String, 선택)
+    #[serde(rename = "ORD_DVSN")]
+    pub ord_dvsn: String,
+    /// CMA_EVLU_AMT_ICLD_YN (String, 선택)
+    #[serde(rename = "CMA_EVLU_AMT_ICLD_YN")]
+    pub cma_evlu_amt_icld_yn: String,
+    /// ACCA_DVSN_CD (String, 선택)
+    #[serde(rename = "ACCA_DVSN_CD")]
+    pub acca_dvsn_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -890,6 +1157,15 @@ pub struct DomesticStockV1TradingPensionInquirePsblOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingPensionInquireDepositRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// ACCA_DVSN_CD (String, 선택)
+    #[serde(rename = "ACCA_DVSN_CD")]
+    pub acca_dvsn_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -924,6 +1200,24 @@ pub struct DomesticStockV1TradingPensionInquireDepositRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingPensionInquireBalanceRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// ACCA_DVSN_CD (String, 선택)
+    #[serde(rename = "ACCA_DVSN_CD")]
+    pub acca_dvsn_cd: String,
+    /// INQR_DVSN (String, 선택)
+    #[serde(rename = "INQR_DVSN")]
+    pub inqr_dvsn: String,
+    /// CTX_AREA_FK100 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK100")]
+    pub ctx_area_fk100: String,
+    /// CTX_AREA_NK100 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK100")]
+    pub ctx_area_nk100: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -958,6 +1252,42 @@ pub struct DomesticStockV1TradingPensionInquireBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquireBalanceRlzPlRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// AFHR_FLPR_YN (String, 선택)
+    #[serde(rename = "AFHR_FLPR_YN")]
+    pub afhr_flpr_yn: String,
+    /// OFL_YN (String, 선택)
+    #[serde(rename = "OFL_YN")]
+    pub ofl_yn: String,
+    /// INQR_DVSN (String, 선택)
+    #[serde(rename = "INQR_DVSN")]
+    pub inqr_dvsn: String,
+    /// UNPR_DVSN (String, 선택)
+    #[serde(rename = "UNPR_DVSN")]
+    pub unpr_dvsn: String,
+    /// FUND_STTL_ICLD_YN (String, 선택)
+    #[serde(rename = "FUND_STTL_ICLD_YN")]
+    pub fund_sttl_icld_yn: String,
+    /// FNCG_AMT_AUTO_RDPT_YN (String, 선택)
+    #[serde(rename = "FNCG_AMT_AUTO_RDPT_YN")]
+    pub fncg_amt_auto_rdpt_yn: String,
+    /// PRCS_DVSN (String, 선택)
+    #[serde(rename = "PRCS_DVSN")]
+    pub prcs_dvsn: String,
+    /// COST_ICLD_YN (String, 선택)
+    #[serde(rename = "COST_ICLD_YN")]
+    pub cost_icld_yn: String,
+    /// CTX_AREA_FK100 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK100")]
+    pub ctx_area_fk100: String,
+    /// CTX_AREA_NK100 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK100")]
+    pub ctx_area_nk100: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1026,6 +1356,36 @@ pub struct DomesticStockV1TradingInquireAccountBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquirePeriodProfitRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// PDNO (String, 선택)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// INQR_STRT_DT (String, 선택)
+    #[serde(rename = "INQR_STRT_DT")]
+    pub inqr_strt_dt: String,
+    /// INQR_END_DT (String, 선택)
+    #[serde(rename = "INQR_END_DT")]
+    pub inqr_end_dt: String,
+    /// SORT_DVSN (String, 선택)
+    #[serde(rename = "SORT_DVSN")]
+    pub sort_dvsn: String,
+    /// INQR_DVSN (String, 선택)
+    #[serde(rename = "INQR_DVSN")]
+    pub inqr_dvsn: String,
+    /// CBLC_DVSN (String, 선택)
+    #[serde(rename = "CBLC_DVSN")]
+    pub cblc_dvsn: String,
+    /// CTX_AREA_FK100 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK100")]
+    pub ctx_area_fk100: String,
+    /// CTX_AREA_NK100 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK100")]
+    pub ctx_area_nk100: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1162,6 +1522,12 @@ pub struct DomesticStockV1TradingPeriodRightsRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquirePriceRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1196,6 +1562,12 @@ pub struct DomesticStockV1QuotationsInquirePriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquirePrice2Request {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1230,6 +1602,12 @@ pub struct DomesticStockV1QuotationsInquirePrice2Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireCcnlRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1264,6 +1642,18 @@ pub struct DomesticStockV1QuotationsInquireCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireDailyPriceRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_org_adj_prc (String, 선택)
+    #[serde(rename = "fid_org_adj_prc")]
+    pub fid_org_adj_prc: String,
+    /// fid_period_div_code (String, 선택)
+    #[serde(rename = "fid_period_div_code")]
+    pub fid_period_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1298,6 +1688,12 @@ pub struct DomesticStockV1QuotationsInquireDailyPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireAskingPriceExpCcnRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1332,6 +1728,12 @@ pub struct DomesticStockV1QuotationsInquireAskingPriceExpCcnRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireInvestorRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1366,6 +1768,12 @@ pub struct DomesticStockV1QuotationsInquireInvestorRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireMemberRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1434,6 +1842,21 @@ pub struct DomesticStockV1QuotationsInquireDailyItemchartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireTimeItemchartpriceRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_etc_cls_code (String, 선택)
+    #[serde(rename = "fid_etc_cls_code")]
+    pub fid_etc_cls_code: String,
+    /// fid_input_hour_1 (String, 선택)
+    #[serde(rename = "fid_input_hour_1")]
+    pub fid_input_hour_1: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_pw_data_incu_yn (String, 선택)
+    #[serde(rename = "fid_pw_data_incu_yn")]
+    pub fid_pw_data_incu_yn: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1706,6 +2129,12 @@ pub struct DomesticStockV1QuotationsExpClosingPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthEtfetnV1QuotationsInquirePriceRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1774,6 +2203,12 @@ pub struct AuthEtfetnV1QuotationsInquireComponentStockPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthEtfetnV1QuotationsNavComparisonTrendRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1808,6 +2243,18 @@ pub struct AuthEtfetnV1QuotationsNavComparisonTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthEtfetnV1QuotationsNavComparisonDailyTrendRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_input_date_1 (String, 선택)
+    #[serde(rename = "fid_input_date_1")]
+    pub fid_input_date_1: String,
+    /// fid_input_date_2 (String, 선택)
+    #[serde(rename = "fid_input_date_2")]
+    pub fid_input_date_2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1842,6 +2289,15 @@ pub struct AuthEtfetnV1QuotationsNavComparisonDailyTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthEtfetnV1QuotationsNavComparisonTimeTrendRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_hour_cls_code (String, 선택)
+    #[serde(rename = "fid_hour_cls_code")]
+    pub fid_hour_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1876,6 +2332,12 @@ pub struct AuthEtfetnV1QuotationsNavComparisonTimeTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireElwPriceRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2760,6 +3222,21 @@ pub struct DomesticStockV1QuotationsInquireIndexTimepriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireTimeIndexchartpriceRequest {
+    /// FID_COND_MRKT_DIV_CODE (String, 선택)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// FID_INPUT_ISCD (String, 선택)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// FID_INPUT_HOUR_1 (String, 선택)
+    #[serde(rename = "FID_INPUT_HOUR_1")]
+    pub fid_input_hour_1: String,
+    /// FID_PW_DATA_INCU_YN (String, 선택)
+    #[serde(rename = "FID_PW_DATA_INCU_YN")]
+    pub fid_pw_data_incu_yn: String,
+    /// FID_ETC_CLS_CODE (String, 선택)
+    #[serde(rename = "FID_ETC_CLS_CODE")]
+    pub fid_etc_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2828,6 +3305,21 @@ pub struct DomesticStockV1QuotationsInquireDailyIndexchartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireIndexCategoryPriceRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_cond_scr_div_code (String, 선택)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// fid_mrkt_cls_code (String, 선택)
+    #[serde(rename = "fid_mrkt_cls_code")]
+    pub fid_mrkt_cls_code: String,
+    /// fid_blng_cls_code (String, 선택)
+    #[serde(rename = "fid_blng_cls_code")]
+    pub fid_blng_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2896,6 +3388,21 @@ pub struct DomesticStockV1QuotationsExpIndexTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsExpTotalIndexRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_cond_scr_div_code (String, 선택)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_mkop_cls_code (String, 선택)
+    #[serde(rename = "fid_mkop_cls_code")]
+    pub fid_mkop_cls_code: String,
+    /// fid_mrkt_cls_code (String, 선택)
+    #[serde(rename = "fid_mrkt_cls_code")]
+    pub fid_mrkt_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2930,6 +3437,30 @@ pub struct DomesticStockV1QuotationsExpTotalIndexRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireViStatusRequest {
+    /// fid_cond_scr_div_code (String, 선택)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// fid_mrkt_cls_code (String, 선택)
+    #[serde(rename = "fid_mrkt_cls_code")]
+    pub fid_mrkt_cls_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_rank_sort_cls_code (String, 선택)
+    #[serde(rename = "fid_rank_sort_cls_code")]
+    pub fid_rank_sort_cls_code: String,
+    /// fid_input_date_1 (String, 선택)
+    #[serde(rename = "fid_input_date_1")]
+    pub fid_input_date_1: String,
+    /// fid_trgt_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
+    /// fid_trgt_exls_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// fid_div_cls_code (String, 선택)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3032,6 +3563,15 @@ pub struct DomesticStockV1QuotationsNewsTitleRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsChkHolidayRequest {
+    /// BASS_DT (String, 선택)
+    #[serde(rename = "BASS_DT")]
+    pub bass_dt: String,
+    /// CTX_AREA_NK (String, 선택)
+    #[serde(rename = "CTX_AREA_NK")]
+    pub ctx_area_nk: String,
+    /// CTX_AREA_FK (String, 선택)
+    #[serde(rename = "CTX_AREA_FK")]
+    pub ctx_area_fk: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3100,6 +3640,12 @@ pub struct DomesticStockV1QuotationsMarketTimeRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsSearchInfoRequest {
+    /// PDNO (String, 선택)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// PRDT_TYPE_CD (String, 선택)
+    #[serde(rename = "PRDT_TYPE_CD")]
+    pub prdt_type_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3134,6 +3680,12 @@ pub struct DomesticStockV1QuotationsSearchInfoRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsSearchStockInfoRequest {
+    /// PDNO (String, 선택)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// PRDT_TYPE_CD (String, 선택)
+    #[serde(rename = "PRDT_TYPE_CD")]
+    pub prdt_type_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3168,6 +3720,15 @@ pub struct DomesticStockV1QuotationsSearchStockInfoRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceBalanceSheetRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_div_cls_code (String, 선택)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3202,6 +3763,15 @@ pub struct DomesticStockV1FinanceBalanceSheetRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceIncomeStatementRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_div_cls_code (String, 선택)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3236,6 +3806,15 @@ pub struct DomesticStockV1FinanceIncomeStatementRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceFinancialRatioRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_div_cls_code (String, 선택)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3270,6 +3849,15 @@ pub struct DomesticStockV1FinanceFinancialRatioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceProfitRatioRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_div_cls_code (String, 선택)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3304,6 +3892,15 @@ pub struct DomesticStockV1FinanceProfitRatioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceOtherMajorRatiosRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_div_cls_code (String, 선택)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3338,6 +3935,15 @@ pub struct DomesticStockV1FinanceOtherMajorRatiosRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceStabilityRatioRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_div_cls_code (String, 선택)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3372,6 +3978,15 @@ pub struct DomesticStockV1FinanceStabilityRatioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceGrowthRatioRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_div_cls_code (String, 선택)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3406,6 +4021,21 @@ pub struct DomesticStockV1FinanceGrowthRatioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsCreditByCompanyRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_cond_scr_div_code (String, 선택)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_slct_yn (String, 선택)
+    #[serde(rename = "fid_slct_yn")]
+    pub fid_slct_yn: String,
+    /// fid_rank_sort_cls_code (String, 선택)
+    #[serde(rename = "fid_rank_sort_cls_code")]
+    pub fid_rank_sort_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3984,6 +4614,9 @@ pub struct DomesticStockV1QuotationsInvestOpbysecRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsPsearchTitleRequest {
+    /// user_id (String, 선택)
+    #[serde(rename = "user_id")]
+    pub user_id: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4018,6 +4651,12 @@ pub struct DomesticStockV1QuotationsPsearchTitleRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsPsearchResultRequest {
+    /// user_id (String, 선택)
+    #[serde(rename = "user_id")]
+    pub user_id: String,
+    /// seq (String, 선택)
+    #[serde(rename = "seq")]
+    pub seq: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4256,6 +4895,12 @@ pub struct DomesticStockV1QuotationsInvestorTradeByStockDailyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireInvestorTimeByMarketRequest {
+    /// FID_INPUT_ISCD (String, 선택)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// FID_INPUT_ISCD_2 (String, 선택)
+    #[serde(rename = "FID_INPUT_ISCD_2")]
+    pub fid_input_iscd_2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4494,6 +5139,9 @@ pub struct DomesticStockV1QuotationsProgramTradeByStockDailyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInvestorTrendEstimateRequest {
+    /// MKSC_SHRN_ISCD (String, 선택)
+    #[serde(rename = "MKSC_SHRN_ISCD")]
+    pub mksc_shrn_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4528,6 +5176,21 @@ pub struct DomesticStockV1QuotationsInvestorTrendEstimateRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireDailyTradeVolumeRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_input_date_1 (String, 선택)
+    #[serde(rename = "fid_input_date_1")]
+    pub fid_input_date_1: String,
+    /// fid_input_date_2 (String, 선택)
+    #[serde(rename = "fid_input_date_2")]
+    pub fid_input_date_2: String,
+    /// fid_period_div_code (String, 선택)
+    #[serde(rename = "fid_period_div_code")]
+    pub fid_period_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4664,6 +5327,18 @@ pub struct DomesticStockV1QuotationsInvestorProgramTradeTodayRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsDailyCreditBalanceRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_cond_scr_div_code (String, 선택)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_input_date_1 (String, 선택)
+    #[serde(rename = "fid_input_date_1")]
+    pub fid_input_date_1: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4698,6 +5373,15 @@ pub struct DomesticStockV1QuotationsDailyCreditBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsExpPriceTrendRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_mkop_cls_code (String, 선택)
+    #[serde(rename = "fid_mkop_cls_code")]
+    pub fid_mkop_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4970,6 +5654,39 @@ pub struct DomesticStockV1QuotationsPbarTratioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsVolumeRankRequest {
+    /// FID_COND_MRKT_DIV_CODE (String, 선택)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// FID_COND_SCR_DIV_CODE (String, 선택)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// FID_INPUT_ISCD (String, 선택)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// FID_DIV_CLS_CODE (String, 선택)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
+    pub fid_div_cls_code: String,
+    /// FID_BLNG_CLS_CODE (String, 선택)
+    #[serde(rename = "FID_BLNG_CLS_CODE")]
+    pub fid_blng_cls_code: String,
+    /// FID_TRGT_CLS_CODE (String, 선택)
+    #[serde(rename = "FID_TRGT_CLS_CODE")]
+    pub fid_trgt_cls_code: String,
+    /// FID_TRGT_EXLS_CLS_CODE (String, 선택)
+    #[serde(rename = "FID_TRGT_EXLS_CLS_CODE")]
+    pub fid_trgt_exls_cls_code: String,
+    /// FID_INPUT_PRICE_1 (String, 선택)
+    #[serde(rename = "FID_INPUT_PRICE_1")]
+    pub fid_input_price_1: String,
+    /// FID_INPUT_PRICE_2 (String, 선택)
+    #[serde(rename = "FID_INPUT_PRICE_2")]
+    pub fid_input_price_2: String,
+    /// FID_VOL_CNT (String, 선택)
+    #[serde(rename = "FID_VOL_CNT")]
+    pub fid_vol_cnt: i64,
+    /// FID_INPUT_DATE_1 (String, 선택)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5004,6 +5721,48 @@ pub struct DomesticStockV1QuotationsVolumeRankRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingFluctuationRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_cond_scr_div_code (String, 선택)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_rank_sort_cls_code (String, 선택)
+    #[serde(rename = "fid_rank_sort_cls_code")]
+    pub fid_rank_sort_cls_code: String,
+    /// fid_input_cnt_1 (String, 선택)
+    #[serde(rename = "fid_input_cnt_1")]
+    pub fid_input_cnt_1: String,
+    /// fid_prc_cls_code (String, 선택)
+    #[serde(rename = "fid_prc_cls_code")]
+    pub fid_prc_cls_code: String,
+    /// fid_input_price_1 (String, 선택)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// fid_input_price_2 (String, 선택)
+    #[serde(rename = "fid_input_price_2")]
+    pub fid_input_price_2: String,
+    /// fid_vol_cnt (String, 선택)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
+    /// fid_trgt_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
+    /// fid_trgt_exls_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// fid_div_cls_code (String, 선택)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// fid_rsfl_rate1 (String, 선택)
+    #[serde(rename = "fid_rsfl_rate1")]
+    pub fid_rsfl_rate1: String,
+    /// fid_rsfl_rate2 (String, 선택)
+    #[serde(rename = "fid_rsfl_rate2")]
+    pub fid_rsfl_rate2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5038,6 +5797,36 @@ pub struct DomesticStockV1RankingFluctuationRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingQuoteBalanceRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_cond_scr_div_code (String, 선택)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_rank_sort_cls_code (String, 선택)
+    #[serde(rename = "fid_rank_sort_cls_code")]
+    pub fid_rank_sort_cls_code: String,
+    /// fid_div_cls_code (String, 선택)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// fid_trgt_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
+    /// fid_trgt_exls_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// fid_input_price_1 (String, 선택)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// fid_input_price_2 (String, 선택)
+    #[serde(rename = "fid_input_price_2")]
+    pub fid_input_price_2: String,
+    /// fid_vol_cnt (String, 선택)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5140,6 +5929,45 @@ pub struct DomesticStockV1RankingMarketCapRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingFinanceRatioRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_cond_scr_div_code (String, 선택)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_div_cls_code (String, 선택)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// fid_input_price_1 (String, 선택)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// fid_input_price_2 (String, 선택)
+    #[serde(rename = "fid_input_price_2")]
+    pub fid_input_price_2: String,
+    /// fid_vol_cnt (String, 선택)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
+    /// fid_input_option_1 (String, 선택)
+    #[serde(rename = "fid_input_option_1")]
+    pub fid_input_option_1: String,
+    /// fid_input_option_2 (String, 선택)
+    #[serde(rename = "fid_input_option_2")]
+    pub fid_input_option_2: String,
+    /// fid_rank_sort_cls_code (String, 선택)
+    #[serde(rename = "fid_rank_sort_cls_code")]
+    pub fid_rank_sort_cls_code: String,
+    /// fid_blng_cls_code (String, 선택)
+    #[serde(rename = "fid_blng_cls_code")]
+    pub fid_blng_cls_code: String,
+    /// fid_trgt_exls_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// fid_trgt_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5242,6 +6070,39 @@ pub struct DomesticStockV1RankingPreferDisparateRatioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingDisparityRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_cond_scr_div_code (String, 선택)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// fid_div_cls_code (String, 선택)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// fid_rank_sort_cls_code (String, 선택)
+    #[serde(rename = "fid_rank_sort_cls_code")]
+    pub fid_rank_sort_cls_code: String,
+    /// fid_hour_cls_code (String, 선택)
+    #[serde(rename = "fid_hour_cls_code")]
+    pub fid_hour_cls_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_trgt_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
+    /// fid_trgt_exls_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// fid_input_price_1 (String, 선택)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// fid_input_price_2 (String, 선택)
+    #[serde(rename = "fid_input_price_2")]
+    pub fid_input_price_2: String,
+    /// fid_vol_cnt (String, 선택)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5276,6 +6137,45 @@ pub struct DomesticStockV1RankingDisparityRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingMarketValueRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_cond_scr_div_code (String, 선택)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_div_cls_code (String, 선택)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// fid_input_price_1 (String, 선택)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// fid_input_price_2 (String, 선택)
+    #[serde(rename = "fid_input_price_2")]
+    pub fid_input_price_2: String,
+    /// fid_vol_cnt (String, 선택)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
+    /// fid_input_option_1 (String, 선택)
+    #[serde(rename = "fid_input_option_1")]
+    pub fid_input_option_1: String,
+    /// fid_input_option_2 (String, 선택)
+    #[serde(rename = "fid_input_option_2")]
+    pub fid_input_option_2: String,
+    /// fid_rank_sort_cls_code (String, 선택)
+    #[serde(rename = "fid_rank_sort_cls_code")]
+    pub fid_rank_sort_cls_code: String,
+    /// fid_blng_cls_code (String, 선택)
+    #[serde(rename = "fid_blng_cls_code")]
+    pub fid_blng_cls_code: String,
+    /// fid_trgt_exls_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// fid_trgt_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5310,6 +6210,33 @@ pub struct DomesticStockV1RankingMarketValueRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingVolumePowerRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_cond_scr_div_code (String, 선택)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_div_cls_code (String, 선택)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// fid_input_price_1 (String, 선택)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// fid_input_price_2 (String, 선택)
+    #[serde(rename = "fid_input_price_2")]
+    pub fid_input_price_2: String,
+    /// fid_vol_cnt (String, 선택)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
+    /// fid_trgt_exls_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// fid_trgt_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5344,6 +6271,39 @@ pub struct DomesticStockV1RankingVolumePowerRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingTopInterestStockRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_cond_scr_div_code (String, 선택)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_trgt_exls_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// fid_trgt_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
+    /// fid_input_price_1 (String, 선택)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// fid_input_price_2 (String, 선택)
+    #[serde(rename = "fid_input_price_2")]
+    pub fid_input_price_2: String,
+    /// fid_vol_cnt (String, 선택)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
+    /// fid_div_cls_code (String, 선택)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// fid_input_iscd_2 (String, 선택)
+    #[serde(rename = "fid_input_iscd_2")]
+    pub fid_input_iscd_2: String,
+    /// fid_input_cnt_1 (String, 선택)
+    #[serde(rename = "fid_input_cnt_1")]
+    pub fid_input_cnt_1: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5378,6 +6338,36 @@ pub struct DomesticStockV1RankingTopInterestStockRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingExpTransUpdownRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_cond_scr_div_code (String, 선택)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_div_cls_code (String, 선택)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// fid_aply_rang_prc_1 (String, 선택)
+    #[serde(rename = "fid_aply_rang_prc_1")]
+    pub fid_aply_rang_prc_1: String,
+    /// fid_vol_cnt (String, 선택)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
+    /// fid_pbmn (String, 선택)
+    #[serde(rename = "fid_pbmn")]
+    pub fid_pbmn: String,
+    /// fid_blng_cls_code (String, 선택)
+    #[serde(rename = "fid_blng_cls_code")]
+    pub fid_blng_cls_code: String,
+    /// fid_mkop_cls_code (String, 선택)
+    #[serde(rename = "fid_mkop_cls_code")]
+    pub fid_mkop_cls_code: String,
+    /// fid_rank_sort_cls_code (String, 선택)
+    #[serde(rename = "fid_rank_sort_cls_code")]
+    pub fid_rank_sort_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5412,6 +6402,42 @@ pub struct DomesticStockV1RankingExpTransUpdownRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingTradedByCompanyRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_cond_scr_div_code (String, 선택)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// fid_div_cls_code (String, 선택)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// fid_rank_sort_cls_code (String, 선택)
+    #[serde(rename = "fid_rank_sort_cls_code")]
+    pub fid_rank_sort_cls_code: String,
+    /// fid_input_date_1 (String, 선택)
+    #[serde(rename = "fid_input_date_1")]
+    pub fid_input_date_1: String,
+    /// fid_input_date_2 (String, 선택)
+    #[serde(rename = "fid_input_date_2")]
+    pub fid_input_date_2: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_trgt_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
+    /// fid_trgt_exls_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// fid_aply_rang_prc_1 (String, 선택)
+    #[serde(rename = "fid_aply_rang_prc_1")]
+    pub fid_aply_rang_prc_1: String,
+    /// fid_aply_rang_prc_2 (String, 선택)
+    #[serde(rename = "fid_aply_rang_prc_2")]
+    pub fid_aply_rang_prc_2: String,
+    /// fid_aply_rang_vol (String, 선택)
+    #[serde(rename = "fid_aply_rang_vol")]
+    pub fid_aply_rang_vol: Decimal,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5446,6 +6472,42 @@ pub struct DomesticStockV1RankingTradedByCompanyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingNearNewHighlowRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_cond_scr_div_code (String, 선택)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// fid_div_cls_code (String, 선택)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// fid_input_cnt_1 (String, 선택)
+    #[serde(rename = "fid_input_cnt_1")]
+    pub fid_input_cnt_1: String,
+    /// fid_input_cnt_2 (String, 선택)
+    #[serde(rename = "fid_input_cnt_2")]
+    pub fid_input_cnt_2: String,
+    /// fid_prc_cls_code (String, 선택)
+    #[serde(rename = "fid_prc_cls_code")]
+    pub fid_prc_cls_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// fid_trgt_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
+    /// fid_trgt_exls_cls_code (String, 선택)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// fid_aply_rang_prc_1 (String, 선택)
+    #[serde(rename = "fid_aply_rang_prc_1")]
+    pub fid_aply_rang_prc_1: String,
+    /// fid_aply_rang_prc_2 (String, 선택)
+    #[serde(rename = "fid_aply_rang_prc_2")]
+    pub fid_aply_rang_prc_2: String,
+    /// fid_aply_rang_vol (String, 선택)
+    #[serde(rename = "fid_aply_rang_vol")]
+    pub fid_aply_rang_vol: Decimal,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5514,6 +6576,18 @@ pub struct DomesticStockV1RankingDividendRateRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingBulkTransNumRequest {
+    /// output (String, 선택)
+    #[serde(rename = "output")]
+    pub output: String,
+    /// rt_cd (String, 선택)
+    #[serde(rename = "rt_cd")]
+    pub rt_cd: String,
+    /// msg_cd (String, 선택)
+    #[serde(rename = "msg_cd")]
+    pub msg_cd: String,
+    /// msg1 (String, 선택)
+    #[serde(rename = "msg1")]
+    pub msg1: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5718,6 +6792,12 @@ pub struct DomesticStockV1RankingHtsTopViewRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STCNT0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5764,6 +6844,12 @@ pub struct AuthTryitoutH0STCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STASP0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5795,6 +6881,12 @@ pub struct AuthTryitoutH0STASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STCNI0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5826,6 +6918,12 @@ pub struct AuthTryitoutH0STCNI0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STANC0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5855,11 +6953,30 @@ pub struct AuthTryitoutH0STANC0Request {
     pub address: String,
 }
 
+/// [국내주식 실시간회원사 (KRX) [실시간-047]] 요청 구조체
+
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+#[allow(non_snake_case)]
+pub struct AuthTryitoutH0STMBC0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
+}
+
 /// [국내주식 실시간프로그램매매 (KRX) [실시간-048]] 요청 구조체
 
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STPGM0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5894,6 +7011,12 @@ pub struct AuthTryitoutH0STPGM0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STMKO0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5928,6 +7051,12 @@ pub struct AuthTryitoutH0STMKO0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STOAA0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5962,6 +7091,12 @@ pub struct AuthTryitoutH0STOAA0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STOUP0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5996,6 +7131,12 @@ pub struct AuthTryitoutH0STOUP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STOAC0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6030,6 +7171,12 @@ pub struct AuthTryitoutH0STOAC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UPCNT0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6064,6 +7211,12 @@ pub struct AuthTryitoutH0UPCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UPANC0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6098,6 +7251,12 @@ pub struct AuthTryitoutH0UPANC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UPPGM0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6132,6 +7291,12 @@ pub struct AuthTryitoutH0UPPGM0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EWASP0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6166,6 +7331,12 @@ pub struct AuthTryitoutH0EWASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EWCNT0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6200,6 +7371,12 @@ pub struct AuthTryitoutH0EWCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EWANC0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6234,6 +7411,12 @@ pub struct AuthTryitoutH0EWANC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STNAV0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6676,24 +7859,6 @@ pub struct AuthTryitoutH0NXMKO0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingOrderRequest {
-    /// headerMap (String, 선택)
-    #[serde(rename = "headerMap")]
-    pub header_map: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "methodList")]
-    pub method_list: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "contentTypeList")]
-    pub content_type_list: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "pathList")]
-    pub path_list: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "queryMap")]
-    pub query_map: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "formMap")]
-    pub form_map: String,
     /// ORD_PRCS_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_PRCS_DVSN_CD")]
     pub ord_prcs_dvsn_cd: String,
@@ -6730,19 +7895,6 @@ pub struct DomesticFutureoptionV1TradingOrderRequest {
     /// ORD_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_DVSN_CD")]
     pub ord_dvsn_cd: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "jsonResponse")]
-    pub json_response: String,
-    /// address (String, 선택)
-    #[serde(rename = "address")]
-    pub address: String,
-}
-
-/// [선물옵션 정정취소주문[v1_국내선물-002]] 요청 구조체
-/// [국내선물-002 v1] 선물옵션정정취소주문
-#[derive(Serialize, Deserialize, Debug, Clone, Default)]
-#[allow(non_snake_case)]
-pub struct DomesticFutureoptionV1TradingOrderRvsecnclRequest {
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6761,6 +7913,19 @@ pub struct DomesticFutureoptionV1TradingOrderRvsecnclRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
+}
+
+/// [선물옵션 정정취소주문[v1_국내선물-002]] 요청 구조체
+/// [국내선물-002 v1] 선물옵션정정취소주문
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+#[allow(non_snake_case)]
+pub struct DomesticFutureoptionV1TradingOrderRvsecnclRequest {
     /// ORD_PRCS_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_PRCS_DVSN_CD")]
     pub ord_prcs_dvsn_cd: String,
@@ -6800,6 +7965,24 @@ pub struct DomesticFutureoptionV1TradingOrderRvsecnclRequest {
     /// ORD_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_DVSN_CD")]
     pub ord_dvsn_cd: String,
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// jsonResponse (String, 선택)
     #[serde(rename = "jsonResponse")]
     pub json_response: String,
@@ -6813,6 +7996,42 @@ pub struct DomesticFutureoptionV1TradingOrderRvsecnclRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireCcnlRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// STRT_ORD_DT (String, 선택)
+    #[serde(rename = "STRT_ORD_DT")]
+    pub strt_ord_dt: String,
+    /// END_ORD_DT (String, 선택)
+    #[serde(rename = "END_ORD_DT")]
+    pub end_ord_dt: String,
+    /// SLL_BUY_DVSN_CD (String, 선택)
+    #[serde(rename = "SLL_BUY_DVSN_CD")]
+    pub sll_buy_dvsn_cd: String,
+    /// CCLD_NCCS_DVSN (String, 선택)
+    #[serde(rename = "CCLD_NCCS_DVSN")]
+    pub ccld_nccs_dvsn: String,
+    /// SORT_SQN (String, 선택)
+    #[serde(rename = "SORT_SQN")]
+    pub sort_sqn: String,
+    /// STRT_ODNO (String, 선택)
+    #[serde(rename = "STRT_ODNO")]
+    pub strt_odno: String,
+    /// PDNO (String, 선택)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// MKET_ID_CD (String, 선택)
+    #[serde(rename = "MKET_ID_CD")]
+    pub mket_id_cd: String,
+    /// CTX_AREA_FK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// CTX_AREA_NK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6847,6 +8066,24 @@ pub struct DomesticFutureoptionV1TradingInquireCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireBalanceRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// MGNA_DVSN (String, 선택)
+    #[serde(rename = "MGNA_DVSN")]
+    pub mgna_dvsn: String,
+    /// EXCC_STAT_CD (String, 선택)
+    #[serde(rename = "EXCC_STAT_CD")]
+    pub excc_stat_cd: String,
+    /// CTX_AREA_FK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// CTX_AREA_NK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6881,6 +8118,24 @@ pub struct DomesticFutureoptionV1TradingInquireBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquirePsblOrderRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// PDNO (String, 선택)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// SLL_BUY_DVSN_CD (String, 선택)
+    #[serde(rename = "SLL_BUY_DVSN_CD")]
+    pub sll_buy_dvsn_cd: String,
+    /// UNIT_PRICE (String, 선택)
+    #[serde(rename = "UNIT_PRICE")]
+    pub unit_price: String,
+    /// ORD_DVSN_CD (String, 선택)
+    #[serde(rename = "ORD_DVSN_CD")]
+    pub ord_dvsn_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6915,6 +8170,48 @@ pub struct DomesticFutureoptionV1TradingInquirePsblOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireNgtCcnlRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// STRT_ORD_DT (String, 선택)
+    #[serde(rename = "STRT_ORD_DT")]
+    pub strt_ord_dt: String,
+    /// END_ORD_DT (String, 선택)
+    #[serde(rename = "END_ORD_DT")]
+    pub end_ord_dt: String,
+    /// SLL_BUY_DVSN_CD (String, 선택)
+    #[serde(rename = "SLL_BUY_DVSN_CD")]
+    pub sll_buy_dvsn_cd: String,
+    /// CCLD_NCCS_DVSN (String, 선택)
+    #[serde(rename = "CCLD_NCCS_DVSN")]
+    pub ccld_nccs_dvsn: String,
+    /// SORT_SQN (String, 선택)
+    #[serde(rename = "SORT_SQN")]
+    pub sort_sqn: String,
+    /// STRT_ODNO (String, 선택)
+    #[serde(rename = "STRT_ODNO")]
+    pub strt_odno: String,
+    /// PDNO (String, 선택)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// MKET_ID_CD (String, 선택)
+    #[serde(rename = "MKET_ID_CD")]
+    pub mket_id_cd: String,
+    /// FUOP_DVSN_CD (String, 선택)
+    #[serde(rename = "FUOP_DVSN_CD")]
+    pub fuop_dvsn_cd: String,
+    /// SCRN_DVSN (String, 선택)
+    #[serde(rename = "SCRN_DVSN")]
+    pub scrn_dvsn: String,
+    /// CTX_AREA_FK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// CTX_AREA_NK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6949,6 +8246,27 @@ pub struct DomesticFutureoptionV1TradingInquireNgtCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireNgtBalanceRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// ACNT_PWD (String, 선택)
+    #[serde(rename = "ACNT_PWD")]
+    pub acnt_pwd: String,
+    /// MGNA_DVSN (String, 선택)
+    #[serde(rename = "MGNA_DVSN")]
+    pub mgna_dvsn: String,
+    /// EXCC_STAT_CD (String, 선택)
+    #[serde(rename = "EXCC_STAT_CD")]
+    pub excc_stat_cd: String,
+    /// CTX_AREA_FK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// CTX_AREA_NK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6983,6 +8301,27 @@ pub struct DomesticFutureoptionV1TradingInquireNgtBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquirePsblNgtOrderRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// PDNO (String, 선택)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// PRDT_TYPE_CD (String, 선택)
+    #[serde(rename = "PRDT_TYPE_CD")]
+    pub prdt_type_cd: String,
+    /// SLL_BUY_DVSN_CD (String, 선택)
+    #[serde(rename = "SLL_BUY_DVSN_CD")]
+    pub sll_buy_dvsn_cd: String,
+    /// UNIT_PRICE (String, 선택)
+    #[serde(rename = "UNIT_PRICE")]
+    pub unit_price: String,
+    /// ORD_DVSN_CD (String, 선택)
+    #[serde(rename = "ORD_DVSN_CD")]
+    pub ord_dvsn_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7051,6 +8390,21 @@ pub struct DomesticFutureoptionV1TradingNgtMarginDetailRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireBalanceSettlementPlRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// INQR_DT (String, 선택)
+    #[serde(rename = "INQR_DT")]
+    pub inqr_dt: String,
+    /// CTX_AREA_FK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// CTX_AREA_NK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7119,6 +8473,24 @@ pub struct DomesticFutureoptionV1TradingInquireDepositRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireBalanceValuationPlRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// MGNA_DVSN (String, 선택)
+    #[serde(rename = "MGNA_DVSN")]
+    pub mgna_dvsn: String,
+    /// EXCC_STAT_CD (String, 선택)
+    #[serde(rename = "EXCC_STAT_CD")]
+    pub excc_stat_cd: String,
+    /// CTX_AREA_FK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// CTX_AREA_NK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7187,6 +8559,24 @@ pub struct DomesticFutureoptionV1TradingInquireCcnlBstimeRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireDailyAmountFeeRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// INQR_STRT_DAY (String, 선택)
+    #[serde(rename = "INQR_STRT_DAY")]
+    pub inqr_strt_day: String,
+    /// INQR_END_DAY (String, 선택)
+    #[serde(rename = "INQR_END_DAY")]
+    pub inqr_end_day: String,
+    /// CTX_AREA_FK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// CTX_AREA_NK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7267,6 +8657,12 @@ pub struct DomesticFutureoptionV1QuotationsMarginRateRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsInquirePriceRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7301,6 +8697,12 @@ pub struct DomesticFutureoptionV1QuotationsInquirePriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsInquireAskingPriceRequest {
+    /// fid_cond_mrkt_div_code (String, 선택)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// fid_input_iscd (String, 선택)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7721,6 +9123,12 @@ pub struct AuthTryitoutH0IOCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0IFCNI0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7823,6 +9231,12 @@ pub struct AuthTryitoutH0CFCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0ZFASP0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7857,6 +9271,12 @@ pub struct AuthTryitoutH0ZFASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0ZFCNT0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7925,6 +9345,12 @@ pub struct AuthTryitoutH0ZFANC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0ZOASP0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7959,6 +9385,12 @@ pub struct AuthTryitoutH0ZOASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0ZOCNT0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8027,6 +9459,12 @@ pub struct AuthTryitoutH0ZOANC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EUASP0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8061,6 +9499,12 @@ pub struct AuthTryitoutH0EUASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EUCNT0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8095,6 +9539,12 @@ pub struct AuthTryitoutH0EUCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EUANC0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8129,6 +9579,12 @@ pub struct AuthTryitoutH0EUANC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EUCNI0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8163,6 +9619,12 @@ pub struct AuthTryitoutH0EUCNI0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0MFASP0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8197,6 +9659,12 @@ pub struct AuthTryitoutH0MFASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0MFCNT0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8265,24 +9733,6 @@ pub struct AuthTryitoutH0MFCNI0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingOrderRequest {
-    /// headerMap (String, 선택)
-    #[serde(rename = "headerMap")]
-    pub header_map: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "methodList")]
-    pub method_list: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "contentTypeList")]
-    pub content_type_list: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "pathList")]
-    pub path_list: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "queryMap")]
-    pub query_map: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "formMap")]
-    pub form_map: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -8310,6 +9760,27 @@ pub struct OverseasStockV1TradingOrderRequest {
     /// ORD_SVR_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_SVR_DVSN_CD")]
     pub ord_svr_dvsn_cd: String,
+    /// ORD_DVSN (String, 선택)
+    #[serde(rename = "ORD_DVSN")]
+    pub ord_dvsn: String,
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// rt_cd (String, 선택)
     #[serde(rename = "rt_cd")]
     pub rt_cd: String,
@@ -8332,24 +9803,6 @@ pub struct OverseasStockV1TradingOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingOrderRvsecnclRequest {
-    /// headerMap (String, 선택)
-    #[serde(rename = "headerMap")]
-    pub header_map: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "methodList")]
-    pub method_list: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "contentTypeList")]
-    pub content_type_list: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "pathList")]
-    pub path_list: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "queryMap")]
-    pub query_map: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "formMap")]
-    pub form_map: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -8383,19 +9836,6 @@ pub struct OverseasStockV1TradingOrderRvsecnclRequest {
     /// ORD_SVR_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_SVR_DVSN_CD")]
     pub ord_svr_dvsn_cd: String,
-    /// jsonResponse (String, 선택)
-    #[serde(rename = "jsonResponse")]
-    pub json_response: String,
-    /// address (String, 선택)
-    #[serde(rename = "address")]
-    pub address: String,
-}
-
-/// [해외주식 예약주문접수[v1_해외주식-002]] 요청 구조체
-/// [해외주식-002 v1] 해외주식 예약주문접수
-#[derive(Serialize, Deserialize, Debug, Clone, Default)]
-#[allow(non_snake_case)]
-pub struct OverseasStockV1TradingOrderResvRequest {
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8414,6 +9854,19 @@ pub struct OverseasStockV1TradingOrderResvRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
+    /// address (String, 선택)
+    #[serde(rename = "address")]
+    pub address: String,
+}
+
+/// [해외주식 예약주문접수[v1_해외주식-002]] 요청 구조체
+/// [해외주식-002 v1] 해외주식 예약주문접수
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+#[allow(non_snake_case)]
+pub struct OverseasStockV1TradingOrderResvRequest {
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -8432,6 +9885,24 @@ pub struct OverseasStockV1TradingOrderResvRequest {
     /// FT_ORD_UNPR3 (String, 선택)
     #[serde(rename = "FT_ORD_UNPR3")]
     pub ft_ord_unpr3: Decimal,
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
@@ -8454,6 +9925,18 @@ pub struct OverseasStockV1TradingOrderResvRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingOrderResvCcnlRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// RSVN_ORD_RCIT_DT (String, 선택)
+    #[serde(rename = "RSVN_ORD_RCIT_DT")]
+    pub rsvn_ord_rcit_dt: String,
+    /// OVRS_RSVN_ODNO (String, 선택)
+    #[serde(rename = "OVRS_RSVN_ODNO")]
+    pub ovrs_rsvn_odno: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8472,18 +9955,6 @@ pub struct OverseasStockV1TradingOrderResvCcnlRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
-    /// CANO (String, 선택)
-    #[serde(rename = "CANO")]
-    pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
-    #[serde(rename = "ACNT_PRDT_CD")]
-    pub acnt_prdt_cd: String,
-    /// RSVN_ORD_RCIT_DT (String, 선택)
-    #[serde(rename = "RSVN_ORD_RCIT_DT")]
-    pub rsvn_ord_rcit_dt: String,
-    /// OVRS_RSVN_ODNO (String, 선택)
-    #[serde(rename = "OVRS_RSVN_ODNO")]
-    pub ovrs_rsvn_odno: String,
     /// jsonResponse (String, 선택)
     #[serde(rename = "jsonResponse")]
     pub json_response: String,
@@ -8558,6 +10029,24 @@ pub struct OverseasStockV1TradingInquirePsamountRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquireNccsRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// OVRS_EXCG_CD (String, 선택)
+    #[serde(rename = "OVRS_EXCG_CD")]
+    pub ovrs_excg_cd: String,
+    /// SORT_SQN (String, 선택)
+    #[serde(rename = "SORT_SQN")]
+    pub sort_sqn: String,
+    /// CTX_AREA_FK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// CTX_AREA_NK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8592,6 +10081,24 @@ pub struct OverseasStockV1TradingInquireNccsRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquireBalanceRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// OVRS_EXCG_CD (String, 선택)
+    #[serde(rename = "OVRS_EXCG_CD")]
+    pub ovrs_excg_cd: String,
+    /// TR_CRCY_CD (String, 선택)
+    #[serde(rename = "TR_CRCY_CD")]
+    pub tr_crcy_cd: String,
+    /// CTX_AREA_FK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// CTX_AREA_NK200 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8660,6 +10167,24 @@ pub struct OverseasStockV1TradingInquireCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquirePresentBalanceRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// WCRC_FRCR_DVSN_CD (String, 선택)
+    #[serde(rename = "WCRC_FRCR_DVSN_CD")]
+    pub wcrc_frcr_dvsn_cd: String,
+    /// TR_MKET_CD (String, 선택)
+    #[serde(rename = "TR_MKET_CD")]
+    pub tr_mket_cd: String,
+    /// NATN_CD (String, 선택)
+    #[serde(rename = "NATN_CD")]
+    pub natn_cd: String,
+    /// INQR_DVSN_CD (String, 선택)
+    #[serde(rename = "INQR_DVSN_CD")]
+    pub inqr_dvsn_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8895,6 +10420,39 @@ pub struct OverseasStockV1TradingDaytimeOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingDaytimeOrderRvsecnclRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// OVRS_EXCG_CD (String, 선택)
+    #[serde(rename = "OVRS_EXCG_CD")]
+    pub ovrs_excg_cd: String,
+    /// PDNO (String, 선택)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// ORGN_ODNO (String, 선택)
+    #[serde(rename = "ORGN_ODNO")]
+    pub orgn_odno: String,
+    /// RVSE_CNCL_DVSN_CD (String, 선택)
+    #[serde(rename = "RVSE_CNCL_DVSN_CD")]
+    pub rvse_cncl_dvsn_cd: String,
+    /// ORD_QTY (String, 선택)
+    #[serde(rename = "ORD_QTY")]
+    pub ord_qty: Decimal,
+    /// OVRS_ORD_UNPR (String, 선택)
+    #[serde(rename = "OVRS_ORD_UNPR")]
+    pub ovrs_ord_unpr: Decimal,
+    /// CTAC_TLNO (String, 선택)
+    #[serde(rename = "CTAC_TLNO")]
+    pub ctac_tlno: String,
+    /// MGCO_APTM_ODNO (String, 선택)
+    #[serde(rename = "MGCO_APTM_ODNO")]
+    pub mgco_aptm_odno: String,
+    /// ORD_SVR_DVSN_CD (String, 선택)
+    #[serde(rename = "ORD_SVR_DVSN_CD")]
+    pub ord_svr_dvsn_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8997,6 +10555,15 @@ pub struct OverseasStockV1TradingInquireAlgoCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsPriceDetailRequest {
+    /// AUTH (String, 선택)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// EXCD (String, 선택)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
+    /// SYMB (String, 선택)
+    #[serde(rename = "SYMB")]
+    pub symb: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9065,6 +10632,15 @@ pub struct OverseasPriceV1QuotationsInquireAskingPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsPriceRequest {
+    /// AUTH (String, 선택)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// EXCD (String, 선택)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
+    /// SYMB (String, 선택)
+    #[serde(rename = "SYMB")]
+    pub symb: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9133,6 +10709,33 @@ pub struct OverseasPriceV1QuotationsInquireCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsInquireTimeItemchartpriceRequest {
+    /// AUTH (String, 선택)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// EXCD (String, 선택)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
+    /// SYMB (String, 선택)
+    #[serde(rename = "SYMB")]
+    pub symb: String,
+    /// NMIN (String, 선택)
+    #[serde(rename = "NMIN")]
+    pub nmin: String,
+    /// PINC (String, 선택)
+    #[serde(rename = "PINC")]
+    pub pinc: String,
+    /// NEXT (String, 선택)
+    #[serde(rename = "NEXT")]
+    pub next: String,
+    /// NREC (String, 선택)
+    #[serde(rename = "NREC")]
+    pub nrec: String,
+    /// FILL (String, 선택)
+    #[serde(rename = "FILL")]
+    pub fill: String,
+    /// KEYB (String, 선택)
+    #[serde(rename = "KEYB")]
+    pub keyb: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9167,6 +10770,18 @@ pub struct OverseasPriceV1QuotationsInquireTimeItemchartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsInquireTimeIndexchartpriceRequest {
+    /// FID_COND_MRKT_DIV_CODE (String, 선택)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// FID_INPUT_ISCD (String, 선택)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// FID_HOUR_CLS_CODE (String, 선택)
+    #[serde(rename = "FID_HOUR_CLS_CODE")]
+    pub fid_hour_cls_code: String,
+    /// FID_PW_DATA_INCU_YN (String, 선택)
+    #[serde(rename = "FID_PW_DATA_INCU_YN")]
+    pub fid_pw_data_incu_yn: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9201,6 +10816,24 @@ pub struct OverseasPriceV1QuotationsInquireTimeIndexchartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsDailypriceRequest {
+    /// AUTH (String, 선택)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// EXCD (String, 선택)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
+    /// SYMB (String, 선택)
+    #[serde(rename = "SYMB")]
+    pub symb: String,
+    /// GUBN (String, 선택)
+    #[serde(rename = "GUBN")]
+    pub gubn: String,
+    /// BYMD (String, 선택)
+    #[serde(rename = "BYMD")]
+    pub bymd: String,
+    /// MODP (String, 선택)
+    #[serde(rename = "MODP")]
+    pub modp: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9306,6 +10939,15 @@ pub struct OverseasPriceV1QuotationsInquireSearchRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1QuotationsCountriesHolidayRequest {
+    /// TRAD_DT (String, 선택)
+    #[serde(rename = "TRAD_DT")]
+    pub trad_dt: String,
+    /// CTX_AREA_NK (String, 선택)
+    #[serde(rename = "CTX_AREA_NK")]
+    pub ctx_area_nk: String,
+    /// CTX_AREA_FK (String, 선택)
+    #[serde(rename = "CTX_AREA_FK")]
+    pub ctx_area_fk: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9340,6 +10982,12 @@ pub struct OverseasStockV1QuotationsCountriesHolidayRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsSearchInfoRequest {
+    /// PDNO (String, 선택)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// PRDT_TYPE_CD (String, 선택)
+    #[serde(rename = "PRDT_TYPE_CD")]
+    pub prdt_type_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9986,6 +11634,12 @@ pub struct OverseasPriceV1QuotationsBrknewsTitleRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutHDFSASP0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10088,6 +11742,12 @@ pub struct AuthTryitoutHDFSCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0GSCNI0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10122,24 +11782,6 @@ pub struct AuthTryitoutH0GSCNI0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingOrderRequest {
-    /// headerMap (String, 선택)
-    #[serde(rename = "headerMap")]
-    pub header_map: String,
-    /// methodList (String, 선택)
-    #[serde(rename = "methodList")]
-    pub method_list: String,
-    /// contentTypeList (String, 선택)
-    #[serde(rename = "contentTypeList")]
-    pub content_type_list: String,
-    /// pathList (String, 선택)
-    #[serde(rename = "pathList")]
-    pub path_list: String,
-    /// queryMap (String, 선택)
-    #[serde(rename = "queryMap")]
-    pub query_map: String,
-    /// formMap (String, 선택)
-    #[serde(rename = "formMap")]
-    pub form_map: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -10185,12 +11827,30 @@ pub struct AuthOverseasFutureoptionV1TradingOrderRequest {
     /// ECIS_RSVN_ORD_YN (String, 선택)
     #[serde(rename = "ECIS_RSVN_ORD_YN")]
     pub ecis_rsvn_ord_yn: String,
-    /// CTAC_TLNO (String, 선택)
-    #[serde(rename = "CTAC_TLNO")]
-    pub ctac_tlno: String,
     /// FM_HDGE_ORD_SCRN_YN (String, 선택)
     #[serde(rename = "FM_HDGE_ORD_SCRN_YN")]
     pub fm_hdge_ord_scrn_yn: String,
+    /// headerMap (String, 선택)
+    #[serde(rename = "headerMap")]
+    pub header_map: String,
+    /// methodList (String, 선택)
+    #[serde(rename = "methodList")]
+    pub method_list: String,
+    /// contentTypeList (String, 선택)
+    #[serde(rename = "contentTypeList")]
+    pub content_type_list: String,
+    /// pathList (String, 선택)
+    #[serde(rename = "pathList")]
+    pub path_list: String,
+    /// queryMap (String, 선택)
+    #[serde(rename = "queryMap")]
+    pub query_map: String,
+    /// formMap (String, 선택)
+    #[serde(rename = "formMap")]
+    pub form_map: String,
+    /// CTAC_TLNO (String, 선택)
+    #[serde(rename = "CTAC_TLNO")]
+    pub ctac_tlno: String,
     /// rt_cd (String, 선택)
     #[serde(rename = "rt_cd")]
     pub rt_cd: String,
@@ -10213,6 +11873,24 @@ pub struct AuthOverseasFutureoptionV1TradingOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingOrderRvsecnclRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// ORGN_ORD_DT (String, 선택)
+    #[serde(rename = "ORGN_ORD_DT")]
+    pub orgn_ord_dt: String,
+    /// ORGN_ODNO (String, 선택)
+    #[serde(rename = "ORGN_ODNO")]
+    pub orgn_odno: String,
+    /// FM_MKPR_CVSN_YN (String, 선택)
+    #[serde(rename = "FM_MKPR_CVSN_YN")]
+    pub fm_mkpr_cvsn_yn: String,
+    /// FM_HDGE_ORD_SCRN_YN (String, 선택)
+    #[serde(rename = "FM_HDGE_ORD_SCRN_YN")]
+    pub fm_hdge_ord_scrn_yn: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10231,18 +11909,6 @@ pub struct AuthOverseasFutureoptionV1TradingOrderRvsecnclRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
-    /// CANO (String, 선택)
-    #[serde(rename = "CANO")]
-    pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
-    #[serde(rename = "ACNT_PRDT_CD")]
-    pub acnt_prdt_cd: String,
-    /// ORGN_ORD_DT (String, 선택)
-    #[serde(rename = "ORGN_ORD_DT")]
-    pub orgn_ord_dt: String,
-    /// ORGN_ODNO (String, 선택)
-    #[serde(rename = "ORGN_ODNO")]
-    pub orgn_odno: String,
     /// FM_LIMIT_ORD_PRIC (String, 선택)
     #[serde(rename = "FM_LIMIT_ORD_PRIC")]
     pub fm_limit_ord_pric: Decimal,
@@ -10258,9 +11924,6 @@ pub struct AuthOverseasFutureoptionV1TradingOrderRvsecnclRequest {
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
-    /// FM_HDGE_ORD_SCRN_YN (String, 선택)
-    #[serde(rename = "FM_HDGE_ORD_SCRN_YN")]
-    pub fm_hdge_ord_scrn_yn: String,
     /// rt_cd (String, 선택)
     #[serde(rename = "rt_cd")]
     pub rt_cd: String,
@@ -10351,6 +12014,24 @@ pub struct AuthOverseasFutureoptionV1TradingInquireUnpdRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingInquirePsamountRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// OVRS_FUTR_FX_PDNO (String, 선택)
+    #[serde(rename = "OVRS_FUTR_FX_PDNO")]
+    pub ovrs_futr_fx_pdno: String,
+    /// SLL_BUY_DVSN_CD (String, 선택)
+    #[serde(rename = "SLL_BUY_DVSN_CD")]
+    pub sll_buy_dvsn_cd: String,
+    /// FM_ORD_PRIC (String, 선택)
+    #[serde(rename = "FM_ORD_PRIC")]
+    pub fm_ord_pric: Decimal,
+    /// ECIS_RSVN_ORD_YN (String, 선택)
+    #[serde(rename = "ECIS_RSVN_ORD_YN")]
+    pub ecis_rsvn_ord_yn: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10521,6 +12202,33 @@ pub struct AuthOverseasFutureoptionV1TradingInquireDailyOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingInquirePeriodTransRequest {
+    /// INQR_TERM_FROM_DT (String, 선택)
+    #[serde(rename = "INQR_TERM_FROM_DT")]
+    pub inqr_term_from_dt: String,
+    /// INQR_TERM_TO_DT (String, 선택)
+    #[serde(rename = "INQR_TERM_TO_DT")]
+    pub inqr_term_to_dt: String,
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// ACNT_TR_TYPE_CD (String, 선택)
+    #[serde(rename = "ACNT_TR_TYPE_CD")]
+    pub acnt_tr_type_cd: String,
+    /// CRCY_CD (String, 선택)
+    #[serde(rename = "CRCY_CD")]
+    pub crcy_cd: String,
+    /// CTX_AREA_FK100 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK100")]
+    pub ctx_area_fk100: String,
+    /// CTX_AREA_NK100 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK100")]
+    pub ctx_area_nk100: String,
+    /// PWD_CHK_YN (String, 선택)
+    #[serde(rename = "PWD_CHK_YN")]
+    pub pwd_chk_yn: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10623,6 +12331,9 @@ pub struct AuthOverseasFutureoptionV1QuotationsInquirePriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsStockDetailRequest {
+    /// SRS_CD (String, 선택)
+    #[serde(rename = "SRS_CD")]
+    pub srs_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11405,6 +13116,39 @@ pub struct AuthTryitoutHDFFF2C0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1TradingBuyRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// PDNO (String, 선택)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// ORD_QTY2 (String, 선택)
+    #[serde(rename = "ORD_QTY2")]
+    pub ord_qty2: String,
+    /// BOND_ORD_UNPR (String, 선택)
+    #[serde(rename = "BOND_ORD_UNPR")]
+    pub bond_ord_unpr: Decimal,
+    /// SAMT_MKET_PTCI_YN (String, 선택)
+    #[serde(rename = "SAMT_MKET_PTCI_YN")]
+    pub samt_mket_ptci_yn: String,
+    /// BOND_RTL_MKET_YN (String, 선택)
+    #[serde(rename = "BOND_RTL_MKET_YN")]
+    pub bond_rtl_mket_yn: String,
+    /// IDCR_STFNO (String, 선택)
+    #[serde(rename = "IDCR_STFNO")]
+    pub idcr_stfno: String,
+    /// MGCO_APTM_ODNO (String, 선택)
+    #[serde(rename = "MGCO_APTM_ODNO")]
+    pub mgco_aptm_odno: String,
+    /// ORD_SVR_DVSN_CD (String, 선택)
+    #[serde(rename = "ORD_SVR_DVSN_CD")]
+    pub ord_svr_dvsn_cd: String,
+    /// CTAC_TLNO (String, 선택)
+    #[serde(rename = "CTAC_TLNO")]
+    pub ctac_tlno: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11439,6 +13183,51 @@ pub struct AuthDomesticBondV1TradingBuyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1TradingSellRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// ORD_DVSN (String, 선택)
+    #[serde(rename = "ORD_DVSN")]
+    pub ord_dvsn: String,
+    /// PDNO (String, 선택)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// ORD_QTY2 (String, 선택)
+    #[serde(rename = "ORD_QTY2")]
+    pub ord_qty2: String,
+    /// BOND_ORD_UNPR (String, 선택)
+    #[serde(rename = "BOND_ORD_UNPR")]
+    pub bond_ord_unpr: Decimal,
+    /// SPRX_YN (String, 선택)
+    #[serde(rename = "SPRX_YN")]
+    pub sprx_yn: String,
+    /// BUY_DT (String, 선택)
+    #[serde(rename = "BUY_DT")]
+    pub buy_dt: String,
+    /// BUY_SEQ (String, 선택)
+    #[serde(rename = "BUY_SEQ")]
+    pub buy_seq: String,
+    /// SAMT_MKET_PTCI_YN (String, 선택)
+    #[serde(rename = "SAMT_MKET_PTCI_YN")]
+    pub samt_mket_ptci_yn: String,
+    /// SLL_AGCO_OPPS_SLL_YN (String, 선택)
+    #[serde(rename = "SLL_AGCO_OPPS_SLL_YN")]
+    pub sll_agco_opps_sll_yn: String,
+    /// BOND_RTL_MKET_YN (String, 선택)
+    #[serde(rename = "BOND_RTL_MKET_YN")]
+    pub bond_rtl_mket_yn: String,
+    /// MGCO_APTM_ODNO (String, 선택)
+    #[serde(rename = "MGCO_APTM_ODNO")]
+    pub mgco_aptm_odno: String,
+    /// ORD_SVR_DVSN_CD (String, 선택)
+    #[serde(rename = "ORD_SVR_DVSN_CD")]
+    pub ord_svr_dvsn_cd: String,
+    /// CTAC_TLNO (String, 선택)
+    #[serde(rename = "CTAC_TLNO")]
+    pub ctac_tlno: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11473,6 +13262,39 @@ pub struct AuthDomesticBondV1TradingSellRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1TradingOrderRvsecnclRequest {
+    /// CANO (String, 선택)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// ACNT_PRDT_CD (String, 선택)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// PDNO (String, 선택)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// ORGN_ODNO (String, 선택)
+    #[serde(rename = "ORGN_ODNO")]
+    pub orgn_odno: String,
+    /// ORD_QTY2 (String, 선택)
+    #[serde(rename = "ORD_QTY2")]
+    pub ord_qty2: String,
+    /// BOND_ORD_UNPR (String, 선택)
+    #[serde(rename = "BOND_ORD_UNPR")]
+    pub bond_ord_unpr: Decimal,
+    /// QTY_ALL_ORD_YN (String, 선택)
+    #[serde(rename = "QTY_ALL_ORD_YN")]
+    pub qty_all_ord_yn: String,
+    /// RVSE_CNCL_DVSN_CD (String, 선택)
+    #[serde(rename = "RVSE_CNCL_DVSN_CD")]
+    pub rvse_cncl_dvsn_cd: String,
+    /// MGCO_APTM_ODNO (String, 선택)
+    #[serde(rename = "MGCO_APTM_ODNO")]
+    pub mgco_aptm_odno: String,
+    /// ORD_SVR_DVSN_CD (String, 선택)
+    #[serde(rename = "ORD_SVR_DVSN_CD")]
+    pub ord_svr_dvsn_cd: String,
+    /// CTAC_TLNO (String, 선택)
+    #[serde(rename = "CTAC_TLNO")]
+    pub ctac_tlno: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11915,6 +13737,12 @@ pub struct AuthDomesticBondV1QuotationsSearchBondInfoRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0BJCNT0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11949,6 +13777,12 @@ pub struct AuthTryitoutH0BJCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0BJASP0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11983,6 +13817,12 @@ pub struct AuthTryitoutH0BJASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0BICNT0Request {
+    /// header (String, 선택)
+    #[serde(rename = "header")]
+    pub header: String,
+    /// body (String, 선택)
+    #[serde(rename = "body")]
+    pub body: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
