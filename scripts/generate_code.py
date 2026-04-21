@@ -62,25 +62,26 @@ def _parse_params_recursive(data):
             })
             if isinstance(v, (dict, list)):
                 params.extend(_parse_params_recursive(v))
+            elif isinstance(v, str) and v.startswith('{'):
+                try:
+                    params.extend(_parse_params_recursive(json.loads(v)))
+                except: pass
     elif isinstance(data, list):
         for item in data:
             params.extend(_parse_params_recursive(item))
     return params
 
-def _parse_params_from_json(json_str):
-    if not json_str: return []
-    try:
-        cleaned = json_str.strip().replace('\r', '').replace('\n', '').replace('\t', '')
-        data = json.loads(cleaned)
-        return _parse_params_recursive(data)
-    except:
-        pass
-    return []
-
 def _extract_params(api):
     params = []
     
-    # 1. PRIMARY: children parsing (Deep recursive walk)
+    # Force search in reqExample first (Absolute source for keys)
+    req_example = api.get('reqExample')
+    if req_example:
+        try:
+            params.extend(_parse_params_recursive(json.loads(req_example)))
+        except: pass
+
+    # Recursive children search
     children_data = api.get('children', '[]')
     try:
         children = json.loads(children_data) if isinstance(children_data, str) else children_data
@@ -98,26 +99,16 @@ def _extract_params(api):
                             'required': 'Y' if param.get('required') else 'N',
                             'description': str(pvalue)
                         })
-                        if isinstance(pvalue, str) and pvalue.startswith('{'):
-                            res.extend(_parse_params_from_json(pvalue))
+                    if isinstance(pvalue, str) and pvalue.startswith('{'):
+                        try: res.extend(_parse_params_recursive(json.loads(pvalue)))
+                        except: pass
                 if node.get('children'):
                     res.extend(walk_children(node.get('children')))
             return res
         params.extend(walk_children(children))
-    except:
-        pass
+    except: pass
 
-    # 2. SECONDARY: reqExample (Recursive parsing)
-    req_example = api.get('reqExample')
-    if req_example:
-        params.extend(_parse_params_from_json(req_example))
-        
-    # 3. TERTIARY: extraParam
-    extra_param = api.get('extraParam')
-    if extra_param:
-        params.extend(_parse_params_from_json(extra_param))
-
-    # Deduplicate by lowercase name to ensure all variants are captured once
+    # Deduplicate by lowercase name
     seen = set()
     unique_params = []
     for p in params:
