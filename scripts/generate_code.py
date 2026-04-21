@@ -74,14 +74,26 @@ def _parse_params_recursive(data):
 def _extract_params(api):
     params = []
     
-    # Force search in reqExample first (Absolute source for keys)
+    # 1. NEW PRIMARY: apiPropertys (Direct fields list)
+    props = api.get('apiPropertys', [])
+    for p in props:
+        if p.get('bodyType') == 'req_b':
+            params.append({
+                'name': p.get('propertyCd'),
+                'korean_name': p.get('propertyNm', p.get('propertyCd')),
+                'type': 'String',
+                'required': p.get('requireYn', 'N'),
+                'description': p.get('description')
+            })
+
+    # 2. reqExample (Recursive parsing)
     req_example = api.get('reqExample')
     if req_example:
         try:
             params.extend(_parse_params_recursive(json.loads(req_example.strip())))
         except: pass
 
-    # Recursive children search
+    # 3. Recursive children search
     children_data = api.get('children', '[]')
     try:
         children = json.loads(children_data) if isinstance(children_data, str) else children_data
@@ -108,7 +120,7 @@ def _extract_params(api):
         params.extend(walk_children(children))
     except: pass
 
-    # Deduplicate by lowercase name
+    # Deduplicate by lowercase name to ensure all variants are captured once
     seen = set()
     unique_params = []
     for p in params:

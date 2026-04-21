@@ -7,13 +7,13 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOauth2TokenPRequest {
-    /// grant_type (String, 선택)
+    /// 권한부여 Type (String, 필수)
     #[serde(rename = "grant_type")]
     pub grant_type: String,
-    /// appkey (String, 선택)
+    /// 앱키 (String, 필수)
     #[serde(rename = "appkey")]
     pub appkey: String,
-    /// appsecret (String, 선택)
+    /// 앱시크릿키 (String, 필수)
     #[serde(rename = "appsecret")]
     pub appsecret: String,
     /// headerMap (String, 선택)
@@ -59,13 +59,13 @@ pub struct AuthOauth2TokenPRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOauth2RevokePRequest {
-    /// appkey (String, 선택)
+    /// 고객 앱Key (String, 필수)
     #[serde(rename = "appkey")]
     pub appkey: String,
-    /// appsecret (String, 선택)
+    /// 고객 앱Secret (String, 필수)
     #[serde(rename = "appsecret")]
     pub appsecret: String,
-    /// token (String, 선택)
+    /// 접근토큰 (String, 필수)
     #[serde(rename = "token")]
     pub token: String,
     /// headerMap (String, 선택)
@@ -108,6 +108,9 @@ pub struct AuthOauth2RevokePRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthHashkeyRequest {
+    /// 요청값 (String, 필수)
+    #[serde(rename = "JsonBody")]
+    pub json_body: String,
     /// ORD_PRCS_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_PRCS_DVSN_CD")]
     pub ord_prcs_dvsn_cd: String,
@@ -162,9 +165,6 @@ pub struct AuthHashkeyRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
-    /// jsonBody (String, 선택)
-    #[serde(rename = "jsonBody")]
-    pub json_body: String,
     /// PDNO (String, 선택)
     #[serde(rename = "PDNO")]
     pub pdno: String,
@@ -190,13 +190,13 @@ pub struct AuthHashkeyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOauth2ApprovalRequest {
-    /// grant_type (String, 선택)
+    /// 권한부여타입 (String, 필수)
     #[serde(rename = "grant_type")]
     pub grant_type: String,
-    /// appkey (String, 선택)
+    /// 앱키 (String, 필수)
     #[serde(rename = "appkey")]
     pub appkey: String,
-    /// secretkey (String, 선택)
+    /// 시크릿키 (String, 필수)
     #[serde(rename = "secretkey")]
     pub secretkey: String,
     /// headerMap (String, 선택)
@@ -233,24 +233,33 @@ pub struct AuthOauth2ApprovalRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingOrderCashRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// PDNO (String, 선택)
+    /// 상품번호 (String, 필수)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// ORD_DVSN (String, 선택)
+    /// 매도유형 (매도주문 시) (String, 선택)
+    #[serde(rename = "SLL_TYPE")]
+    pub sll_type: String,
+    /// 주문구분 (String, 필수)
     #[serde(rename = "ORD_DVSN")]
     pub ord_dvsn: String,
-    /// ORD_QTY (String, 선택)
+    /// 주문수량 (String, 필수)
     #[serde(rename = "ORD_QTY")]
     pub ord_qty: Decimal,
-    /// ORD_UNPR (String, 선택)
+    /// 주문단가 (String, 필수)
     #[serde(rename = "ORD_UNPR")]
     pub ord_unpr: Decimal,
+    /// 조건가격 (String, 선택)
+    #[serde(rename = "CNDT_PRIC")]
+    pub cndt_pric: Decimal,
+    /// 거래소ID구분코드 (String, 선택)
+    #[serde(rename = "EXCG_ID_DVSN_CD")]
+    pub excg_id_dvsn_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -288,33 +297,78 @@ pub struct DomesticStockV1TradingOrderCashRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingOrderCreditRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// PDNO (String, 선택)
+    /// 상품번호 (String, 필수)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// CRDT_TYPE (String, 선택)
+    /// 매도유형 (String, 선택)
+    #[serde(rename = "SLL_TYPE")]
+    pub sll_type: String,
+    /// 신용유형 (String, 필수)
     #[serde(rename = "CRDT_TYPE")]
     pub crdt_type: String,
-    /// LOAN_DT (String, 선택)
+    /// 대출일자 (String, 필수)
     #[serde(rename = "LOAN_DT")]
     pub loan_dt: String,
-    /// ORD_DVSN (String, 선택)
+    /// 주문구분 (String, 필수)
     #[serde(rename = "ORD_DVSN")]
     pub ord_dvsn: String,
-    /// ORD_QTY (String, 선택)
+    /// 주문수량 (String, 필수)
     #[serde(rename = "ORD_QTY")]
     pub ord_qty: Decimal,
-    /// ORD_UNPR (String, 선택)
+    /// 주문단가 (String, 필수)
     #[serde(rename = "ORD_UNPR")]
     pub ord_unpr: Decimal,
-    /// RSVN_ORD_YN (String, 선택)
+    /// 예약주문여부 (String, 선택)
     #[serde(rename = "RSVN_ORD_YN")]
     pub rsvn_ord_yn: String,
+    /// 비상주문여부 (String, 선택)
+    #[serde(rename = "EMGC_ORD_YN")]
+    pub emgc_ord_yn: String,
+    /// 프로그램매매구분 (String, 선택)
+    #[serde(rename = "PGTR_DVSN")]
+    pub pgtr_dvsn: String,
+    /// 운용사지정주문번호 (String, 선택)
+    #[serde(rename = "MGCO_APTM_ODNO")]
+    pub mgco_aptm_odno: String,
+    /// 대량거래협상상세번호 (String, 선택)
+    #[serde(rename = "LQTY_TR_NGTN_DTL_NO")]
+    pub lqty_tr_ngtn_dtl_no: String,
+    /// 대량거래협정번호 (String, 선택)
+    #[serde(rename = "LQTY_TR_AGMT_NO")]
+    pub lqty_tr_agmt_no: String,
+    /// 대량거래협상자Id (String, 선택)
+    #[serde(rename = "LQTY_TR_NGTN_ID")]
+    pub lqty_tr_ngtn_id: String,
+    /// LP주문여부 (String, 선택)
+    #[serde(rename = "LP_ORD_YN")]
+    pub lp_ord_yn: String,
+    /// 매체주문번호 (String, 선택)
+    #[serde(rename = "MDIA_ODNO")]
+    pub mdia_odno: String,
+    /// 주문서버구분코드 (String, 선택)
+    #[serde(rename = "ORD_SVR_DVSN_CD")]
+    pub ord_svr_dvsn_cd: String,
+    /// 프로그램호가신고구분코드 (String, 선택)
+    #[serde(rename = "PGM_NMPR_STMT_DVSN_CD")]
+    pub pgm_nmpr_stmt_dvsn_cd: String,
+    /// 반대매매선정사유코드 (String, 선택)
+    #[serde(rename = "CVRG_SLCT_RSON_CD")]
+    pub cvrg_slct_rson_cd: String,
+    /// 반대매매순번 (String, 선택)
+    #[serde(rename = "CVRG_SEQ")]
+    pub cvrg_seq: String,
+    /// 거래소ID구분코드 (String, 선택)
+    #[serde(rename = "EXCG_ID_DVSN_CD")]
+    pub excg_id_dvsn_cd: String,
+    /// 조건가격 (String, 선택)
+    #[serde(rename = "CNDT_PRIC")]
+    pub cndt_pric: Decimal,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -339,9 +393,6 @@ pub struct DomesticStockV1TradingOrderCreditRequest {
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
-    /// EMGC_ORD_YN (String, 선택)
-    #[serde(rename = "EMGC_ORD_YN")]
-    pub emgc_ord_yn: String,
     /// jsonResponse (String, 선택)
     #[serde(rename = "jsonResponse")]
     pub json_response: String,
@@ -355,33 +406,39 @@ pub struct DomesticStockV1TradingOrderCreditRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingOrderRvsecnclRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// KRX_FWDG_ORD_ORGNO (String, 선택)
+    /// 한국거래소전송주문조직번호 (String, 필수)
     #[serde(rename = "KRX_FWDG_ORD_ORGNO")]
     pub krx_fwdg_ord_orgno: String,
-    /// ORGN_ODNO (String, 선택)
+    /// 원주문번호 (String, 필수)
     #[serde(rename = "ORGN_ODNO")]
     pub orgn_odno: String,
-    /// ORD_DVSN (String, 선택)
+    /// 주문구분 (String, 필수)
     #[serde(rename = "ORD_DVSN")]
     pub ord_dvsn: String,
-    /// RVSE_CNCL_DVSN_CD (String, 선택)
+    /// 정정취소구분코드 (String, 필수)
     #[serde(rename = "RVSE_CNCL_DVSN_CD")]
     pub rvse_cncl_dvsn_cd: String,
-    /// ORD_QTY (String, 선택)
+    /// 주문수량 (String, 필수)
     #[serde(rename = "ORD_QTY")]
     pub ord_qty: Decimal,
-    /// ORD_UNPR (String, 선택)
+    /// 주문단가 (String, 필수)
     #[serde(rename = "ORD_UNPR")]
     pub ord_unpr: Decimal,
-    /// QTY_ALL_ORD_YN (String, 선택)
+    /// 잔량전부주문여부 (String, 필수)
     #[serde(rename = "QTY_ALL_ORD_YN")]
     pub qty_all_ord_yn: String,
+    /// 조건가격 (String, 선택)
+    #[serde(rename = "CNDT_PRIC")]
+    pub cndt_pric: Decimal,
+    /// 거래소ID구분코드 (String, 선택)
+    #[serde(rename = "EXCG_ID_DVSN_CD")]
+    pub excg_id_dvsn_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -419,22 +476,22 @@ pub struct DomesticStockV1TradingOrderRvsecnclRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquirePsblRvsecnclRequest {
-    /// ACNT_PRDT_CD (String, 선택)
-    #[serde(rename = "ACNT_PRDT_CD")]
-    pub acnt_prdt_cd: String,
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// CTX_AREA_FK100 (String, 선택)
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 연속조회검색조건100 (String, 필수)
     #[serde(rename = "CTX_AREA_FK100")]
     pub ctx_area_fk100: String,
-    /// CTX_AREA_NK100 (String, 선택)
+    /// 연속조회키100 (String, 필수)
     #[serde(rename = "CTX_AREA_NK100")]
     pub ctx_area_nk100: String,
-    /// INQR_DVSN_1 (String, 선택)
+    /// 조회구분1 (String, 필수)
     #[serde(rename = "INQR_DVSN_1")]
     pub inqr_dvsn_1: String,
-    /// INQR_DVSN_2 (String, 선택)
+    /// 조회구분2 (String, 필수)
     #[serde(rename = "INQR_DVSN_2")]
     pub inqr_dvsn_2: String,
     /// headerMap (String, 선택)
@@ -471,46 +528,49 @@ pub struct DomesticStockV1TradingInquirePsblRvsecnclRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquireDailyCcldRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// INQR_STRT_DT (String, 선택)
+    /// 조회시작일자 (String, 필수)
     #[serde(rename = "INQR_STRT_DT")]
     pub inqr_strt_dt: String,
-    /// INQR_END_DT (String, 선택)
+    /// 조회종료일자 (String, 필수)
     #[serde(rename = "INQR_END_DT")]
     pub inqr_end_dt: String,
-    /// SLL_BUY_DVSN_CD (String, 선택)
+    /// 매도매수구분코드 (String, 필수)
     #[serde(rename = "SLL_BUY_DVSN_CD")]
     pub sll_buy_dvsn_cd: String,
-    /// INQR_DVSN (String, 선택)
-    #[serde(rename = "INQR_DVSN")]
-    pub inqr_dvsn: String,
-    /// PDNO (String, 선택)
+    /// 상품번호 (String, 선택)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// CCLD_DVSN (String, 선택)
-    #[serde(rename = "CCLD_DVSN")]
-    pub ccld_dvsn: String,
-    /// ORD_GNO_BRNO (String, 선택)
+    /// 주문채번지점번호 (String, 필수)
     #[serde(rename = "ORD_GNO_BRNO")]
     pub ord_gno_brno: String,
-    /// ODNO (String, 선택)
+    /// 주문번호 (String, 선택)
     #[serde(rename = "ODNO")]
     pub odno: String,
-    /// INQR_DVSN_3 (String, 선택)
-    #[serde(rename = "INQR_DVSN_3")]
-    pub inqr_dvsn_3: String,
-    /// INQR_DVSN_1 (String, 선택)
+    /// 체결구분 (String, 필수)
+    #[serde(rename = "CCLD_DVSN")]
+    pub ccld_dvsn: String,
+    /// 조회구분 (String, 필수)
+    #[serde(rename = "INQR_DVSN")]
+    pub inqr_dvsn: String,
+    /// 조회구분1 (String, 필수)
     #[serde(rename = "INQR_DVSN_1")]
     pub inqr_dvsn_1: String,
-    /// CTX_AREA_FK100 (String, 선택)
+    /// 조회구분3 (String, 필수)
+    #[serde(rename = "INQR_DVSN_3")]
+    pub inqr_dvsn_3: String,
+    /// 거래소ID구분코드 (String, 필수)
+    #[serde(rename = "EXCG_ID_DVSN_CD")]
+    pub excg_id_dvsn_cd: String,
+    /// 연속조회검색조건100 (String, 필수)
     #[serde(rename = "CTX_AREA_FK100")]
     pub ctx_area_fk100: String,
-    /// CTX_AREA_NK100 (String, 선택)
+    /// 연속조회키100 (String, 필수)
     #[serde(rename = "CTX_AREA_NK100")]
     pub ctx_area_nk100: String,
     /// headerMap (String, 선택)
@@ -547,37 +607,37 @@ pub struct DomesticStockV1TradingInquireDailyCcldRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquireBalanceRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// AFHR_FLPR_YN (String, 선택)
+    /// 시간외단일가, 거래소여부 (String, 필수)
     #[serde(rename = "AFHR_FLPR_YN")]
     pub afhr_flpr_yn: String,
-    /// OFL_YN (String, 선택)
+    /// 오프라인여부 (String, 선택)
     #[serde(rename = "OFL_YN")]
     pub ofl_yn: String,
-    /// INQR_DVSN (String, 선택)
+    /// 조회구분 (String, 필수)
     #[serde(rename = "INQR_DVSN")]
     pub inqr_dvsn: String,
-    /// UNPR_DVSN (String, 선택)
+    /// 단가구분 (String, 필수)
     #[serde(rename = "UNPR_DVSN")]
     pub unpr_dvsn: String,
-    /// FUND_STTL_ICLD_YN (String, 선택)
+    /// 펀드결제분포함여부 (String, 필수)
     #[serde(rename = "FUND_STTL_ICLD_YN")]
     pub fund_sttl_icld_yn: String,
-    /// FNCG_AMT_AUTO_RDPT_YN (String, 선택)
+    /// 융자금액자동상환여부 (String, 필수)
     #[serde(rename = "FNCG_AMT_AUTO_RDPT_YN")]
     pub fncg_amt_auto_rdpt_yn: String,
-    /// PRCS_DVSN (String, 선택)
+    /// 처리구분 (String, 필수)
     #[serde(rename = "PRCS_DVSN")]
     pub prcs_dvsn: String,
-    /// CTX_AREA_FK100 (String, 선택)
+    /// 연속조회검색조건100 (String, 선택)
     #[serde(rename = "CTX_AREA_FK100")]
     pub ctx_area_fk100: String,
-    /// CTX_AREA_NK100 (String, 선택)
+    /// 연속조회키100 (String, 선택)
     #[serde(rename = "CTX_AREA_NK100")]
     pub ctx_area_nk100: String,
     /// headerMap (String, 선택)
@@ -614,25 +674,25 @@ pub struct DomesticStockV1TradingInquireBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquirePsblOrderRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// PDNO (String, 선택)
+    /// 상품번호 (String, 필수)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// ORD_UNPR (String, 선택)
+    /// 주문단가 (String, 필수)
     #[serde(rename = "ORD_UNPR")]
     pub ord_unpr: Decimal,
-    /// ORD_DVSN (String, 선택)
+    /// 주문구분 (String, 필수)
     #[serde(rename = "ORD_DVSN")]
     pub ord_dvsn: String,
-    /// CMA_EVLU_AMT_ICLD_YN (String, 선택)
+    /// CMA평가금액포함여부 (String, 필수)
     #[serde(rename = "CMA_EVLU_AMT_ICLD_YN")]
     pub cma_evlu_amt_icld_yn: String,
-    /// OVRS_ICLD_YN (String, 선택)
+    /// 해외포함여부 (String, 필수)
     #[serde(rename = "OVRS_ICLD_YN")]
     pub ovrs_icld_yn: String,
     /// headerMap (String, 선택)
@@ -669,6 +729,15 @@ pub struct DomesticStockV1TradingInquirePsblOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquirePsblSellRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 종목번호 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -703,28 +772,28 @@ pub struct DomesticStockV1TradingInquirePsblSellRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquireCreditPsamountRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// PDNO (String, 선택)
+    /// 상품번호 (String, 필수)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// ORD_UNPR (String, 선택)
+    /// 주문단가 (String, 필수)
     #[serde(rename = "ORD_UNPR")]
     pub ord_unpr: Decimal,
-    /// ORD_DVSN (String, 선택)
+    /// 주문구분 (String, 필수)
     #[serde(rename = "ORD_DVSN")]
     pub ord_dvsn: String,
-    /// CRDT_TYPE (String, 선택)
+    /// 신용유형 (String, 필수)
     #[serde(rename = "CRDT_TYPE")]
     pub crdt_type: String,
-    /// CMA_EVLU_AMT_ICLD_YN (String, 선택)
+    /// CMA평가금액포함여부 (String, 필수)
     #[serde(rename = "CMA_EVLU_AMT_ICLD_YN")]
     pub cma_evlu_amt_icld_yn: String,
-    /// OVRS_ICLD_YN (String, 선택)
+    /// 해외포함여부 (String, 필수)
     #[serde(rename = "OVRS_ICLD_YN")]
     pub ovrs_icld_yn: String,
     /// headerMap (String, 선택)
@@ -761,36 +830,39 @@ pub struct DomesticStockV1TradingInquireCreditPsamountRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingOrderResvRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// PDNO (String, 선택)
+    /// 종목코드(6자리) (String, 필수)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// ORD_QTY (String, 선택)
+    /// 주문수량 (String, 필수)
     #[serde(rename = "ORD_QTY")]
     pub ord_qty: Decimal,
-    /// ORD_UNPR (String, 선택)
+    /// 주문단가 (String, 필수)
     #[serde(rename = "ORD_UNPR")]
     pub ord_unpr: Decimal,
-    /// SLL_BUY_DVSN_CD (String, 선택)
+    /// 매도매수구분코드 (String, 필수)
     #[serde(rename = "SLL_BUY_DVSN_CD")]
     pub sll_buy_dvsn_cd: String,
-    /// ORD_DVSN_CD (String, 선택)
+    /// 주문구분코드 (String, 필수)
     #[serde(rename = "ORD_DVSN_CD")]
     pub ord_dvsn_cd: String,
-    /// ORD_OBJT_CBLC_DVSN_CD (String, 선택)
+    /// 주문대상잔고구분코드 (String, 필수)
     #[serde(rename = "ORD_OBJT_CBLC_DVSN_CD")]
     pub ord_objt_cblc_dvsn_cd: String,
-    /// LOAN_DT (String, 선택)
+    /// 대출일자 (String, 선택)
     #[serde(rename = "LOAN_DT")]
     pub loan_dt: String,
-    /// RSVN_ORD_END_DT (String, 선택)
+    /// 예약주문종료일자 (String, 선택)
     #[serde(rename = "RSVN_ORD_END_DT")]
     pub rsvn_ord_end_dt: String,
+    /// 대여일자 (String, 선택)
+    #[serde(rename = "LDNG_DT")]
+    pub ldng_dt: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -815,9 +887,6 @@ pub struct DomesticStockV1TradingOrderResvRequest {
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
-    /// LDNG_DT (String, 선택)
-    #[serde(rename = "LDNG_DT")]
-    pub ldng_dt: String,
     /// CUST_LDNG_TR_SEQ (String, 선택)
     #[serde(rename = "CUST_LDNG_TR_SEQ")]
     pub cust_ldng_tr_seq: String,
@@ -849,6 +918,48 @@ pub struct DomesticStockV1TradingOrderResvRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingOrderResvRvsecnclRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 종목코드(6자리) (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// 주문수량 (String, 필수)
+    #[serde(rename = "ORD_QTY")]
+    pub ord_qty: Decimal,
+    /// 주문단가 (String, 필수)
+    #[serde(rename = "ORD_UNPR")]
+    pub ord_unpr: Decimal,
+    /// 매도매수구분코드 (String, 필수)
+    #[serde(rename = "SLL_BUY_DVSN_CD")]
+    pub sll_buy_dvsn_cd: String,
+    /// 주문구분코드 (String, 필수)
+    #[serde(rename = "ORD_DVSN_CD")]
+    pub ord_dvsn_cd: String,
+    /// 주문대상잔고구분코드 (String, 필수)
+    #[serde(rename = "ORD_OBJT_CBLC_DVSN_CD")]
+    pub ord_objt_cblc_dvsn_cd: String,
+    /// 대출일자 (String, 선택)
+    #[serde(rename = "LOAN_DT")]
+    pub loan_dt: String,
+    /// 예약주문종료일자 (String, 선택)
+    #[serde(rename = "RSVN_ORD_END_DT")]
+    pub rsvn_ord_end_dt: String,
+    /// 연락전화번호 (String, 선택)
+    #[serde(rename = "CTAL_TLNO")]
+    pub ctal_tlno: String,
+    /// 예약주문순번 (String, 필수)
+    #[serde(rename = "RSVN_ORD_SEQ")]
+    pub rsvn_ord_seq: String,
+    /// 예약주문조직번호 (String, 선택)
+    #[serde(rename = "RSVN_ORD_ORGNO")]
+    pub rsvn_ord_orgno: String,
+    /// 예약주문주문일자 (String, 선택)
+    #[serde(rename = "RSVN_ORD_ORD_DT")]
+    pub rsvn_ord_ord_dt: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -873,48 +984,9 @@ pub struct DomesticStockV1TradingOrderResvRvsecnclRequest {
     /// _comment (String, 선택)
     #[serde(rename = "_comment")]
     pub _comment: String,
-    /// CANO (String, 선택)
-    #[serde(rename = "CANO")]
-    pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
-    #[serde(rename = "ACNT_PRDT_CD")]
-    pub acnt_prdt_cd: String,
-    /// PDNO (String, 선택)
-    #[serde(rename = "PDNO")]
-    pub pdno: String,
-    /// ORD_QTY (String, 선택)
-    #[serde(rename = "ORD_QTY")]
-    pub ord_qty: Decimal,
-    /// ORD_UNPR (String, 선택)
-    #[serde(rename = "ORD_UNPR")]
-    pub ord_unpr: Decimal,
-    /// SLL_BUY_DVSN_CD (String, 선택)
-    #[serde(rename = "SLL_BUY_DVSN_CD")]
-    pub sll_buy_dvsn_cd: String,
-    /// ORD_DVSN_CD (String, 선택)
-    #[serde(rename = "ORD_DVSN_CD")]
-    pub ord_dvsn_cd: String,
-    /// ORD_OBJT_CBLC_DVSN_CD (String, 선택)
-    #[serde(rename = "ORD_OBJT_CBLC_DVSN_CD")]
-    pub ord_objt_cblc_dvsn_cd: String,
-    /// LOAN_DT (String, 선택)
-    #[serde(rename = "LOAN_DT")]
-    pub loan_dt: String,
-    /// RSVN_ORD_END_DT (String, 선택)
-    #[serde(rename = "RSVN_ORD_END_DT")]
-    pub rsvn_ord_end_dt: String,
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
-    /// RSVN_ORD_SEQ (String, 선택)
-    #[serde(rename = "RSVN_ORD_SEQ")]
-    pub rsvn_ord_seq: String,
-    /// RSVN_ORD_ORGNO (String, 선택)
-    #[serde(rename = "RSVN_ORD_ORGNO")]
-    pub rsvn_ord_orgno: String,
-    /// RSVN_ORD_ORD_DT (String, 선택)
-    #[serde(rename = "RSVN_ORD_ORD_DT")]
-    pub rsvn_ord_ord_dt: String,
     /// jsonResponse (String, 선택)
     #[serde(rename = "jsonResponse")]
     pub json_response: String,
@@ -943,40 +1015,40 @@ pub struct DomesticStockV1TradingOrderResvRvsecnclRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingOrderResvCcnlRequest {
-    /// RSVN_ORD_ORD_DT (String, 선택)
+    /// 예약주문시작일자 (String, 필수)
     #[serde(rename = "RSVN_ORD_ORD_DT")]
     pub rsvn_ord_ord_dt: String,
-    /// RSVN_ORD_END_DT (String, 선택)
+    /// 예약주문종료일자 (String, 필수)
     #[serde(rename = "RSVN_ORD_END_DT")]
     pub rsvn_ord_end_dt: String,
-    /// RSVN_ORD_SEQ (String, 선택)
+    /// 예약주문순번 (String, 필수)
     #[serde(rename = "RSVN_ORD_SEQ")]
     pub rsvn_ord_seq: String,
-    /// TMNL_MDIA_KIND_CD (String, 선택)
+    /// 단말매체종류코드 (String, 필수)
     #[serde(rename = "TMNL_MDIA_KIND_CD")]
     pub tmnl_mdia_kind_cd: String,
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// PRCS_DVSN_CD (String, 선택)
+    /// 처리구분코드 (String, 필수)
     #[serde(rename = "PRCS_DVSN_CD")]
     pub prcs_dvsn_cd: String,
-    /// CNCL_YN (String, 선택)
+    /// 취소여부 (String, 필수)
     #[serde(rename = "CNCL_YN")]
     pub cncl_yn: String,
-    /// PDNO (String, 선택)
+    /// 상품번호 (String, 필수)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// SLL_BUY_DVSN_CD (String, 선택)
+    /// 매도매수구분코드 (String, 필수)
     #[serde(rename = "SLL_BUY_DVSN_CD")]
     pub sll_buy_dvsn_cd: String,
-    /// CTX_AREA_FK200 (String, 선택)
+    /// 연속조회검색조건200 (String, 필수)
     #[serde(rename = "CTX_AREA_FK200")]
     pub ctx_area_fk200: String,
-    /// CTX_AREA_NK200 (String, 선택)
+    /// 연속조회키200 (String, 필수)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
@@ -1025,21 +1097,24 @@ pub struct DomesticStockV1TradingOrderResvCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingPensionInquirePresentBalanceRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// USER_DVSN_CD (String, 선택)
+    /// 사용자구분코드 (String, 필수)
     #[serde(rename = "USER_DVSN_CD")]
     pub user_dvsn_cd: String,
-    /// CTX_AREA_FK100 (String, 선택)
+    /// 연속조회검색조건100 (String, 필수)
     #[serde(rename = "CTX_AREA_FK100")]
     pub ctx_area_fk100: String,
-    /// CTX_AREA_NK100 (String, 선택)
+    /// 연속조회키100 (String, 필수)
     #[serde(rename = "CTX_AREA_NK100")]
     pub ctx_area_nk100: String,
+    /// 처리구분코드 (String, 선택)
+    #[serde(rename = "PRCS_DVSN_CD")]
+    pub prcs_dvsn_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1086,28 +1161,28 @@ pub struct DomesticStockV1TradingPensionInquirePresentBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingPensionInquireDailyCcldRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// USER_DVSN_CD (String, 선택)
+    /// 사용자구분코드 (String, 필수)
     #[serde(rename = "USER_DVSN_CD")]
     pub user_dvsn_cd: String,
-    /// SLL_BUY_DVSN_CD (String, 선택)
+    /// 매도매수구분코드 (String, 필수)
     #[serde(rename = "SLL_BUY_DVSN_CD")]
     pub sll_buy_dvsn_cd: String,
-    /// CCLD_NCCS_DVSN (String, 선택)
+    /// 체결미체결구분 (String, 필수)
     #[serde(rename = "CCLD_NCCS_DVSN")]
     pub ccld_nccs_dvsn: String,
-    /// INQR_DVSN_3 (String, 선택)
+    /// 조회구분3 (String, 필수)
     #[serde(rename = "INQR_DVSN_3")]
     pub inqr_dvsn_3: String,
-    /// CTX_AREA_FK100 (String, 선택)
+    /// 연속조회검색조건100 (String, 필수)
     #[serde(rename = "CTX_AREA_FK100")]
     pub ctx_area_fk100: String,
-    /// CTX_AREA_NK100 (String, 선택)
+    /// 연속조회키100 (String, 필수)
     #[serde(rename = "CTX_AREA_NK100")]
     pub ctx_area_nk100: String,
     /// headerMap (String, 선택)
@@ -1144,27 +1219,27 @@ pub struct DomesticStockV1TradingPensionInquireDailyCcldRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingPensionInquirePsblOrderRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// PDNO (String, 선택)
+    /// 상품번호 (String, 필수)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// ORD_UNPR (String, 선택)
-    #[serde(rename = "ORD_UNPR")]
-    pub ord_unpr: Decimal,
-    /// ORD_DVSN (String, 선택)
-    #[serde(rename = "ORD_DVSN")]
-    pub ord_dvsn: String,
-    /// CMA_EVLU_AMT_ICLD_YN (String, 선택)
-    #[serde(rename = "CMA_EVLU_AMT_ICLD_YN")]
-    pub cma_evlu_amt_icld_yn: String,
-    /// ACCA_DVSN_CD (String, 선택)
+    /// 적립금구분코드 (String, 필수)
     #[serde(rename = "ACCA_DVSN_CD")]
     pub acca_dvsn_cd: String,
+    /// CMA평가금액포함여부 (String, 필수)
+    #[serde(rename = "CMA_EVLU_AMT_ICLD_YN")]
+    pub cma_evlu_amt_icld_yn: String,
+    /// 주문구분 (String, 필수)
+    #[serde(rename = "ORD_DVSN")]
+    pub ord_dvsn: String,
+    /// 주문단가 (String, 필수)
+    #[serde(rename = "ORD_UNPR")]
+    pub ord_unpr: Decimal,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1199,13 +1274,13 @@ pub struct DomesticStockV1TradingPensionInquirePsblOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingPensionInquireDepositRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// ACCA_DVSN_CD (String, 선택)
+    /// 적립금구분코드 (String, 필수)
     #[serde(rename = "ACCA_DVSN_CD")]
     pub acca_dvsn_cd: String,
     /// headerMap (String, 선택)
@@ -1242,22 +1317,22 @@ pub struct DomesticStockV1TradingPensionInquireDepositRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingPensionInquireBalanceRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// ACCA_DVSN_CD (String, 선택)
+    /// 적립금구분코드 (String, 필수)
     #[serde(rename = "ACCA_DVSN_CD")]
     pub acca_dvsn_cd: String,
-    /// INQR_DVSN (String, 선택)
+    /// 조회구분 (String, 필수)
     #[serde(rename = "INQR_DVSN")]
     pub inqr_dvsn: String,
-    /// CTX_AREA_FK100 (String, 선택)
+    /// 연속조회검색조건100 (String, 필수)
     #[serde(rename = "CTX_AREA_FK100")]
     pub ctx_area_fk100: String,
-    /// CTX_AREA_NK100 (String, 선택)
+    /// 연속조회키100 (String, 필수)
     #[serde(rename = "CTX_AREA_NK100")]
     pub ctx_area_nk100: String,
     /// headerMap (String, 선택)
@@ -1294,40 +1369,40 @@ pub struct DomesticStockV1TradingPensionInquireBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquireBalanceRlzPlRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// AFHR_FLPR_YN (String, 선택)
+    /// 시간외단일가여부 (String, 필수)
     #[serde(rename = "AFHR_FLPR_YN")]
     pub afhr_flpr_yn: String,
-    /// OFL_YN (String, 선택)
+    /// 오프라인여부 (String, 필수)
     #[serde(rename = "OFL_YN")]
     pub ofl_yn: String,
-    /// INQR_DVSN (String, 선택)
+    /// 조회구분 (String, 필수)
     #[serde(rename = "INQR_DVSN")]
     pub inqr_dvsn: String,
-    /// UNPR_DVSN (String, 선택)
+    /// 단가구분 (String, 필수)
     #[serde(rename = "UNPR_DVSN")]
     pub unpr_dvsn: String,
-    /// FUND_STTL_ICLD_YN (String, 선택)
+    /// 펀드결제포함여부 (String, 필수)
     #[serde(rename = "FUND_STTL_ICLD_YN")]
     pub fund_sttl_icld_yn: String,
-    /// FNCG_AMT_AUTO_RDPT_YN (String, 선택)
+    /// 융자금액자동상환여부 (String, 필수)
     #[serde(rename = "FNCG_AMT_AUTO_RDPT_YN")]
     pub fncg_amt_auto_rdpt_yn: String,
-    /// PRCS_DVSN (String, 선택)
+    /// PRCS_DVSN (String, 필수)
     #[serde(rename = "PRCS_DVSN")]
     pub prcs_dvsn: String,
-    /// COST_ICLD_YN (String, 선택)
+    /// 비용포함여부 (String, 필수)
     #[serde(rename = "COST_ICLD_YN")]
     pub cost_icld_yn: String,
-    /// CTX_AREA_FK100 (String, 선택)
+    /// 연속조회검색조건100 (String, 필수)
     #[serde(rename = "CTX_AREA_FK100")]
     pub ctx_area_fk100: String,
-    /// CTX_AREA_NK100 (String, 선택)
+    /// 연속조회키100 (String, 필수)
     #[serde(rename = "CTX_AREA_NK100")]
     pub ctx_area_nk100: String,
     /// headerMap (String, 선택)
@@ -1364,6 +1439,18 @@ pub struct DomesticStockV1TradingInquireBalanceRlzPlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquireAccountBalanceRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 조회구분1 (String, 필수)
+    #[serde(rename = "INQR_DVSN_1")]
+    pub inqr_dvsn_1: String,
+    /// 기준가이전일자적용여부 (String, 필수)
+    #[serde(rename = "BSPR_BF_DT_APLY_YN")]
+    pub bspr_bf_dt_aply_yn: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1398,36 +1485,36 @@ pub struct DomesticStockV1TradingInquireAccountBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquirePeriodProfitRequest {
-    /// CANO (String, 선택)
-    #[serde(rename = "CANO")]
-    pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// PDNO (String, 선택)
-    #[serde(rename = "PDNO")]
-    pub pdno: String,
-    /// INQR_STRT_DT (String, 선택)
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 조회시작일자 (String, 필수)
     #[serde(rename = "INQR_STRT_DT")]
     pub inqr_strt_dt: String,
-    /// INQR_END_DT (String, 선택)
-    #[serde(rename = "INQR_END_DT")]
-    pub inqr_end_dt: String,
-    /// SORT_DVSN (String, 선택)
-    #[serde(rename = "SORT_DVSN")]
-    pub sort_dvsn: String,
-    /// INQR_DVSN (String, 선택)
-    #[serde(rename = "INQR_DVSN")]
-    pub inqr_dvsn: String,
-    /// CBLC_DVSN (String, 선택)
-    #[serde(rename = "CBLC_DVSN")]
-    pub cblc_dvsn: String,
-    /// CTX_AREA_FK100 (String, 선택)
-    #[serde(rename = "CTX_AREA_FK100")]
-    pub ctx_area_fk100: String,
-    /// CTX_AREA_NK100 (String, 선택)
+    /// 상품번호 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// 연속조회키100 (String, 필수)
     #[serde(rename = "CTX_AREA_NK100")]
     pub ctx_area_nk100: String,
+    /// 조회종료일자 (String, 필수)
+    #[serde(rename = "INQR_END_DT")]
+    pub inqr_end_dt: String,
+    /// 정렬구분 (String, 필수)
+    #[serde(rename = "SORT_DVSN")]
+    pub sort_dvsn: String,
+    /// 조회구분 (String, 필수)
+    #[serde(rename = "INQR_DVSN")]
+    pub inqr_dvsn: String,
+    /// 잔고구분 (String, 필수)
+    #[serde(rename = "CBLC_DVSN")]
+    pub cblc_dvsn: String,
+    /// 연속조회검색조건100 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK100")]
+    pub ctx_area_fk100: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1462,6 +1549,33 @@ pub struct DomesticStockV1TradingInquirePeriodProfitRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingInquirePeriodTradeProfitRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 정렬구분 (String, 필수)
+    #[serde(rename = "SORT_DVSN")]
+    pub sort_dvsn: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 상품번호 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// 조회시작일자 (String, 필수)
+    #[serde(rename = "INQR_STRT_DT")]
+    pub inqr_strt_dt: String,
+    /// 조회종료일자 (String, 필수)
+    #[serde(rename = "INQR_END_DT")]
+    pub inqr_end_dt: String,
+    /// 연속조회키100 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK100")]
+    pub ctx_area_nk100: String,
+    /// 잔고구분 (String, 필수)
+    #[serde(rename = "CBLC_DVSN")]
+    pub cblc_dvsn: String,
+    /// 연속조회검색조건100 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK100")]
+    pub ctx_area_fk100: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1496,6 +1610,21 @@ pub struct DomesticStockV1TradingInquirePeriodTradeProfitRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingIntgrMarginRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// CMA평가금액포함여부 (String, 필수)
+    #[serde(rename = "CMA_EVLU_AMT_ICLD_YN")]
+    pub cma_evlu_amt_icld_yn: String,
+    /// 원화외화구분코드 (String, 필수)
+    #[serde(rename = "WCRC_FRCR_DVSN_CD")]
+    pub wcrc_frcr_dvsn_cd: String,
+    /// 선도환계약외화구분코드 (String, 필수)
+    #[serde(rename = "FWEX_CTRT_FRCR_DVSN_CD")]
+    pub fwex_ctrt_frcr_dvsn_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1530,6 +1659,42 @@ pub struct DomesticStockV1TradingIntgrMarginRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1TradingPeriodRightsRequest {
+    /// 조회구분 (String, 필수)
+    #[serde(rename = "INQR_DVSN")]
+    pub inqr_dvsn: String,
+    /// 고객실명확인번호25 (String, 필수)
+    #[serde(rename = "CUST_RNCNO25")]
+    pub cust_rncno25: String,
+    /// 홈넷ID (String, 필수)
+    #[serde(rename = "HMID")]
+    pub hmid: String,
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 조회시작일자 (String, 필수)
+    #[serde(rename = "INQR_STRT_DT")]
+    pub inqr_strt_dt: String,
+    /// 조회종료일자 (String, 필수)
+    #[serde(rename = "INQR_END_DT")]
+    pub inqr_end_dt: String,
+    /// 권리유형코드 (String, 필수)
+    #[serde(rename = "RGHT_TYPE_CD")]
+    pub rght_type_cd: String,
+    /// 상품번호 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// 상품유형코드 (String, 필수)
+    #[serde(rename = "PRDT_TYPE_CD")]
+    pub prdt_type_cd: String,
+    /// 연속조회키100 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK100")]
+    pub ctx_area_nk100: String,
+    /// 연속조회검색조건100 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK100")]
+    pub ctx_area_fk100: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1564,11 +1729,11 @@ pub struct DomesticStockV1TradingPeriodRightsRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquirePriceRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
@@ -1604,11 +1769,11 @@ pub struct DomesticStockV1QuotationsInquirePriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquirePrice2Request {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
+    /// FID 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
+    /// FID 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
@@ -1644,11 +1809,11 @@ pub struct DomesticStockV1QuotationsInquirePrice2Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireCcnlRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
@@ -1684,18 +1849,18 @@ pub struct DomesticStockV1QuotationsInquireCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireDailyPriceRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
-    /// fid_org_adj_prc (String, 선택)
-    #[serde(rename = "fid_org_adj_prc")]
-    pub fid_org_adj_prc: String,
-    /// fid_period_div_code (String, 선택)
-    #[serde(rename = "fid_period_div_code")]
+    /// 기간 분류 코드 (String, 필수)
+    #[serde(rename = "FID_PERIOD_DIV_CODE")]
     pub fid_period_div_code: String,
+    /// 수정주가 원주가 가격 (String, 필수)
+    #[serde(rename = "FID_ORG_ADJ_PRC")]
+    pub fid_org_adj_prc: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1730,11 +1895,11 @@ pub struct DomesticStockV1QuotationsInquireDailyPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireAskingPriceExpCcnRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
@@ -1770,11 +1935,11 @@ pub struct DomesticStockV1QuotationsInquireAskingPriceExpCcnRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireInvestorRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
@@ -1810,11 +1975,11 @@ pub struct DomesticStockV1QuotationsInquireInvestorRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireMemberRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
+    /// FID 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
+    /// FID 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
@@ -1850,6 +2015,24 @@ pub struct DomesticStockV1QuotationsInquireMemberRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireDailyItemchartpriceRequest {
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 입력 날짜 1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// 입력 날짜 2 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_2")]
+    pub fid_input_date_2: String,
+    /// 기간분류코드 (String, 필수)
+    #[serde(rename = "FID_PERIOD_DIV_CODE")]
+    pub fid_period_div_code: String,
+    /// 수정주가 원주가 가격 여부 (String, 필수)
+    #[serde(rename = "FID_ORG_ADJ_PRC")]
+    pub fid_org_adj_prc: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1884,21 +2067,21 @@ pub struct DomesticStockV1QuotationsInquireDailyItemchartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireTimeItemchartpriceRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_etc_cls_code (String, 선택)
-    #[serde(rename = "fid_etc_cls_code")]
-    pub fid_etc_cls_code: String,
-    /// fid_input_hour_1 (String, 선택)
-    #[serde(rename = "fid_input_hour_1")]
-    pub fid_input_hour_1: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
-    /// fid_pw_data_incu_yn (String, 선택)
-    #[serde(rename = "fid_pw_data_incu_yn")]
+    /// 입력 시간1 (String, 필수)
+    #[serde(rename = "FID_INPUT_HOUR_1")]
+    pub fid_input_hour_1: String,
+    /// 과거 데이터 포함 여부  (String, 필수)
+    #[serde(rename = "FID_PW_DATA_INCU_YN")]
     pub fid_pw_data_incu_yn: String,
+    /// 기타 구분 코드 (String, 필수)
+    #[serde(rename = "FID_ETC_CLS_CODE")]
+    pub fid_etc_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1933,6 +2116,24 @@ pub struct DomesticStockV1QuotationsInquireTimeItemchartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireTimeDailychartpriceRequest {
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 입력 시간1 (String, 필수)
+    #[serde(rename = "FID_INPUT_HOUR_1")]
+    pub fid_input_hour_1: String,
+    /// 입력 날짜1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// 과거 데이터 포함 여부  (String, 필수)
+    #[serde(rename = "FID_PW_DATA_INCU_YN")]
+    pub fid_pw_data_incu_yn: String,
+    /// 허봉 포함 여부 (String, 선택)
+    #[serde(rename = "FID_FAKE_TICK_INCU_YN")]
+    pub fid_fake_tick_incu_yn: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -1967,6 +2168,15 @@ pub struct DomesticStockV1QuotationsInquireTimeDailychartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireTimeItemconclusionRequest {
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 입력 시간1 (String, 필수)
+    #[serde(rename = "FID_INPUT_HOUR_1")]
+    pub fid_input_hour_1: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2001,6 +2211,12 @@ pub struct DomesticStockV1QuotationsInquireTimeItemconclusionRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireDailyOvertimepriceRequest {
+    /// FID 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// FID 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2035,6 +2251,15 @@ pub struct DomesticStockV1QuotationsInquireDailyOvertimepriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireTimeOvertimeconclusionRequest {
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 시간 구분 코드 (String, 필수)
+    #[serde(rename = "FID_HOUR_CLS_CODE")]
+    pub fid_hour_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2069,6 +2294,12 @@ pub struct DomesticStockV1QuotationsInquireTimeOvertimeconclusionRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireOvertimePriceRequest {
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2103,6 +2334,12 @@ pub struct DomesticStockV1QuotationsInquireOvertimePriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireOvertimeAskingPriceRequest {
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2137,6 +2374,21 @@ pub struct DomesticStockV1QuotationsInquireOvertimeAskingPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsExpClosingPriceRequest {
+    /// 순위 정렬 구분 코드 (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    pub fid_rank_sort_cls_code: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 소속 구분 코드 (String, 필수)
+    #[serde(rename = "FID_BLNG_CLS_CODE")]
+    pub fid_blng_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2171,12 +2423,12 @@ pub struct DomesticStockV1QuotationsExpClosingPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthEtfetnV1QuotationsInquirePriceRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
+    /// FID 입력 종목코드 (String, 필수)
     #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
+    /// FID 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2211,6 +2463,15 @@ pub struct AuthEtfetnV1QuotationsInquirePriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthEtfetnV1QuotationsInquireComponentStockPriceRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2245,11 +2506,11 @@ pub struct AuthEtfetnV1QuotationsInquireComponentStockPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthEtfetnV1QuotationsNavComparisonTrendRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
@@ -2285,16 +2546,16 @@ pub struct AuthEtfetnV1QuotationsNavComparisonTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthEtfetnV1QuotationsNavComparisonDailyTrendRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
+    /// FID 조건 시장 분류 코드 (String, 필수)
     #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
+    /// FID 입력 종목코드 (String, 필수)
     #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// fid_input_date_1 (String, 선택)
+    /// FID 입력 날짜1 (String, 필수)
     #[serde(rename = "fid_input_date_1")]
     pub fid_input_date_1: String,
-    /// fid_input_date_2 (String, 선택)
+    /// FID 입력 날짜2 (String, 필수)
     #[serde(rename = "fid_input_date_2")]
     pub fid_input_date_2: String,
     /// headerMap (String, 선택)
@@ -2331,15 +2592,15 @@ pub struct AuthEtfetnV1QuotationsNavComparisonDailyTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthEtfetnV1QuotationsNavComparisonTimeTrendRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
-    pub fid_input_iscd: String,
-    /// fid_hour_cls_code (String, 선택)
+    /// FID 시간 구분 코드 (String, 필수)
     #[serde(rename = "fid_hour_cls_code")]
     pub fid_hour_cls_code: String,
+    /// FID 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// FID 입력 종목코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2374,11 +2635,11 @@ pub struct AuthEtfetnV1QuotationsNavComparisonTimeTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireElwPriceRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
@@ -2414,6 +2675,27 @@ pub struct DomesticStockV1QuotationsInquireElwPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsNewlyListedRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 분류구분코드 (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
+    pub fid_div_cls_code: String,
+    /// 기초자산입력종목코드 (String, 필수)
+    #[serde(rename = "FID_UNAS_INPUT_ISCD")]
+    pub fid_unas_input_iscd: String,
+    /// 입력종목코드2 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_2")]
+    pub fid_input_iscd_2: String,
+    /// 입력날짜1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// 결재방법 (String, 필수)
+    #[serde(rename = "FID_BLNC_CLS_CODE")]
+    pub fid_blnc_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2448,6 +2730,45 @@ pub struct AuthElwV1QuotationsNewlyListedRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1RankingSensitivityRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 기초자산입력종목코드 (String, 필수)
+    #[serde(rename = "FID_UNAS_INPUT_ISCD")]
+    pub fid_unas_input_iscd: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 콜풋구분코드 (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
+    pub fid_div_cls_code: String,
+    /// 가격(이상) (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_1")]
+    pub fid_input_price_1: String,
+    /// 가격(이하) (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_2")]
+    pub fid_input_price_2: String,
+    /// 거래량(이상) (String, 필수)
+    #[serde(rename = "FID_INPUT_VOL_1")]
+    pub fid_input_vol_1: String,
+    /// 거래량(이하) (String, 필수)
+    #[serde(rename = "FID_INPUT_VOL_2")]
+    pub fid_input_vol_2: String,
+    /// 순위정렬구분코드 (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    pub fid_rank_sort_cls_code: String,
+    /// 잔존일수(이상) (String, 필수)
+    #[serde(rename = "FID_INPUT_RMNN_DYNU_1")]
+    pub fid_input_rmnn_dynu_1: String,
+    /// 조회기준일 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// 결재방법 (String, 필수)
+    #[serde(rename = "FID_BLNG_CLS_CODE")]
+    pub fid_blng_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2482,6 +2803,54 @@ pub struct AuthElwV1RankingSensitivityRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsUdrlAssetPriceRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 시장구분코드 (String, 필수)
+    #[serde(rename = "FID_MRKT_CLS_CODE")]
+    pub fid_mrkt_cls_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 기초자산입력종목코드 (String, 필수)
+    #[serde(rename = "FID_UNAS_INPUT_ISCD")]
+    pub fid_unas_input_iscd: String,
+    /// 거래량수 (String, 필수)
+    #[serde(rename = "FID_VOL_CNT")]
+    pub fid_vol_cnt: i64,
+    /// 대상제외구분코드 (String, 필수)
+    #[serde(rename = "FID_TRGT_EXLS_CLS_CODE")]
+    pub fid_trgt_exls_cls_code: String,
+    /// 입력가격1 (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_1")]
+    pub fid_input_price_1: String,
+    /// 입력가격2 (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_2")]
+    pub fid_input_price_2: String,
+    /// 입력거래량1 (String, 필수)
+    #[serde(rename = "FID_INPUT_VOL_1")]
+    pub fid_input_vol_1: String,
+    /// 입력거래량2 (String, 필수)
+    #[serde(rename = "FID_INPUT_VOL_2")]
+    pub fid_input_vol_2: String,
+    /// 입력잔존일수1 (String, 필수)
+    #[serde(rename = "FID_INPUT_RMNN_DYNU_1")]
+    pub fid_input_rmnn_dynu_1: String,
+    /// 입력잔존일수2 (String, 필수)
+    #[serde(rename = "FID_INPUT_RMNN_DYNU_2")]
+    pub fid_input_rmnn_dynu_2: String,
+    /// 옵션 (String, 필수)
+    #[serde(rename = "FID_OPTION")]
+    pub fid_option: String,
+    /// 입력옵션1 (String, 필수)
+    #[serde(rename = "FID_INPUT_OPTION_1")]
+    pub fid_input_option_1: String,
+    /// 입력옵션2 (String, 필수)
+    #[serde(rename = "FID_INPUT_OPTION_2")]
+    pub fid_input_option_2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2516,6 +2885,177 @@ pub struct AuthElwV1QuotationsUdrlAssetPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsCondSearchRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 순위정렬구분코드 (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    pub fid_rank_sort_cls_code: String,
+    /// 입력수1 (String, 필수)
+    #[serde(rename = "FID_INPUT_CNT_1")]
+    pub fid_input_cnt_1: String,
+    /// 순위정렬구분코드2 (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE_2")]
+    pub fid_rank_sort_cls_code_2: String,
+    /// 입력수2 (String, 필수)
+    #[serde(rename = "FID_INPUT_CNT_2")]
+    pub fid_input_cnt_2: String,
+    /// 순위정렬구분코드3 (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE_3")]
+    pub fid_rank_sort_cls_code_3: String,
+    /// 입력수3 (String, 필수)
+    #[serde(rename = "FID_INPUT_CNT_3")]
+    pub fid_input_cnt_3: String,
+    /// 대상구분코드 (String, 필수)
+    #[serde(rename = "FID_TRGT_CLS_CODE")]
+    pub fid_trgt_cls_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 기초자산입력종목코드 (String, 필수)
+    #[serde(rename = "FID_UNAS_INPUT_ISCD")]
+    pub fid_unas_input_iscd: String,
+    /// 시장구분코드 (String, 필수)
+    #[serde(rename = "FID_MRKT_CLS_CODE")]
+    pub fid_mrkt_cls_code: String,
+    /// 입력날짜1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// 입력날짜2 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_2")]
+    pub fid_input_date_2: String,
+    /// 입력종목코드2 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_2")]
+    pub fid_input_iscd_2: String,
+    /// 기타구분코드 (String, 필수)
+    #[serde(rename = "FID_ETC_CLS_CODE")]
+    pub fid_etc_cls_code: String,
+    /// 입력잔존일수1 (String, 필수)
+    #[serde(rename = "FID_INPUT_RMNN_DYNU_1")]
+    pub fid_input_rmnn_dynu_1: String,
+    /// 입력잔존일수2 (String, 필수)
+    #[serde(rename = "FID_INPUT_RMNN_DYNU_2")]
+    pub fid_input_rmnn_dynu_2: String,
+    /// 현재가수1 (String, 필수)
+    #[serde(rename = "FID_PRPR_CNT1")]
+    pub fid_prpr_cnt1: String,
+    /// 현재가수2 (String, 필수)
+    #[serde(rename = "FID_PRPR_CNT2")]
+    pub fid_prpr_cnt2: String,
+    /// 등락비율1 (String, 필수)
+    #[serde(rename = "FID_RSFL_RATE1")]
+    pub fid_rsfl_rate1: String,
+    /// 등락비율2 (String, 필수)
+    #[serde(rename = "FID_RSFL_RATE2")]
+    pub fid_rsfl_rate2: String,
+    /// 거래량1 (String, 필수)
+    #[serde(rename = "FID_VOL1")]
+    pub fid_vol1: String,
+    /// 거래량2 (String, 필수)
+    #[serde(rename = "FID_VOL2")]
+    pub fid_vol2: String,
+    /// 적용범위가격1 (String, 필수)
+    #[serde(rename = "FID_APLY_RANG_PRC_1")]
+    pub fid_aply_rang_prc_1: String,
+    /// 적용범위가격2 (String, 필수)
+    #[serde(rename = "FID_APLY_RANG_PRC_2")]
+    pub fid_aply_rang_prc_2: String,
+    /// 레버리지값1 (String, 필수)
+    #[serde(rename = "FID_LVRG_VAL1")]
+    pub fid_lvrg_val1: String,
+    /// 레버리지값2 (String, 필수)
+    #[serde(rename = "FID_LVRG_VAL2")]
+    pub fid_lvrg_val2: String,
+    /// 거래량3 (String, 필수)
+    #[serde(rename = "FID_VOL3")]
+    pub fid_vol3: String,
+    /// 거래량4 (String, 필수)
+    #[serde(rename = "FID_VOL4")]
+    pub fid_vol4: String,
+    /// 내재변동성1 (String, 필수)
+    #[serde(rename = "FID_INTS_VLTL1")]
+    pub fid_ints_vltl1: String,
+    /// 내재변동성2 (String, 필수)
+    #[serde(rename = "FID_INTS_VLTL2")]
+    pub fid_ints_vltl2: String,
+    /// 프리미엄값1 (String, 필수)
+    #[serde(rename = "FID_PRMM_VAL1")]
+    pub fid_prmm_val1: String,
+    /// 프리미엄값2 (String, 필수)
+    #[serde(rename = "FID_PRMM_VAL2")]
+    pub fid_prmm_val2: String,
+    /// 기어링1 (String, 필수)
+    #[serde(rename = "FID_GEAR1")]
+    pub fid_gear1: String,
+    /// 기어링2 (String, 필수)
+    #[serde(rename = "FID_GEAR2")]
+    pub fid_gear2: String,
+    /// 손익분기비율1 (String, 필수)
+    #[serde(rename = "FID_PRLS_QRYR_RATE1")]
+    pub fid_prls_qryr_rate1: String,
+    /// 손익분기비율2 (String, 필수)
+    #[serde(rename = "FID_PRLS_QRYR_RATE2")]
+    pub fid_prls_qryr_rate2: String,
+    /// 델타1 (String, 필수)
+    #[serde(rename = "FID_DELTA1")]
+    pub fid_delta1: String,
+    /// 델타2 (String, 필수)
+    #[serde(rename = "FID_DELTA2")]
+    pub fid_delta2: String,
+    /// 행사가1 (String, 필수)
+    #[serde(rename = "FID_ACPR1")]
+    pub fid_acpr1: String,
+    /// 행사가2 (String, 필수)
+    #[serde(rename = "FID_ACPR2")]
+    pub fid_acpr2: String,
+    /// 주식전환비율1 (String, 필수)
+    #[serde(rename = "FID_STCK_CNVR_RATE1")]
+    pub fid_stck_cnvr_rate1: String,
+    /// 주식전환비율2 (String, 필수)
+    #[serde(rename = "FID_STCK_CNVR_RATE2")]
+    pub fid_stck_cnvr_rate2: String,
+    /// 분류구분코드 (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
+    pub fid_div_cls_code: String,
+    /// 패리티1 (String, 필수)
+    #[serde(rename = "FID_PRIT1")]
+    pub fid_prit1: String,
+    /// 패리티2 (String, 필수)
+    #[serde(rename = "FID_PRIT2")]
+    pub fid_prit2: String,
+    /// 자본지지점1 (String, 필수)
+    #[serde(rename = "FID_CFP1")]
+    pub fid_cfp1: String,
+    /// 자본지지점2 (String, 필수)
+    #[serde(rename = "FID_CFP2")]
+    pub fid_cfp2: String,
+    /// 지수가격1 (String, 필수)
+    #[serde(rename = "FID_INPUT_NMIX_PRICE_1")]
+    pub fid_input_nmix_price_1: String,
+    /// 지수가격2 (String, 필수)
+    #[serde(rename = "FID_INPUT_NMIX_PRICE_2")]
+    pub fid_input_nmix_price_2: String,
+    /// E기어링값1 (String, 필수)
+    #[serde(rename = "FID_EGEA_VAL1")]
+    pub fid_egea_val1: String,
+    /// E기어링값2 (String, 필수)
+    #[serde(rename = "FID_EGEA_VAL2")]
+    pub fid_egea_val2: String,
+    /// 배당수익율 (String, 필수)
+    #[serde(rename = "FID_INPUT_DVDN_ERT")]
+    pub fid_input_dvdn_ert: String,
+    /// 역사적변동성 (String, 필수)
+    #[serde(rename = "FID_INPUT_HIST_VLTL")]
+    pub fid_input_hist_vltl: String,
+    /// 세타1 (String, 필수)
+    #[serde(rename = "FID_THETA1")]
+    pub fid_theta1: String,
+    /// 세타2 (String, 필수)
+    #[serde(rename = "FID_THETA2")]
+    pub fid_theta2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2550,6 +3090,48 @@ pub struct AuthElwV1QuotationsCondSearchRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1RankingQuickChangeRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 기초자산입력종목코드 (String, 필수)
+    #[serde(rename = "FID_UNAS_INPUT_ISCD")]
+    pub fid_unas_input_iscd: String,
+    /// 발행사 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 시장구분코드 (String, 필수)
+    #[serde(rename = "FID_MRKT_CLS_CODE")]
+    pub fid_mrkt_cls_code: String,
+    /// 가격(이상) (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_1")]
+    pub fid_input_price_1: String,
+    /// 가격(이하) (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_2")]
+    pub fid_input_price_2: String,
+    /// 거래량(이상) (String, 필수)
+    #[serde(rename = "FID_INPUT_VOL_1")]
+    pub fid_input_vol_1: String,
+    /// 거래량(이하) (String, 필수)
+    #[serde(rename = "FID_INPUT_VOL_2")]
+    pub fid_input_vol_2: String,
+    /// 시간구분코드 (String, 필수)
+    #[serde(rename = "FID_HOUR_CLS_CODE")]
+    pub fid_hour_cls_code: String,
+    /// 입력 일 또는 분 (String, 필수)
+    #[serde(rename = "FID_INPUT_HOUR_1")]
+    pub fid_input_hour_1: String,
+    /// 기준시간(분 선택 시) (String, 필수)
+    #[serde(rename = "FID_INPUT_HOUR_2")]
+    pub fid_input_hour_2: String,
+    /// 순위정렬구분코드 (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    pub fid_rank_sort_cls_code: String,
+    /// 결재방법 (String, 필수)
+    #[serde(rename = "FID_BLNG_CLS_CODE")]
+    pub fid_blng_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2584,6 +3166,15 @@ pub struct AuthElwV1RankingQuickChangeRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsUdrlAssetListRequest {
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 순위정렬구분코드 (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    pub fid_rank_sort_cls_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2618,6 +3209,12 @@ pub struct AuthElwV1QuotationsUdrlAssetListRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsCompareStocksRequest {
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2652,6 +3249,12 @@ pub struct AuthElwV1QuotationsCompareStocksRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsLpTradeTrendRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2686,6 +3289,12 @@ pub struct AuthElwV1QuotationsLpTradeTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsIndicatorTrendCcnlRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2720,6 +3329,18 @@ pub struct AuthElwV1QuotationsIndicatorTrendCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsIndicatorTrendMinuteRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 시간구분코드 (String, 필수)
+    #[serde(rename = "FID_HOUR_CLS_CODE")]
+    pub fid_hour_cls_code: String,
+    /// 과거데이터 포함 여부 (String, 필수)
+    #[serde(rename = "FID_PW_DATA_INCU_YN")]
+    pub fid_pw_data_incu_yn: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2754,6 +3375,12 @@ pub struct AuthElwV1QuotationsIndicatorTrendMinuteRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsIndicatorTrendDailyRequest {
+    /// 시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 종콕코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2788,6 +3415,12 @@ pub struct AuthElwV1QuotationsIndicatorTrendDailyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsVolatilityTrendTickRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2822,6 +3455,12 @@ pub struct AuthElwV1QuotationsVolatilityTrendTickRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsVolatilityTrendCcnlRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2856,6 +3495,12 @@ pub struct AuthElwV1QuotationsVolatilityTrendCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsVolatilityTrendDailyRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2890,6 +3535,12 @@ pub struct AuthElwV1QuotationsVolatilityTrendDailyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsSensitivityTrendCcnlRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2924,6 +3575,18 @@ pub struct AuthElwV1QuotationsSensitivityTrendCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsVolatilityTrendMinuteRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 시간구분코드 (String, 필수)
+    #[serde(rename = "FID_HOUR_CLS_CODE")]
+    pub fid_hour_cls_code: String,
+    /// 과거데이터 포함 여부 (String, 필수)
+    #[serde(rename = "FID_PW_DATA_INCU_YN")]
+    pub fid_pw_data_incu_yn: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2958,6 +3621,12 @@ pub struct AuthElwV1QuotationsVolatilityTrendMinuteRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsSensitivityTrendDailyRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -2992,6 +3661,36 @@ pub struct AuthElwV1QuotationsSensitivityTrendDailyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1QuotationsExpirationStocksRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력날짜1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// 입력날짜2 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_2")]
+    pub fid_input_date_2: String,
+    /// 분류구분코드 (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
+    pub fid_div_cls_code: String,
+    /// 기타구분코드 (String, 필수)
+    #[serde(rename = "FID_ETC_CLS_CODE")]
+    pub fid_etc_cls_code: String,
+    /// 기초자산입력종목코드 (String, 필수)
+    #[serde(rename = "FID_UNAS_INPUT_ISCD")]
+    pub fid_unas_input_iscd: String,
+    /// 발행회사코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_2")]
+    pub fid_input_iscd_2: String,
+    /// 결제방법 (String, 필수)
+    #[serde(rename = "FID_BLNG_CLS_CODE")]
+    pub fid_blng_cls_code: String,
+    /// 입력옵션1 (String, 필수)
+    #[serde(rename = "FID_INPUT_OPTION_1")]
+    pub fid_input_option_1: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3026,6 +3725,39 @@ pub struct AuthElwV1QuotationsExpirationStocksRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1RankingIndicatorRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 기초자산입력종목코드 (String, 필수)
+    #[serde(rename = "FID_UNAS_INPUT_ISCD")]
+    pub fid_unas_input_iscd: String,
+    /// 발행사 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 콜풋구분코드 (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
+    pub fid_div_cls_code: String,
+    /// 가격(이상) (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_1")]
+    pub fid_input_price_1: String,
+    /// 가격(이하) (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_2")]
+    pub fid_input_price_2: String,
+    /// 거래량(이상) (String, 필수)
+    #[serde(rename = "FID_INPUT_VOL_1")]
+    pub fid_input_vol_1: String,
+    /// 거래량(이하) (String, 필수)
+    #[serde(rename = "FID_INPUT_VOL_2")]
+    pub fid_input_vol_2: String,
+    /// 순위정렬구분코드 (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    pub fid_rank_sort_cls_code: String,
+    /// 결재방법 (String, 필수)
+    #[serde(rename = "FID_BLNG_CLS_CODE")]
+    pub fid_blng_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3060,6 +3792,48 @@ pub struct AuthElwV1RankingIndicatorRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1RankingUpdownRateRequest {
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 상승율/하락율 구분 (String, 필수)
+    #[serde(rename = "FID_UNAS_INPUT_ISCD")]
+    pub fid_unas_input_iscd: String,
+    /// N일자값 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 거래량조건 (String, 필수)
+    #[serde(rename = "FID_INPUT_RMNN_DYNU_1")]
+    pub fid_input_rmnn_dynu_1: String,
+    /// NEXT KEY BUFF (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
+    pub fid_div_cls_code: String,
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_1")]
+    pub fid_input_price_1: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_2")]
+    pub fid_input_price_2: String,
+    /// 상승율/하락율 구분 (String, 필수)
+    #[serde(rename = "FID_INPUT_VOL_1")]
+    pub fid_input_vol_1: String,
+    /// N일자값 (String, 필수)
+    #[serde(rename = "FID_INPUT_VOL_2")]
+    pub fid_input_vol_2: String,
+    /// 거래량조건 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// NEXT KEY BUFF (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    pub fid_rank_sort_cls_code: String,
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "FID_BLNG_CLS_CODE")]
+    pub fid_blng_cls_code: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_2")]
+    pub fid_input_date_2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3094,6 +3868,51 @@ pub struct AuthElwV1RankingUpdownRateRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthElwV1RankingVolumeRankRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 기초자산입력종목코드 (String, 필수)
+    #[serde(rename = "FID_UNAS_INPUT_ISCD")]
+    pub fid_unas_input_iscd: String,
+    /// 발행사 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 입력잔존일수 (String, 필수)
+    #[serde(rename = "FID_INPUT_RMNN_DYNU_1")]
+    pub fid_input_rmnn_dynu_1: String,
+    /// 콜풋구분코드 (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
+    pub fid_div_cls_code: String,
+    /// 가격(이상) (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_1")]
+    pub fid_input_price_1: String,
+    /// 가격(이하) (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_2")]
+    pub fid_input_price_2: String,
+    /// 거래량(이상) (String, 필수)
+    #[serde(rename = "FID_INPUT_VOL_1")]
+    pub fid_input_vol_1: String,
+    /// 거래량(이하) (String, 필수)
+    #[serde(rename = "FID_INPUT_VOL_2")]
+    pub fid_input_vol_2: String,
+    /// 조회기준일 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// 순위정렬구분코드 (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    pub fid_rank_sort_cls_code: String,
+    /// 소속구분코드 (String, 필수)
+    #[serde(rename = "FID_BLNG_CLS_CODE")]
+    pub fid_blng_cls_code: String,
+    /// LP발행사 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_2")]
+    pub fid_input_iscd_2: String,
+    /// 만기일-최종거래일조회 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_2")]
+    pub fid_input_date_2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3128,6 +3947,12 @@ pub struct AuthElwV1RankingVolumeRankRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireIndexPriceRequest {
+    /// FID 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// FID 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3162,6 +3987,18 @@ pub struct DomesticStockV1QuotationsInquireIndexPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireIndexDailyPriceRequest {
+    /// FID 기간 분류 코드 (String, 필수)
+    #[serde(rename = "FID_PERIOD_DIV_CODE")]
+    pub fid_period_div_code: String,
+    /// FID 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// FID 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// FID 입력 날짜1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3196,6 +4033,12 @@ pub struct DomesticStockV1QuotationsInquireIndexDailyPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireIndexTickpriceRequest {
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3230,6 +4073,15 @@ pub struct DomesticStockV1QuotationsInquireIndexTickpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireIndexTimepriceRequest {
+    /// ?입력 시간1 (String, 필수)
+    #[serde(rename = "FID_INPUT_HOUR_1")]
+    pub fid_input_hour_1: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3264,21 +4116,21 @@ pub struct DomesticStockV1QuotationsInquireIndexTimepriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireTimeIndexchartpriceRequest {
-    /// FID_COND_MRKT_DIV_CODE (String, 선택)
+    /// FID 조건 시장 분류 코드 (String, 필수)
     #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
-    /// FID_INPUT_ISCD (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
-    pub fid_input_iscd: String,
-    /// FID_INPUT_HOUR_1 (String, 선택)
-    #[serde(rename = "FID_INPUT_HOUR_1")]
-    pub fid_input_hour_1: String,
-    /// FID_PW_DATA_INCU_YN (String, 선택)
-    #[serde(rename = "FID_PW_DATA_INCU_YN")]
-    pub fid_pw_data_incu_yn: String,
-    /// FID_ETC_CLS_CODE (String, 선택)
+    /// FID 기타 구분 코드 (String, 필수)
     #[serde(rename = "FID_ETC_CLS_CODE")]
     pub fid_etc_cls_code: String,
+    /// FID 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// FID 입력 시간1 (String, 필수)
+    #[serde(rename = "FID_INPUT_HOUR_1")]
+    pub fid_input_hour_1: String,
+    /// FID 과거 데이터 포함 여부 (String, 필수)
+    #[serde(rename = "FID_PW_DATA_INCU_YN")]
+    pub fid_pw_data_incu_yn: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3313,6 +4165,21 @@ pub struct DomesticStockV1QuotationsInquireTimeIndexchartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireDailyIndexchartpriceRequest {
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 업종 상세코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 조회 시작일자 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// 조회 종료일자 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_2")]
+    pub fid_input_date_2: String,
+    /// '	기간분류코드' (String, 필수)
+    #[serde(rename = "FID_PERIOD_DIV_CODE")]
+    pub fid_period_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3347,20 +4214,20 @@ pub struct DomesticStockV1QuotationsInquireDailyIndexchartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireIndexCategoryPriceRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
+    /// FID 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
+    /// FID 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
-    /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "fid_cond_scr_div_code")]
+    /// FID 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
     pub fid_cond_scr_div_code: String,
-    /// fid_mrkt_cls_code (String, 선택)
-    #[serde(rename = "fid_mrkt_cls_code")]
+    /// FID 시장 구분 코드 (String, 필수)
+    #[serde(rename = "FID_MRKT_CLS_CODE")]
     pub fid_mrkt_cls_code: String,
-    /// fid_blng_cls_code (String, 선택)
-    #[serde(rename = "fid_blng_cls_code")]
+    /// FID 소속 구분 코드 (String, 필수)
+    #[serde(rename = "FID_BLNG_CLS_CODE")]
     pub fid_blng_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
@@ -3396,6 +4263,18 @@ pub struct DomesticStockV1QuotationsInquireIndexCategoryPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsExpIndexTrendRequest {
+    /// 장운영 구분 코드 (String, 필수)
+    #[serde(rename = "FID_MKOP_CLS_CODE")]
+    pub fid_mkop_cls_code: String,
+    /// 입력 시간1 (String, 필수)
+    #[serde(rename = "FID_INPUT_HOUR_1")]
+    pub fid_input_hour_1: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3430,21 +4309,21 @@ pub struct DomesticStockV1QuotationsExpIndexTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsExpTotalIndexRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "fid_cond_scr_div_code")]
-    pub fid_cond_scr_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
-    pub fid_input_iscd: String,
-    /// fid_mkop_cls_code (String, 선택)
-    #[serde(rename = "fid_mkop_cls_code")]
-    pub fid_mkop_cls_code: String,
-    /// fid_mrkt_cls_code (String, 선택)
+    /// 시장 구분 코드 (String, 필수)
     #[serde(rename = "fid_mrkt_cls_code")]
     pub fid_mrkt_cls_code: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// 장운영 구분 코드 (String, 필수)
+    #[serde(rename = "fid_mkop_cls_code")]
+    pub fid_mkop_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3479,30 +4358,30 @@ pub struct DomesticStockV1QuotationsExpTotalIndexRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireViStatusRequest {
-    /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "fid_cond_scr_div_code")]
-    pub fid_cond_scr_div_code: String,
-    /// fid_mrkt_cls_code (String, 선택)
-    #[serde(rename = "fid_mrkt_cls_code")]
-    pub fid_mrkt_cls_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
-    pub fid_input_iscd: String,
-    /// fid_rank_sort_cls_code (String, 선택)
-    #[serde(rename = "fid_rank_sort_cls_code")]
-    pub fid_rank_sort_cls_code: String,
-    /// fid_input_date_1 (String, 선택)
-    #[serde(rename = "fid_input_date_1")]
-    pub fid_input_date_1: String,
-    /// fid_trgt_cls_code (String, 선택)
-    #[serde(rename = "fid_trgt_cls_code")]
-    pub fid_trgt_cls_code: String,
-    /// fid_trgt_exls_cls_code (String, 선택)
-    #[serde(rename = "fid_trgt_exls_cls_code")]
-    pub fid_trgt_exls_cls_code: String,
-    /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "fid_div_cls_code")]
+    /// FID 분류 구분 코드 (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
     pub fid_div_cls_code: String,
+    /// FID 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// FID 시장 구분 코드 (String, 필수)
+    #[serde(rename = "FID_MRKT_CLS_CODE")]
+    pub fid_mrkt_cls_code: String,
+    /// FID 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// FID 순위 정렬 구분 코드 (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    pub fid_rank_sort_cls_code: String,
+    /// FID 입력 날짜1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// FID 대상 구분 코드 (String, 필수)
+    #[serde(rename = "FID_TRGT_CLS_CODE")]
+    pub fid_trgt_cls_code: String,
+    /// FID 대상 제외 구분 코드 (String, 필수)
+    #[serde(rename = "FID_TRGT_EXLS_CLS_CODE")]
+    pub fid_trgt_exls_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3537,6 +4416,18 @@ pub struct DomesticStockV1QuotationsInquireViStatusRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsCompInterestRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 분류구분코드 (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
+    pub fid_div_cls_code: String,
+    /// 분류구분코드 (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE1")]
+    pub fid_div_cls_code1: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3571,6 +4462,30 @@ pub struct DomesticStockV1QuotationsCompInterestRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsNewsTitleRequest {
+    /// 뉴스 제공 업체 코드 (String, 필수)
+    #[serde(rename = "FID_NEWS_OFER_ENTP_CODE")]
+    pub fid_news_ofer_entp_code: String,
+    /// 조건 시장 구분 코드  (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_CLS_CODE")]
+    pub fid_cond_mrkt_cls_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 제목 내용 (String, 필수)
+    #[serde(rename = "FID_TITL_CNTT")]
+    pub fid_titl_cntt: String,
+    /// 입력 날짜 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// 입력 시간 (String, 필수)
+    #[serde(rename = "FID_INPUT_HOUR_1")]
+    pub fid_input_hour_1: String,
+    /// 순위 정렬 구분 코드 (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    pub fid_rank_sort_cls_code: String,
+    /// 입력 일련번호 (String, 필수)
+    #[serde(rename = "FID_INPUT_SRNO")]
+    pub fid_input_srno: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3605,13 +4520,13 @@ pub struct DomesticStockV1QuotationsNewsTitleRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsChkHolidayRequest {
-    /// BASS_DT (String, 선택)
+    /// 기준일자 (String, 필수)
     #[serde(rename = "BASS_DT")]
     pub bass_dt: String,
-    /// CTX_AREA_NK (String, 선택)
+    /// 연속조회키 (String, 필수)
     #[serde(rename = "CTX_AREA_NK")]
     pub ctx_area_nk: String,
-    /// CTX_AREA_FK (String, 선택)
+    /// 연속조회검색조건 (String, 필수)
     #[serde(rename = "CTX_AREA_FK")]
     pub ctx_area_fk: String,
     /// headerMap (String, 선택)
@@ -3682,10 +4597,10 @@ pub struct DomesticStockV1QuotationsMarketTimeRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsSearchInfoRequest {
-    /// PDNO (String, 선택)
+    /// 상품번호 (String, 필수)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// PRDT_TYPE_CD (String, 선택)
+    /// 상품유형코드 (String, 필수)
     #[serde(rename = "PRDT_TYPE_CD")]
     pub prdt_type_cd: String,
     /// headerMap (String, 선택)
@@ -3722,12 +4637,12 @@ pub struct DomesticStockV1QuotationsSearchInfoRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsSearchStockInfoRequest {
-    /// PDNO (String, 선택)
-    #[serde(rename = "PDNO")]
-    pub pdno: String,
-    /// PRDT_TYPE_CD (String, 선택)
+    /// 상품유형코드 (String, 필수)
     #[serde(rename = "PRDT_TYPE_CD")]
     pub prdt_type_cd: String,
+    /// 상품번호 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3762,15 +4677,15 @@ pub struct DomesticStockV1QuotationsSearchStockInfoRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceBalanceSheetRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
+    pub fid_div_cls_code: String,
+    /// 조건 시장 분류 코드 (String, 필수)
     #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
+    /// 입력 종목코드 (String, 필수)
     #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "fid_div_cls_code")]
-    pub fid_div_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3805,15 +4720,15 @@ pub struct DomesticStockV1FinanceBalanceSheetRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceIncomeStatementRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
+    pub fid_div_cls_code: String,
+    /// 조건 시장 분류 코드 (String, 필수)
     #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
+    /// 입력 종목코드 (String, 필수)
     #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "fid_div_cls_code")]
-    pub fid_div_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3848,15 +4763,15 @@ pub struct DomesticStockV1FinanceIncomeStatementRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceFinancialRatioRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
+    pub fid_div_cls_code: String,
+    /// 조건 시장 분류 코드 (String, 필수)
     #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
+    /// 입력 종목코드 (String, 필수)
     #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "fid_div_cls_code")]
-    pub fid_div_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3891,15 +4806,15 @@ pub struct DomesticStockV1FinanceFinancialRatioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceProfitRatioRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
+    /// 입력 종목코드 (String, 필수)
     #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "fid_div_cls_code")]
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
     pub fid_div_cls_code: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3934,15 +4849,15 @@ pub struct DomesticStockV1FinanceProfitRatioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceOtherMajorRatiosRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
+    /// 입력 종목코드 (String, 필수)
     #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// fid_div_cls_code (String, 선택)
+    /// 분류 구분 코드 (String, 필수)
     #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -3977,15 +4892,15 @@ pub struct DomesticStockV1FinanceOtherMajorRatiosRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceStabilityRatioRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
+    /// 입력 종목코드 (String, 필수)
     #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// fid_div_cls_code (String, 선택)
+    /// 분류 구분 코드 (String, 필수)
     #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4020,15 +4935,15 @@ pub struct DomesticStockV1FinanceStabilityRatioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1FinanceGrowthRatioRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
+    /// 입력 종목코드 (String, 필수)
     #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// fid_div_cls_code (String, 선택)
+    /// 분류 구분 코드 (String, 필수)
     #[serde(rename = "fid_div_cls_code")]
     pub fid_div_cls_code: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4063,21 +4978,21 @@ pub struct DomesticStockV1FinanceGrowthRatioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsCreditByCompanyRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "fid_cond_scr_div_code")]
-    pub fid_cond_scr_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
-    pub fid_input_iscd: String,
-    /// fid_slct_yn (String, 선택)
-    #[serde(rename = "fid_slct_yn")]
-    pub fid_slct_yn: String,
-    /// fid_rank_sort_cls_code (String, 선택)
+    /// 순위 정렬 구분 코드 (String, 필수)
     #[serde(rename = "fid_rank_sort_cls_code")]
     pub fid_rank_sort_cls_code: String,
+    /// 선택 여부 (String, 필수)
+    #[serde(rename = "fid_slct_yn")]
+    pub fid_slct_yn: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4112,6 +5027,24 @@ pub struct DomesticStockV1QuotationsCreditByCompanyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoDividendRequest {
+    /// CTS (String, 필수)
+    #[serde(rename = "CTS")]
+    pub cts: String,
+    /// 조회구분 (String, 필수)
+    #[serde(rename = "GB1")]
+    pub gb1: String,
+    /// 조회일자From (String, 필수)
+    #[serde(rename = "F_DT")]
+    pub f_dt: String,
+    /// 조회일자To (String, 필수)
+    #[serde(rename = "T_DT")]
+    pub t_dt: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SHT_CD")]
+    pub sht_cd: String,
+    /// 고배당여부 (String, 필수)
+    #[serde(rename = "HIGH_GB")]
+    pub high_gb: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4146,6 +5079,18 @@ pub struct DomesticStockV1KsdinfoDividendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoPurreqRequest {
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SHT_CD")]
+    pub sht_cd: String,
+    /// 조회일자To (String, 필수)
+    #[serde(rename = "T_DT")]
+    pub t_dt: String,
+    /// 조회일자From (String, 필수)
+    #[serde(rename = "F_DT")]
+    pub f_dt: String,
+    /// CTS (String, 필수)
+    #[serde(rename = "CTS")]
+    pub cts: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4180,6 +5125,18 @@ pub struct DomesticStockV1KsdinfoPurreqRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoMergerSplitRequest {
+    /// CTS (String, 필수)
+    #[serde(rename = "CTS")]
+    pub cts: String,
+    /// 조회일자From (String, 필수)
+    #[serde(rename = "F_DT")]
+    pub f_dt: String,
+    /// 조회일자To (String, 필수)
+    #[serde(rename = "T_DT")]
+    pub t_dt: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SHT_CD")]
+    pub sht_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4214,6 +5171,21 @@ pub struct DomesticStockV1KsdinfoMergerSplitRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoRevSplitRequest {
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SHT_CD")]
+    pub sht_cd: String,
+    /// CTS (String, 필수)
+    #[serde(rename = "CTS")]
+    pub cts: String,
+    /// 조회일자From (String, 필수)
+    #[serde(rename = "F_DT")]
+    pub f_dt: String,
+    /// 조회일자To (String, 필수)
+    #[serde(rename = "T_DT")]
+    pub t_dt: String,
+    /// 시장구분 (String, 필수)
+    #[serde(rename = "MARKET_GB")]
+    pub market_gb: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4248,6 +5220,18 @@ pub struct DomesticStockV1KsdinfoRevSplitRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoCapDcrsRequest {
+    /// CTS (String, 필수)
+    #[serde(rename = "CTS")]
+    pub cts: String,
+    /// 조회일자From (String, 필수)
+    #[serde(rename = "F_DT")]
+    pub f_dt: String,
+    /// 조회일자To (String, 필수)
+    #[serde(rename = "T_DT")]
+    pub t_dt: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SHT_CD")]
+    pub sht_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4282,6 +5266,18 @@ pub struct DomesticStockV1KsdinfoCapDcrsRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoListInfoRequest {
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SHT_CD")]
+    pub sht_cd: String,
+    /// 조회일자To (String, 필수)
+    #[serde(rename = "T_DT")]
+    pub t_dt: String,
+    /// 조회일자From (String, 필수)
+    #[serde(rename = "F_DT")]
+    pub f_dt: String,
+    /// CTS (String, 필수)
+    #[serde(rename = "CTS")]
+    pub cts: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4316,6 +5312,18 @@ pub struct DomesticStockV1KsdinfoListInfoRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoPubOfferRequest {
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SHT_CD")]
+    pub sht_cd: String,
+    /// CTS (String, 필수)
+    #[serde(rename = "CTS")]
+    pub cts: String,
+    /// 조회일자From (String, 필수)
+    #[serde(rename = "F_DT")]
+    pub f_dt: String,
+    /// 조회일자To (String, 필수)
+    #[serde(rename = "T_DT")]
+    pub t_dt: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4350,6 +5358,18 @@ pub struct DomesticStockV1KsdinfoPubOfferRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoForfeitRequest {
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SHT_CD")]
+    pub sht_cd: String,
+    /// 조회일자To (String, 필수)
+    #[serde(rename = "T_DT")]
+    pub t_dt: String,
+    /// 조회일자From (String, 필수)
+    #[serde(rename = "F_DT")]
+    pub f_dt: String,
+    /// CTS (String, 필수)
+    #[serde(rename = "CTS")]
+    pub cts: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4384,6 +5404,18 @@ pub struct DomesticStockV1KsdinfoForfeitRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoMandDepositRequest {
+    /// 조회일자To (String, 필수)
+    #[serde(rename = "T_DT")]
+    pub t_dt: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SHT_CD")]
+    pub sht_cd: String,
+    /// 조회일자From (String, 필수)
+    #[serde(rename = "F_DT")]
+    pub f_dt: String,
+    /// CTS (String, 필수)
+    #[serde(rename = "CTS")]
+    pub cts: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4418,6 +5450,21 @@ pub struct DomesticStockV1KsdinfoMandDepositRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoPaidinCapinRequest {
+    /// CTS (String, 필수)
+    #[serde(rename = "CTS")]
+    pub cts: String,
+    /// 조회구분 (String, 필수)
+    #[serde(rename = "GB1")]
+    pub gb1: String,
+    /// 조회일자From (String, 필수)
+    #[serde(rename = "F_DT")]
+    pub f_dt: String,
+    /// 조회일자To (String, 필수)
+    #[serde(rename = "T_DT")]
+    pub t_dt: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SHT_CD")]
+    pub sht_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4452,6 +5499,18 @@ pub struct DomesticStockV1KsdinfoPaidinCapinRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoBonusIssueRequest {
+    /// CTS (String, 필수)
+    #[serde(rename = "CTS")]
+    pub cts: String,
+    /// 조회일자From (String, 필수)
+    #[serde(rename = "F_DT")]
+    pub f_dt: String,
+    /// 조회일자To (String, 필수)
+    #[serde(rename = "T_DT")]
+    pub t_dt: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SHT_CD")]
+    pub sht_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4486,6 +5545,18 @@ pub struct DomesticStockV1KsdinfoBonusIssueRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1KsdinfoSharehldMeetRequest {
+    /// CTS (String, 필수)
+    #[serde(rename = "CTS")]
+    pub cts: String,
+    /// 조회일자From (String, 필수)
+    #[serde(rename = "F_DT")]
+    pub f_dt: String,
+    /// 조회일자To (String, 필수)
+    #[serde(rename = "T_DT")]
+    pub t_dt: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SHT_CD")]
+    pub sht_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4520,6 +5591,9 @@ pub struct DomesticStockV1KsdinfoSharehldMeetRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsEstimatePerformRequest {
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SHT_CD")]
+    pub sht_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4554,6 +5628,24 @@ pub struct DomesticStockV1QuotationsEstimatePerformRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsLendableByCompanyRequest {
+    /// 거래소구분코드 (String, 필수)
+    #[serde(rename = "EXCG_DVSN_CD")]
+    pub excg_dvsn_cd: String,
+    /// 상품번호 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// 당사대주가능여부 (String, 필수)
+    #[serde(rename = "THCO_STLN_PSBL_YN")]
+    pub thco_stln_psbl_yn: String,
+    /// 조회구분1 (String, 필수)
+    #[serde(rename = "INQR_DVSN_1")]
+    pub inqr_dvsn_1: String,
+    /// 연속조회검색조건200 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// 연속조회키100 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK100")]
+    pub ctx_area_nk100: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4588,6 +5680,21 @@ pub struct DomesticStockV1QuotationsLendableByCompanyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInvestOpinionRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 입력날짜1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// 입력날짜2 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_2")]
+    pub fid_input_date_2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4622,6 +5729,24 @@ pub struct DomesticStockV1QuotationsInvestOpinionRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInvestOpbysecRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 분류구분코드 (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
+    pub fid_div_cls_code: String,
+    /// 입력날짜1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// 입력날짜2 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_2")]
+    pub fid_input_date_2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4656,7 +5781,7 @@ pub struct DomesticStockV1QuotationsInvestOpbysecRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsPsearchTitleRequest {
-    /// user_id (String, 선택)
+    /// 사용자 HTS ID (String, 필수)
     #[serde(rename = "user_id")]
     pub user_id: String,
     /// headerMap (String, 선택)
@@ -4693,10 +5818,10 @@ pub struct DomesticStockV1QuotationsPsearchTitleRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsPsearchResultRequest {
-    /// user_id (String, 선택)
+    /// 사용자 HTS ID (String, 필수)
     #[serde(rename = "user_id")]
     pub user_id: String,
-    /// seq (String, 선택)
+    /// 사용자조건 키값 (String, 필수)
     #[serde(rename = "seq")]
     pub seq: String,
     /// headerMap (String, 선택)
@@ -4733,6 +5858,15 @@ pub struct DomesticStockV1QuotationsPsearchResultRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsIntstockGrouplistRequest {
+    /// 관심종목구분코드                 (String, 필수)
+    #[serde(rename = "TYPE")]
+    pub r#type: String,
+    /// FID 기타 구분 코드  (String, 필수)
+    #[serde(rename = "FID_ETC_CLS_CODE")]
+    pub fid_etc_cls_code: String,
+    /// 사용자 ID                 (String, 필수)
+    #[serde(rename = "USER_ID")]
+    pub user_id: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4767,6 +5901,186 @@ pub struct DomesticStockV1QuotationsIntstockGrouplistRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsIntstockMultpriceRequest {
+    /// 조건 시장 분류 코드1 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_1")]
+    pub fid_cond_mrkt_div_code_1: String,
+    /// 입력 종목코드1 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_1")]
+    pub fid_input_iscd_1: String,
+    /// 조건 시장 분류 코드2 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_2")]
+    pub fid_cond_mrkt_div_code_2: String,
+    /// 입력 종목코드2 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_2")]
+    pub fid_input_iscd_2: String,
+    /// 조건 시장 분류 코드3 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_3")]
+    pub fid_cond_mrkt_div_code_3: String,
+    /// 입력 종목코드3 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_3")]
+    pub fid_input_iscd_3: String,
+    /// 조건 시장 분류 코드4 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_4")]
+    pub fid_cond_mrkt_div_code_4: String,
+    /// 입력 종목코드4 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_4")]
+    pub fid_input_iscd_4: String,
+    /// 조건 시장 분류 코드5 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_5")]
+    pub fid_cond_mrkt_div_code_5: String,
+    /// 입력 종목코드5 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_5")]
+    pub fid_input_iscd_5: String,
+    /// 조건 시장 분류 코드6 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_6")]
+    pub fid_cond_mrkt_div_code_6: String,
+    /// 입력 종목코드6 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_6")]
+    pub fid_input_iscd_6: String,
+    /// 조건 시장 분류 코드7 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_7")]
+    pub fid_cond_mrkt_div_code_7: String,
+    /// 입력 종목코드7 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_7")]
+    pub fid_input_iscd_7: String,
+    /// 조건 시장 분류 코드8 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_8")]
+    pub fid_cond_mrkt_div_code_8: String,
+    /// 입력 종목코드8 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_8")]
+    pub fid_input_iscd_8: String,
+    /// 조건 시장 분류 코드9 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_9")]
+    pub fid_cond_mrkt_div_code_9: String,
+    /// 입력 종목코드9 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_9")]
+    pub fid_input_iscd_9: String,
+    /// 조건 시장 분류 코드10 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_10")]
+    pub fid_cond_mrkt_div_code_10: String,
+    /// 입력 종목코드10 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_10")]
+    pub fid_input_iscd_10: String,
+    /// 조건 시장 분류 코드11 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_11")]
+    pub fid_cond_mrkt_div_code_11: String,
+    /// 입력 종목코드11 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_11")]
+    pub fid_input_iscd_11: String,
+    /// 조건 시장 분류 코드12 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_12")]
+    pub fid_cond_mrkt_div_code_12: String,
+    /// 입력 종목코드12 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_12")]
+    pub fid_input_iscd_12: String,
+    /// 조건 시장 분류 코드13 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_13")]
+    pub fid_cond_mrkt_div_code_13: String,
+    /// 입력 종목코드13 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_13")]
+    pub fid_input_iscd_13: String,
+    /// 조건 시장 분류 코드14 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_14")]
+    pub fid_cond_mrkt_div_code_14: String,
+    /// 입력 종목코드14 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_14")]
+    pub fid_input_iscd_14: String,
+    /// 조건 시장 분류 코드15 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_15")]
+    pub fid_cond_mrkt_div_code_15: String,
+    /// 입력 종목코드15 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_15")]
+    pub fid_input_iscd_15: String,
+    /// 조건 시장 분류 코드16 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_16")]
+    pub fid_cond_mrkt_div_code_16: String,
+    /// 입력 종목코드16 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_16")]
+    pub fid_input_iscd_16: String,
+    /// 조건 시장 분류 코드17 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_17")]
+    pub fid_cond_mrkt_div_code_17: String,
+    /// 입력 종목코드17 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_17")]
+    pub fid_input_iscd_17: String,
+    /// 조건 시장 분류 코드18 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_18")]
+    pub fid_cond_mrkt_div_code_18: String,
+    ///  입력 종목코드18 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_18")]
+    pub fid_input_iscd_18: String,
+    /// 조건 시장 분류 코드19 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_19")]
+    pub fid_cond_mrkt_div_code_19: String,
+    /// 입력 종목코드19 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_19")]
+    pub fid_input_iscd_19: String,
+    /// 조건 시장 분류 코드20 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_20")]
+    pub fid_cond_mrkt_div_code_20: String,
+    /// 입력 종목코드20 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_20")]
+    pub fid_input_iscd_20: String,
+    /// 조건 시장 분류 코드21 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_21")]
+    pub fid_cond_mrkt_div_code_21: String,
+    /// 입력 종목코드21 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_21")]
+    pub fid_input_iscd_21: String,
+    /// 조건 시장 분류 코드22 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_22")]
+    pub fid_cond_mrkt_div_code_22: String,
+    /// 입력 종목코드22 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_22")]
+    pub fid_input_iscd_22: String,
+    /// 조건 시장 분류 코드23 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_23")]
+    pub fid_cond_mrkt_div_code_23: String,
+    /// 입력 종목코드23 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_23")]
+    pub fid_input_iscd_23: String,
+    /// 조건 시장 분류 코드24 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_24")]
+    pub fid_cond_mrkt_div_code_24: String,
+    /// 입력 종목코드24 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_24")]
+    pub fid_input_iscd_24: String,
+    /// 조건 시장 분류 코드25 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_25")]
+    pub fid_cond_mrkt_div_code_25: String,
+    /// 입력 종목코드25 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_25")]
+    pub fid_input_iscd_25: String,
+    /// 조건 시장 분류 코드26 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_26")]
+    pub fid_cond_mrkt_div_code_26: String,
+    /// 입력 종목코드26 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_26")]
+    pub fid_input_iscd_26: String,
+    /// 조건 시장 분류 코드27 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_27")]
+    pub fid_cond_mrkt_div_code_27: String,
+    /// 입력 종목코드27 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_27")]
+    pub fid_input_iscd_27: String,
+    /// 조건 시장 분류 코드28 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_28")]
+    pub fid_cond_mrkt_div_code_28: String,
+    /// 입력 종목코드28 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_28")]
+    pub fid_input_iscd_28: String,
+    /// 조건 시장 분류 코드29 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_29")]
+    pub fid_cond_mrkt_div_code_29: String,
+    /// 입력 종목코드29 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_29")]
+    pub fid_input_iscd_29: String,
+    /// 조건 시장 분류 코드30 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE_30")]
+    pub fid_cond_mrkt_div_code_30: String,
+    /// 입력 종목코드30 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_30")]
+    pub fid_input_iscd_30: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4801,6 +6115,30 @@ pub struct DomesticStockV1QuotationsIntstockMultpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsIntstockStocklistByGroupRequest {
+    /// 관심종목구분코드                 (String, 필수)
+    #[serde(rename = "TYPE")]
+    pub r#type: String,
+    /// 사용자 ID                 (String, 필수)
+    #[serde(rename = "USER_ID")]
+    pub user_id: String,
+    /// 데이터 순위            (String, 필수)
+    #[serde(rename = "DATA_RANK")]
+    pub data_rank: String,
+    /// 관심 그룹 코드        (String, 필수)
+    #[serde(rename = "INTER_GRP_CODE")]
+    pub inter_grp_code: String,
+    /// 관심 그룹 명       (String, 필수)
+    #[serde(rename = "INTER_GRP_NAME")]
+    pub inter_grp_name: String,
+    /// HTS 한글 종목명      (String, 필수)
+    #[serde(rename = "HTS_KOR_ISNM")]
+    pub hts_kor_isnm: String,
+    /// 체결 구분 코드          (String, 필수)
+    #[serde(rename = "CNTG_CLS_CODE")]
+    pub cntg_cls_code: String,
+    /// 기타 구분 코드  (String, 필수)
+    #[serde(rename = "FID_ETC_CLS_CODE")]
+    pub fid_etc_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4835,6 +6173,24 @@ pub struct DomesticStockV1QuotationsIntstockStocklistByGroupRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsForeignInstitutionTotalRequest {
+    /// 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
+    pub fid_div_cls_code: String,
+    /// 순위 정렬 구분 코드 (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    pub fid_rank_sort_cls_code: String,
+    /// 기타 구분  정렬 (String, 필수)
+    #[serde(rename = "FID_ETC_CLS_CODE")]
+    pub fid_etc_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4869,6 +6225,21 @@ pub struct DomesticStockV1QuotationsForeignInstitutionTotalRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsFrgnmemTradeEstimateRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 순위정렬구분코드 (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    pub fid_rank_sort_cls_code: String,
+    /// 순위정렬구분코드2 (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE_2")]
+    pub fid_rank_sort_cls_code_2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4903,6 +6274,21 @@ pub struct DomesticStockV1QuotationsFrgnmemTradeEstimateRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInvestorTradeByStockDailyRequest {
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 입력 날짜1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// 수정주가 원주가 가격 (String, 필수)
+    #[serde(rename = "FID_ORG_ADJ_PRC")]
+    pub fid_org_adj_prc: String,
+    /// 기타 구분 코드 (String, 필수)
+    #[serde(rename = "FID_ETC_CLS_CODE")]
+    pub fid_etc_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -4937,11 +6323,11 @@ pub struct DomesticStockV1QuotationsInvestorTradeByStockDailyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireInvestorTimeByMarketRequest {
-    /// FID_INPUT_ISCD (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD")]
+    /// 시장구분 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// FID_INPUT_ISCD_2 (String, 선택)
-    #[serde(rename = "FID_INPUT_ISCD_2")]
+    /// 업종구분 (String, 필수)
+    #[serde(rename = "fid_input_iscd_2")]
     pub fid_input_iscd_2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
@@ -4977,6 +6363,24 @@ pub struct DomesticStockV1QuotationsInquireInvestorTimeByMarketRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireInvestorDailyByMarketRequest {
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 입력 날짜1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_1")]
+    pub fid_input_iscd_1: String,
+    /// 입력 날짜2 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_2")]
+    pub fid_input_date_2: String,
+    /// 하위 분류코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_2")]
+    pub fid_input_iscd_2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5011,6 +6415,15 @@ pub struct DomesticStockV1QuotationsInquireInvestorDailyByMarketRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsFrgnmemPchsTrendRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_2")]
+    pub fid_input_iscd_2: String,
+    /// 시장구분코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5045,6 +6458,24 @@ pub struct DomesticStockV1QuotationsFrgnmemPchsTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsFrgnmemTradeTrendRequest {
+    /// 화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// FID 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 회원사코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_2")]
+    pub fid_input_iscd_2: String,
+    /// 시장구분코드 (String, 필수)
+    #[serde(rename = "FID_MRKT_CLS_CODE")]
+    pub fid_mrkt_cls_code: String,
+    /// 거래량 (String, 필수)
+    #[serde(rename = "FID_VOL_CNT")]
+    pub fid_vol_cnt: i64,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5079,6 +6510,24 @@ pub struct DomesticStockV1QuotationsFrgnmemTradeTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireMemberDailyRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 회원사코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD_2")]
+    pub fid_input_iscd_2: String,
+    /// 입력날짜1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// 입력날짜2 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_2")]
+    pub fid_input_date_2: String,
+    /// 구간구분코드 (String, 필수)
+    #[serde(rename = "FID_SCTN_CLS_CODE")]
+    pub fid_sctn_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5113,6 +6562,12 @@ pub struct DomesticStockV1QuotationsInquireMemberDailyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsProgramTradeByStockRequest {
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5147,6 +6602,15 @@ pub struct DomesticStockV1QuotationsProgramTradeByStockRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsProgramTradeByStockDailyRequest {
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 입력 날짜1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5181,7 +6645,7 @@ pub struct DomesticStockV1QuotationsProgramTradeByStockDailyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInvestorTrendEstimateRequest {
-    /// MKSC_SHRN_ISCD (String, 선택)
+    /// 종목코드 (String, 필수)
     #[serde(rename = "MKSC_SHRN_ISCD")]
     pub mksc_shrn_iscd: String,
     /// headerMap (String, 선택)
@@ -5218,20 +6682,20 @@ pub struct DomesticStockV1QuotationsInvestorTrendEstimateRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInquireDailyTradeVolumeRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
+    /// FID 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
+    /// FID 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
-    /// fid_input_date_1 (String, 선택)
-    #[serde(rename = "fid_input_date_1")]
+    /// FID 입력 날짜1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
     pub fid_input_date_1: String,
-    /// fid_input_date_2 (String, 선택)
-    #[serde(rename = "fid_input_date_2")]
+    /// FID 입력 날짜2 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_2")]
     pub fid_input_date_2: String,
-    /// fid_period_div_code (String, 선택)
-    #[serde(rename = "fid_period_div_code")]
+    /// FID 기간 분류 코드 (String, 필수)
+    #[serde(rename = "FID_PERIOD_DIV_CODE")]
     pub fid_period_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
@@ -5267,6 +6731,24 @@ pub struct DomesticStockV1QuotationsInquireDailyTradeVolumeRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsCompProgramTradeTodayRequest {
+    /// 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 시장 구분 코드 (String, 필수)
+    #[serde(rename = "FID_MRKT_CLS_CODE")]
+    pub fid_mrkt_cls_code: String,
+    /// 구간 구분 코드 (String, 필수)
+    #[serde(rename = "FID_SCTN_CLS_CODE")]
+    pub fid_sctn_cls_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 시장 분류코드1 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE1")]
+    pub fid_cond_mrkt_div_code1: String,
+    /// 입력 시간1 (String, 필수)
+    #[serde(rename = "FID_INPUT_HOUR_1")]
+    pub fid_input_hour_1: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5301,6 +6783,18 @@ pub struct DomesticStockV1QuotationsCompProgramTradeTodayRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsCompProgramTradeDailyRequest {
+    /// 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 시장 구분 코드 (String, 필수)
+    #[serde(rename = "FID_MRKT_CLS_CODE")]
+    pub fid_mrkt_cls_code: String,
+    /// 검색시작일 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// 검색종료일 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_2")]
+    pub fid_input_date_2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5335,6 +6829,12 @@ pub struct DomesticStockV1QuotationsCompProgramTradeDailyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsInvestorProgramTradeTodayRequest {
+    /// 거래소 구분 코드 (String, 필수)
+    #[serde(rename = "EXCH_DIV_CLS_CODE")]
+    pub exch_div_cls_code: String,
+    /// 시장 구분 코드 (String, 필수)
+    #[serde(rename = "MRKT_DIV_CLS_CODE")]
+    pub mrkt_div_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5369,16 +6869,16 @@ pub struct DomesticStockV1QuotationsInvestorProgramTradeTodayRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsDailyCreditBalanceRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
+    /// 시장 분류 코드 (String, 필수)
     #[serde(rename = "fid_cond_mrkt_div_code")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_cond_scr_div_code (String, 선택)
+    /// 화면 분류 코드 (String, 필수)
     #[serde(rename = "fid_cond_scr_div_code")]
     pub fid_cond_scr_div_code: String,
-    /// fid_input_iscd (String, 선택)
+    /// 종목코드 (String, 필수)
     #[serde(rename = "fid_input_iscd")]
     pub fid_input_iscd: String,
-    /// fid_input_date_1 (String, 선택)
+    /// 결제일자 (String, 필수)
     #[serde(rename = "fid_input_date_1")]
     pub fid_input_date_1: String,
     /// headerMap (String, 선택)
@@ -5415,15 +6915,15 @@ pub struct DomesticStockV1QuotationsDailyCreditBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsExpPriceTrendRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
-    pub fid_input_iscd: String,
-    /// fid_mkop_cls_code (String, 선택)
+    /// 장운영 구분 코드 (String, 필수)
     #[serde(rename = "fid_mkop_cls_code")]
     pub fid_mkop_cls_code: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5458,6 +6958,18 @@ pub struct DomesticStockV1QuotationsExpPriceTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsDailyShortSaleRequest {
+    /// 입력 날짜2 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_2")]
+    pub fid_input_date_2: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 입력 날짜1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5492,6 +7004,30 @@ pub struct DomesticStockV1QuotationsDailyShortSaleRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingOvertimeExpTransFluctRequest {
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 순위 정렬 구분 코드 (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    pub fid_rank_sort_cls_code: String,
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
+    pub fid_div_cls_code: String,
+    /// 입력 가격1 (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_1")]
+    pub fid_input_price_1: String,
+    /// 입력 가격2 (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_2")]
+    pub fid_input_price_2: String,
+    /// 입력 거래량 (String, 필수)
+    #[serde(rename = "FID_INPUT_VOL_1")]
+    pub fid_input_vol_1: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5526,6 +7062,15 @@ pub struct DomesticStockV1RankingOvertimeExpTransFluctRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsTradprtByamtRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5560,6 +7105,9 @@ pub struct DomesticStockV1QuotationsTradprtByamtRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsMktfundsRequest {
+    /// 입력날짜1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5594,6 +7142,21 @@ pub struct DomesticStockV1QuotationsMktfundsRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsDailyLoanTransRequest {
+    /// 조회구분 (String, 필수)
+    #[serde(rename = "MRKT_DIV_CLS_CODE")]
+    pub mrkt_div_cls_code: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "MKSC_SHRN_ISCD")]
+    pub mksc_shrn_iscd: String,
+    /// 조회시작일시 (String, 필수)
+    #[serde(rename = "START_DATE")]
+    pub start_date: String,
+    /// 조회종료일시 (String, 필수)
+    #[serde(rename = "END_DATE")]
+    pub end_date: String,
+    /// 이전조회KEY (String, 필수)
+    #[serde(rename = "CTS")]
+    pub cts: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5628,6 +7191,36 @@ pub struct DomesticStockV1QuotationsDailyLoanTransRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsCaptureUplowpriceRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 상하한가 구분코드 (String, 필수)
+    #[serde(rename = "FID_PRC_CLS_CODE")]
+    pub fid_prc_cls_code: String,
+    /// 분류구분코드 (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
+    pub fid_div_cls_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 대상구분코드 (String, 필수)
+    #[serde(rename = "FID_TRGT_CLS_CODE")]
+    pub fid_trgt_cls_code: String,
+    /// 대상제외구분코드 (String, 필수)
+    #[serde(rename = "FID_TRGT_EXLS_CLS_CODE")]
+    pub fid_trgt_exls_cls_code: String,
+    /// 입력가격1 (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_1")]
+    pub fid_input_price_1: String,
+    /// 입력가격2 (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_2")]
+    pub fid_input_price_2: String,
+    /// 거래량수 (String, 필수)
+    #[serde(rename = "FID_VOL_CNT")]
+    pub fid_vol_cnt: i64,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5662,6 +7255,18 @@ pub struct DomesticStockV1QuotationsCaptureUplowpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsPbarTratioRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력시간1 (String, 필수)
+    #[serde(rename = "FID_INPUT_HOUR_1")]
+    pub fid_input_hour_1: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5696,37 +7301,37 @@ pub struct DomesticStockV1QuotationsPbarTratioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsVolumeRankRequest {
-    /// FID_COND_MRKT_DIV_CODE (String, 선택)
+    /// 조건 시장 분류 코드 (String, 필수)
     #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
-    /// FID_COND_SCR_DIV_CODE (String, 선택)
+    /// 조건 화면 분류 코드 (String, 필수)
     #[serde(rename = "FID_COND_SCR_DIV_CODE")]
     pub fid_cond_scr_div_code: String,
-    /// FID_INPUT_ISCD (String, 선택)
+    /// 입력 종목코드 (String, 필수)
     #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
-    /// FID_DIV_CLS_CODE (String, 선택)
+    /// 분류 구분 코드 (String, 필수)
     #[serde(rename = "FID_DIV_CLS_CODE")]
     pub fid_div_cls_code: String,
-    /// FID_BLNG_CLS_CODE (String, 선택)
+    /// 소속 구분 코드 (String, 필수)
     #[serde(rename = "FID_BLNG_CLS_CODE")]
     pub fid_blng_cls_code: String,
-    /// FID_TRGT_CLS_CODE (String, 선택)
+    /// 대상 구분 코드 (String, 필수)
     #[serde(rename = "FID_TRGT_CLS_CODE")]
     pub fid_trgt_cls_code: String,
-    /// FID_TRGT_EXLS_CLS_CODE (String, 선택)
+    /// 대상 제외 구분 코드 (String, 필수)
     #[serde(rename = "FID_TRGT_EXLS_CLS_CODE")]
     pub fid_trgt_exls_cls_code: String,
-    /// FID_INPUT_PRICE_1 (String, 선택)
+    /// 입력 가격1 (String, 필수)
     #[serde(rename = "FID_INPUT_PRICE_1")]
     pub fid_input_price_1: String,
-    /// FID_INPUT_PRICE_2 (String, 선택)
+    /// 입력 가격2 (String, 필수)
     #[serde(rename = "FID_INPUT_PRICE_2")]
     pub fid_input_price_2: String,
-    /// FID_VOL_CNT (String, 선택)
+    /// 거래량 수 (String, 필수)
     #[serde(rename = "FID_VOL_CNT")]
     pub fid_vol_cnt: i64,
-    /// FID_INPUT_DATE_1 (String, 선택)
+    /// 입력 날짜1 (String, 필수)
     #[serde(rename = "FID_INPUT_DATE_1")]
     pub fid_input_date_1: String,
     /// headerMap (String, 선택)
@@ -5763,48 +7368,48 @@ pub struct DomesticStockV1QuotationsVolumeRankRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingFluctuationRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "fid_cond_scr_div_code")]
-    pub fid_cond_scr_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
-    pub fid_input_iscd: String,
-    /// fid_rank_sort_cls_code (String, 선택)
-    #[serde(rename = "fid_rank_sort_cls_code")]
-    pub fid_rank_sort_cls_code: String,
-    /// fid_input_cnt_1 (String, 선택)
-    #[serde(rename = "fid_input_cnt_1")]
-    pub fid_input_cnt_1: String,
-    /// fid_prc_cls_code (String, 선택)
-    #[serde(rename = "fid_prc_cls_code")]
-    pub fid_prc_cls_code: String,
-    /// fid_input_price_1 (String, 선택)
-    #[serde(rename = "fid_input_price_1")]
-    pub fid_input_price_1: String,
-    /// fid_input_price_2 (String, 선택)
-    #[serde(rename = "fid_input_price_2")]
-    pub fid_input_price_2: String,
-    /// fid_vol_cnt (String, 선택)
-    #[serde(rename = "fid_vol_cnt")]
-    pub fid_vol_cnt: i64,
-    /// fid_trgt_cls_code (String, 선택)
-    #[serde(rename = "fid_trgt_cls_code")]
-    pub fid_trgt_cls_code: String,
-    /// fid_trgt_exls_cls_code (String, 선택)
-    #[serde(rename = "fid_trgt_exls_cls_code")]
-    pub fid_trgt_exls_cls_code: String,
-    /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "fid_div_cls_code")]
-    pub fid_div_cls_code: String,
-    /// fid_rsfl_rate1 (String, 선택)
-    #[serde(rename = "fid_rsfl_rate1")]
-    pub fid_rsfl_rate1: String,
-    /// fid_rsfl_rate2 (String, 선택)
+    /// 등락 비율2 (String, 필수)
     #[serde(rename = "fid_rsfl_rate2")]
     pub fid_rsfl_rate2: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// 순위 정렬 구분 코드 (String, 필수)
+    #[serde(rename = "fid_rank_sort_cls_code")]
+    pub fid_rank_sort_cls_code: String,
+    /// 입력 수1 (String, 필수)
+    #[serde(rename = "fid_input_cnt_1")]
+    pub fid_input_cnt_1: String,
+    /// 가격 구분 코드 (String, 필수)
+    #[serde(rename = "fid_prc_cls_code")]
+    pub fid_prc_cls_code: String,
+    /// 입력 가격1 (String, 필수)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// 입력 가격2 (String, 필수)
+    #[serde(rename = "fid_input_price_2")]
+    pub fid_input_price_2: String,
+    /// 거래량 수 (String, 필수)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
+    /// 대상 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
+    /// 대상 제외 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// 등락 비율1 (String, 필수)
+    #[serde(rename = "fid_rsfl_rate1")]
+    pub fid_rsfl_rate1: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5839,36 +7444,36 @@ pub struct DomesticStockV1RankingFluctuationRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingQuoteBalanceRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "fid_cond_scr_div_code")]
-    pub fid_cond_scr_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
-    pub fid_input_iscd: String,
-    /// fid_rank_sort_cls_code (String, 선택)
-    #[serde(rename = "fid_rank_sort_cls_code")]
-    pub fid_rank_sort_cls_code: String,
-    /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "fid_div_cls_code")]
-    pub fid_div_cls_code: String,
-    /// fid_trgt_cls_code (String, 선택)
-    #[serde(rename = "fid_trgt_cls_code")]
-    pub fid_trgt_cls_code: String,
-    /// fid_trgt_exls_cls_code (String, 선택)
-    #[serde(rename = "fid_trgt_exls_cls_code")]
-    pub fid_trgt_exls_cls_code: String,
-    /// fid_input_price_1 (String, 선택)
-    #[serde(rename = "fid_input_price_1")]
-    pub fid_input_price_1: String,
-    /// fid_input_price_2 (String, 선택)
-    #[serde(rename = "fid_input_price_2")]
-    pub fid_input_price_2: String,
-    /// fid_vol_cnt (String, 선택)
+    /// 거래량 수 (String, 필수)
     #[serde(rename = "fid_vol_cnt")]
     pub fid_vol_cnt: i64,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// 순위 정렬 구분 코드 (String, 필수)
+    #[serde(rename = "fid_rank_sort_cls_code")]
+    pub fid_rank_sort_cls_code: String,
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// 대상 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
+    /// 대상 제외 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// 입력 가격1 (String, 필수)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// 입력 가격2 (String, 필수)
+    #[serde(rename = "fid_input_price_2")]
+    pub fid_input_price_2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5903,6 +7508,45 @@ pub struct DomesticStockV1RankingQuoteBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingProfitAssetIndexRequest {
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 대상 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// 입력 가격1 (String, 필수)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// 입력 가격2 (String, 필수)
+    #[serde(rename = "fid_input_price_2")]
+    pub fid_input_price_2: String,
+    /// 거래량 수 (String, 필수)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
+    /// 입력 옵션1 (String, 필수)
+    #[serde(rename = "fid_input_option_1")]
+    pub fid_input_option_1: String,
+    /// 입력 옵션2 (String, 필수)
+    #[serde(rename = "fid_input_option_2")]
+    pub fid_input_option_2: String,
+    /// 순위 정렬 구분 코드 (String, 필수)
+    #[serde(rename = "fid_rank_sort_cls_code")]
+    pub fid_rank_sort_cls_code: String,
+    /// 소속 구분 코드 (String, 필수)
+    #[serde(rename = "fid_blng_cls_code")]
+    pub fid_blng_cls_code: String,
+    /// 대상 제외 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5937,6 +7581,33 @@ pub struct DomesticStockV1RankingProfitAssetIndexRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingMarketCapRequest {
+    /// 입력 가격2 (String, 필수)
+    #[serde(rename = "fid_input_price_2")]
+    pub fid_input_price_2: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// 대상 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
+    /// 대상 제외 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// 입력 가격1 (String, 필수)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// 거래량 수 (String, 필수)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -5971,45 +7642,45 @@ pub struct DomesticStockV1RankingMarketCapRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingFinanceRatioRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "fid_cond_scr_div_code")]
-    pub fid_cond_scr_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
-    pub fid_input_iscd: String,
-    /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "fid_div_cls_code")]
-    pub fid_div_cls_code: String,
-    /// fid_input_price_1 (String, 선택)
-    #[serde(rename = "fid_input_price_1")]
-    pub fid_input_price_1: String,
-    /// fid_input_price_2 (String, 선택)
-    #[serde(rename = "fid_input_price_2")]
-    pub fid_input_price_2: String,
-    /// fid_vol_cnt (String, 선택)
-    #[serde(rename = "fid_vol_cnt")]
-    pub fid_vol_cnt: i64,
-    /// fid_input_option_1 (String, 선택)
-    #[serde(rename = "fid_input_option_1")]
-    pub fid_input_option_1: String,
-    /// fid_input_option_2 (String, 선택)
-    #[serde(rename = "fid_input_option_2")]
-    pub fid_input_option_2: String,
-    /// fid_rank_sort_cls_code (String, 선택)
-    #[serde(rename = "fid_rank_sort_cls_code")]
-    pub fid_rank_sort_cls_code: String,
-    /// fid_blng_cls_code (String, 선택)
-    #[serde(rename = "fid_blng_cls_code")]
-    pub fid_blng_cls_code: String,
-    /// fid_trgt_exls_cls_code (String, 선택)
-    #[serde(rename = "fid_trgt_exls_cls_code")]
-    pub fid_trgt_exls_cls_code: String,
-    /// fid_trgt_cls_code (String, 선택)
+    /// 대상 구분 코드 (String, 필수)
     #[serde(rename = "fid_trgt_cls_code")]
     pub fid_trgt_cls_code: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// 입력 가격1 (String, 필수)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// 입력 가격2 (String, 필수)
+    #[serde(rename = "fid_input_price_2")]
+    pub fid_input_price_2: String,
+    /// 거래량 수 (String, 필수)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
+    /// 입력 옵션1 (String, 필수)
+    #[serde(rename = "fid_input_option_1")]
+    pub fid_input_option_1: String,
+    /// 입력 옵션2 (String, 필수)
+    #[serde(rename = "fid_input_option_2")]
+    pub fid_input_option_2: String,
+    /// 순위 정렬 구분 코드 (String, 필수)
+    #[serde(rename = "fid_rank_sort_cls_code")]
+    pub fid_rank_sort_cls_code: String,
+    /// 소속 구분 코드 (String, 필수)
+    #[serde(rename = "fid_blng_cls_code")]
+    pub fid_blng_cls_code: String,
+    /// 대상 제외 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6044,6 +7715,36 @@ pub struct DomesticStockV1RankingFinanceRatioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingAfterHourBalanceRequest {
+    /// 입력 가격1 (String, 필수)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// 순위 정렬 구분 코드 (String, 필수)
+    #[serde(rename = "fid_rank_sort_cls_code")]
+    pub fid_rank_sort_cls_code: String,
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// 대상 제외 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// 대상 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
+    /// 거래량 수 (String, 필수)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
+    /// 입력 가격2 (String, 필수)
+    #[serde(rename = "fid_input_price_2")]
+    pub fid_input_price_2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6078,6 +7779,33 @@ pub struct DomesticStockV1RankingAfterHourBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingPreferDisparateRatioRequest {
+    /// 거래량 수 (String, 필수)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// 대상 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
+    /// 대상 제외 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// 입력 가격1 (String, 필수)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// 입력 가격2 (String, 필수)
+    #[serde(rename = "fid_input_price_2")]
+    pub fid_input_price_2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6112,37 +7840,37 @@ pub struct DomesticStockV1RankingPreferDisparateRatioRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingDisparityRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "fid_cond_scr_div_code")]
-    pub fid_cond_scr_div_code: String,
-    /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "fid_div_cls_code")]
-    pub fid_div_cls_code: String,
-    /// fid_rank_sort_cls_code (String, 선택)
-    #[serde(rename = "fid_rank_sort_cls_code")]
-    pub fid_rank_sort_cls_code: String,
-    /// fid_hour_cls_code (String, 선택)
-    #[serde(rename = "fid_hour_cls_code")]
-    pub fid_hour_cls_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
-    pub fid_input_iscd: String,
-    /// fid_trgt_cls_code (String, 선택)
-    #[serde(rename = "fid_trgt_cls_code")]
-    pub fid_trgt_cls_code: String,
-    /// fid_trgt_exls_cls_code (String, 선택)
-    #[serde(rename = "fid_trgt_exls_cls_code")]
-    pub fid_trgt_exls_cls_code: String,
-    /// fid_input_price_1 (String, 선택)
-    #[serde(rename = "fid_input_price_1")]
-    pub fid_input_price_1: String,
-    /// fid_input_price_2 (String, 선택)
+    /// 입력 가격2 (String, 필수)
     #[serde(rename = "fid_input_price_2")]
     pub fid_input_price_2: String,
-    /// fid_vol_cnt (String, 선택)
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// 순위 정렬 구분 코드 (String, 필수)
+    #[serde(rename = "fid_rank_sort_cls_code")]
+    pub fid_rank_sort_cls_code: String,
+    /// 시간 구분 코드 (String, 필수)
+    #[serde(rename = "fid_hour_cls_code")]
+    pub fid_hour_cls_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// 대상 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
+    /// 대상 제외 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// 입력 가격1 (String, 필수)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// 거래량 수 (String, 필수)
     #[serde(rename = "fid_vol_cnt")]
     pub fid_vol_cnt: i64,
     /// headerMap (String, 선택)
@@ -6179,45 +7907,45 @@ pub struct DomesticStockV1RankingDisparityRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingMarketValueRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "fid_cond_scr_div_code")]
-    pub fid_cond_scr_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
-    pub fid_input_iscd: String,
-    /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "fid_div_cls_code")]
-    pub fid_div_cls_code: String,
-    /// fid_input_price_1 (String, 선택)
-    #[serde(rename = "fid_input_price_1")]
-    pub fid_input_price_1: String,
-    /// fid_input_price_2 (String, 선택)
-    #[serde(rename = "fid_input_price_2")]
-    pub fid_input_price_2: String,
-    /// fid_vol_cnt (String, 선택)
-    #[serde(rename = "fid_vol_cnt")]
-    pub fid_vol_cnt: i64,
-    /// fid_input_option_1 (String, 선택)
-    #[serde(rename = "fid_input_option_1")]
-    pub fid_input_option_1: String,
-    /// fid_input_option_2 (String, 선택)
-    #[serde(rename = "fid_input_option_2")]
-    pub fid_input_option_2: String,
-    /// fid_rank_sort_cls_code (String, 선택)
-    #[serde(rename = "fid_rank_sort_cls_code")]
-    pub fid_rank_sort_cls_code: String,
-    /// fid_blng_cls_code (String, 선택)
-    #[serde(rename = "fid_blng_cls_code")]
-    pub fid_blng_cls_code: String,
-    /// fid_trgt_exls_cls_code (String, 선택)
-    #[serde(rename = "fid_trgt_exls_cls_code")]
-    pub fid_trgt_exls_cls_code: String,
-    /// fid_trgt_cls_code (String, 선택)
+    /// 대상 구분 코드 (String, 필수)
     #[serde(rename = "fid_trgt_cls_code")]
     pub fid_trgt_cls_code: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// 입력 가격1 (String, 필수)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// 입력 가격2 (String, 필수)
+    #[serde(rename = "fid_input_price_2")]
+    pub fid_input_price_2: String,
+    /// 거래량 수 (String, 필수)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
+    /// 입력 옵션1 (String, 필수)
+    #[serde(rename = "fid_input_option_1")]
+    pub fid_input_option_1: String,
+    /// 입력 옵션2 (String, 필수)
+    #[serde(rename = "fid_input_option_2")]
+    pub fid_input_option_2: String,
+    /// 순위 정렬 구분 코드 (String, 필수)
+    #[serde(rename = "fid_rank_sort_cls_code")]
+    pub fid_rank_sort_cls_code: String,
+    /// 소속 구분 코드 (String, 필수)
+    #[serde(rename = "fid_blng_cls_code")]
+    pub fid_blng_cls_code: String,
+    /// 대상 제외 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6252,31 +7980,31 @@ pub struct DomesticStockV1RankingMarketValueRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingVolumePowerRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "fid_cond_scr_div_code")]
-    pub fid_cond_scr_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
-    pub fid_input_iscd: String,
-    /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "fid_div_cls_code")]
-    pub fid_div_cls_code: String,
-    /// fid_input_price_1 (String, 선택)
-    #[serde(rename = "fid_input_price_1")]
-    pub fid_input_price_1: String,
-    /// fid_input_price_2 (String, 선택)
-    #[serde(rename = "fid_input_price_2")]
-    pub fid_input_price_2: String,
-    /// fid_vol_cnt (String, 선택)
-    #[serde(rename = "fid_vol_cnt")]
-    pub fid_vol_cnt: i64,
-    /// fid_trgt_exls_cls_code (String, 선택)
+    /// 대상 제외 구분 코드 (String, 필수)
     #[serde(rename = "fid_trgt_exls_cls_code")]
     pub fid_trgt_exls_cls_code: String,
-    /// fid_trgt_cls_code (String, 선택)
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// 입력 가격1 (String, 필수)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// 입력 가격2 (String, 필수)
+    #[serde(rename = "fid_input_price_2")]
+    pub fid_input_price_2: String,
+    /// 거래량 수 (String, 필수)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
+    /// 대상 구분 코드 (String, 필수)
     #[serde(rename = "fid_trgt_cls_code")]
     pub fid_trgt_cls_code: String,
     /// headerMap (String, 선택)
@@ -6313,37 +8041,37 @@ pub struct DomesticStockV1RankingVolumePowerRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingTopInterestStockRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "fid_cond_scr_div_code")]
-    pub fid_cond_scr_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
-    pub fid_input_iscd: String,
-    /// fid_trgt_exls_cls_code (String, 선택)
-    #[serde(rename = "fid_trgt_exls_cls_code")]
-    pub fid_trgt_exls_cls_code: String,
-    /// fid_trgt_cls_code (String, 선택)
-    #[serde(rename = "fid_trgt_cls_code")]
-    pub fid_trgt_cls_code: String,
-    /// fid_input_price_1 (String, 선택)
-    #[serde(rename = "fid_input_price_1")]
-    pub fid_input_price_1: String,
-    /// fid_input_price_2 (String, 선택)
-    #[serde(rename = "fid_input_price_2")]
-    pub fid_input_price_2: String,
-    /// fid_vol_cnt (String, 선택)
-    #[serde(rename = "fid_vol_cnt")]
-    pub fid_vol_cnt: i64,
-    /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "fid_div_cls_code")]
-    pub fid_div_cls_code: String,
-    /// fid_input_iscd_2 (String, 선택)
+    /// 입력 필수값2 (String, 필수)
     #[serde(rename = "fid_input_iscd_2")]
     pub fid_input_iscd_2: String,
-    /// fid_input_cnt_1 (String, 선택)
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// 업종 코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// 대상 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
+    /// 대상 제외 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// 입력 가격1 (String, 필수)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// 입력 가격2 (String, 필수)
+    #[serde(rename = "fid_input_price_2")]
+    pub fid_input_price_2: String,
+    /// 거래량 수 (String, 필수)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// 순위 입력값 (String, 필수)
     #[serde(rename = "fid_input_cnt_1")]
     pub fid_input_cnt_1: String,
     /// headerMap (String, 선택)
@@ -6380,36 +8108,36 @@ pub struct DomesticStockV1RankingTopInterestStockRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingExpTransUpdownRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "fid_cond_scr_div_code")]
-    pub fid_cond_scr_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
-    pub fid_input_iscd: String,
-    /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "fid_div_cls_code")]
-    pub fid_div_cls_code: String,
-    /// fid_aply_rang_prc_1 (String, 선택)
-    #[serde(rename = "fid_aply_rang_prc_1")]
-    pub fid_aply_rang_prc_1: String,
-    /// fid_vol_cnt (String, 선택)
-    #[serde(rename = "fid_vol_cnt")]
-    pub fid_vol_cnt: i64,
-    /// fid_pbmn (String, 선택)
-    #[serde(rename = "fid_pbmn")]
-    pub fid_pbmn: String,
-    /// fid_blng_cls_code (String, 선택)
-    #[serde(rename = "fid_blng_cls_code")]
-    pub fid_blng_cls_code: String,
-    /// fid_mkop_cls_code (String, 선택)
-    #[serde(rename = "fid_mkop_cls_code")]
-    pub fid_mkop_cls_code: String,
-    /// fid_rank_sort_cls_code (String, 선택)
+    /// 순위 정렬 구분 코드 (String, 필수)
     #[serde(rename = "fid_rank_sort_cls_code")]
     pub fid_rank_sort_cls_code: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// 적용 범위 가격1 (String, 필수)
+    #[serde(rename = "fid_aply_rang_prc_1")]
+    pub fid_aply_rang_prc_1: String,
+    /// 거래량 수 (String, 필수)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
+    /// 거래대금 (String, 필수)
+    #[serde(rename = "fid_pbmn")]
+    pub fid_pbmn: String,
+    /// 소속 구분 코드 (String, 필수)
+    #[serde(rename = "fid_blng_cls_code")]
+    pub fid_blng_cls_code: String,
+    /// 장운영 구분 코드 (String, 필수)
+    #[serde(rename = "fid_mkop_cls_code")]
+    pub fid_mkop_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6444,42 +8172,42 @@ pub struct DomesticStockV1RankingExpTransUpdownRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingTradedByCompanyRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "fid_cond_scr_div_code")]
-    pub fid_cond_scr_div_code: String,
-    /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "fid_div_cls_code")]
-    pub fid_div_cls_code: String,
-    /// fid_rank_sort_cls_code (String, 선택)
-    #[serde(rename = "fid_rank_sort_cls_code")]
-    pub fid_rank_sort_cls_code: String,
-    /// fid_input_date_1 (String, 선택)
-    #[serde(rename = "fid_input_date_1")]
-    pub fid_input_date_1: String,
-    /// fid_input_date_2 (String, 선택)
-    #[serde(rename = "fid_input_date_2")]
-    pub fid_input_date_2: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
-    pub fid_input_iscd: String,
-    /// fid_trgt_cls_code (String, 선택)
-    #[serde(rename = "fid_trgt_cls_code")]
-    pub fid_trgt_cls_code: String,
-    /// fid_trgt_exls_cls_code (String, 선택)
+    /// 대상 제외 구분 코드 (String, 필수)
     #[serde(rename = "fid_trgt_exls_cls_code")]
     pub fid_trgt_exls_cls_code: String,
-    /// fid_aply_rang_prc_1 (String, 선택)
-    #[serde(rename = "fid_aply_rang_prc_1")]
-    pub fid_aply_rang_prc_1: String,
-    /// fid_aply_rang_prc_2 (String, 선택)
-    #[serde(rename = "fid_aply_rang_prc_2")]
-    pub fid_aply_rang_prc_2: String,
-    /// fid_aply_rang_vol (String, 선택)
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// 순위 정렬 구분 코드 (String, 필수)
+    #[serde(rename = "fid_rank_sort_cls_code")]
+    pub fid_rank_sort_cls_code: String,
+    /// 입력 날짜1 (String, 필수)
+    #[serde(rename = "fid_input_date_1")]
+    pub fid_input_date_1: String,
+    /// 입력 날짜2 (String, 필수)
+    #[serde(rename = "fid_input_date_2")]
+    pub fid_input_date_2: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// 대상 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
+    /// 적용 범위 거래량 (String, 필수)
     #[serde(rename = "fid_aply_rang_vol")]
     pub fid_aply_rang_vol: Decimal,
+    /// 적용 범위 가격2 (String, 필수)
+    #[serde(rename = "fid_aply_rang_prc_2")]
+    pub fid_aply_rang_prc_2: String,
+    /// 적용 범위 가격1 (String, 필수)
+    #[serde(rename = "fid_aply_rang_prc_1")]
+    pub fid_aply_rang_prc_1: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6514,42 +8242,42 @@ pub struct DomesticStockV1RankingTradedByCompanyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingNearNewHighlowRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
-    pub fid_cond_mrkt_div_code: String,
-    /// fid_cond_scr_div_code (String, 선택)
-    #[serde(rename = "fid_cond_scr_div_code")]
-    pub fid_cond_scr_div_code: String,
-    /// fid_div_cls_code (String, 선택)
-    #[serde(rename = "fid_div_cls_code")]
-    pub fid_div_cls_code: String,
-    /// fid_input_cnt_1 (String, 선택)
-    #[serde(rename = "fid_input_cnt_1")]
-    pub fid_input_cnt_1: String,
-    /// fid_input_cnt_2 (String, 선택)
-    #[serde(rename = "fid_input_cnt_2")]
-    pub fid_input_cnt_2: String,
-    /// fid_prc_cls_code (String, 선택)
-    #[serde(rename = "fid_prc_cls_code")]
-    pub fid_prc_cls_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
-    pub fid_input_iscd: String,
-    /// fid_trgt_cls_code (String, 선택)
-    #[serde(rename = "fid_trgt_cls_code")]
-    pub fid_trgt_cls_code: String,
-    /// fid_trgt_exls_cls_code (String, 선택)
-    #[serde(rename = "fid_trgt_exls_cls_code")]
-    pub fid_trgt_exls_cls_code: String,
-    /// fid_aply_rang_prc_1 (String, 선택)
-    #[serde(rename = "fid_aply_rang_prc_1")]
-    pub fid_aply_rang_prc_1: String,
-    /// fid_aply_rang_prc_2 (String, 선택)
-    #[serde(rename = "fid_aply_rang_prc_2")]
-    pub fid_aply_rang_prc_2: String,
-    /// fid_aply_rang_vol (String, 선택)
+    /// 적용 범위 거래량 (String, 필수)
     #[serde(rename = "fid_aply_rang_vol")]
     pub fid_aply_rang_vol: Decimal,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// 입력 수1 (String, 필수)
+    #[serde(rename = "fid_input_cnt_1")]
+    pub fid_input_cnt_1: String,
+    /// 입력 수2 (String, 필수)
+    #[serde(rename = "fid_input_cnt_2")]
+    pub fid_input_cnt_2: String,
+    /// 가격 구분 코드 (String, 필수)
+    #[serde(rename = "fid_prc_cls_code")]
+    pub fid_prc_cls_code: String,
+    ///  입력 종목코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// 대상 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
+    /// 대상 제외 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// 적용 범위 가격1 (String, 필수)
+    #[serde(rename = "fid_aply_rang_prc_1")]
+    pub fid_aply_rang_prc_1: String,
+    /// 적용 범위 가격2 (String, 필수)
+    #[serde(rename = "fid_aply_rang_prc_2")]
+    pub fid_aply_rang_prc_2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6584,6 +8312,30 @@ pub struct DomesticStockV1RankingNearNewHighlowRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingDividendRateRequest {
+    /// CTS_AREA (String, 필수)
+    #[serde(rename = "CTS_AREA")]
+    pub cts_area: String,
+    /// KOSPI (String, 필수)
+    #[serde(rename = "GB1")]
+    pub gb1: String,
+    /// 업종구분 (String, 필수)
+    #[serde(rename = "UPJONG")]
+    pub upjong: String,
+    /// 종목선택 (String, 필수)
+    #[serde(rename = "GB2")]
+    pub gb2: String,
+    /// 배당구분 (String, 필수)
+    #[serde(rename = "GB3")]
+    pub gb3: String,
+    /// 기준일From (String, 필수)
+    #[serde(rename = "F_DT")]
+    pub f_dt: String,
+    /// 기준일To (String, 필수)
+    #[serde(rename = "T_DT")]
+    pub t_dt: String,
+    /// 결산/중간배당 (String, 필수)
+    #[serde(rename = "GB4")]
+    pub gb4: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6618,6 +8370,42 @@ pub struct DomesticStockV1RankingDividendRateRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingBulkTransNumRequest {
+    /// 적용 범위 가격2 (String, 필수)
+    #[serde(rename = "fid_aply_rang_prc_2")]
+    pub fid_aply_rang_prc_2: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_mrkt_div_code")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "fid_cond_scr_div_code")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "fid_input_iscd")]
+    pub fid_input_iscd: String,
+    /// 순위 정렬 구분 코드 (String, 필수)
+    #[serde(rename = "fid_rank_sort_cls_code")]
+    pub fid_rank_sort_cls_code: String,
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "fid_div_cls_code")]
+    pub fid_div_cls_code: String,
+    /// 입력 가격1 (String, 필수)
+    #[serde(rename = "fid_input_price_1")]
+    pub fid_input_price_1: String,
+    /// 적용 범위 가격1 (String, 필수)
+    #[serde(rename = "fid_aply_rang_prc_1")]
+    pub fid_aply_rang_prc_1: String,
+    /// 입력 종목코드2 (String, 필수)
+    #[serde(rename = "fid_input_iscd_2")]
+    pub fid_input_iscd_2: String,
+    /// 대상 제외 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_exls_cls_code")]
+    pub fid_trgt_exls_cls_code: String,
+    /// 대상 구분 코드 (String, 필수)
+    #[serde(rename = "fid_trgt_cls_code")]
+    pub fid_trgt_cls_code: String,
+    ///  거래량 수 (String, 필수)
+    #[serde(rename = "fid_vol_cnt")]
+    pub fid_vol_cnt: i64,
     /// output (String, 선택)
     #[serde(rename = "output")]
     pub output: String,
@@ -6697,6 +8485,21 @@ pub struct DomesticStockV1RankingBulkTransNumRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingCreditBalanceRequest {
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 증가율기간 (String, 필수)
+    #[serde(rename = "FID_OPTION")]
+    pub fid_option: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 순위 정렬 구분 코드 (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    pub fid_rank_sort_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6731,6 +8534,36 @@ pub struct DomesticStockV1RankingCreditBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingShortSaleRequest {
+    /// FID 적용 범위 거래량 (String, 필수)
+    #[serde(rename = "FID_APLY_RANG_VOL")]
+    pub fid_aply_rang_vol: Decimal,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 조회구분 (일/월) (String, 필수)
+    #[serde(rename = "FID_PERIOD_DIV_CODE")]
+    pub fid_period_div_code: String,
+    /// 조회가간(일수 (String, 필수)
+    #[serde(rename = "FID_INPUT_CNT_1")]
+    pub fid_input_cnt_1: String,
+    /// 대상 제외 구분 코드 (String, 필수)
+    #[serde(rename = "FID_TRGT_EXLS_CLS_CODE")]
+    pub fid_trgt_exls_cls_code: String,
+    /// FID 대상 구분 코드 (String, 필수)
+    #[serde(rename = "FID_TRGT_CLS_CODE")]
+    pub fid_trgt_cls_code: String,
+    /// FID 적용 범위 가격1 (String, 필수)
+    #[serde(rename = "FID_APLY_RANG_PRC_1")]
+    pub fid_aply_rang_prc_1: String,
+    /// FID 적용 범위 가격2 (String, 필수)
+    #[serde(rename = "FID_APLY_RANG_PRC_2")]
+    pub fid_aply_rang_prc_2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6765,6 +8598,36 @@ pub struct DomesticStockV1RankingShortSaleRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingOvertimeFluctuationRequest {
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 시장 구분 코드 (String, 필수)
+    #[serde(rename = "FID_MRKT_CLS_CODE")]
+    pub fid_mrkt_cls_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 분류 구분 코드 (String, 필수)
+    #[serde(rename = "FID_DIV_CLS_CODE")]
+    pub fid_div_cls_code: String,
+    /// 입력 가격1 (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_1")]
+    pub fid_input_price_1: String,
+    /// 입력 가격2 (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_2")]
+    pub fid_input_price_2: String,
+    /// 거래량 수 (String, 필수)
+    #[serde(rename = "FID_VOL_CNT")]
+    pub fid_vol_cnt: i64,
+    /// 대상 구분 코드 (String, 필수)
+    #[serde(rename = "FID_TRGT_CLS_CODE")]
+    pub fid_trgt_cls_code: String,
+    /// 대상 제외 구분 코드 (String, 필수)
+    #[serde(rename = "FID_TRGT_EXLS_CLS_CODE")]
+    pub fid_trgt_exls_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6799,6 +8662,33 @@ pub struct DomesticStockV1RankingOvertimeFluctuationRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1RankingOvertimeVolumeRequest {
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 순위 정렬 구분 코드 (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    pub fid_rank_sort_cls_code: String,
+    /// 입력 가격1 (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_1")]
+    pub fid_input_price_1: String,
+    /// 입력 가격2 (String, 필수)
+    #[serde(rename = "FID_INPUT_PRICE_2")]
+    pub fid_input_price_2: String,
+    /// 거래량 수 (String, 필수)
+    #[serde(rename = "FID_VOL_CNT")]
+    pub fid_vol_cnt: i64,
+    /// 대상 구분 코드 (String, 필수)
+    #[serde(rename = "FID_TRGT_CLS_CODE")]
+    pub fid_trgt_cls_code: String,
+    /// 대상 제외 구분 코드 (String, 필수)
+    #[serde(rename = "FID_TRGT_EXLS_CLS_CODE")]
+    pub fid_trgt_exls_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6867,6 +8757,12 @@ pub struct DomesticStockV1RankingHtsTopViewRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STCNT0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -6888,12 +8784,6 @@ pub struct AuthTryitoutH0STCNT0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6937,6 +8827,12 @@ pub struct AuthTryitoutH0STCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STASP0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -6958,12 +8854,6 @@ pub struct AuthTryitoutH0STASP0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -6998,6 +8888,12 @@ pub struct AuthTryitoutH0STASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STCNI0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -7019,12 +8915,6 @@ pub struct AuthTryitoutH0STCNI0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7059,6 +8949,12 @@ pub struct AuthTryitoutH0STCNI0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STANC0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -7080,12 +8976,6 @@ pub struct AuthTryitoutH0STANC0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7120,6 +9010,12 @@ pub struct AuthTryitoutH0STANC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STMBC0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -7141,12 +9037,6 @@ pub struct AuthTryitoutH0STMBC0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
 }
 
 /// [국내주식 실시간프로그램매매 (KRX) [실시간-048]] 요청 구조체
@@ -7154,6 +9044,12 @@ pub struct AuthTryitoutH0STMBC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STPGM0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -7175,12 +9071,6 @@ pub struct AuthTryitoutH0STPGM0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7215,6 +9105,12 @@ pub struct AuthTryitoutH0STPGM0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STMKO0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -7236,12 +9132,6 @@ pub struct AuthTryitoutH0STMKO0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7276,6 +9166,12 @@ pub struct AuthTryitoutH0STMKO0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STOAA0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -7297,12 +9193,6 @@ pub struct AuthTryitoutH0STOAA0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7337,6 +9227,12 @@ pub struct AuthTryitoutH0STOAA0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STOUP0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값	 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -7358,12 +9254,6 @@ pub struct AuthTryitoutH0STOUP0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7398,6 +9288,12 @@ pub struct AuthTryitoutH0STOUP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STOAC0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -7419,12 +9315,6 @@ pub struct AuthTryitoutH0STOAC0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7459,6 +9349,12 @@ pub struct AuthTryitoutH0STOAC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UPCNT0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -7480,12 +9376,6 @@ pub struct AuthTryitoutH0UPCNT0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7520,6 +9410,12 @@ pub struct AuthTryitoutH0UPCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UPANC0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -7541,12 +9437,6 @@ pub struct AuthTryitoutH0UPANC0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7581,6 +9471,12 @@ pub struct AuthTryitoutH0UPANC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UPPGM0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -7602,12 +9498,6 @@ pub struct AuthTryitoutH0UPPGM0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7642,6 +9532,12 @@ pub struct AuthTryitoutH0UPPGM0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EWASP0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -7663,12 +9559,6 @@ pub struct AuthTryitoutH0EWASP0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7703,6 +9593,12 @@ pub struct AuthTryitoutH0EWASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EWCNT0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -7724,12 +9620,6 @@ pub struct AuthTryitoutH0EWCNT0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7764,6 +9654,12 @@ pub struct AuthTryitoutH0EWCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EWANC0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -7785,12 +9681,6 @@ pub struct AuthTryitoutH0EWANC0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7825,6 +9715,12 @@ pub struct AuthTryitoutH0EWANC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0STNAV0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -7846,12 +9742,6 @@ pub struct AuthTryitoutH0STNAV0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7886,6 +9776,12 @@ pub struct AuthTryitoutH0STNAV0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UNCNT0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7920,6 +9816,12 @@ pub struct AuthTryitoutH0UNCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UNASP0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7954,6 +9856,12 @@ pub struct AuthTryitoutH0UNASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UNANC0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -7988,6 +9896,12 @@ pub struct AuthTryitoutH0UNANC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UNMBC0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8022,6 +9936,12 @@ pub struct AuthTryitoutH0UNMBC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UNPGM0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8056,6 +9976,12 @@ pub struct AuthTryitoutH0UNPGM0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0UNMKO0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8090,6 +10016,12 @@ pub struct AuthTryitoutH0UNMKO0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0NXCNT0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8124,6 +10056,12 @@ pub struct AuthTryitoutH0NXCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0NXASP0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8158,6 +10096,12 @@ pub struct AuthTryitoutH0NXASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0NXANC0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8192,6 +10136,12 @@ pub struct AuthTryitoutH0NXANC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0NXMBC0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8226,6 +10176,12 @@ pub struct AuthTryitoutH0NXMBC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0NXPGM0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8260,6 +10216,12 @@ pub struct AuthTryitoutH0NXPGM0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0NXMKO0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8294,40 +10256,40 @@ pub struct AuthTryitoutH0NXMKO0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingOrderRequest {
-    /// ORD_PRCS_DVSN_CD (String, 선택)
+    /// 주문처리구분코드 (String, 필수)
     #[serde(rename = "ORD_PRCS_DVSN_CD")]
     pub ord_prcs_dvsn_cd: String,
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// SLL_BUY_DVSN_CD (String, 선택)
+    /// 매도매수구분코드 (String, 필수)
     #[serde(rename = "SLL_BUY_DVSN_CD")]
     pub sll_buy_dvsn_cd: String,
-    /// SHTN_PDNO (String, 선택)
+    /// 단축상품번호 (String, 필수)
     #[serde(rename = "SHTN_PDNO")]
     pub shtn_pdno: String,
-    /// ORD_QTY (String, 선택)
+    /// 주문수량 (String, 필수)
     #[serde(rename = "ORD_QTY")]
     pub ord_qty: Decimal,
-    /// UNIT_PRICE (String, 선택)
+    /// 주문가격1 (String, 필수)
     #[serde(rename = "UNIT_PRICE")]
     pub unit_price: String,
-    /// NMPR_TYPE_CD (String, 선택)
+    /// 호가유형코드 (String, 선택)
     #[serde(rename = "NMPR_TYPE_CD")]
     pub nmpr_type_cd: String,
-    /// KRX_NMPR_CNDT_CD (String, 선택)
+    /// 한국거래소호가조건코드 (String, 선택)
     #[serde(rename = "KRX_NMPR_CNDT_CD")]
     pub krx_nmpr_cndt_cd: String,
-    /// CTAC_TLNO (String, 선택)
+    /// 연락전화번호 (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
-    /// FUOP_ITEM_DVSN_CD (String, 선택)
+    /// 선물옵션종목구분코드 (String, 선택)
     #[serde(rename = "FUOP_ITEM_DVSN_CD")]
     pub fuop_item_dvsn_cd: String,
-    /// ORD_DVSN_CD (String, 선택)
+    /// 주문구분코드 (String, 필수)
     #[serde(rename = "ORD_DVSN_CD")]
     pub ord_dvsn_cd: String,
     /// headerMap (String, 선택)
@@ -8364,45 +10326,45 @@ pub struct DomesticFutureoptionV1TradingOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingOrderRvsecnclRequest {
-    /// ORD_PRCS_DVSN_CD (String, 선택)
+    /// 주문처리구분코드 (String, 필수)
     #[serde(rename = "ORD_PRCS_DVSN_CD")]
     pub ord_prcs_dvsn_cd: String,
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// RVSE_CNCL_DVSN_CD (String, 선택)
+    /// 정정취소구분코드 (String, 필수)
     #[serde(rename = "RVSE_CNCL_DVSN_CD")]
     pub rvse_cncl_dvsn_cd: String,
-    /// ORGN_ODNO (String, 선택)
+    /// 원주문번호 (String, 필수)
     #[serde(rename = "ORGN_ODNO")]
     pub orgn_odno: String,
-    /// ORD_QTY (String, 선택)
+    /// 주문수량 (String, 필수)
     #[serde(rename = "ORD_QTY")]
     pub ord_qty: Decimal,
-    /// UNIT_PRICE (String, 선택)
+    /// 주문가격1 (String, 필수)
     #[serde(rename = "UNIT_PRICE")]
     pub unit_price: String,
-    /// NMPR_TYPE_CD (String, 선택)
+    /// 호가유형코드 (String, 필수)
     #[serde(rename = "NMPR_TYPE_CD")]
     pub nmpr_type_cd: String,
-    /// KRX_NMPR_CNDT_CD (String, 선택)
+    /// 한국거래소호가조건코드 (String, 필수)
     #[serde(rename = "KRX_NMPR_CNDT_CD")]
     pub krx_nmpr_cndt_cd: String,
-    /// RMN_QTY_YN (String, 선택)
+    /// 잔여수량여부 (String, 필수)
     #[serde(rename = "RMN_QTY_YN")]
     pub rmn_qty_yn: String,
+    /// 선물옵션종목구분코드 (String, 선택)
+    #[serde(rename = "FUOP_ITEM_DVSN_CD")]
+    pub fuop_item_dvsn_cd: String,
+    /// 주문구분코드 (String, 필수)
+    #[serde(rename = "ORD_DVSN_CD")]
+    pub ord_dvsn_cd: String,
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
-    /// FUOP_ITEM_DVSN_CD (String, 선택)
-    #[serde(rename = "FUOP_ITEM_DVSN_CD")]
-    pub fuop_item_dvsn_cd: String,
-    /// ORD_DVSN_CD (String, 선택)
-    #[serde(rename = "ORD_DVSN_CD")]
-    pub ord_dvsn_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8437,40 +10399,40 @@ pub struct DomesticFutureoptionV1TradingOrderRvsecnclRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireCcnlRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// STRT_ORD_DT (String, 선택)
+    /// 시작주문일자 (String, 필수)
     #[serde(rename = "STRT_ORD_DT")]
     pub strt_ord_dt: String,
-    /// END_ORD_DT (String, 선택)
+    /// 종료주문일자 (String, 필수)
     #[serde(rename = "END_ORD_DT")]
     pub end_ord_dt: String,
-    /// SLL_BUY_DVSN_CD (String, 선택)
+    /// 매도매수구분코드 (String, 필수)
     #[serde(rename = "SLL_BUY_DVSN_CD")]
     pub sll_buy_dvsn_cd: String,
-    /// CCLD_NCCS_DVSN (String, 선택)
+    /// 체결미체결구분 (String, 필수)
     #[serde(rename = "CCLD_NCCS_DVSN")]
     pub ccld_nccs_dvsn: String,
-    /// SORT_SQN (String, 선택)
+    /// 정렬순서 (String, 필수)
     #[serde(rename = "SORT_SQN")]
     pub sort_sqn: String,
-    /// STRT_ODNO (String, 선택)
+    /// 시작주문번호 (String, 필수)
     #[serde(rename = "STRT_ODNO")]
     pub strt_odno: String,
-    /// PDNO (String, 선택)
+    /// 상품번호 (String, 필수)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// MKET_ID_CD (String, 선택)
+    /// 시장ID코드 (String, 필수)
     #[serde(rename = "MKET_ID_CD")]
     pub mket_id_cd: String,
-    /// CTX_AREA_FK200 (String, 선택)
+    /// 연속조회검색조건200 (String, 필수)
     #[serde(rename = "CTX_AREA_FK200")]
     pub ctx_area_fk200: String,
-    /// CTX_AREA_NK200 (String, 선택)
+    /// 연속조회키200 (String, 필수)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
@@ -8507,22 +10469,22 @@ pub struct DomesticFutureoptionV1TradingInquireCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireBalanceRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// MGNA_DVSN (String, 선택)
+    /// 증거금 구분 (String, 필수)
     #[serde(rename = "MGNA_DVSN")]
     pub mgna_dvsn: String,
-    /// EXCC_STAT_CD (String, 선택)
+    /// 정산상태코드 (String, 필수)
     #[serde(rename = "EXCC_STAT_CD")]
     pub excc_stat_cd: String,
-    /// CTX_AREA_FK200 (String, 선택)
+    /// 연속조회검색조건200 (String, 필수)
     #[serde(rename = "CTX_AREA_FK200")]
     pub ctx_area_fk200: String,
-    /// CTX_AREA_NK200 (String, 선택)
+    /// 연속조회키200 (String, 필수)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
@@ -8559,22 +10521,22 @@ pub struct DomesticFutureoptionV1TradingInquireBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquirePsblOrderRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 선택)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// PDNO (String, 선택)
+    /// 상품번호 (String, 선택)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// SLL_BUY_DVSN_CD (String, 선택)
+    /// 매도매수구분코드 (String, 선택)
     #[serde(rename = "SLL_BUY_DVSN_CD")]
     pub sll_buy_dvsn_cd: String,
-    /// UNIT_PRICE (String, 선택)
+    /// 주문가격1 (String, 선택)
     #[serde(rename = "UNIT_PRICE")]
     pub unit_price: String,
-    /// ORD_DVSN_CD (String, 선택)
+    /// 주문구분코드 (String, 선택)
     #[serde(rename = "ORD_DVSN_CD")]
     pub ord_dvsn_cd: String,
     /// headerMap (String, 선택)
@@ -8611,46 +10573,46 @@ pub struct DomesticFutureoptionV1TradingInquirePsblOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireNgtCcnlRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// STRT_ORD_DT (String, 선택)
+    /// 시작주문일자 (String, 필수)
     #[serde(rename = "STRT_ORD_DT")]
     pub strt_ord_dt: String,
-    /// END_ORD_DT (String, 선택)
+    /// 종료주문일자 (String, 필수)
     #[serde(rename = "END_ORD_DT")]
     pub end_ord_dt: String,
-    /// SLL_BUY_DVSN_CD (String, 선택)
+    /// 매도매수구분코드 (String, 필수)
     #[serde(rename = "SLL_BUY_DVSN_CD")]
     pub sll_buy_dvsn_cd: String,
-    /// CCLD_NCCS_DVSN (String, 선택)
+    /// 체결미체결구분 (String, 필수)
     #[serde(rename = "CCLD_NCCS_DVSN")]
     pub ccld_nccs_dvsn: String,
-    /// SORT_SQN (String, 선택)
+    /// 정렬순서 (String, 필수)
     #[serde(rename = "SORT_SQN")]
     pub sort_sqn: String,
-    /// STRT_ODNO (String, 선택)
+    /// 시작주문번호 (String, 필수)
     #[serde(rename = "STRT_ODNO")]
     pub strt_odno: String,
-    /// PDNO (String, 선택)
+    /// 상품번호 (String, 필수)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// MKET_ID_CD (String, 선택)
+    /// 시장ID코드 (String, 필수)
     #[serde(rename = "MKET_ID_CD")]
     pub mket_id_cd: String,
-    /// FUOP_DVSN_CD (String, 선택)
+    /// 선물옵션구분코드 (String, 필수)
     #[serde(rename = "FUOP_DVSN_CD")]
     pub fuop_dvsn_cd: String,
-    /// SCRN_DVSN (String, 선택)
+    /// 화면구분 (String, 필수)
     #[serde(rename = "SCRN_DVSN")]
     pub scrn_dvsn: String,
-    /// CTX_AREA_FK200 (String, 선택)
+    /// 연속조회검색조건200 (String, 필수)
     #[serde(rename = "CTX_AREA_FK200")]
     pub ctx_area_fk200: String,
-    /// CTX_AREA_NK200 (String, 선택)
+    /// 연속조회키200 (String, 필수)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
@@ -8687,25 +10649,25 @@ pub struct DomesticFutureoptionV1TradingInquireNgtCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireNgtBalanceRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// ACNT_PWD (String, 선택)
+    /// 계좌비밀번호 (String, 필수)
     #[serde(rename = "ACNT_PWD")]
     pub acnt_pwd: String,
-    /// MGNA_DVSN (String, 선택)
+    /// 증거금구분 (String, 필수)
     #[serde(rename = "MGNA_DVSN")]
     pub mgna_dvsn: String,
-    /// EXCC_STAT_CD (String, 선택)
+    /// 정산상태코드 (String, 필수)
     #[serde(rename = "EXCC_STAT_CD")]
     pub excc_stat_cd: String,
-    /// CTX_AREA_FK200 (String, 선택)
+    /// 연속조회검색조건200 (String, 필수)
     #[serde(rename = "CTX_AREA_FK200")]
     pub ctx_area_fk200: String,
-    /// CTX_AREA_NK200 (String, 선택)
+    /// 연속조회키200 (String, 필수)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
@@ -8742,25 +10704,25 @@ pub struct DomesticFutureoptionV1TradingInquireNgtBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquirePsblNgtOrderRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// PDNO (String, 선택)
+    /// 상품번호 (String, 필수)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// PRDT_TYPE_CD (String, 선택)
+    /// 상품유형코드 (String, 필수)
     #[serde(rename = "PRDT_TYPE_CD")]
     pub prdt_type_cd: String,
-    /// SLL_BUY_DVSN_CD (String, 선택)
+    /// 매도매수구분코드 (String, 필수)
     #[serde(rename = "SLL_BUY_DVSN_CD")]
     pub sll_buy_dvsn_cd: String,
-    /// UNIT_PRICE (String, 선택)
+    /// 주문가격1 (String, 필수)
     #[serde(rename = "UNIT_PRICE")]
     pub unit_price: String,
-    /// ORD_DVSN_CD (String, 선택)
+    /// 주문구분코드 (String, 필수)
     #[serde(rename = "ORD_DVSN_CD")]
     pub ord_dvsn_cd: String,
     /// headerMap (String, 선택)
@@ -8797,6 +10759,15 @@ pub struct DomesticFutureoptionV1TradingInquirePsblNgtOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingNgtMarginDetailRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 증거금 구분코드 (String, 필수)
+    #[serde(rename = "MGNA_DVSN_CD")]
+    pub mgna_dvsn_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8831,19 +10802,19 @@ pub struct DomesticFutureoptionV1TradingNgtMarginDetailRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireBalanceSettlementPlRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// INQR_DT (String, 선택)
+    /// 조회일자 (String, 필수)
     #[serde(rename = "INQR_DT")]
     pub inqr_dt: String,
-    /// CTX_AREA_FK200 (String, 선택)
+    /// 연속조회검색조건200 (String, 필수)
     #[serde(rename = "CTX_AREA_FK200")]
     pub ctx_area_fk200: String,
-    /// CTX_AREA_NK200 (String, 선택)
+    /// 연속조회키200 (String, 필수)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
@@ -8880,6 +10851,12 @@ pub struct DomesticFutureoptionV1TradingInquireBalanceSettlementPlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireDepositRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -8914,22 +10891,22 @@ pub struct DomesticFutureoptionV1TradingInquireDepositRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireBalanceValuationPlRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// MGNA_DVSN (String, 선택)
+    /// 증거금구분 (String, 필수)
     #[serde(rename = "MGNA_DVSN")]
     pub mgna_dvsn: String,
-    /// EXCC_STAT_CD (String, 선택)
+    /// 정산상태코드 (String, 필수)
     #[serde(rename = "EXCC_STAT_CD")]
     pub excc_stat_cd: String,
-    /// CTX_AREA_FK200 (String, 선택)
+    /// 연속조회검색조건200 (String, 필수)
     #[serde(rename = "CTX_AREA_FK200")]
     pub ctx_area_fk200: String,
-    /// CTX_AREA_NK200 (String, 선택)
+    /// 연속조회키200 (String, 필수)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
@@ -8966,6 +10943,27 @@ pub struct DomesticFutureoptionV1TradingInquireBalanceValuationPlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireCcnlBstimeRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 주문일자 (String, 필수)
+    #[serde(rename = "ORD_DT")]
+    pub ord_dt: String,
+    /// 선물옵션거래시작시각 (String, 필수)
+    #[serde(rename = "FUOP_TR_STRT_TMD")]
+    pub fuop_tr_strt_tmd: String,
+    /// 선물옵션거래종료시각 (String, 필수)
+    #[serde(rename = "FUOP_TR_END_TMD")]
+    pub fuop_tr_end_tmd: String,
+    /// 연속조회검색조건200 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// 연속조회키200 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9000,22 +10998,22 @@ pub struct DomesticFutureoptionV1TradingInquireCcnlBstimeRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1TradingInquireDailyAmountFeeRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// INQR_STRT_DAY (String, 선택)
+    /// 조회시작일 (String, 필수)
     #[serde(rename = "INQR_STRT_DAY")]
     pub inqr_strt_day: String,
-    /// INQR_END_DAY (String, 선택)
+    /// 조회종료일 (String, 필수)
     #[serde(rename = "INQR_END_DAY")]
     pub inqr_end_day: String,
-    /// CTX_AREA_FK200 (String, 선택)
+    /// 연속조회검색조건200 (String, 필수)
     #[serde(rename = "CTX_AREA_FK200")]
     pub ctx_area_fk200: String,
-    /// CTX_AREA_NK200 (String, 선택)
+    /// 연속조회키200 (String, 필수)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
@@ -9052,6 +11050,15 @@ pub struct DomesticFutureoptionV1TradingInquireDailyAmountFeeRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsMarginRateRequest {
+    /// 기준일자 (String, 필수)
+    #[serde(rename = "BASS_DT")]
+    pub bass_dt: String,
+    /// 기초자산ID (String, 필수)
+    #[serde(rename = "BAST_ID")]
+    pub bast_id: String,
+    /// 연속조회키200 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9098,11 +11105,11 @@ pub struct DomesticFutureoptionV1QuotationsMarginRateRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsInquirePriceRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
+    /// FID 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
+    /// FID 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
@@ -9138,11 +11145,11 @@ pub struct DomesticFutureoptionV1QuotationsInquirePriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsInquireAskingPriceRequest {
-    /// fid_cond_mrkt_div_code (String, 선택)
-    #[serde(rename = "fid_cond_mrkt_div_code")]
+    /// FID 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
-    /// fid_input_iscd (String, 선택)
-    #[serde(rename = "fid_input_iscd")]
+    /// FID 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
@@ -9178,6 +11185,21 @@ pub struct DomesticFutureoptionV1QuotationsInquireAskingPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsInquireDailyFuopchartpriceRequest {
+    /// FID 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 조회 시작일자 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// 조회 종료일자  (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_2")]
+    pub fid_input_date_2: String,
+    /// 기간분류코드 (String, 필수)
+    #[serde(rename = "FID_PERIOD_DIV_CODE")]
+    pub fid_period_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9212,6 +11234,27 @@ pub struct DomesticFutureoptionV1QuotationsInquireDailyFuopchartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsInquireTimeFuopchartpriceRequest {
+    /// FID 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// FID 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// FID 시간 구분 코드 (String, 필수)
+    #[serde(rename = "FID_HOUR_CLS_CODE")]
+    pub fid_hour_cls_code: String,
+    /// FID 과거 데이터 포함 여부 (String, 필수)
+    #[serde(rename = "FID_PW_DATA_INCU_YN")]
+    pub fid_pw_data_incu_yn: String,
+    /// FID 허봉 포함 여부 (String, 필수)
+    #[serde(rename = "FID_FAKE_TICK_INCU_YN")]
+    pub fid_fake_tick_incu_yn: String,
+    /// FID 입력 날짜1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// FID 입력 시간1 (String, 필수)
+    #[serde(rename = "FID_INPUT_HOUR_1")]
+    pub fid_input_hour_1: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9258,6 +11301,15 @@ pub struct DomesticFutureoptionV1QuotationsInquireTimeFuopchartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsDisplayBoardOptionListRequest {
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 시장 구분 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_CLS_CODE")]
+    pub fid_cond_mrkt_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9292,6 +11344,24 @@ pub struct DomesticFutureoptionV1QuotationsDisplayBoardOptionListRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsDisplayBoardTopRequest {
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE1")]
+    pub fid_cond_mrkt_div_code1: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 만기 수 (String, 필수)
+    #[serde(rename = "FID_MTRT_CNT")]
+    pub fid_mtrt_cnt: i64,
+    /// 조건 시장 구분 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_CLS_CODE")]
+    pub fid_cond_mrkt_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9326,6 +11396,24 @@ pub struct DomesticFutureoptionV1QuotationsDisplayBoardTopRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsDisplayBoardCallputRequest {
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 시장 구분 코드 (String, 필수)
+    #[serde(rename = "FID_MRKT_CLS_CODE")]
+    pub fid_mrkt_cls_code: String,
+    /// 만기 수 (String, 필수)
+    #[serde(rename = "FID_MTRT_CNT")]
+    pub fid_mtrt_cnt: i64,
+    /// 조건 시장 구분 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_CLS_CODE")]
+    pub fid_cond_mrkt_cls_code: String,
+    /// 시장 구분 코드 (String, 필수)
+    #[serde(rename = "FID_MRKT_CLS_CODE1")]
+    pub fid_mrkt_cls_code1: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9360,6 +11448,15 @@ pub struct DomesticFutureoptionV1QuotationsDisplayBoardCallputRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsDisplayBoardFuturesRequest {
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 조건 화면 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
+    /// 조건 시장 구분 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_CLS_CODE")]
+    pub fid_cond_mrkt_cls_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9394,6 +11491,12 @@ pub struct DomesticFutureoptionV1QuotationsDisplayBoardFuturesRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticFutureoptionV1QuotationsExpPriceTrendRequest {
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9428,6 +11531,12 @@ pub struct DomesticFutureoptionV1QuotationsExpPriceTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0IFASP0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9462,6 +11571,12 @@ pub struct AuthTryitoutH0IFASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0IFCNT0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9496,6 +11611,12 @@ pub struct AuthTryitoutH0IFCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0IOASP0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9530,6 +11651,12 @@ pub struct AuthTryitoutH0IOASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0IOCNT0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9564,6 +11691,12 @@ pub struct AuthTryitoutH0IOCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0IFCNI0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -9585,12 +11718,6 @@ pub struct AuthTryitoutH0IFCNI0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9625,6 +11752,12 @@ pub struct AuthTryitoutH0IFCNI0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0CFASP0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9659,6 +11792,12 @@ pub struct AuthTryitoutH0CFASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0CFCNT0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9693,6 +11832,12 @@ pub struct AuthTryitoutH0CFCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0ZFASP0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -9714,12 +11859,6 @@ pub struct AuthTryitoutH0ZFASP0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9754,6 +11893,12 @@ pub struct AuthTryitoutH0ZFASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0ZFCNT0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -9775,12 +11920,6 @@ pub struct AuthTryitoutH0ZFCNT0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9815,6 +11954,12 @@ pub struct AuthTryitoutH0ZFCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0ZFANC0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9849,6 +11994,12 @@ pub struct AuthTryitoutH0ZFANC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0ZOASP0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -9870,12 +12021,6 @@ pub struct AuthTryitoutH0ZOASP0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9910,6 +12055,12 @@ pub struct AuthTryitoutH0ZOASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0ZOCNT0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -9931,12 +12082,6 @@ pub struct AuthTryitoutH0ZOCNT0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -9971,6 +12116,12 @@ pub struct AuthTryitoutH0ZOCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0ZOANC0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10005,6 +12156,12 @@ pub struct AuthTryitoutH0ZOANC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EUASP0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -10026,12 +12183,6 @@ pub struct AuthTryitoutH0EUASP0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10066,6 +12217,12 @@ pub struct AuthTryitoutH0EUASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EUCNT0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -10087,12 +12244,6 @@ pub struct AuthTryitoutH0EUCNT0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10127,6 +12278,12 @@ pub struct AuthTryitoutH0EUCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EUANC0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -10148,12 +12305,6 @@ pub struct AuthTryitoutH0EUANC0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10188,6 +12339,12 @@ pub struct AuthTryitoutH0EUANC0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0EUCNI0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -10209,12 +12366,6 @@ pub struct AuthTryitoutH0EUCNI0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10249,6 +12400,12 @@ pub struct AuthTryitoutH0EUCNI0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0MFASP0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -10270,12 +12427,6 @@ pub struct AuthTryitoutH0MFASP0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10310,6 +12461,12 @@ pub struct AuthTryitoutH0MFASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0MFCNT0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -10331,12 +12488,6 @@ pub struct AuthTryitoutH0MFCNT0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10371,6 +12522,12 @@ pub struct AuthTryitoutH0MFCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0MFCNI0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10405,36 +12562,48 @@ pub struct AuthTryitoutH0MFCNI0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingOrderRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// OVRS_EXCG_CD (String, 선택)
+    /// 해외거래소코드 (String, 필수)
     #[serde(rename = "OVRS_EXCG_CD")]
     pub ovrs_excg_cd: String,
-    /// PDNO (String, 선택)
+    /// 상품번호 (String, 필수)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// ORD_QTY (String, 선택)
+    /// 주문수량 (String, 필수)
     #[serde(rename = "ORD_QTY")]
     pub ord_qty: Decimal,
-    /// OVRS_ORD_UNPR (String, 선택)
+    /// 해외주문단가 (String, 필수)
     #[serde(rename = "OVRS_ORD_UNPR")]
     pub ovrs_ord_unpr: Decimal,
-    /// CTAC_TLNO (String, 선택)
+    /// 연락전화번호 (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
-    /// MGCO_APTM_ODNO (String, 선택)
+    /// 운용사지정주문번호 (String, 선택)
     #[serde(rename = "MGCO_APTM_ODNO")]
     pub mgco_aptm_odno: String,
-    /// ORD_SVR_DVSN_CD (String, 선택)
+    /// 판매유형 (String, 선택)
+    #[serde(rename = "SLL_TYPE")]
+    pub sll_type: String,
+    /// 주문서버구분코드 (String, 필수)
     #[serde(rename = "ORD_SVR_DVSN_CD")]
     pub ord_svr_dvsn_cd: String,
-    /// ORD_DVSN (String, 선택)
+    /// 주문구분 (String, 필수)
     #[serde(rename = "ORD_DVSN")]
     pub ord_dvsn: String,
+    /// 시작시간 (String, 선택)
+    #[serde(rename = "START_TIME")]
+    pub start_time: String,
+    /// 종료시간 (String, 선택)
+    #[serde(rename = "END_TIME")]
+    pub end_time: String,
+    /// 알고리즘주문시간구분코드 (String, 선택)
+    #[serde(rename = "ALGO_ORD_TMD_DVSN_CD")]
+    pub algo_ord_tmd_dvsn_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10490,39 +12659,39 @@ pub struct OverseasStockV1TradingOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingOrderRvsecnclRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// OVRS_EXCG_CD (String, 선택)
+    /// 해외거래소코드 (String, 필수)
     #[serde(rename = "OVRS_EXCG_CD")]
     pub ovrs_excg_cd: String,
-    /// PDNO (String, 선택)
+    /// 상품번호 (String, 필수)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// ORGN_ODNO (String, 선택)
+    /// 원주문번호 (String, 필수)
     #[serde(rename = "ORGN_ODNO")]
     pub orgn_odno: String,
-    /// RVSE_CNCL_DVSN_CD (String, 선택)
+    /// 정정취소구분코드 (String, 필수)
     #[serde(rename = "RVSE_CNCL_DVSN_CD")]
     pub rvse_cncl_dvsn_cd: String,
-    /// ORD_QTY (String, 선택)
+    /// 주문수량 (String, 필수)
     #[serde(rename = "ORD_QTY")]
     pub ord_qty: Decimal,
-    /// OVRS_ORD_UNPR (String, 선택)
+    /// 해외주문단가 (String, 필수)
     #[serde(rename = "OVRS_ORD_UNPR")]
     pub ovrs_ord_unpr: Decimal,
+    /// 운용사지정주문번호 (String, 선택)
+    #[serde(rename = "MGCO_APTM_ODNO")]
+    pub mgco_aptm_odno: String,
+    /// 주문서버구분코드 (String, 선택)
+    #[serde(rename = "ORD_SVR_DVSN_CD")]
+    pub ord_svr_dvsn_cd: String,
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
-    /// MGCO_APTM_ODNO (String, 선택)
-    #[serde(rename = "MGCO_APTM_ODNO")]
-    pub mgco_aptm_odno: String,
-    /// ORD_SVR_DVSN_CD (String, 선택)
-    #[serde(rename = "ORD_SVR_DVSN_CD")]
-    pub ord_svr_dvsn_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10557,24 +12726,48 @@ pub struct OverseasStockV1TradingOrderRvsecnclRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingOrderResvRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// PDNO (String, 선택)
+    /// 매도매수구분코드 (String, 선택)
+    #[serde(rename = "SLL_BUY_DVSN_CD")]
+    pub sll_buy_dvsn_cd: String,
+    /// 정정취소구분코드 (String, 필수)
+    #[serde(rename = "RVSE_CNCL_DVSN_CD")]
+    pub rvse_cncl_dvsn_cd: String,
+    /// 상품번호 (String, 필수)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// OVRS_EXCG_CD (String, 선택)
+    /// 상품유형코드 (String, 필수)
+    #[serde(rename = "PRDT_TYPE_CD")]
+    pub prdt_type_cd: String,
+    /// 해외거래소코드 (String, 필수)
     #[serde(rename = "OVRS_EXCG_CD")]
     pub ovrs_excg_cd: String,
-    /// FT_ORD_QTY (String, 선택)
+    /// FT주문수량 (String, 필수)
     #[serde(rename = "FT_ORD_QTY")]
     pub ft_ord_qty: Decimal,
-    /// FT_ORD_UNPR3 (String, 선택)
+    /// FT주문단가3 (String, 필수)
     #[serde(rename = "FT_ORD_UNPR3")]
     pub ft_ord_unpr3: Decimal,
+    /// 주문서버구분코드 (String, 선택)
+    #[serde(rename = "ORD_SVR_DVSN_CD")]
+    pub ord_svr_dvsn_cd: String,
+    /// 예약주문접수일자 (String, 선택)
+    #[serde(rename = "RSVN_ORD_RCIT_DT")]
+    pub rsvn_ord_rcit_dt: String,
+    /// 주문구분 (String, 선택)
+    #[serde(rename = "ORD_DVSN")]
+    pub ord_dvsn: String,
+    /// 해외예약주문번호 (String, 선택)
+    #[serde(rename = "OVRS_RSVN_ODNO")]
+    pub ovrs_rsvn_odno: String,
+    /// 알고리즘주문시간구분코드 (String, 선택)
+    #[serde(rename = "ALGO_ORD_TMD_DVSN_CD")]
+    pub algo_ord_tmd_dvsn_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10602,9 +12795,6 @@ pub struct OverseasStockV1TradingOrderResvRequest {
     /// MGCO_APTM_ODNO (String, 선택)
     #[serde(rename = "MGCO_APTM_ODNO")]
     pub mgco_aptm_odno: String,
-    /// ORD_SVR_DVSN_CD (String, 선택)
-    #[serde(rename = "ORD_SVR_DVSN_CD")]
-    pub ord_svr_dvsn_cd: String,
     /// jsonResponse (String, 선택)
     #[serde(rename = "jsonResponse")]
     pub json_response: String,
@@ -10618,18 +12808,21 @@ pub struct OverseasStockV1TradingOrderResvRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingOrderResvCcnlRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
+    /// 해외주문접수일자 (String, 필수)
+    #[serde(rename = "RSYN_ORD_RCIT_DT")]
+    pub rsyn_ord_rcit_dt: String,
+    /// 해외예약주문번호 (String, 필수)
+    #[serde(rename = "OVRS_RSVN_ODNO")]
+    pub ovrs_rsvn_odno: String,
     /// RSVN_ORD_RCIT_DT (String, 선택)
     #[serde(rename = "RSVN_ORD_RCIT_DT")]
     pub rsvn_ord_rcit_dt: String,
-    /// OVRS_RSVN_ODNO (String, 선택)
-    #[serde(rename = "OVRS_RSVN_ODNO")]
-    pub ovrs_rsvn_odno: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10664,6 +12857,21 @@ pub struct OverseasStockV1TradingOrderResvCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquirePsamountRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 해외거래소코드 (String, 필수)
+    #[serde(rename = "OVRS_EXCG_CD")]
+    pub ovrs_excg_cd: String,
+    /// 해외주문단가 (String, 필수)
+    #[serde(rename = "OVRS_ORD_UNPR")]
+    pub ovrs_ord_unpr: Decimal,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "ITEM_CD")]
+    pub item_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10731,22 +12939,22 @@ pub struct OverseasStockV1TradingInquirePsamountRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquireNccsRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// OVRS_EXCG_CD (String, 선택)
+    /// 해외거래소코드 (String, 필수)
     #[serde(rename = "OVRS_EXCG_CD")]
     pub ovrs_excg_cd: String,
-    /// SORT_SQN (String, 선택)
+    /// 정렬순서 (String, 필수)
     #[serde(rename = "SORT_SQN")]
     pub sort_sqn: String,
-    /// CTX_AREA_FK200 (String, 선택)
+    /// 연속조회검색조건200 (String, 필수)
     #[serde(rename = "CTX_AREA_FK200")]
     pub ctx_area_fk200: String,
-    /// CTX_AREA_NK200 (String, 선택)
+    /// 연속조회키200 (String, 필수)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
@@ -10783,22 +12991,22 @@ pub struct OverseasStockV1TradingInquireNccsRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquireBalanceRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// OVRS_EXCG_CD (String, 선택)
+    /// 해외거래소코드 (String, 필수)
     #[serde(rename = "OVRS_EXCG_CD")]
     pub ovrs_excg_cd: String,
-    /// TR_CRCY_CD (String, 선택)
+    /// 거래통화코드 (String, 필수)
     #[serde(rename = "TR_CRCY_CD")]
     pub tr_crcy_cd: String,
-    /// CTX_AREA_FK200 (String, 선택)
+    /// 연속조회검색조건200 (String, 선택)
     #[serde(rename = "CTX_AREA_FK200")]
     pub ctx_area_fk200: String,
-    /// CTX_AREA_NK200 (String, 선택)
+    /// 연속조회키200 (String, 선택)
     #[serde(rename = "CTX_AREA_NK200")]
     pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
@@ -10835,6 +13043,48 @@ pub struct OverseasStockV1TradingInquireBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquireCcnlRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 상품번호 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// 주문시작일자 (String, 필수)
+    #[serde(rename = "ORD_STRT_DT")]
+    pub ord_strt_dt: String,
+    /// 주문종료일자 (String, 필수)
+    #[serde(rename = "ORD_END_DT")]
+    pub ord_end_dt: String,
+    /// 매도매수구분 (String, 필수)
+    #[serde(rename = "SLL_BUY_DVSN")]
+    pub sll_buy_dvsn: String,
+    /// 체결미체결구분 (String, 필수)
+    #[serde(rename = "CCLD_NCCS_DVSN")]
+    pub ccld_nccs_dvsn: String,
+    /// 해외거래소코드 (String, 필수)
+    #[serde(rename = "OVRS_EXCG_CD")]
+    pub ovrs_excg_cd: String,
+    /// 정렬순서 (String, 필수)
+    #[serde(rename = "SORT_SQN")]
+    pub sort_sqn: String,
+    /// 주문일자 (String, 필수)
+    #[serde(rename = "ORD_DT")]
+    pub ord_dt: String,
+    /// 주문채번지점번호 (String, 필수)
+    #[serde(rename = "ORD_GNO_BRNO")]
+    pub ord_gno_brno: String,
+    /// 주문번호 (String, 필수)
+    #[serde(rename = "ODNO")]
+    pub odno: String,
+    /// 연속조회키200 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
+    /// 연속조회검색조건200 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10869,22 +13119,22 @@ pub struct OverseasStockV1TradingInquireCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquirePresentBalanceRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// WCRC_FRCR_DVSN_CD (String, 선택)
+    /// 원화외화구분코드 (String, 필수)
     #[serde(rename = "WCRC_FRCR_DVSN_CD")]
     pub wcrc_frcr_dvsn_cd: String,
-    /// TR_MKET_CD (String, 선택)
-    #[serde(rename = "TR_MKET_CD")]
-    pub tr_mket_cd: String,
-    /// NATN_CD (String, 선택)
+    /// 국가코드 (String, 필수)
     #[serde(rename = "NATN_CD")]
     pub natn_cd: String,
-    /// INQR_DVSN_CD (String, 선택)
+    /// 거래시장코드 (String, 필수)
+    #[serde(rename = "TR_MKET_CD")]
+    pub tr_mket_cd: String,
+    /// 조회구분코드 (String, 필수)
     #[serde(rename = "INQR_DVSN_CD")]
     pub inqr_dvsn_cd: String,
     /// headerMap (String, 선택)
@@ -10921,6 +13171,33 @@ pub struct OverseasStockV1TradingInquirePresentBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingOrderResvListRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 조회시작일자 (String, 필수)
+    #[serde(rename = "INQR_STRT_DT")]
+    pub inqr_strt_dt: String,
+    /// 조회종료일자 (String, 필수)
+    #[serde(rename = "INQR_END_DT")]
+    pub inqr_end_dt: String,
+    /// 조회구분코드 (String, 필수)
+    #[serde(rename = "INQR_DVSN_CD")]
+    pub inqr_dvsn_cd: String,
+    /// 상품유형코드 (String, 필수)
+    #[serde(rename = "PRDT_TYPE_CD")]
+    pub prdt_type_cd: String,
+    /// 해외거래소코드 (String, 필수)
+    #[serde(rename = "OVRS_EXCG_CD")]
+    pub ovrs_excg_cd: String,
+    /// 연속조회검색조건200 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// 연속조회키200 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -10981,9 +13258,6 @@ pub struct OverseasStockV1TradingOrderResvListRequest {
     /// ord_stfno (String, 선택)
     #[serde(rename = "ord_stfno")]
     pub ord_stfno: String,
-    /// ovrs_excg_cd (String, 선택)
-    #[serde(rename = "ovrs_excg_cd")]
-    pub ovrs_excg_cd: String,
     /// ovrs_rsvn_odno (String, 선택)
     #[serde(rename = "ovrs_rsvn_odno")]
     pub ovrs_rsvn_odno: String,
@@ -10999,9 +13273,6 @@ pub struct OverseasStockV1TradingOrderResvListRequest {
     /// prdt_name (String, 선택)
     #[serde(rename = "prdt_name")]
     pub prdt_name: String,
-    /// prdt_type_cd (String, 선택)
-    #[serde(rename = "prdt_type_cd")]
-    pub prdt_type_cd: String,
     /// rsvn_ord_rcit_dt (String, 선택)
     #[serde(rename = "rsvn_ord_rcit_dt")]
     pub rsvn_ord_rcit_dt: String,
@@ -11027,6 +13298,21 @@ pub struct OverseasStockV1TradingOrderResvListRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquirePaymtStdrBalanceRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 기준일자 (String, 필수)
+    #[serde(rename = "BASS_DT")]
+    pub bass_dt: String,
+    /// 원화외화구분코드 (String, 필수)
+    #[serde(rename = "WCRC_FRCR_DVSN_CD")]
+    pub wcrc_frcr_dvsn_cd: String,
+    /// 조회구분코드 (String, 필수)
+    #[serde(rename = "INQR_DVSN_CD")]
+    pub inqr_dvsn_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11061,6 +13347,36 @@ pub struct OverseasStockV1TradingInquirePaymtStdrBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquirePeriodTransRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 등록시작일자 (String, 필수)
+    #[serde(rename = "ERLM_STRT_DT")]
+    pub erlm_strt_dt: String,
+    /// 등록종료일자 (String, 필수)
+    #[serde(rename = "ERLM_END_DT")]
+    pub erlm_end_dt: String,
+    /// 해외거래소코드 (String, 필수)
+    #[serde(rename = "OVRS_EXCG_CD")]
+    pub ovrs_excg_cd: String,
+    /// 상품번호 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// 매도매수구분코드 (String, 필수)
+    #[serde(rename = "SLL_BUY_DVSN_CD")]
+    pub sll_buy_dvsn_cd: String,
+    /// 대출구분코드 (String, 필수)
+    #[serde(rename = "LOAN_DVSN_CD")]
+    pub loan_dvsn_cd: String,
+    /// 연속조회검색조건100 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK100")]
+    pub ctx_area_fk100: String,
+    /// 연속조회키100 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK100")]
+    pub ctx_area_nk100: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11095,6 +13411,39 @@ pub struct OverseasStockV1TradingInquirePeriodTransRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquirePeriodProfitRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 해외거래소코드 (String, 필수)
+    #[serde(rename = "OVRS_EXCG_CD")]
+    pub ovrs_excg_cd: String,
+    /// 국가코드 (String, 필수)
+    #[serde(rename = "NATN_CD")]
+    pub natn_cd: String,
+    /// 통화코드 (String, 필수)
+    #[serde(rename = "CRCY_CD")]
+    pub crcy_cd: String,
+    /// 상품번호 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// 조회시작일자 (String, 필수)
+    #[serde(rename = "INQR_STRT_DT")]
+    pub inqr_strt_dt: String,
+    /// 조회종료일자 (String, 필수)
+    #[serde(rename = "INQR_END_DT")]
+    pub inqr_end_dt: String,
+    /// 원화외화구분코드 (String, 필수)
+    #[serde(rename = "WCRC_FRCR_DVSN_CD")]
+    pub wcrc_frcr_dvsn_cd: String,
+    /// 연속조회검색조건200 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// 연속조회키200 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11129,6 +13478,12 @@ pub struct OverseasStockV1TradingInquirePeriodProfitRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingForeignMarginRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드  (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11163,6 +13518,36 @@ pub struct OverseasStockV1TradingForeignMarginRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingDaytimeOrderRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 해외거래소코드 (String, 필수)
+    #[serde(rename = "OVRS_EXCG_CD")]
+    pub ovrs_excg_cd: String,
+    /// 상품번호 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// 주문수량 (String, 필수)
+    #[serde(rename = "ORD_QTY")]
+    pub ord_qty: Decimal,
+    /// 해외주문단가 (String, 필수)
+    #[serde(rename = "OVRS_ORD_UNPR")]
+    pub ovrs_ord_unpr: Decimal,
+    /// 연락전화번호 (String, 선택)
+    #[serde(rename = "CTAC_TLNO")]
+    pub ctac_tlno: String,
+    /// 운용사지정주문번호 (String, 선택)
+    #[serde(rename = "MGCO_APTM_ODNO")]
+    pub mgco_aptm_odno: String,
+    /// 주문서버구분코드 (String, 필수)
+    #[serde(rename = "ORD_SVR_DVSN_CD")]
+    pub ord_svr_dvsn_cd: String,
+    /// 주문구분 (String, 필수)
+    #[serde(rename = "ORD_DVSN")]
+    pub ord_dvsn: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11197,37 +13582,37 @@ pub struct OverseasStockV1TradingDaytimeOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingDaytimeOrderRvsecnclRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// OVRS_EXCG_CD (String, 선택)
+    /// 해외거래소코드 (String, 필수)
     #[serde(rename = "OVRS_EXCG_CD")]
     pub ovrs_excg_cd: String,
-    /// PDNO (String, 선택)
+    /// 상품번호 (String, 필수)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// ORGN_ODNO (String, 선택)
+    /// 원주문번호 (String, 필수)
     #[serde(rename = "ORGN_ODNO")]
     pub orgn_odno: String,
-    /// RVSE_CNCL_DVSN_CD (String, 선택)
+    /// 정정취소구분코드 (String, 필수)
     #[serde(rename = "RVSE_CNCL_DVSN_CD")]
     pub rvse_cncl_dvsn_cd: String,
-    /// ORD_QTY (String, 선택)
+    /// 주문수량 (String, 필수)
     #[serde(rename = "ORD_QTY")]
     pub ord_qty: Decimal,
-    /// OVRS_ORD_UNPR (String, 선택)
+    /// 해외주문단가 (String, 필수)
     #[serde(rename = "OVRS_ORD_UNPR")]
     pub ovrs_ord_unpr: Decimal,
-    /// CTAC_TLNO (String, 선택)
+    /// 연락전화번호 (String, 필수)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
-    /// MGCO_APTM_ODNO (String, 선택)
+    /// 운용사지정주문번호 (String, 필수)
     #[serde(rename = "MGCO_APTM_ODNO")]
     pub mgco_aptm_odno: String,
-    /// ORD_SVR_DVSN_CD (String, 선택)
+    /// 주문서버구분코드 (String, 필수)
     #[serde(rename = "ORD_SVR_DVSN_CD")]
     pub ord_svr_dvsn_cd: String,
     /// headerMap (String, 선택)
@@ -11264,6 +13649,21 @@ pub struct OverseasStockV1TradingDaytimeOrderRvsecnclRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingAlgoOrdnoRequest {
+    /// 거래일자 (String, 필수)
+    #[serde(rename = "TRAD_DT")]
+    pub trad_dt: String,
+    /// 계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 연속조회키200 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
+    /// 연속조회조건200 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11298,6 +13698,30 @@ pub struct OverseasStockV1TradingAlgoOrdnoRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1TradingInquireAlgoCcnlRequest {
+    /// 계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 주문일자 (String, 필수)
+    #[serde(rename = "ORD_DT")]
+    pub ord_dt: String,
+    /// 주문채번지점번호 (String, 선택)
+    #[serde(rename = "ORD_GNO_BRNO")]
+    pub ord_gno_brno: String,
+    /// 주문번호 (String, 필수)
+    #[serde(rename = "ODNO")]
+    pub odno: String,
+    /// 집계포함여부 (String, 선택)
+    #[serde(rename = "TTLZ_ICLD_YN")]
+    pub ttlz_icld_yn: String,
+    /// 연속조회키200 (String, 선택)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
+    /// 연속조회조건200 (String, 선택)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11332,13 +13756,13 @@ pub struct OverseasStockV1TradingInquireAlgoCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsPriceDetailRequest {
-    /// AUTH (String, 선택)
+    /// 사용자권한정보 (String, 필수)
     #[serde(rename = "AUTH")]
     pub auth: String,
-    /// EXCD (String, 선택)
+    /// 거래소명 (String, 필수)
     #[serde(rename = "EXCD")]
     pub excd: String,
-    /// SYMB (String, 선택)
+    /// 종목코드 (String, 필수)
     #[serde(rename = "SYMB")]
     pub symb: String,
     /// headerMap (String, 선택)
@@ -11375,6 +13799,15 @@ pub struct OverseasPriceV1QuotationsPriceDetailRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsInquireAskingPriceRequest {
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SYMB")]
+    pub symb: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11409,13 +13842,13 @@ pub struct OverseasPriceV1QuotationsInquireAskingPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsPriceRequest {
-    /// AUTH (String, 선택)
+    /// 사용자권한정보 (String, 필수)
     #[serde(rename = "AUTH")]
     pub auth: String,
-    /// EXCD (String, 선택)
+    /// 거래소코드 (String, 필수)
     #[serde(rename = "EXCD")]
     pub excd: String,
-    /// SYMB (String, 선택)
+    /// 종목코드 (String, 필수)
     #[serde(rename = "SYMB")]
     pub symb: String,
     /// headerMap (String, 선택)
@@ -11452,6 +13885,21 @@ pub struct OverseasPriceV1QuotationsPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsInquireCcnlRequest {
+    /// 거래소명 (String, 필수)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// NEXT KEY BUFF (String, 필수)
+    #[serde(rename = "KEYB")]
+    pub keyb: String,
+    /// 당일전일구분 (String, 필수)
+    #[serde(rename = "TDAY")]
+    pub tday: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SYMB")]
+    pub symb: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11486,31 +13934,31 @@ pub struct OverseasPriceV1QuotationsInquireCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsInquireTimeItemchartpriceRequest {
-    /// AUTH (String, 선택)
+    /// 사용자권한정보 (String, 필수)
     #[serde(rename = "AUTH")]
     pub auth: String,
-    /// EXCD (String, 선택)
+    /// 거래소코드 (String, 필수)
     #[serde(rename = "EXCD")]
     pub excd: String,
-    /// SYMB (String, 선택)
+    /// 종목코드 (String, 필수)
     #[serde(rename = "SYMB")]
     pub symb: String,
-    /// NMIN (String, 선택)
+    /// 분갭 (String, 필수)
     #[serde(rename = "NMIN")]
     pub nmin: String,
-    /// PINC (String, 선택)
+    /// 전일포함여부 (String, 필수)
     #[serde(rename = "PINC")]
     pub pinc: String,
-    /// NEXT (String, 선택)
+    /// 다음여부 (String, 필수)
     #[serde(rename = "NEXT")]
     pub next: String,
-    /// NREC (String, 선택)
+    /// 요청갯수 (String, 필수)
     #[serde(rename = "NREC")]
     pub nrec: String,
-    /// FILL (String, 선택)
+    /// 미체결채움구분 (String, 필수)
     #[serde(rename = "FILL")]
     pub fill: String,
-    /// KEYB (String, 선택)
+    /// NEXT KEY BUFF (String, 필수)
     #[serde(rename = "KEYB")]
     pub keyb: String,
     /// headerMap (String, 선택)
@@ -11547,16 +13995,16 @@ pub struct OverseasPriceV1QuotationsInquireTimeItemchartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsInquireTimeIndexchartpriceRequest {
-    /// FID_COND_MRKT_DIV_CODE (String, 선택)
+    /// 조건 시장 분류 코드 (String, 필수)
     #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
-    /// FID_INPUT_ISCD (String, 선택)
+    /// 입력 종목코드 (String, 필수)
     #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
-    /// FID_HOUR_CLS_CODE (String, 선택)
+    /// 시간 구분 코드 (String, 필수)
     #[serde(rename = "FID_HOUR_CLS_CODE")]
     pub fid_hour_cls_code: String,
-    /// FID_PW_DATA_INCU_YN (String, 선택)
+    /// 과거 데이터 포함 여부 (String, 필수)
     #[serde(rename = "FID_PW_DATA_INCU_YN")]
     pub fid_pw_data_incu_yn: String,
     /// headerMap (String, 선택)
@@ -11593,24 +14041,27 @@ pub struct OverseasPriceV1QuotationsInquireTimeIndexchartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsDailypriceRequest {
-    /// AUTH (String, 선택)
+    /// 사용자권한정보 (String, 필수)
     #[serde(rename = "AUTH")]
     pub auth: String,
-    /// EXCD (String, 선택)
+    /// 거래소코드 (String, 필수)
     #[serde(rename = "EXCD")]
     pub excd: String,
-    /// SYMB (String, 선택)
+    /// 종목코드 (String, 필수)
     #[serde(rename = "SYMB")]
     pub symb: String,
-    /// GUBN (String, 선택)
+    /// 일/주/월구분 (String, 필수)
     #[serde(rename = "GUBN")]
     pub gubn: String,
-    /// BYMD (String, 선택)
+    /// 조회기준일자 (String, 필수)
     #[serde(rename = "BYMD")]
     pub bymd: String,
-    /// MODP (String, 선택)
+    /// 수정주가반영여부 (String, 필수)
     #[serde(rename = "MODP")]
     pub modp: String,
+    /// NEXT KEY BUFF (String, 선택)
+    #[serde(rename = "KEYB")]
+    pub keyb: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11645,6 +14096,21 @@ pub struct OverseasPriceV1QuotationsDailypriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsInquireDailyChartpriceRequest {
+    /// FID 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// FID 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// FID 입력 날짜1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// FID 입력 날짜2 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_2")]
+    pub fid_input_date_2: String,
+    /// FID 기간 분류 코드 (String, 필수)
+    #[serde(rename = "FID_PERIOD_DIV_CODE")]
+    pub fid_period_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11733,6 +14199,87 @@ pub struct OverseasPriceV1QuotationsInquireDailyChartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsInquireSearchRequest {
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
+    /// 현재가선택조건 (String, 선택)
+    #[serde(rename = "CO_YN_PRICECUR")]
+    pub co_yn_pricecur: String,
+    /// 현재가시작범위가 (String, 선택)
+    #[serde(rename = "CO_ST_PRICECUR")]
+    pub co_st_pricecur: String,
+    /// 현재가끝범위가 (String, 선택)
+    #[serde(rename = "CO_EN_PRICECUR")]
+    pub co_en_pricecur: String,
+    /// 등락율선택조건 (String, 선택)
+    #[serde(rename = "CO_YN_RATE")]
+    pub co_yn_rate: Decimal,
+    /// 등락율시작율 (String, 선택)
+    #[serde(rename = "CO_ST_RATE")]
+    pub co_st_rate: Decimal,
+    /// 등락율끝율 (String, 선택)
+    #[serde(rename = "CO_EN_RATE")]
+    pub co_en_rate: Decimal,
+    /// 시가총액선택조건 (String, 선택)
+    #[serde(rename = "CO_YN_VALX")]
+    pub co_yn_valx: String,
+    /// 시가총액시작액 (String, 선택)
+    #[serde(rename = "CO_ST_VALX")]
+    pub co_st_valx: String,
+    /// 시가총액끝액 (String, 선택)
+    #[serde(rename = "CO_EN_VALX")]
+    pub co_en_valx: String,
+    /// 발행주식수선택조건 (String, 선택)
+    #[serde(rename = "CO_YN_SHAR")]
+    pub co_yn_shar: String,
+    /// 발행주식시작수 (String, 선택)
+    #[serde(rename = "CO_ST_SHAR")]
+    pub co_st_shar: String,
+    /// 발행주식끝수 (String, 선택)
+    #[serde(rename = "CO_EN_SHAR")]
+    pub co_en_shar: String,
+    /// 거래량선택조건 (String, 선택)
+    #[serde(rename = "CO_YN_VOLUME")]
+    pub co_yn_volume: String,
+    /// 거래량시작량 (String, 선택)
+    #[serde(rename = "CO_ST_VOLUME")]
+    pub co_st_volume: String,
+    /// 거래량끝량 (String, 선택)
+    #[serde(rename = "CO_EN_VOLUME")]
+    pub co_en_volume: String,
+    /// 거래대금선택조건 (String, 선택)
+    #[serde(rename = "CO_YN_AMT")]
+    pub co_yn_amt: Decimal,
+    /// 거래대금시작금 (String, 선택)
+    #[serde(rename = "CO_ST_AMT")]
+    pub co_st_amt: Decimal,
+    /// 거래대금끝금 (String, 선택)
+    #[serde(rename = "CO_EN_AMT")]
+    pub co_en_amt: Decimal,
+    /// EPS선택조건 (String, 선택)
+    #[serde(rename = "CO_YN_EPS")]
+    pub co_yn_eps: String,
+    /// EPS시작 (String, 선택)
+    #[serde(rename = "CO_ST_EPS")]
+    pub co_st_eps: String,
+    /// EPS끝 (String, 선택)
+    #[serde(rename = "CO_EN_EPS")]
+    pub co_en_eps: String,
+    /// PER선택조건 (String, 선택)
+    #[serde(rename = "CO_YN_PER")]
+    pub co_yn_per: String,
+    /// PER시작 (String, 선택)
+    #[serde(rename = "CO_ST_PER")]
+    pub co_st_per: String,
+    /// PER끝 (String, 선택)
+    #[serde(rename = "CO_EN_PER")]
+    pub co_en_per: String,
+    /// NEXT KEY BUFF (String, 선택)
+    #[serde(rename = "KEYB")]
+    pub keyb: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11793,9 +14340,6 @@ pub struct OverseasPriceV1QuotationsInquireSearchRequest {
     /// eps (String, 선택)
     #[serde(rename = "eps")]
     pub eps: String,
-    /// excd (String, 선택)
-    #[serde(rename = "excd")]
-    pub excd: String,
     /// last (String, 선택)
     #[serde(rename = "last")]
     pub last: String,
@@ -11848,13 +14392,13 @@ pub struct OverseasPriceV1QuotationsInquireSearchRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1QuotationsCountriesHolidayRequest {
-    /// TRAD_DT (String, 선택)
+    /// 기준일자 (String, 필수)
     #[serde(rename = "TRAD_DT")]
     pub trad_dt: String,
-    /// CTX_AREA_NK (String, 선택)
+    /// 연속조회키 (String, 필수)
     #[serde(rename = "CTX_AREA_NK")]
     pub ctx_area_nk: String,
-    /// CTX_AREA_FK (String, 선택)
+    /// 연속조회검색조건 (String, 필수)
     #[serde(rename = "CTX_AREA_FK")]
     pub ctx_area_fk: String,
     /// headerMap (String, 선택)
@@ -11891,12 +14435,12 @@ pub struct OverseasStockV1QuotationsCountriesHolidayRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsSearchInfoRequest {
-    /// PDNO (String, 선택)
-    #[serde(rename = "PDNO")]
-    pub pdno: String,
-    /// PRDT_TYPE_CD (String, 선택)
+    /// 상품유형코드 (String, 필수)
     #[serde(rename = "PRDT_TYPE_CD")]
     pub prdt_type_cd: String,
+    /// 상품번호 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11931,6 +14475,21 @@ pub struct OverseasPriceV1QuotationsSearchInfoRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsIndustryThemeRequest {
+    /// NEXT KEY BUFF (String, 필수)
+    #[serde(rename = "KEYB")]
+    pub keyb: String,
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
+    /// 업종코드 (String, 필수)
+    #[serde(rename = "ICOD")]
+    pub icod: String,
+    /// 거래량조건 (String, 필수)
+    #[serde(rename = "VOL_RANG")]
+    pub vol_rang: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11965,6 +14524,12 @@ pub struct OverseasPriceV1QuotationsIndustryThemeRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsIndustryPriceRequest {
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -11999,6 +14564,18 @@ pub struct OverseasPriceV1QuotationsIndustryPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsMultpriceRequest {
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// 종목요청개수 (String, 필수)
+    #[serde(rename = "NREC")]
+    pub nrec: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCD_01 ~ 10")]
+    pub excd_01_10: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SYMB_01 ~ 10")]
+    pub symb_01_10: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12033,6 +14610,24 @@ pub struct OverseasPriceV1QuotationsMultpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingPriceFluctRequest {
+    /// NEXT KEY BUFF (String, 필수)
+    #[serde(rename = "KEYB")]
+    pub keyb: String,
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
+    /// 급등/급락구분 (String, 필수)
+    #[serde(rename = "GUBN")]
+    pub gubn: String,
+    /// N분전콤보값 (String, 필수)
+    #[serde(rename = "MINX")]
+    pub minx: String,
+    /// 거래량조건 (String, 필수)
+    #[serde(rename = "VOL_RANG")]
+    pub vol_rang: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12067,6 +14662,21 @@ pub struct OverseasStockV1RankingPriceFluctRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingVolumeSurgeRequest {
+    /// NEXT KEY BUFF (String, 필수)
+    #[serde(rename = "KEYB")]
+    pub keyb: String,
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
+    /// N분전콤보값 (String, 필수)
+    #[serde(rename = "MINX")]
+    pub minx: String,
+    /// 거래량조건 (String, 필수)
+    #[serde(rename = "VOL_RANG")]
+    pub vol_rang: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12101,6 +14711,21 @@ pub struct OverseasStockV1RankingVolumeSurgeRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingVolumePowerRequest {
+    /// NEXT KEY BUFF (String, 필수)
+    #[serde(rename = "KEYB")]
+    pub keyb: String,
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
+    /// N일자값 (String, 필수)
+    #[serde(rename = "NDAY")]
+    pub nday: String,
+    /// 거래량조건 (String, 필수)
+    #[serde(rename = "VOL_RANG")]
+    pub vol_rang: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12135,6 +14760,24 @@ pub struct OverseasStockV1RankingVolumePowerRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingUpdownRateRequest {
+    /// NEXT KEY BUFF (String, 필수)
+    #[serde(rename = "KEYB")]
+    pub keyb: String,
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
+    /// 상승율/하락율 구분 (String, 필수)
+    #[serde(rename = "GUBN")]
+    pub gubn: String,
+    /// N일자값 (String, 필수)
+    #[serde(rename = "NDAY")]
+    pub nday: String,
+    /// 거래량조건 (String, 필수)
+    #[serde(rename = "VOL_RANG")]
+    pub vol_rang: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12169,6 +14812,27 @@ pub struct OverseasStockV1RankingUpdownRateRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingNewHighlowRequest {
+    /// NEXT KEY BUFF (String, 필수)
+    #[serde(rename = "KEYB")]
+    pub keyb: String,
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
+    /// 신고/신저 구분 (String, 필수)
+    #[serde(rename = "GUBN")]
+    pub gubn: String,
+    /// 일시돌파/돌파 구분 (String, 필수)
+    #[serde(rename = "GUBN2")]
+    pub gubn2: String,
+    /// N일자값 (String, 필수)
+    #[serde(rename = "NDAY")]
+    pub nday: String,
+    /// 거래량조건 (String, 필수)
+    #[serde(rename = "VOL_RANG")]
+    pub vol_rang: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12203,6 +14867,27 @@ pub struct OverseasStockV1RankingNewHighlowRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingTradeVolRequest {
+    /// NEXT KEY BUFF (String, 필수)
+    #[serde(rename = "KEYB")]
+    pub keyb: String,
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
+    /// N일자값 (String, 필수)
+    #[serde(rename = "NDAY")]
+    pub nday: String,
+    /// 현재가 필터범위 1 (String, 필수)
+    #[serde(rename = "PRC1")]
+    pub prc1: String,
+    /// 현재가 필터범위 2 (String, 필수)
+    #[serde(rename = "PRC2")]
+    pub prc2: String,
+    /// 거래량조건 (String, 필수)
+    #[serde(rename = "VOL_RANG")]
+    pub vol_rang: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12237,6 +14922,27 @@ pub struct OverseasStockV1RankingTradeVolRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingTradePbmnRequest {
+    /// NEXT KEY BUFF (String, 필수)
+    #[serde(rename = "KEYB")]
+    pub keyb: String,
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
+    /// N일자값 (String, 필수)
+    #[serde(rename = "NDAY")]
+    pub nday: String,
+    /// 거래량조건 (String, 필수)
+    #[serde(rename = "VOL_RANG")]
+    pub vol_rang: String,
+    /// 현재가 필터범위 1 (String, 필수)
+    #[serde(rename = "PRC1")]
+    pub prc1: String,
+    /// 현재가 필터범위 2 (String, 필수)
+    #[serde(rename = "PRC2")]
+    pub prc2: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12271,6 +14977,21 @@ pub struct OverseasStockV1RankingTradePbmnRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingTradeGrowthRequest {
+    /// NEXT KEY BUFF (String, 필수)
+    #[serde(rename = "KEYB")]
+    pub keyb: String,
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
+    /// N일자값 (String, 필수)
+    #[serde(rename = "NDAY")]
+    pub nday: String,
+    /// 거래량조건 (String, 필수)
+    #[serde(rename = "VOL_RANG")]
+    pub vol_rang: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12305,6 +15026,21 @@ pub struct OverseasStockV1RankingTradeGrowthRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingTradeTurnoverRequest {
+    /// NEXT KEY BUFF (String, 필수)
+    #[serde(rename = "KEYB")]
+    pub keyb: String,
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
+    /// N일자값 (String, 필수)
+    #[serde(rename = "NDAY")]
+    pub nday: String,
+    /// 거래량조건 (String, 필수)
+    #[serde(rename = "VOL_RANG")]
+    pub vol_rang: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12339,6 +15075,18 @@ pub struct OverseasStockV1RankingTradeTurnoverRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasStockV1RankingMarketCapRequest {
+    /// NEXT KEY BUFF (String, 필수)
+    #[serde(rename = "KEYB")]
+    pub keyb: String,
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "AUTH")]
+    pub auth: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCD")]
+    pub excd: String,
+    /// 거래량조건 (String, 필수)
+    #[serde(rename = "VOL_RANG")]
+    pub vol_rang: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12373,6 +15121,30 @@ pub struct OverseasStockV1RankingMarketCapRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsPeriodRightsRequest {
+    /// 권리유형코드 (String, 필수)
+    #[serde(rename = "RGHT_TYPE_CD")]
+    pub rght_type_cd: String,
+    /// 조회구분코드 (String, 필수)
+    #[serde(rename = "INQR_DVSN_CD")]
+    pub inqr_dvsn_cd: String,
+    /// 조회시작일자 (String, 필수)
+    #[serde(rename = "INQR_STRT_DT")]
+    pub inqr_strt_dt: String,
+    /// 조회종료일자 (String, 필수)
+    #[serde(rename = "INQR_END_DT")]
+    pub inqr_end_dt: String,
+    /// 상품번호 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// 상품유형코드 (String, 필수)
+    #[serde(rename = "PRDT_TYPE_CD")]
+    pub prdt_type_cd: String,
+    /// 연속조회키50 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK50")]
+    pub ctx_area_nk50: String,
+    /// 연속조회검색조건50 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK50")]
+    pub ctx_area_fk50: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12407,6 +15179,30 @@ pub struct OverseasPriceV1QuotationsPeriodRightsRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsNewsTitleRequest {
+    /// 뉴스구분 (String, 필수)
+    #[serde(rename = "INFO_GB")]
+    pub info_gb: String,
+    /// 중분류 (String, 필수)
+    #[serde(rename = "CLASS_CD")]
+    pub class_cd: String,
+    /// 국가코드 (String, 필수)
+    #[serde(rename = "NATION_CD")]
+    pub nation_cd: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCHANGE_CD")]
+    pub exchange_cd: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SYMB")]
+    pub symb: String,
+    /// 조회일자 (String, 필수)
+    #[serde(rename = "DATA_DT")]
+    pub data_dt: String,
+    /// 조회시간 (String, 필수)
+    #[serde(rename = "DATA_TM")]
+    pub data_tm: String,
+    /// 다음키 (String, 필수)
+    #[serde(rename = "CTS")]
+    pub cts: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12441,6 +15237,18 @@ pub struct OverseasPriceV1QuotationsNewsTitleRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsRightsByIceRequest {
+    /// 국가코드 (String, 필수)
+    #[serde(rename = "NCOD")]
+    pub ncod: String,
+    /// 심볼 (String, 필수)
+    #[serde(rename = "SYMB")]
+    pub symb: String,
+    /// 일자 시작일 (String, 필수)
+    #[serde(rename = "ST_YMD")]
+    pub st_ymd: String,
+    /// 일자 종료일 (String, 필수)
+    #[serde(rename = "ED_YMD")]
+    pub ed_ymd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12475,6 +15283,42 @@ pub struct OverseasPriceV1QuotationsRightsByIceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsColableByCompanyRequest {
+    /// 상품번호 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// 상품유형코드 (String, 필수)
+    #[serde(rename = "PRDT_TYPE_CD")]
+    pub prdt_type_cd: String,
+    /// 조회시작일자 (String, 필수)
+    #[serde(rename = "INQR_STRT_DT")]
+    pub inqr_strt_dt: String,
+    /// 조회종료일자 (String, 필수)
+    #[serde(rename = "INQR_END_DT")]
+    pub inqr_end_dt: String,
+    /// 조회구분 (String, 필수)
+    #[serde(rename = "INQR_DVSN")]
+    pub inqr_dvsn: String,
+    /// 국가코드 (String, 필수)
+    #[serde(rename = "NATN_CD")]
+    pub natn_cd: String,
+    /// 조회순서구분 (String, 필수)
+    #[serde(rename = "INQR_SQN_DVSN")]
+    pub inqr_sqn_dvsn: String,
+    /// 비율구분코드 (String, 필수)
+    #[serde(rename = "RT_DVSN_CD")]
+    pub rt_dvsn_cd: String,
+    /// 비율 (String, 필수)
+    #[serde(rename = "RT")]
+    pub rt: Decimal,
+    /// 대출가능여부 (String, 필수)
+    #[serde(rename = "LOAN_PSBL_YN")]
+    pub loan_psbl_yn: String,
+    /// 연속조회검색조건100 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK100")]
+    pub ctx_area_fk100: String,
+    /// 연속조회키100 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK100")]
+    pub ctx_area_nk100: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12509,6 +15353,33 @@ pub struct OverseasPriceV1QuotationsColableByCompanyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct OverseasPriceV1QuotationsBrknewsTitleRequest {
+    /// 뉴스제공업체코드 (String, 필수)
+    #[serde(rename = "FID_NEWS_OFER_ENTP_CODE")]
+    pub fid_news_ofer_entp_code: String,
+    /// 조건시장구분코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_CLS_CODE")]
+    pub fid_cond_mrkt_cls_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
+    /// 제목내용 (String, 필수)
+    #[serde(rename = "FID_TITL_CNTT")]
+    pub fid_titl_cntt: String,
+    /// 입력날짜1 (String, 필수)
+    #[serde(rename = "FID_INPUT_DATE_1")]
+    pub fid_input_date_1: String,
+    /// 입력시간1 (String, 필수)
+    #[serde(rename = "FID_INPUT_HOUR_1")]
+    pub fid_input_hour_1: String,
+    /// 순위정렬구분코드 (String, 필수)
+    #[serde(rename = "FID_RANK_SORT_CLS_CODE")]
+    pub fid_rank_sort_cls_code: String,
+    /// 입력일련번호 (String, 필수)
+    #[serde(rename = "FID_INPUT_SRNO")]
+    pub fid_input_srno: String,
+    /// 조건화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12543,6 +15414,12 @@ pub struct OverseasPriceV1QuotationsBrknewsTitleRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutHDFSASP0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// R거래소명종목코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -12564,12 +15441,6 @@ pub struct AuthTryitoutHDFSASP0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12604,6 +15475,12 @@ pub struct AuthTryitoutHDFSASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutHDFSASP1Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// D거래소명종목코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12638,6 +15515,12 @@ pub struct AuthTryitoutHDFSASP1Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutHDFSCNT0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// D거래소명종목코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12672,6 +15555,12 @@ pub struct AuthTryitoutHDFSCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0GSCNI0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// HTSID (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -12693,12 +15582,6 @@ pub struct AuthTryitoutH0GSCNI0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12733,52 +15616,52 @@ pub struct AuthTryitoutH0GSCNI0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingOrderRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// OVRS_FUTR_FX_PDNO (String, 선택)
+    /// 해외선물FX상품번호 (String, 필수)
     #[serde(rename = "OVRS_FUTR_FX_PDNO")]
     pub ovrs_futr_fx_pdno: String,
-    /// SLL_BUY_DVSN_CD (String, 선택)
+    /// 매도매수구분코드 (String, 필수)
     #[serde(rename = "SLL_BUY_DVSN_CD")]
     pub sll_buy_dvsn_cd: String,
-    /// FM_LQD_USTL_CCLD_DT (String, 선택)
+    /// FM청산미결제체결일자 (String, 선택)
     #[serde(rename = "FM_LQD_USTL_CCLD_DT")]
     pub fm_lqd_ustl_ccld_dt: String,
-    /// FM_LQD_USTL_CCNO (String, 선택)
+    /// FM청산미결제체결번호 (String, 선택)
     #[serde(rename = "FM_LQD_USTL_CCNO")]
     pub fm_lqd_ustl_ccno: String,
-    /// PRIC_DVSN_CD (String, 선택)
+    /// 가격구분코드 (String, 필수)
     #[serde(rename = "PRIC_DVSN_CD")]
     pub pric_dvsn_cd: String,
-    /// FM_LIMIT_ORD_PRIC (String, 선택)
+    /// FMLIMIT주문가격 (String, 필수)
     #[serde(rename = "FM_LIMIT_ORD_PRIC")]
     pub fm_limit_ord_pric: Decimal,
-    /// FM_STOP_ORD_PRIC (String, 선택)
+    /// FMSTOP주문가격 (String, 필수)
     #[serde(rename = "FM_STOP_ORD_PRIC")]
     pub fm_stop_ord_pric: Decimal,
-    /// FM_ORD_QTY (String, 선택)
+    /// FM주문수량 (String, 필수)
     #[serde(rename = "FM_ORD_QTY")]
     pub fm_ord_qty: Decimal,
-    /// FM_LQD_LMT_ORD_PRIC (String, 선택)
+    /// FM청산LIMIT주문가격 (String, 선택)
     #[serde(rename = "FM_LQD_LMT_ORD_PRIC")]
     pub fm_lqd_lmt_ord_pric: Decimal,
-    /// FM_LQD_STOP_ORD_PRIC (String, 선택)
+    /// FM청산STOP주문가격 (String, 선택)
     #[serde(rename = "FM_LQD_STOP_ORD_PRIC")]
     pub fm_lqd_stop_ord_pric: Decimal,
-    /// CCLD_CNDT_CD (String, 선택)
+    /// 체결조건코드 (String, 필수)
     #[serde(rename = "CCLD_CNDT_CD")]
     pub ccld_cndt_cd: String,
-    /// CPLX_ORD_DVSN_CD (String, 선택)
+    /// 복합주문구분코드 (String, 필수)
     #[serde(rename = "CPLX_ORD_DVSN_CD")]
     pub cplx_ord_dvsn_cd: String,
-    /// ECIS_RSVN_ORD_YN (String, 선택)
+    /// 행사예약주문여부 (String, 필수)
     #[serde(rename = "ECIS_RSVN_ORD_YN")]
     pub ecis_rsvn_ord_yn: String,
-    /// FM_HDGE_ORD_SCRN_YN (String, 선택)
+    /// FM_HEDGE주문화면여부 (String, 필수)
     #[serde(rename = "FM_HDGE_ORD_SCRN_YN")]
     pub fm_hdge_ord_scrn_yn: String,
     /// headerMap (String, 선택)
@@ -12836,24 +15719,36 @@ pub struct AuthOverseasFutureoptionV1TradingOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingOrderRvsecnclRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// ORGN_ORD_DT (String, 선택)
+    /// 원주문일자 (String, 필수)
     #[serde(rename = "ORGN_ORD_DT")]
     pub orgn_ord_dt: String,
-    /// ORGN_ODNO (String, 선택)
+    /// 원주문번호 (String, 필수)
     #[serde(rename = "ORGN_ODNO")]
     pub orgn_odno: String,
-    /// FM_MKPR_CVSN_YN (String, 선택)
-    #[serde(rename = "FM_MKPR_CVSN_YN")]
-    pub fm_mkpr_cvsn_yn: String,
-    /// FM_HDGE_ORD_SCRN_YN (String, 선택)
+    /// FMLIMIT주문가격 (String, 선택)
+    #[serde(rename = "FM_LIMIT_ORD_PRIC")]
+    pub fm_limit_ord_pric: Decimal,
+    /// FMSTOP주문가격 (String, 선택)
+    #[serde(rename = "FM_STOP_ORD_PRIC")]
+    pub fm_stop_ord_pric: Decimal,
+    /// FM청산LIMIT주문가격 (String, 선택)
+    #[serde(rename = "FM_LQD_LMT_ORD_PRIC")]
+    pub fm_lqd_lmt_ord_pric: Decimal,
+    /// FM청산STOP주문가격 (String, 선택)
+    #[serde(rename = "FM_LQD_STOP_ORD_PRIC")]
+    pub fm_lqd_stop_ord_pric: Decimal,
+    /// FM_HEDGE주문화면여부 (String, 필수)
     #[serde(rename = "FM_HDGE_ORD_SCRN_YN")]
     pub fm_hdge_ord_scrn_yn: String,
+    /// FM시장가전환여부 (String, 선택)
+    #[serde(rename = "FM_MKPR_CVSN_YN")]
+    pub fm_mkpr_cvsn_yn: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12875,18 +15770,6 @@ pub struct AuthOverseasFutureoptionV1TradingOrderRvsecnclRequest {
     /// jsonBody (String, 선택)
     #[serde(rename = "jsonBody")]
     pub json_body: String,
-    /// FM_LIMIT_ORD_PRIC (String, 선택)
-    #[serde(rename = "FM_LIMIT_ORD_PRIC")]
-    pub fm_limit_ord_pric: Decimal,
-    /// FM_STOP_ORD_PRIC (String, 선택)
-    #[serde(rename = "FM_STOP_ORD_PRIC")]
-    pub fm_stop_ord_pric: Decimal,
-    /// FM_LQD_LMT_ORD_PRIC (String, 선택)
-    #[serde(rename = "FM_LQD_LMT_ORD_PRIC")]
-    pub fm_lqd_lmt_ord_pric: Decimal,
-    /// FM_LQD_STOP_ORD_PRIC (String, 선택)
-    #[serde(rename = "FM_LQD_STOP_ORD_PRIC")]
-    pub fm_lqd_stop_ord_pric: Decimal,
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
@@ -12921,6 +15804,27 @@ pub struct AuthOverseasFutureoptionV1TradingOrderRvsecnclRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingInquireCcldRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 체결미체결구분 (String, 필수)
+    #[serde(rename = "CCLD_NCCS_DVSN")]
+    pub ccld_nccs_dvsn: String,
+    /// 매도매수구분코드 (String, 필수)
+    #[serde(rename = "SLL_BUY_DVSN_CD")]
+    pub sll_buy_dvsn_cd: String,
+    /// 선물옵션구분 (String, 필수)
+    #[serde(rename = "FUOP_DVSN")]
+    pub fuop_dvsn: String,
+    /// 연속조회검색조건200 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// 연속조회키200 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12955,6 +15859,21 @@ pub struct AuthOverseasFutureoptionV1TradingInquireCcldRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingInquireUnpdRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 선물옵션구분 (String, 필수)
+    #[serde(rename = "FUOP_DVSN")]
+    pub fuop_dvsn: String,
+    /// 연속조회검색조건100 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK100")]
+    pub ctx_area_fk100: String,
+    /// 연속조회키100 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK100")]
+    pub ctx_area_nk100: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -12989,22 +15908,22 @@ pub struct AuthOverseasFutureoptionV1TradingInquireUnpdRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingInquirePsamountRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// OVRS_FUTR_FX_PDNO (String, 선택)
+    /// 해외선물FX상품번호 (String, 필수)
     #[serde(rename = "OVRS_FUTR_FX_PDNO")]
     pub ovrs_futr_fx_pdno: String,
-    /// SLL_BUY_DVSN_CD (String, 선택)
+    /// 매도매수구분코드 (String, 필수)
     #[serde(rename = "SLL_BUY_DVSN_CD")]
     pub sll_buy_dvsn_cd: String,
-    /// FM_ORD_PRIC (String, 선택)
+    /// FM주문가격 (String, 필수)
     #[serde(rename = "FM_ORD_PRIC")]
     pub fm_ord_pric: Decimal,
-    /// ECIS_RSVN_ORD_YN (String, 선택)
+    /// 행사예약주문여부 (String, 필수)
     #[serde(rename = "ECIS_RSVN_ORD_YN")]
     pub ecis_rsvn_ord_yn: String,
     /// headerMap (String, 선택)
@@ -13041,6 +15960,33 @@ pub struct AuthOverseasFutureoptionV1TradingInquirePsamountRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingInquirePeriodCcldRequest {
+    /// 조회기간FROM일자 (String, 필수)
+    #[serde(rename = "INQR_TERM_FROM_DT")]
+    pub inqr_term_from_dt: String,
+    /// 조회기간TO일자 (String, 필수)
+    #[serde(rename = "INQR_TERM_TO_DT")]
+    pub inqr_term_to_dt: String,
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 통화코드 (String, 필수)
+    #[serde(rename = "CRCY_CD")]
+    pub crcy_cd: String,
+    /// 전체환산여부 (String, 필수)
+    #[serde(rename = "WHOL_TRSL_YN")]
+    pub whol_trsl_yn: String,
+    /// 선물옵션구분 (String, 필수)
+    #[serde(rename = "FUOP_DVSN")]
+    pub fuop_dvsn: String,
+    /// 연속조회검색조건200 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// 연속조회키200 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13075,6 +16021,39 @@ pub struct AuthOverseasFutureoptionV1TradingInquirePeriodCcldRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingInquireDailyCcldRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 시작일자 (String, 필수)
+    #[serde(rename = "STRT_DT")]
+    pub strt_dt: String,
+    /// 종료일자 (String, 필수)
+    #[serde(rename = "END_DT")]
+    pub end_dt: String,
+    /// 선물옵션구분코드 (String, 필수)
+    #[serde(rename = "FUOP_DVSN_CD")]
+    pub fuop_dvsn_cd: String,
+    /// FM상품군코드 (String, 필수)
+    #[serde(rename = "FM_PDGR_CD")]
+    pub fm_pdgr_cd: String,
+    /// 통화코드 (String, 필수)
+    #[serde(rename = "CRCY_CD")]
+    pub crcy_cd: String,
+    /// FM종목합산여부 (String, 필수)
+    #[serde(rename = "FM_ITEM_FTNG_YN")]
+    pub fm_item_ftng_yn: String,
+    /// 매도매수구분코드 (String, 필수)
+    #[serde(rename = "SLL_BUY_DVSN_CD")]
+    pub sll_buy_dvsn_cd: String,
+    /// 연속조회검색조건200 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// 연속조회키200 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13109,6 +16088,18 @@ pub struct AuthOverseasFutureoptionV1TradingInquireDailyCcldRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingInquireDepositRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 통화코드 (String, 필수)
+    #[serde(rename = "CRCY_CD")]
+    pub crcy_cd: String,
+    /// 조회일자 (String, 필수)
+    #[serde(rename = "INQR_DT")]
+    pub inqr_dt: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13143,6 +16134,36 @@ pub struct AuthOverseasFutureoptionV1TradingInquireDepositRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingInquireDailyOrderRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 시작일자 (String, 필수)
+    #[serde(rename = "STRT_DT")]
+    pub strt_dt: String,
+    /// 종료일자 (String, 필수)
+    #[serde(rename = "END_DT")]
+    pub end_dt: String,
+    /// FM상품군코드 (String, 필수)
+    #[serde(rename = "FM_PDGR_CD")]
+    pub fm_pdgr_cd: String,
+    /// 체결미체결구분 (String, 필수)
+    #[serde(rename = "CCLD_NCCS_DVSN")]
+    pub ccld_nccs_dvsn: String,
+    /// 매도매수구분코드 (String, 필수)
+    #[serde(rename = "SLL_BUY_DVSN_CD")]
+    pub sll_buy_dvsn_cd: String,
+    /// 선물옵션구분 (String, 필수)
+    #[serde(rename = "FUOP_DVSN")]
+    pub fuop_dvsn: String,
+    /// 연속조회검색조건200 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// 연속조회키200 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13177,31 +16198,31 @@ pub struct AuthOverseasFutureoptionV1TradingInquireDailyOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingInquirePeriodTransRequest {
-    /// INQR_TERM_FROM_DT (String, 선택)
+    /// 조회기간FROM일자 (String, 필수)
     #[serde(rename = "INQR_TERM_FROM_DT")]
     pub inqr_term_from_dt: String,
-    /// INQR_TERM_TO_DT (String, 선택)
+    /// 조회기간TO일자 (String, 필수)
     #[serde(rename = "INQR_TERM_TO_DT")]
     pub inqr_term_to_dt: String,
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// ACNT_TR_TYPE_CD (String, 선택)
+    /// 계좌거래유형코드 (String, 필수)
     #[serde(rename = "ACNT_TR_TYPE_CD")]
     pub acnt_tr_type_cd: String,
-    /// CRCY_CD (String, 선택)
+    /// 통화코드 (String, 필수)
     #[serde(rename = "CRCY_CD")]
     pub crcy_cd: String,
-    /// CTX_AREA_FK100 (String, 선택)
+    /// 연속조회검색조건100 (String, 필수)
     #[serde(rename = "CTX_AREA_FK100")]
     pub ctx_area_fk100: String,
-    /// CTX_AREA_NK100 (String, 선택)
+    /// 연속조회키100 (String, 필수)
     #[serde(rename = "CTX_AREA_NK100")]
     pub ctx_area_nk100: String,
-    /// PWD_CHK_YN (String, 선택)
+    /// 비밀번호체크여부 (String, 필수)
     #[serde(rename = "PWD_CHK_YN")]
     pub pwd_chk_yn: String,
     /// headerMap (String, 선택)
@@ -13238,6 +16259,18 @@ pub struct AuthOverseasFutureoptionV1TradingInquirePeriodTransRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1TradingMarginDetailRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 통화코드 (String, 필수)
+    #[serde(rename = "CRCY_CD")]
+    pub crcy_cd: String,
+    /// 조회일자 (String, 필수)
+    #[serde(rename = "INQR_DT")]
+    pub inqr_dt: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13272,6 +16305,9 @@ pub struct AuthOverseasFutureoptionV1TradingMarginDetailRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsInquirePriceRequest {
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SRS_CD")]
+    pub srs_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13306,7 +16342,7 @@ pub struct AuthOverseasFutureoptionV1QuotationsInquirePriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsStockDetailRequest {
-    /// SRS_CD (String, 선택)
+    /// 종목코드 (String, 필수)
     #[serde(rename = "SRS_CD")]
     pub srs_cd: String,
     /// headerMap (String, 선택)
@@ -13343,6 +16379,9 @@ pub struct AuthOverseasFutureoptionV1QuotationsStockDetailRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsInquireAskingPriceRequest {
+    /// 종목명 (String, 필수)
+    #[serde(rename = "SRS_CD")]
+    pub srs_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13377,6 +16416,30 @@ pub struct AuthOverseasFutureoptionV1QuotationsInquireAskingPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsInquireTimeFuturechartpriceRequest {
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SRS_CD")]
+    pub srs_cd: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCH_CD")]
+    pub exch_cd: String,
+    /// 조회시작일시 (String, 필수)
+    #[serde(rename = "START_DATE_TIME")]
+    pub start_date_time: String,
+    /// 조회종료일시 (String, 필수)
+    #[serde(rename = "CLOSE_DATE_TIME")]
+    pub close_date_time: String,
+    /// 조회구분 (String, 필수)
+    #[serde(rename = "QRY_TP")]
+    pub qry_tp: String,
+    /// 요청개수 (String, 필수)
+    #[serde(rename = "QRY_CNT")]
+    pub qry_cnt: i64,
+    /// 묶음개수 (String, 필수)
+    #[serde(rename = "QRY_GAP")]
+    pub qry_gap: String,
+    /// 이전조회KEY (String, 필수)
+    #[serde(rename = "INDEX_KEY")]
+    pub index_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13411,6 +16474,30 @@ pub struct AuthOverseasFutureoptionV1QuotationsInquireTimeFuturechartpriceReques
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsTickCcnlRequest {
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SRS_CD")]
+    pub srs_cd: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCH_CD")]
+    pub exch_cd: String,
+    /// 조회시작일시 (String, 필수)
+    #[serde(rename = "START_DATE_TIME")]
+    pub start_date_time: String,
+    /// 조회종료일시 (String, 필수)
+    #[serde(rename = "CLOSE_DATE_TIME")]
+    pub close_date_time: String,
+    /// 조회구분 (String, 필수)
+    #[serde(rename = "QRY_TP")]
+    pub qry_tp: String,
+    /// 요청개수 (String, 필수)
+    #[serde(rename = "QRY_CNT")]
+    pub qry_cnt: i64,
+    /// 묶음개수 (String, 필수)
+    #[serde(rename = "QRY_GAP")]
+    pub qry_gap: String,
+    /// 이전조회KEY (String, 필수)
+    #[serde(rename = "INDEX_KEY")]
+    pub index_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13445,6 +16532,30 @@ pub struct AuthOverseasFutureoptionV1QuotationsTickCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsWeeklyCcnlRequest {
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SRS_CD")]
+    pub srs_cd: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCH_CD")]
+    pub exch_cd: String,
+    /// 조회시작일시 (String, 필수)
+    #[serde(rename = "START_DATE_TIME")]
+    pub start_date_time: String,
+    /// 조회종료일시 (String, 필수)
+    #[serde(rename = "CLOSE_DATE_TIME")]
+    pub close_date_time: String,
+    /// 조회구분 (String, 필수)
+    #[serde(rename = "QRY_TP")]
+    pub qry_tp: String,
+    /// 요청개수 (String, 필수)
+    #[serde(rename = "QRY_CNT")]
+    pub qry_cnt: i64,
+    /// 묶음개수 (String, 필수)
+    #[serde(rename = "QRY_GAP")]
+    pub qry_gap: String,
+    /// 이전조회KEY (String, 필수)
+    #[serde(rename = "INDEX_KEY")]
+    pub index_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13479,6 +16590,30 @@ pub struct AuthOverseasFutureoptionV1QuotationsWeeklyCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsDailyCcnlRequest {
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SRS_CD")]
+    pub srs_cd: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCH_CD")]
+    pub exch_cd: String,
+    /// 조회시작일시 (String, 필수)
+    #[serde(rename = "START_DATE_TIME")]
+    pub start_date_time: String,
+    /// 조회종료일시 (String, 필수)
+    #[serde(rename = "CLOSE_DATE_TIME")]
+    pub close_date_time: String,
+    /// 조회구분 (String, 필수)
+    #[serde(rename = "QRY_TP")]
+    pub qry_tp: String,
+    /// 요청개수 (String, 필수)
+    #[serde(rename = "QRY_CNT")]
+    pub qry_cnt: i64,
+    /// 묶음개수 (String, 필수)
+    #[serde(rename = "QRY_GAP")]
+    pub qry_gap: String,
+    /// 이전조회KEY (String, 필수)
+    #[serde(rename = "INDEX_KEY")]
+    pub index_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13513,6 +16648,30 @@ pub struct AuthOverseasFutureoptionV1QuotationsDailyCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsMonthlyCcnlRequest {
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SRS_CD")]
+    pub srs_cd: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCH_CD")]
+    pub exch_cd: String,
+    /// 조회시작일시 (String, 필수)
+    #[serde(rename = "START_DATE_TIME")]
+    pub start_date_time: String,
+    /// 조회종료일시 (String, 필수)
+    #[serde(rename = "CLOSE_DATE_TIME")]
+    pub close_date_time: String,
+    /// 조회구분 (String, 필수)
+    #[serde(rename = "QRY_TP")]
+    pub qry_tp: String,
+    /// 요청개수 (String, 필수)
+    #[serde(rename = "QRY_CNT")]
+    pub qry_cnt: i64,
+    /// 묶음개수 (String, 필수)
+    #[serde(rename = "QRY_GAP")]
+    pub qry_gap: String,
+    /// 이전조회KEY (String, 필수)
+    #[serde(rename = "INDEX_KEY")]
+    pub index_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13547,6 +16706,18 @@ pub struct AuthOverseasFutureoptionV1QuotationsMonthlyCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsSearchContractDetailRequest {
+    /// 요청개수 (String, 필수)
+    #[serde(rename = "QRY_CNT")]
+    pub qry_cnt: i64,
+    /// 품목종류 (String, 필수)
+    #[serde(rename = "SRS_CD_01")]
+    pub srs_cd_01: String,
+    /// 품목종류… (String, 필수)
+    #[serde(rename = "SRS_CD_02…")]
+    pub srs_cd_02: String,
+    /// 품목종류 (String, 필수)
+    #[serde(rename = "SRS_CD_32")]
+    pub srs_cd_32: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13581,6 +16752,18 @@ pub struct AuthOverseasFutureoptionV1QuotationsSearchContractDetailRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsInvestorUnpdTrendRequest {
+    /// 상품 (String, 필수)
+    #[serde(rename = "PROD_ISCD")]
+    pub prod_iscd: String,
+    /// 일자 (String, 필수)
+    #[serde(rename = "BSOP_DATE")]
+    pub bsop_date: String,
+    /// 구분 (String, 필수)
+    #[serde(rename = "UPMU_GUBUN")]
+    pub upmu_gubun: String,
+    /// CTS_KEY (String, 필수)
+    #[serde(rename = "CTS_KEY")]
+    pub cts_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13615,6 +16798,9 @@ pub struct AuthOverseasFutureoptionV1QuotationsInvestorUnpdTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsOptPriceRequest {
+    /// 종목명 (String, 필수)
+    #[serde(rename = "SRS_CD")]
+    pub srs_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13649,6 +16835,9 @@ pub struct AuthOverseasFutureoptionV1QuotationsOptPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsOptDetailRequest {
+    /// 종목명 (String, 필수)
+    #[serde(rename = "SRS_CD")]
+    pub srs_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13683,6 +16872,9 @@ pub struct AuthOverseasFutureoptionV1QuotationsOptDetailRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsOptAskingPriceRequest {
+    /// 종목명 (String, 필수)
+    #[serde(rename = "SRS_CD")]
+    pub srs_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13717,6 +16909,30 @@ pub struct AuthOverseasFutureoptionV1QuotationsOptAskingPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsInquireTimeOptchartpriceRequest {
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SRS_CD")]
+    pub srs_cd: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCH_CD")]
+    pub exch_cd: String,
+    /// 조회시작일시 (String, 필수)
+    #[serde(rename = "START_DATE_TIME")]
+    pub start_date_time: String,
+    /// 조회종료일시 (String, 필수)
+    #[serde(rename = "CLOSE_DATE_TIME")]
+    pub close_date_time: String,
+    /// 조회구분 (String, 필수)
+    #[serde(rename = "QRY_TP")]
+    pub qry_tp: String,
+    /// 요청개수 (String, 필수)
+    #[serde(rename = "QRY_CNT")]
+    pub qry_cnt: i64,
+    /// 묶음개수 (String, 필수)
+    #[serde(rename = "QRY_GAP")]
+    pub qry_gap: String,
+    /// 이전조회KEY (String, 필수)
+    #[serde(rename = "INDEX_KEY")]
+    pub index_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13751,6 +16967,30 @@ pub struct AuthOverseasFutureoptionV1QuotationsInquireTimeOptchartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsOptTickCcnlRequest {
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SRS_CD")]
+    pub srs_cd: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCH_CD")]
+    pub exch_cd: String,
+    /// 조회시작일시 (String, 필수)
+    #[serde(rename = "START_DATE_TIME")]
+    pub start_date_time: String,
+    /// 조회종료일시 (String, 필수)
+    #[serde(rename = "CLOSE_DATE_TIME")]
+    pub close_date_time: String,
+    /// 조회구분 (String, 필수)
+    #[serde(rename = "QRY_TP")]
+    pub qry_tp: String,
+    /// 요청개수 (String, 필수)
+    #[serde(rename = "QRY_CNT")]
+    pub qry_cnt: i64,
+    /// 묶음개수 (String, 필수)
+    #[serde(rename = "QRY_GAP")]
+    pub qry_gap: String,
+    /// 이전조회KEY (String, 필수)
+    #[serde(rename = "INDEX_KEY")]
+    pub index_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13785,6 +17025,30 @@ pub struct AuthOverseasFutureoptionV1QuotationsOptTickCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsOptDailyCcnlRequest {
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SRS_CD")]
+    pub srs_cd: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCH_CD")]
+    pub exch_cd: String,
+    /// 조회시작일시 (String, 필수)
+    #[serde(rename = "START_DATE_TIME")]
+    pub start_date_time: String,
+    /// 조회종료일시 (String, 필수)
+    #[serde(rename = "CLOSE_DATE_TIME")]
+    pub close_date_time: String,
+    /// 조회구분 (String, 필수)
+    #[serde(rename = "QRY_TP")]
+    pub qry_tp: String,
+    /// 요청개수 (String, 필수)
+    #[serde(rename = "QRY_CNT")]
+    pub qry_cnt: i64,
+    /// 묶음개수 (String, 필수)
+    #[serde(rename = "QRY_GAP")]
+    pub qry_gap: String,
+    /// 이전조회KEY (String, 필수)
+    #[serde(rename = "INDEX_KEY")]
+    pub index_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13819,6 +17083,30 @@ pub struct AuthOverseasFutureoptionV1QuotationsOptDailyCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsOptWeeklyCcnlRequest {
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SRS_CD")]
+    pub srs_cd: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCH_CD")]
+    pub exch_cd: String,
+    /// 조회시작일시 (String, 필수)
+    #[serde(rename = "START_DATE_TIME")]
+    pub start_date_time: String,
+    /// 조회종료일시 (String, 필수)
+    #[serde(rename = "CLOSE_DATE_TIME")]
+    pub close_date_time: String,
+    /// 조회구분 (String, 필수)
+    #[serde(rename = "QRY_TP")]
+    pub qry_tp: String,
+    /// 요청개수 (String, 필수)
+    #[serde(rename = "QRY_CNT")]
+    pub qry_cnt: i64,
+    /// 묶음개수 (String, 필수)
+    #[serde(rename = "QRY_GAP")]
+    pub qry_gap: String,
+    /// 이전조회KEY (String, 필수)
+    #[serde(rename = "INDEX_KEY")]
+    pub index_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13853,6 +17141,30 @@ pub struct AuthOverseasFutureoptionV1QuotationsOptWeeklyCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsOptMonthlyCcnlRequest {
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "SRS_CD")]
+    pub srs_cd: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "EXCH_CD")]
+    pub exch_cd: String,
+    /// 조회시작일시 (String, 필수)
+    #[serde(rename = "START_DATE_TIME")]
+    pub start_date_time: String,
+    /// 조회종료일시 (String, 필수)
+    #[serde(rename = "CLOSE_DATE_TIME")]
+    pub close_date_time: String,
+    /// 조회구분 (String, 필수)
+    #[serde(rename = "QRY_TP")]
+    pub qry_tp: String,
+    /// 요청개수 (String, 필수)
+    #[serde(rename = "QRY_CNT")]
+    pub qry_cnt: i64,
+    /// 묶음개수 (String, 필수)
+    #[serde(rename = "QRY_GAP")]
+    pub qry_gap: String,
+    /// 이전조회KEY (String, 필수)
+    #[serde(rename = "INDEX_KEY")]
+    pub index_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13887,6 +17199,18 @@ pub struct AuthOverseasFutureoptionV1QuotationsOptMonthlyCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsSearchOptDetailRequest {
+    /// 요청개수 (String, 필수)
+    #[serde(rename = "QRY_CNT")]
+    pub qry_cnt: i64,
+    /// 종목코드1 (String, 필수)
+    #[serde(rename = "SRS_CD_01")]
+    pub srs_cd_01: String,
+    /// 종목코드2 (String, 필수)
+    #[serde(rename = "SRS_CD_02...")]
+    pub srs_cd_02: String,
+    /// 종목코드30 (String, 필수)
+    #[serde(rename = "SRS_CD_30")]
+    pub srs_cd_30: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13921,6 +17245,24 @@ pub struct AuthOverseasFutureoptionV1QuotationsSearchOptDetailRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthOverseasFutureoptionV1QuotationsMarketTimeRequest {
+    /// FM상품군코드 (String, 필수)
+    #[serde(rename = "FM_PDGR_CD")]
+    pub fm_pdgr_cd: String,
+    /// FM클래스코드 (String, 필수)
+    #[serde(rename = "FM_CLAS_CD")]
+    pub fm_clas_cd: String,
+    /// FM거래소코드 (String, 필수)
+    #[serde(rename = "FM_EXCG_CD")]
+    pub fm_excg_cd: String,
+    /// 옵션여부 (String, 필수)
+    #[serde(rename = "OPT_YN")]
+    pub opt_yn: String,
+    /// 연속조회키200 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
+    /// 연속조회검색조건200 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13955,6 +17297,12 @@ pub struct AuthOverseasFutureoptionV1QuotationsMarketTimeRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutHDFFF020Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -13989,6 +17337,12 @@ pub struct AuthTryitoutHDFFF020Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutHDFFF010Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 종목코드 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -14023,6 +17377,12 @@ pub struct AuthTryitoutHDFFF010Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutHDFFF1C0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// HTSID (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -14057,6 +17417,12 @@ pub struct AuthTryitoutHDFFF1C0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutHDFFF2C0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// HTSID (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -14091,37 +17457,37 @@ pub struct AuthTryitoutHDFFF2C0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1TradingBuyRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// PDNO (String, 선택)
+    /// 상품번호 (String, 필수)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// ORD_QTY2 (String, 선택)
+    /// 주문수량2 (String, 필수)
     #[serde(rename = "ORD_QTY2")]
     pub ord_qty2: String,
-    /// BOND_ORD_UNPR (String, 선택)
+    /// 채권주문단가 (String, 필수)
     #[serde(rename = "BOND_ORD_UNPR")]
     pub bond_ord_unpr: Decimal,
-    /// SAMT_MKET_PTCI_YN (String, 선택)
+    /// 소액시장참여여부 (String, 필수)
     #[serde(rename = "SAMT_MKET_PTCI_YN")]
     pub samt_mket_ptci_yn: String,
-    /// BOND_RTL_MKET_YN (String, 선택)
+    /// 채권소매시장여부 (String, 필수)
     #[serde(rename = "BOND_RTL_MKET_YN")]
     pub bond_rtl_mket_yn: String,
-    /// IDCR_STFNO (String, 선택)
+    /// 유치자직원번호 (String, 필수)
     #[serde(rename = "IDCR_STFNO")]
     pub idcr_stfno: String,
-    /// MGCO_APTM_ODNO (String, 선택)
+    /// 운용사지정주문번호 (String, 필수)
     #[serde(rename = "MGCO_APTM_ODNO")]
     pub mgco_aptm_odno: String,
-    /// ORD_SVR_DVSN_CD (String, 선택)
+    /// 주문서버구분코드 (String, 필수)
     #[serde(rename = "ORD_SVR_DVSN_CD")]
     pub ord_svr_dvsn_cd: String,
-    /// CTAC_TLNO (String, 선택)
+    /// 연락전화번호 (String, 필수)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
     /// headerMap (String, 선택)
@@ -14158,49 +17524,49 @@ pub struct AuthDomesticBondV1TradingBuyRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1TradingSellRequest {
-    /// CANO (String, 선택)
+    ///  종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// ORD_DVSN (String, 선택)
+    /// 주문구분 (String, 필수)
     #[serde(rename = "ORD_DVSN")]
     pub ord_dvsn: String,
-    /// PDNO (String, 선택)
+    ///  상품번호 (String, 필수)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// ORD_QTY2 (String, 선택)
+    /// 주문수량2 (String, 필수)
     #[serde(rename = "ORD_QTY2")]
     pub ord_qty2: String,
-    /// BOND_ORD_UNPR (String, 선택)
+    /// 주문단가 (String, 필수)
     #[serde(rename = "BOND_ORD_UNPR")]
     pub bond_ord_unpr: Decimal,
-    /// SPRX_YN (String, 선택)
+    /// 분리과세여부 (String, 필수)
     #[serde(rename = "SPRX_YN")]
     pub sprx_yn: String,
-    /// BUY_DT (String, 선택)
+    /// 매수일자 (String, 필수)
     #[serde(rename = "BUY_DT")]
     pub buy_dt: String,
-    /// BUY_SEQ (String, 선택)
+    /// 매수순번 (String, 필수)
     #[serde(rename = "BUY_SEQ")]
     pub buy_seq: String,
-    /// SAMT_MKET_PTCI_YN (String, 선택)
+    /// 소액시장참여여부 (String, 필수)
     #[serde(rename = "SAMT_MKET_PTCI_YN")]
     pub samt_mket_ptci_yn: String,
-    /// SLL_AGCO_OPPS_SLL_YN (String, 선택)
+    /// 매도대행사반대매도여부 (String, 필수)
     #[serde(rename = "SLL_AGCO_OPPS_SLL_YN")]
     pub sll_agco_opps_sll_yn: String,
-    /// BOND_RTL_MKET_YN (String, 선택)
+    /// 채권소매시장여부 (String, 필수)
     #[serde(rename = "BOND_RTL_MKET_YN")]
     pub bond_rtl_mket_yn: String,
-    /// MGCO_APTM_ODNO (String, 선택)
+    /// 운용사지정주문번호 (String, 필수)
     #[serde(rename = "MGCO_APTM_ODNO")]
     pub mgco_aptm_odno: String,
-    /// ORD_SVR_DVSN_CD (String, 선택)
+    /// 주문서버구분코드 (String, 필수)
     #[serde(rename = "ORD_SVR_DVSN_CD")]
     pub ord_svr_dvsn_cd: String,
-    /// CTAC_TLNO (String, 선택)
+    /// 연락전화번호 (String, 필수)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
     /// headerMap (String, 선택)
@@ -14237,37 +17603,37 @@ pub struct AuthDomesticBondV1TradingSellRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1TradingOrderRvsecnclRequest {
-    /// CANO (String, 선택)
+    /// 종합계좌번호 (String, 필수)
     #[serde(rename = "CANO")]
     pub cano: String,
-    /// ACNT_PRDT_CD (String, 선택)
+    /// 계좌상품코드 (String, 필수)
     #[serde(rename = "ACNT_PRDT_CD")]
     pub acnt_prdt_cd: String,
-    /// PDNO (String, 선택)
+    /// 상품번호 (String, 필수)
     #[serde(rename = "PDNO")]
     pub pdno: String,
-    /// ORGN_ODNO (String, 선택)
+    /// 원주문번호 (String, 필수)
     #[serde(rename = "ORGN_ODNO")]
     pub orgn_odno: String,
-    /// ORD_QTY2 (String, 선택)
+    /// 주문수량2 (String, 필수)
     #[serde(rename = "ORD_QTY2")]
     pub ord_qty2: String,
-    /// BOND_ORD_UNPR (String, 선택)
+    /// 채권주문단가 (String, 필수)
     #[serde(rename = "BOND_ORD_UNPR")]
     pub bond_ord_unpr: Decimal,
-    /// QTY_ALL_ORD_YN (String, 선택)
+    /// 잔량전부주문여부 (String, 필수)
     #[serde(rename = "QTY_ALL_ORD_YN")]
     pub qty_all_ord_yn: String,
-    /// RVSE_CNCL_DVSN_CD (String, 선택)
+    /// 정정취소구분코드 (String, 필수)
     #[serde(rename = "RVSE_CNCL_DVSN_CD")]
     pub rvse_cncl_dvsn_cd: String,
-    /// MGCO_APTM_ODNO (String, 선택)
+    /// 운용사지정주문번호 (String, 필수)
     #[serde(rename = "MGCO_APTM_ODNO")]
     pub mgco_aptm_odno: String,
-    /// ORD_SVR_DVSN_CD (String, 선택)
+    /// 주문서버구분코드 (String, 필수)
     #[serde(rename = "ORD_SVR_DVSN_CD")]
     pub ord_svr_dvsn_cd: String,
-    /// CTAC_TLNO (String, 선택)
+    /// 연락전화번호 (String, 필수)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
     /// headerMap (String, 선택)
@@ -14304,6 +17670,24 @@ pub struct AuthDomesticBondV1TradingOrderRvsecnclRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1TradingInquirePsblRvsecnclRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 주문일자 (String, 필수)
+    #[serde(rename = "ORD_DT")]
+    pub ord_dt: String,
+    /// 주문번호 (String, 필수)
+    #[serde(rename = "ODNO")]
+    pub odno: String,
+    /// 연속조회검색조건200 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// 연속조회키200 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -14338,6 +17722,36 @@ pub struct AuthDomesticBondV1TradingInquirePsblRvsecnclRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1TradingInquireDailyCcldRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 조회시작일자 (String, 필수)
+    #[serde(rename = "INQR_STRT_DT")]
+    pub inqr_strt_dt: String,
+    /// 조회종료일자 (String, 필수)
+    #[serde(rename = "INQR_END_DT")]
+    pub inqr_end_dt: String,
+    /// 매도매수구분코드 (String, 필수)
+    #[serde(rename = "SLL_BUY_DVSN_CD")]
+    pub sll_buy_dvsn_cd: String,
+    /// 정렬순서구분 (String, 필수)
+    #[serde(rename = "SORT_SQN_DVSN")]
+    pub sort_sqn_dvsn: String,
+    /// 상품번호 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// 미체결여부 (String, 필수)
+    #[serde(rename = "NCCS_YN")]
+    pub nccs_yn: String,
+    /// 연속조회키200 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
+    /// 연속조회검색조건200 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -14372,6 +17786,27 @@ pub struct AuthDomesticBondV1TradingInquireDailyCcldRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1TradingInquireBalanceRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 조회조건 (String, 필수)
+    #[serde(rename = "INQR_CNDT")]
+    pub inqr_cndt: String,
+    /// 상품번호 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// 매수일자 (String, 필수)
+    #[serde(rename = "BUY_DT")]
+    pub buy_dt: String,
+    /// 연속조회검색조건200 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK200")]
+    pub ctx_area_fk200: String,
+    /// 연속조회키200 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK200")]
+    pub ctx_area_nk200: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -14406,6 +17841,21 @@ pub struct AuthDomesticBondV1TradingInquireBalanceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1TradingInquirePsblOrderRequest {
+    /// 종합계좌번호 (String, 필수)
+    #[serde(rename = "CANO")]
+    pub cano: String,
+    /// 계좌상품코드 (String, 필수)
+    #[serde(rename = "ACNT_PRDT_CD")]
+    pub acnt_prdt_cd: String,
+    /// 상품번호 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// 채권주문단가 (String, 필수)
+    #[serde(rename = "BOND_ORD_UNPR")]
+    pub bond_ord_unpr: Decimal,
+    /// 소액시장참여여부 (String, 필수)
+    #[serde(rename = "SAMT_MKET_PTCI_YN")]
+    pub samt_mket_ptci_yn: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -14440,6 +17890,12 @@ pub struct AuthDomesticBondV1TradingInquirePsblOrderRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1QuotationsInquireAskingPriceRequest {
+    /// 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -14474,6 +17930,12 @@ pub struct AuthDomesticBondV1QuotationsInquireAskingPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1QuotationsInquirePriceRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -14508,6 +17970,12 @@ pub struct AuthDomesticBondV1QuotationsInquirePriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1QuotationsInquireCcnlRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -14542,6 +18010,12 @@ pub struct AuthDomesticBondV1QuotationsInquireCcnlRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1QuotationsInquireDailyPriceRequest {
+    /// 조건시장분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -14576,6 +18050,12 @@ pub struct AuthDomesticBondV1QuotationsInquireDailyPriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1QuotationsInquireDailyItemchartpriceRequest {
+    /// 조건 시장 구분 코드  (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
+    /// 입력 종목코드 (String, 필수)
+    #[serde(rename = "FID_INPUT_ISCD")]
+    pub fid_input_iscd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -14610,6 +18090,27 @@ pub struct AuthDomesticBondV1QuotationsInquireDailyItemchartpriceRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1QuotationsAvgUnitRequest {
+    /// 조회시작일자 (String, 필수)
+    #[serde(rename = "INQR_STRT_DT")]
+    pub inqr_strt_dt: String,
+    /// 조회종료일자 (String, 필수)
+    #[serde(rename = "INQR_END_DT")]
+    pub inqr_end_dt: String,
+    /// 상품번호 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// 상품유형코드 (String, 필수)
+    #[serde(rename = "PRDT_TYPE_CD")]
+    pub prdt_type_cd: String,
+    /// 검증종류코드 (String, 필수)
+    #[serde(rename = "VRFC_KIND_CD")]
+    pub vrfc_kind_cd: String,
+    /// 연속조회키30 (String, 필수)
+    #[serde(rename = "CTX_AREA_NK30")]
+    pub ctx_area_nk30: String,
+    /// 연속조회검색조건100 (String, 필수)
+    #[serde(rename = "CTX_AREA_FK100")]
+    pub ctx_area_fk100: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -14644,6 +18145,12 @@ pub struct AuthDomesticBondV1QuotationsAvgUnitRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1QuotationsIssueInfoRequest {
+    /// 사용자권한정보 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// 거래소코드 (String, 필수)
+    #[serde(rename = "PRDT_TYPE_CD")]
+    pub prdt_type_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -14678,6 +18185,12 @@ pub struct AuthDomesticBondV1QuotationsIssueInfoRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthDomesticBondV1QuotationsSearchBondInfoRequest {
+    /// 상품번호 (String, 필수)
+    #[serde(rename = "PDNO")]
+    pub pdno: String,
+    /// 상품유형코드 (String, 필수)
+    #[serde(rename = "PRDT_TYPE_CD")]
+    pub prdt_type_cd: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -14712,6 +18225,12 @@ pub struct AuthDomesticBondV1QuotationsSearchBondInfoRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0BJCNT0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -14733,12 +18252,6 @@ pub struct AuthTryitoutH0BJCNT0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -14773,6 +18286,12 @@ pub struct AuthTryitoutH0BJCNT0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0BJASP0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -14794,12 +18313,6 @@ pub struct AuthTryitoutH0BJASP0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
@@ -14834,6 +18347,12 @@ pub struct AuthTryitoutH0BJASP0Request {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct AuthTryitoutH0BICNT0Request {
+    /// 거래ID (String, 필수)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// 구분값 (String, 필수)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
@@ -14855,12 +18374,6 @@ pub struct AuthTryitoutH0BICNT0Request {
     /// input (String, 선택)
     #[serde(rename = "input")]
     pub input: String,
-    /// tr_id (String, 선택)
-    #[serde(rename = "tr_id")]
-    pub tr_id: String,
-    /// tr_key (String, 선택)
-    #[serde(rename = "tr_key")]
-    pub tr_key: String,
     /// headerMap (String, 선택)
     #[serde(rename = "headerMap")]
     pub header_map: String,
