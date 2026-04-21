@@ -11,12 +11,9 @@ OUTPUT_DIR = "crates/kis_api/src/generated"
 # --- Utility Functions ---
 
 def to_struct_name(api):
-    # 경로 전체를 활용하여 고유한 이름 생성
-    # /uapi/overseas-stock/v1/trading/order -> OverseasStockV1TradingOrder
     endpoint = api.get('accessUrl', '')
     parts = [p for p in endpoint.strip('/').split('/') if p != "uapi"]
     
-    # rs_kis_server 기대치에 정확히 맞춘 접두사 결정
     if "domestic-stock" in endpoint:
         prefix = "DomesticStock"
     elif "overseas-stock" in endpoint:
@@ -57,7 +54,7 @@ def _extract_params(children_data):
     if not children_data: return params
     
     try:
-        # children_data could be a string or a list
+        # data might be string-encoded JSON or direct list
         if isinstance(children_data, str):
             try:
                 children = json.loads(children_data)
@@ -68,12 +65,11 @@ def _extract_params(children_data):
             
         for child in children:
             key = child.get('key', '')
-            # Extract from InBound (Request) and OutBound (Parameter) configurations
-            # KIS raw data structure search
+            # Try to extract from known parameter keys
             if any(k in key for k in ['OAuth.Common.Policy.Config', 'Parameter.Config']):
                 for param in child.get('paramList', []):
                     pname = param.get('name')
-                    if pname:
+                    if pname and pname not in ['tr_id', 'custtype', 'content-type', 'authorization', 'appkey', 'appsecret']: # skip headers
                         params.append({
                             'name': pname,
                             'korean_name': param.get('description', pname),
@@ -81,8 +77,11 @@ def _extract_params(children_data):
                             'required': 'Y' if param.get('required') else 'N',
                             'description': param.get('value')
                         })
-            if child.get('children'):
-                params.extend(_extract_params(child.get('children')))
+            
+            # Recursively check children
+            inner_children = child.get('children')
+            if inner_children:
+                params.extend(_extract_params(inner_children))
     except:
         pass
     return params
