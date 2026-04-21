@@ -16,9 +16,6 @@ def to_struct_name(api):
     endpoint = api.get('endpoint', '')
     parts = [p for p in endpoint.strip('/').split('/') if p != "uapi"]
     
-    # KIS API 특성에 맞게 카테고리 보정
-    # domestic-stock -> DomesticStock, overseas-stock -> OverseasStock
-    # domestic-futureoption -> DomesticFutureoption, overseas-price -> OverseasPrice
     name_parts = [inflection.camelize(p.replace('-', '_')) for p in parts]
     name = "".join(name_parts)
     
@@ -159,19 +156,26 @@ class CodeGenerator:
             if group_name not in groups: groups[group_name] = []
             groups[group_name].append(api)
 
+        # Module-specific wrapper struct name (e.g., StockQuotations)
+        module_prefix = "Stock" if module_name == "stock" else "Overseas"
+        
         for group in groups:
-            output.append(f"#[allow(dead_code)]\npub struct {group}(pub(crate) KisClient);\n")
+            struct_name = f"{module_prefix}{group}"
+            output.append(f"#[allow(dead_code)]\npub struct {struct_name}(pub(crate) KisClient);\n")
 
-        target_type = "crate::endpoints::Stock" if module_name == "stock" else "crate::endpoints::Overseas"
-        output.append(f"impl {target_type} {{")
+        # Implement methods on crate::endpoints::Stock/Overseas that return these groups
+        target_endpoint_type = f"crate::endpoints::{module_prefix}"
+        output.append(f"impl {target_endpoint_type} {{")
         for group in groups:
+            struct_name = f"{module_prefix}{group}"
             method_name = inflection.underscore(group)
-            output.append(f"    pub fn {method_name}(&self) -> {group} {{ {group}(self.0.clone()) }}")
+            output.append(f"    pub fn {method_name}(&self) -> {struct_name} {{ {struct_name}(self.0.clone()) }}")
         output.append("}\n")
 
         for group, apis in groups.items():
+            struct_name = f"{module_prefix}{group}"
             output.append("#[allow(non_snake_case)]")
-            output.append(f"impl {group} {{")
+            output.append(f"impl {struct_name} {{")
             for api in apis:
                 endpoint = api.get('endpoint', '')
                 method_name = to_safe_snake(endpoint.split('/')[-1])
@@ -211,4 +215,4 @@ class CodeGenerator:
 if __name__ == "__main__":
     generator = CodeGenerator()
     generator.generate()
-    print("[+] Structured SDK generated with Smart Type Mapping and Full Path Naming.")
+    print("[+] Structured SDK generated with Smart Type Mapping and Robust Accessors.")
