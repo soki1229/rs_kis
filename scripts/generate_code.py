@@ -3,6 +3,7 @@ import os
 import re
 import yaml
 import inflection
+import subprocess
 
 # --- Constants ---
 RAW_DATA_FILE = "crates/kis_api/kis-raw-data.json"
@@ -172,6 +173,7 @@ class CodeGenerator:
         self._write_api_module("stock")
         self._write_api_module("overseas")
         self._write_mod_rs()
+        self._run_fmt()
 
     def _write_models(self):
         output = ["#![allow(clippy::doc_lazy_continuation, clippy::tabs_in_doc_comments)]"]
@@ -273,7 +275,14 @@ class CodeGenerator:
 
     def _write_mod_rs(self):
         with open(os.path.join(OUTPUT_DIR, "mod.rs"), "w") as f:
-            f.write("pub mod models;\npub mod stock;\npub mod overseas;\npub mod config;\n")
+            f.write("pub mod config;\npub mod models;\npub mod overseas;\npub mod stock;\n")
+
+    def _run_fmt(self):
+        try:
+            subprocess.run(["cargo", "fmt"], check=True)
+            print("[+] Auto-formatted generated code.")
+        except:
+            print("[!] Failed to run cargo fmt.")
 
 if __name__ == "__main__":
     generator = CodeGenerator()
