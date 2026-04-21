@@ -49,38 +49,38 @@ def format_doc(text, indent=""):
     lines = str(text).strip().split('\n')
     return "\n".join([f"{indent}/// {line}" for line in lines])
 
-def _parse_params_from_json(json_str):
+def _parse_params_recursive(data):
     params = []
-    if not json_str: return params
+    if isinstance(data, dict):
+        for k, v in data.items():
+            params.append({
+                'name': k,
+                'korean_name': k,
+                'type': 'String',
+                'required': 'N',
+                'description': str(v)
+            })
+            if isinstance(v, (dict, list)):
+                params.extend(_parse_params_recursive(v))
+    elif isinstance(data, list):
+        for item in data:
+            params.extend(_parse_params_recursive(item))
+    return params
+
+def _parse_params_from_json(json_str):
+    if not json_str: return []
     try:
         cleaned = json_str.strip().replace('\r', '').replace('\n', '').replace('\t', '')
         data = json.loads(cleaned)
-        if isinstance(data, dict):
-            for k, v in data.items():
-                params.append({
-                    'name': k, # Original Case
-                    'korean_name': k,
-                    'type': 'String',
-                    'required': 'N',
-                    'description': str(v)
-                })
-        elif isinstance(data, list) and len(data) > 0 and isinstance(data[0], dict):
-            for k, v in data[0].items():
-                params.append({
-                    'name': k, # Original Case
-                    'korean_name': k,
-                    'type': 'String',
-                    'required': 'N',
-                    'description': str(v)
-                })
+        return _parse_params_recursive(data)
     except:
         pass
-    return params
+    return []
 
 def _extract_params(api):
     params = []
     
-    # 1. PRIMARY: children parsing (Most accurate field list)
+    # 1. PRIMARY: children parsing (Deep recursive walk)
     children_data = api.get('children', '[]')
     try:
         children = json.loads(children_data) if isinstance(children_data, str) else children_data
@@ -90,16 +90,16 @@ def _extract_params(api):
                 for param in node.get('paramList', []):
                     pname = param.get('name')
                     pvalue = param.get('value', '')
-                    if pname in ['jsonBody', 'jsonResponse'] and isinstance(pvalue, str) and pvalue.startswith('{'):
-                        res.extend(_parse_params_from_json(pvalue))
-                    elif pname and pname.lower() not in ['tr_id', 'custtype', 'content-type', 'authorization', 'appkey', 'appsecret']:
+                    if pname and pname.lower() not in ['tr_id', 'custtype', 'content-type', 'authorization', 'appkey', 'appsecret']:
                         res.append({
-                            'name': pname, # Original Case
+                            'name': pname,
                             'korean_name': param.get('description', pname),
                             'type': 'String',
                             'required': 'Y' if param.get('required') else 'N',
-                            'description': pvalue
+                            'description': str(pvalue)
                         })
+                        if isinstance(pvalue, str) and pvalue.startswith('{'):
+                            res.extend(_parse_params_from_json(pvalue))
                 if node.get('children'):
                     res.extend(walk_children(node.get('children')))
             return res
@@ -107,7 +107,7 @@ def _extract_params(api):
     except:
         pass
 
-    # 2. SECONDARY: reqExample (Backup for missed fields)
+    # 2. SECONDARY: reqExample (Recursive parsing)
     req_example = api.get('reqExample')
     if req_example:
         params.extend(_parse_params_from_json(req_example))
@@ -117,7 +117,7 @@ def _extract_params(api):
     if extra_param:
         params.extend(_parse_params_from_json(extra_param))
 
-    # Deduplicate by lowercase name to keep one variant but preserve original casing for rename
+    # Deduplicate by lowercase name to ensure all variants are captured once
     seen = set()
     unique_params = []
     for p in params:

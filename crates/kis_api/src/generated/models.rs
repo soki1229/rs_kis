@@ -25,6 +25,9 @@ pub struct AuthOauth2TokenPRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// grant_type (String, 선택)
     #[serde(rename = "grant_type")]
     pub grant_type: String,
@@ -34,6 +37,9 @@ pub struct AuthOauth2TokenPRequest {
     /// appsecret (String, 선택)
     #[serde(rename = "appsecret")]
     pub appsecret: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// access_token (String, 선택)
     #[serde(rename = "access_token")]
     pub access_token: String,
@@ -71,6 +77,9 @@ pub struct AuthOauth2RevokePRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// appkey (String, 선택)
     #[serde(rename = "appkey")]
     pub appkey: String,
@@ -80,6 +89,9 @@ pub struct AuthOauth2RevokePRequest {
     /// token (String, 선택)
     #[serde(rename = "token")]
     pub token: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// code (String, 선택)
     #[serde(rename = "code")]
     pub code: String,
@@ -114,6 +126,9 @@ pub struct AuthHashkeyRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -135,6 +150,9 @@ pub struct AuthHashkeyRequest {
     /// CTAC_TLNO (String, 선택)
     #[serde(rename = "CTAC_TLNO")]
     pub ctac_tlno: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// BODY (String, 선택)
     #[serde(rename = "BODY")]
     pub body: String,
@@ -233,6 +251,9 @@ pub struct DomesticStockV1TradingOrderCashRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -285,6 +306,9 @@ pub struct DomesticStockV1TradingOrderCreditRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -349,6 +373,9 @@ pub struct DomesticStockV1TradingOrderRvsecnclRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -752,6 +779,9 @@ pub struct DomesticStockV1TradingOrderResvRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -794,6 +824,9 @@ pub struct DomesticStockV1TradingOrderResvRequest {
     /// RSVN_ORD_SEQ (String, 선택)
     #[serde(rename = "RSVN_ORD_SEQ")]
     pub rsvn_ord_seq: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// rt_cd (String, 선택)
     #[serde(rename = "rt_cd")]
     pub rt_cd: String,
@@ -834,6 +867,9 @@ pub struct DomesticStockV1TradingOrderResvRvsecnclRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// _comment (String, 선택)
     #[serde(rename = "_comment")]
     pub _comment: String,
@@ -879,6 +915,9 @@ pub struct DomesticStockV1TradingOrderResvRvsecnclRequest {
     /// RSVN_ORD_ORD_DT (String, 선택)
     #[serde(rename = "RSVN_ORD_ORD_DT")]
     pub rsvn_ord_ord_dt: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// rt_cd (String, 선택)
     #[serde(rename = "rt_cd")]
     pub rt_cd: String,
@@ -891,6 +930,9 @@ pub struct DomesticStockV1TradingOrderResvRvsecnclRequest {
     /// output (String, 선택)
     #[serde(rename = "output")]
     pub output: String,
+    /// NRML_PRCS_YN (String, 선택)
+    #[serde(rename = "NRML_PRCS_YN")]
+    pub nrml_prcs_yn: String,
     /// address (String, 선택)
     #[serde(rename = "address")]
     pub address: String,
@@ -6606,6 +6648,39 @@ pub struct DomesticStockV1RankingBulkTransNumRequest {
     /// output (String, 선택)
     #[serde(rename = "output")]
     pub output: String,
+    /// mksc_shrn_iscd (String, 선택)
+    #[serde(rename = "mksc_shrn_iscd")]
+    pub mksc_shrn_iscd: String,
+    /// data_rank (String, 선택)
+    #[serde(rename = "data_rank")]
+    pub data_rank: String,
+    /// hts_kor_isnm (String, 선택)
+    #[serde(rename = "hts_kor_isnm")]
+    pub hts_kor_isnm: String,
+    /// stck_prpr (String, 선택)
+    #[serde(rename = "stck_prpr")]
+    pub stck_prpr: String,
+    /// prdy_vrss_sign (String, 선택)
+    #[serde(rename = "prdy_vrss_sign")]
+    pub prdy_vrss_sign: String,
+    /// prdy_vrss (String, 선택)
+    #[serde(rename = "prdy_vrss")]
+    pub prdy_vrss: String,
+    /// prdy_ctrt (String, 선택)
+    #[serde(rename = "prdy_ctrt")]
+    pub prdy_ctrt: String,
+    /// acml_vol (String, 선택)
+    #[serde(rename = "acml_vol")]
+    pub acml_vol: Decimal,
+    /// shnu_cntg_csnu (String, 선택)
+    #[serde(rename = "shnu_cntg_csnu")]
+    pub shnu_cntg_csnu: String,
+    /// seln_cntg_csnu (String, 선택)
+    #[serde(rename = "seln_cntg_csnu")]
+    pub seln_cntg_csnu: String,
+    /// ntby_cnqn (String, 선택)
+    #[serde(rename = "ntby_cnqn")]
+    pub ntby_cnqn: String,
     /// rt_cd (String, 선택)
     #[serde(rename = "rt_cd")]
     pub rt_cd: String,
@@ -6810,6 +6885,9 @@ pub struct AuthTryitoutH0STCNT0Request {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// appkey (String, 선택)
     #[serde(rename = "appkey")]
     pub appkey: String,
@@ -6834,9 +6912,24 @@ pub struct AuthTryitoutH0STCNT0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [국내주식 실시간호가 (KRX) [실시간-004]] 요청 구조체
@@ -6862,6 +6955,9 @@ pub struct AuthTryitoutH0STASP0Request {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
     #[serde(rename = "jsonResponse")]
     pub json_response: String,
@@ -6871,9 +6967,30 @@ pub struct AuthTryitoutH0STASP0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [국내주식 실시간체결통보 [실시간-005]] 요청 구조체
@@ -6899,6 +7016,9 @@ pub struct AuthTryitoutH0STCNI0Request {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
     #[serde(rename = "jsonResponse")]
     pub json_response: String,
@@ -6908,9 +7028,30 @@ pub struct AuthTryitoutH0STCNI0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [국내주식 실시간예상체결 (KRX) [실시간-041]] 요청 구조체
@@ -6948,9 +7089,30 @@ pub struct AuthTryitoutH0STANC0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [국내주식 실시간회원사 (KRX) [실시간-047]] 요청 구조체
@@ -6961,9 +7123,30 @@ pub struct AuthTryitoutH0STMBC0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [국내주식 실시간프로그램매매 (KRX) [실시간-048]] 요청 구조체
@@ -7001,9 +7184,30 @@ pub struct AuthTryitoutH0STPGM0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [국내주식 장운영정보 (KRX) [실시간-049]] 요청 구조체
@@ -7041,9 +7245,30 @@ pub struct AuthTryitoutH0STMKO0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [국내주식 시간외 실시간호가 (KRX) [실시간-025]] 요청 구조체
@@ -7081,9 +7306,30 @@ pub struct AuthTryitoutH0STOAA0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [국내주식 시간외 실시간체결가 (KRX) [실시간-042]] 요청 구조체
@@ -7121,9 +7367,30 @@ pub struct AuthTryitoutH0STOUP0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [국내주식 시간외 실시간예상체결 (KRX) [실시간-024]] 요청 구조체
@@ -7161,9 +7428,30 @@ pub struct AuthTryitoutH0STOAC0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [국내지수 실시간체결 [실시간-026]] 요청 구조체
@@ -7201,9 +7489,30 @@ pub struct AuthTryitoutH0UPCNT0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [국내지수 실시간예상체결 [실시간-027]] 요청 구조체
@@ -7241,9 +7550,30 @@ pub struct AuthTryitoutH0UPANC0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [국내지수 실시간프로그램매매 [실시간-028]] 요청 구조체
@@ -7281,9 +7611,30 @@ pub struct AuthTryitoutH0UPPGM0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [ELW 실시간호가 [실시간-062]] 요청 구조체
@@ -7321,9 +7672,30 @@ pub struct AuthTryitoutH0EWASP0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [ELW 실시간체결가 [실시간-061]] 요청 구조체
@@ -7361,9 +7733,30 @@ pub struct AuthTryitoutH0EWCNT0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [ELW 실시간예상체결 [실시간-063]] 요청 구조체
@@ -7401,9 +7794,30 @@ pub struct AuthTryitoutH0EWANC0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [국내ETF NAV추이 [실시간-051]] 요청 구조체
@@ -7441,9 +7855,30 @@ pub struct AuthTryitoutH0STNAV0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [국내주식 실시간체결가 (통합)] 요청 구조체
@@ -7877,6 +8312,9 @@ pub struct DomesticFutureoptionV1TradingOrderRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// ORD_PRCS_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_PRCS_DVSN_CD")]
     pub ord_prcs_dvsn_cd: String,
@@ -7944,6 +8382,9 @@ pub struct DomesticFutureoptionV1TradingOrderRvsecnclRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// ORD_PRCS_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_PRCS_DVSN_CD")]
     pub ord_prcs_dvsn_cd: String,
@@ -9153,9 +9594,30 @@ pub struct AuthTryitoutH0IFCNI0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [상품선물 실시간호가[실시간-023]] 요청 구조체
@@ -9261,9 +9723,30 @@ pub struct AuthTryitoutH0ZFASP0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [주식선물 실시간체결가 [실시간-029]] 요청 구조체
@@ -9301,9 +9784,30 @@ pub struct AuthTryitoutH0ZFCNT0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [주식선물 실시간예상체결 [실시간-031]] 요청 구조체
@@ -9375,9 +9879,30 @@ pub struct AuthTryitoutH0ZOASP0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [주식옵션 실시간체결가 [실시간-044]] 요청 구조체
@@ -9415,9 +9940,30 @@ pub struct AuthTryitoutH0ZOCNT0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [주식옵션 실시간예상체결 [실시간-046]] 요청 구조체
@@ -9489,9 +10035,30 @@ pub struct AuthTryitoutH0EUASP0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [KRX야간옵션 실시간체결가 [실시간-032]] 요청 구조체
@@ -9529,9 +10096,30 @@ pub struct AuthTryitoutH0EUCNT0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [KRX야간옵션실시간예상체결 [실시간-034]] 요청 구조체
@@ -9569,9 +10157,30 @@ pub struct AuthTryitoutH0EUANC0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [KRX야간옵션실시간체결통보 [실시간-067]] 요청 구조체
@@ -9609,9 +10218,30 @@ pub struct AuthTryitoutH0EUCNI0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [KRX야간선물 실시간호가 [실시간-065]] 요청 구조체
@@ -9649,9 +10279,30 @@ pub struct AuthTryitoutH0MFASP0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [KRX야간선물 실시간종목체결 [실시간-064]] 요청 구조체
@@ -9689,9 +10340,30 @@ pub struct AuthTryitoutH0MFCNT0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [KRX야간선물 실시간체결통보 [실시간-066]] 요청 구조체
@@ -9751,6 +10423,9 @@ pub struct OverseasStockV1TradingOrderRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -9778,6 +10453,9 @@ pub struct OverseasStockV1TradingOrderRequest {
     /// ORD_SVR_DVSN_CD (String, 선택)
     #[serde(rename = "ORD_SVR_DVSN_CD")]
     pub ord_svr_dvsn_cd: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// rt_cd (String, 선택)
     #[serde(rename = "rt_cd")]
     pub rt_cd: String,
@@ -9790,6 +10468,15 @@ pub struct OverseasStockV1TradingOrderRequest {
     /// output (String, 선택)
     #[serde(rename = "output")]
     pub output: String,
+    /// KRX_FWDG_ORD_ORGNO (String, 선택)
+    #[serde(rename = "KRX_FWDG_ORD_ORGNO")]
+    pub krx_fwdg_ord_orgno: String,
+    /// ODNO (String, 선택)
+    #[serde(rename = "ODNO")]
+    pub odno: String,
+    /// ORD_TMD (String, 선택)
+    #[serde(rename = "ORD_TMD")]
+    pub ord_tmd: String,
     /// address (String, 선택)
     #[serde(rename = "address")]
     pub address: String,
@@ -9821,6 +10508,9 @@ pub struct OverseasStockV1TradingOrderRvsecnclRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -9885,6 +10575,9 @@ pub struct OverseasStockV1TradingOrderResvRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -9943,6 +10636,9 @@ pub struct OverseasStockV1TradingOrderResvCcnlRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -9986,6 +10682,12 @@ pub struct OverseasStockV1TradingInquirePsamountRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// echm_af_ord_psbl_amt (String, 선택)
     #[serde(rename = "echm_af_ord_psbl_amt")]
     pub echm_af_ord_psbl_amt: Decimal,
@@ -10237,6 +10939,9 @@ pub struct OverseasStockV1TradingOrderResvListRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// jsonResponse (String, 선택)
     #[serde(rename = "jsonResponse")]
     pub json_response: String,
@@ -10886,12 +11591,66 @@ pub struct OverseasPriceV1QuotationsInquireDailyChartpriceRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// output1 (String, 선택)
     #[serde(rename = "output1")]
     pub output1: String,
+    /// acml_vol (String, 선택)
+    #[serde(rename = "acml_vol")]
+    pub acml_vol: Decimal,
+    /// hts_kor_isnm (String, 선택)
+    #[serde(rename = "hts_kor_isnm")]
+    pub hts_kor_isnm: String,
+    /// ovrs_nmix_prdy_clpr (String, 선택)
+    #[serde(rename = "ovrs_nmix_prdy_clpr")]
+    pub ovrs_nmix_prdy_clpr: String,
+    /// ovrs_nmix_prdy_vrss (String, 선택)
+    #[serde(rename = "ovrs_nmix_prdy_vrss")]
+    pub ovrs_nmix_prdy_vrss: String,
+    /// ovrs_nmix_prpr (String, 선택)
+    #[serde(rename = "ovrs_nmix_prpr")]
+    pub ovrs_nmix_prpr: String,
+    /// ovrs_prod_hgpr (String, 선택)
+    #[serde(rename = "ovrs_prod_hgpr")]
+    pub ovrs_prod_hgpr: String,
+    /// ovrs_prod_lwpr (String, 선택)
+    #[serde(rename = "ovrs_prod_lwpr")]
+    pub ovrs_prod_lwpr: String,
+    /// ovrs_prod_oprc (String, 선택)
+    #[serde(rename = "ovrs_prod_oprc")]
+    pub ovrs_prod_oprc: String,
+    /// prdy_ctrt (String, 선택)
+    #[serde(rename = "prdy_ctrt")]
+    pub prdy_ctrt: String,
+    /// prdy_vrss_sign (String, 선택)
+    #[serde(rename = "prdy_vrss_sign")]
+    pub prdy_vrss_sign: String,
+    /// stck_shrn_iscd (String, 선택)
+    #[serde(rename = "stck_shrn_iscd")]
+    pub stck_shrn_iscd: String,
     /// output2 (String, 선택)
     #[serde(rename = "output2")]
     pub output2: String,
+    /// mod_yn (String, 선택)
+    #[serde(rename = "mod_yn")]
+    pub mod_yn: String,
+    /// ovrs_nmix_hgpr (String, 선택)
+    #[serde(rename = "ovrs_nmix_hgpr")]
+    pub ovrs_nmix_hgpr: String,
+    /// ovrs_nmix_lwpr (String, 선택)
+    #[serde(rename = "ovrs_nmix_lwpr")]
+    pub ovrs_nmix_lwpr: String,
+    /// ovrs_nmix_oprc (String, 선택)
+    #[serde(rename = "ovrs_nmix_oprc")]
+    pub ovrs_nmix_oprc: String,
+    /// stck_bsop_date (String, 선택)
+    #[serde(rename = "stck_bsop_date")]
+    pub stck_bsop_date: String,
     /// address (String, 선택)
     #[serde(rename = "address")]
     pub address: String,
@@ -10923,12 +11682,90 @@ pub struct OverseasPriceV1QuotationsInquireSearchRequest {
     /// jsonBody (String, 선택)
     #[serde(rename = "jsonBody")]
     pub json_body: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// output1 (String, 선택)
     #[serde(rename = "output1")]
     pub output1: String,
+    /// crec (String, 선택)
+    #[serde(rename = "crec")]
+    pub crec: String,
+    /// nrec (String, 선택)
+    #[serde(rename = "nrec")]
+    pub nrec: String,
+    /// stat (String, 선택)
+    #[serde(rename = "stat")]
+    pub stat: String,
+    /// trec (String, 선택)
+    #[serde(rename = "trec")]
+    pub trec: String,
+    /// zdiv (String, 선택)
+    #[serde(rename = "zdiv")]
+    pub zdiv: String,
     /// output2 (String, 선택)
     #[serde(rename = "output2")]
     pub output2: String,
+    /// avol (String, 선택)
+    #[serde(rename = "avol")]
+    pub avol: String,
+    /// diff (String, 선택)
+    #[serde(rename = "diff")]
+    pub diff: String,
+    /// e_ordyn (String, 선택)
+    #[serde(rename = "e_ordyn")]
+    pub e_ordyn: String,
+    /// ename (String, 선택)
+    #[serde(rename = "ename")]
+    pub ename: String,
+    /// eps (String, 선택)
+    #[serde(rename = "eps")]
+    pub eps: String,
+    /// excd (String, 선택)
+    #[serde(rename = "excd")]
+    pub excd: String,
+    /// last (String, 선택)
+    #[serde(rename = "last")]
+    pub last: String,
+    /// name (String, 선택)
+    #[serde(rename = "name")]
+    pub name: String,
+    /// per (String, 선택)
+    #[serde(rename = "per")]
+    pub per: String,
+    /// phigh (String, 선택)
+    #[serde(rename = "phigh")]
+    pub phigh: String,
+    /// plow (String, 선택)
+    #[serde(rename = "plow")]
+    pub plow: String,
+    /// popen (String, 선택)
+    #[serde(rename = "popen")]
+    pub popen: String,
+    /// rank (String, 선택)
+    #[serde(rename = "rank")]
+    pub rank: String,
+    /// rate (String, 선택)
+    #[serde(rename = "rate")]
+    pub rate: Decimal,
+    /// rsym (String, 선택)
+    #[serde(rename = "rsym")]
+    pub rsym: String,
+    /// shar (String, 선택)
+    #[serde(rename = "shar")]
+    pub shar: String,
+    /// sign (String, 선택)
+    #[serde(rename = "sign")]
+    pub sign: String,
+    /// symb (String, 선택)
+    #[serde(rename = "symb")]
+    pub symb: String,
+    /// tvol (String, 선택)
+    #[serde(rename = "tvol")]
+    pub tvol: String,
+    /// valx (String, 선택)
+    #[serde(rename = "valx")]
+    pub valx: String,
     /// address (String, 선택)
     #[serde(rename = "address")]
     pub address: String,
@@ -11664,9 +12501,30 @@ pub struct AuthTryitoutHDFSASP0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [해외주식 지연호가(아시아)[실시간-008]] 요청 구조체
@@ -11772,9 +12630,30 @@ pub struct AuthTryitoutH0GSCNI0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [해외선물옵션 주문 [v1_해외선물-001]] 요청 구조체
@@ -11800,6 +12679,9 @@ pub struct AuthOverseasFutureoptionV1TradingOrderRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -11851,6 +12733,9 @@ pub struct AuthOverseasFutureoptionV1TradingOrderRequest {
     /// FM_HDGE_ORD_SCRN_YN (String, 선택)
     #[serde(rename = "FM_HDGE_ORD_SCRN_YN")]
     pub fm_hdge_ord_scrn_yn: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// rt_cd (String, 선택)
     #[serde(rename = "rt_cd")]
     pub rt_cd: String,
@@ -11863,6 +12748,12 @@ pub struct AuthOverseasFutureoptionV1TradingOrderRequest {
     /// output (String, 선택)
     #[serde(rename = "output")]
     pub output: String,
+    /// ORD_DT (String, 선택)
+    #[serde(rename = "ORD_DT")]
+    pub ord_dt: String,
+    /// ODNO (String, 선택)
+    #[serde(rename = "ODNO")]
+    pub odno: String,
     /// address (String, 선택)
     #[serde(rename = "address")]
     pub address: String,
@@ -11891,6 +12782,9 @@ pub struct AuthOverseasFutureoptionV1TradingOrderRvsecnclRequest {
     /// formMap (String, 선택)
     #[serde(rename = "formMap")]
     pub form_map: String,
+    /// jsonBody (String, 선택)
+    #[serde(rename = "jsonBody")]
+    pub json_body: String,
     /// CANO (String, 선택)
     #[serde(rename = "CANO")]
     pub cano: String,
@@ -11921,6 +12815,9 @@ pub struct AuthOverseasFutureoptionV1TradingOrderRvsecnclRequest {
     /// FM_HDGE_ORD_SCRN_YN (String, 선택)
     #[serde(rename = "FM_HDGE_ORD_SCRN_YN")]
     pub fm_hdge_ord_scrn_yn: String,
+    /// jsonResponse (String, 선택)
+    #[serde(rename = "jsonResponse")]
+    pub json_response: String,
     /// rt_cd (String, 선택)
     #[serde(rename = "rt_cd")]
     pub rt_cd: String,
@@ -11933,6 +12830,12 @@ pub struct AuthOverseasFutureoptionV1TradingOrderRvsecnclRequest {
     /// output (String, 선택)
     #[serde(rename = "output")]
     pub output: String,
+    /// ORD_DT (String, 선택)
+    #[serde(rename = "ORD_DT")]
+    pub ord_dt: String,
+    /// ODNO (String, 선택)
+    #[serde(rename = "ODNO")]
+    pub odno: String,
     /// address (String, 선택)
     #[serde(rename = "address")]
     pub address: String,
@@ -13767,9 +14670,30 @@ pub struct AuthTryitoutH0BJCNT0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [일반채권 실시간호가 [실시간-053]] 요청 구조체
@@ -13807,9 +14731,30 @@ pub struct AuthTryitoutH0BJASP0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
 
 /// [채권지수 실시간체결가 [실시간-060]] 요청 구조체
@@ -13847,7 +14792,28 @@ pub struct AuthTryitoutH0BICNT0Request {
     /// header (String, 선택)
     #[serde(rename = "header")]
     pub header: String,
+    /// approval_key (String, 선택)
+    #[serde(rename = "approval_key")]
+    pub approval_key: String,
+    /// custtype (String, 선택)
+    #[serde(rename = "custtype")]
+    pub custtype: String,
+    /// tr_type (String, 선택)
+    #[serde(rename = "tr_type")]
+    pub tr_type: String,
+    /// content-type (String, 선택)
+    #[serde(rename = "content-type")]
+    pub content_type: String,
     /// body (String, 선택)
     #[serde(rename = "body")]
     pub body: String,
+    /// input (String, 선택)
+    #[serde(rename = "input")]
+    pub input: String,
+    /// tr_id (String, 선택)
+    #[serde(rename = "tr_id")]
+    pub tr_id: String,
+    /// tr_key (String, 선택)
+    #[serde(rename = "tr_key")]
+    pub tr_key: String,
 }
