@@ -53,14 +53,12 @@ def _parse_params_from_json(json_str):
     params = []
     if not json_str: return params
     try:
-        # Clean up common KIS example junk
         cleaned = json_str.strip().replace('\r', '').replace('\n', '').replace('\t', '')
-        # Handle cases where multiple objects might be present or other junk
         data = json.loads(cleaned)
         if isinstance(data, dict):
             for k, v in data.items():
                 params.append({
-                    'name': k,
+                    'name': k.upper(), # Keep KIS original casing for #[serde(rename)]
                     'korean_name': k,
                     'type': 'String',
                     'required': 'N',
@@ -69,7 +67,7 @@ def _parse_params_from_json(json_str):
         elif isinstance(data, list) and len(data) > 0 and isinstance(data[0], dict):
             for k, v in data[0].items():
                 params.append({
-                    'name': k,
+                    'name': k.upper(),
                     'korean_name': k,
                     'type': 'String',
                     'required': 'N',
@@ -106,7 +104,7 @@ def _extract_params(api):
                         res.extend(_parse_params_from_json(pvalue))
                     elif pname and pname.lower() not in ['tr_id', 'custtype', 'content-type', 'authorization', 'appkey', 'appsecret']:
                         res.append({
-                            'name': pname,
+                            'name': pname.upper(),
                             'korean_name': param.get('description', pname),
                             'type': 'String',
                             'required': 'Y' if param.get('required') else 'N',
@@ -123,10 +121,11 @@ def _extract_params(api):
     seen = set()
     unique_params = []
     for p in params:
-        pname_lower = p['name'].lower()
-        if pname_lower not in seen:
+        pname_upper = p['name'].upper()
+        if pname_upper not in seen:
+            p['name'] = pname_upper # Force uppercase for KIS consistency
             unique_params.append(p)
-            seen.add(pname_lower)
+            seen.add(pname_upper)
             
     return unique_params
 
@@ -261,7 +260,7 @@ class CodeGenerator:
         output.append(f"impl {target_endpoint_type} {{")
         for group in groups:
             struct_name = f"{module_prefix}{group}"
-            method_name = inflection.underscore(group)
+            method_name = group.lower()
             output.append(f"    pub fn {method_name}(&self) -> {struct_name} {{ {struct_name}(self.0.clone()) }}")
         output.append("}\n")
 
