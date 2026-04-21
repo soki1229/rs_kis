@@ -11,9 +11,12 @@ OUTPUT_DIR = "crates/kis_api/src/generated"
 # --- Utility Functions ---
 
 def to_struct_name(api):
+    # 경로 전체를 활용하여 고유한 이름 생성
+    # /uapi/overseas-stock/v1/trading/order -> OverseasStockV1TradingOrder
     endpoint = api.get('accessUrl', '')
     parts = [p for p in endpoint.strip('/').split('/') if p != "uapi"]
     
+    # rs_kis_server 기대치에 정확히 맞춘 접두사 결정
     if "domestic-stock" in endpoint:
         prefix = "DomesticStock"
     elif "overseas-stock" in endpoint:
@@ -65,7 +68,8 @@ def _extract_params(children_data):
             
         for child in children:
             key = child.get('key', '')
-            # Extract from InBound (Request) and OutBound (Response) configurations
+            # Extract from InBound (Request) and OutBound (Parameter) configurations
+            # KIS raw data structure search
             if any(k in key for k in ['OAuth.Common.Policy.Config', 'Parameter.Config']):
                 for param in child.get('paramList', []):
                     pname = param.get('name')
@@ -77,7 +81,6 @@ def _extract_params(children_data):
                             'required': 'Y' if param.get('required') else 'N',
                             'description': param.get('value')
                         })
-            # Recursively dig into children (they might be objects, not strings here)
             if child.get('children'):
                 params.extend(_extract_params(child.get('children')))
     except:
@@ -122,7 +125,7 @@ class CodeGenerator:
                 'accessUrl': api.get('accessUrl'),
                 'realTrId': api.get('realTrId', ''),
                 'virtualTrId': api.get('virtualTrId', ''),
-                'method': 'POST', # KIS post is more common
+                'method': 'POST',
                 'description': api.get('description', ''),
                 'request': _extract_params(api.get('children', '[]')),
                 'response': []
@@ -215,7 +218,7 @@ class CodeGenerator:
         output.append(f"impl {target_endpoint_type} {{")
         for group in groups:
             struct_name = f"{module_prefix}{group}"
-            method_name = group.lower()
+            method_name = inflection.underscore(group)
             output.append(f"    pub fn {method_name}(&self) -> {struct_name} {{ {struct_name}(self.0.clone()) }}")
         output.append("}\n")
 
