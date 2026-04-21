@@ -156,19 +156,18 @@ class CodeGenerator:
             if group_name not in groups: groups[group_name] = []
             groups[group_name].append(api)
 
-        # Module-specific wrapper struct name (e.g., StockQuotations)
         module_prefix = "Stock" if module_name == "stock" else "Overseas"
         
         for group in groups:
             struct_name = f"{module_prefix}{group}"
             output.append(f"#[allow(dead_code)]\npub struct {struct_name}(pub(crate) KisClient);\n")
 
-        # Implement methods on crate::endpoints::Stock/Overseas that return these groups
         target_endpoint_type = f"crate::endpoints::{module_prefix}"
         output.append(f"impl {target_endpoint_type} {{")
         for group in groups:
             struct_name = f"{module_prefix}{group}"
-            method_name = inflection.underscore(group)
+            # explicitly lowercase for accessor methods
+            method_name = group.lower()
             output.append(f"    pub fn {method_name}(&self) -> {struct_name} {{ {struct_name}(self.0.clone()) }}")
         output.append("}\n")
 
