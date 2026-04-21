@@ -54,7 +54,6 @@ def _extract_params(children_data):
     if not children_data: return params
     
     try:
-        # data might be string-encoded JSON or direct list
         if isinstance(children_data, str):
             try:
                 children = json.loads(children_data)
@@ -65,11 +64,11 @@ def _extract_params(children_data):
             
         for child in children:
             key = child.get('key', '')
-            # Try to extract from known parameter keys
-            if any(k in key for k in ['OAuth.Common.Policy.Config', 'Parameter.Config']):
+            # Extract from any key that looks like a parameter config
+            if any(k in key for k in ['Config', 'Parameter']):
                 for param in child.get('paramList', []):
                     pname = param.get('name')
-                    if pname and pname not in ['tr_id', 'custtype', 'content-type', 'authorization', 'appkey', 'appsecret']: # skip headers
+                    if pname and pname.lower() not in ['tr_id', 'custtype', 'content-type', 'authorization', 'appkey', 'appsecret']:
                         params.append({
                             'name': pname,
                             'korean_name': param.get('description', pname),
@@ -78,7 +77,6 @@ def _extract_params(children_data):
                             'description': param.get('value')
                         })
             
-            # Recursively check children
             inner_children = child.get('children')
             if inner_children:
                 params.extend(_extract_params(inner_children))
@@ -217,7 +215,7 @@ class CodeGenerator:
         output.append(f"impl {target_endpoint_type} {{")
         for group in groups:
             struct_name = f"{module_prefix}{group}"
-            method_name = group.lower()
+            method_name = inflection.underscore(group)
             output.append(f"    pub fn {method_name}(&self) -> {struct_name} {{ {struct_name}(self.0.clone()) }}")
         output.append("}\n")
 
