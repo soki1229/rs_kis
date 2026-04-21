@@ -12,16 +12,14 @@ OUTPUT_DIR = "crates/kis_api/src/generated"
 
 def to_struct_name(api):
     # 경로 전체를 활용하여 고유한 이름 생성
+    # /uapi/overseas-stock/v1/trading/order -> OverseasStockV1TradingOrder
     endpoint = api.get('endpoint', '')
     parts = [p for p in endpoint.strip('/').split('/') if p != "uapi"]
     
-    # 카테고리 명시적 추가 (Stock/Overseas)
-    if "domestic-stock" in endpoint or "domestic-futureoption" in endpoint:
-        prefix = "Stock"
-    else:
-        prefix = "Overseas"
-        
-    name_parts = [prefix] + [inflection.camelize(p.replace('-', '_')) for p in parts if p not in ["domestic-stock", "overseas-stock", "domestic-futureoption", "overseas-price"]]
+    # KIS API 특성에 맞게 카테고리 보정
+    # domestic-stock -> DomesticStock, overseas-stock -> OverseasStock
+    # domestic-futureoption -> DomesticFutureoption, overseas-price -> OverseasPrice
+    name_parts = [inflection.camelize(p.replace('-', '_')) for p in parts]
     name = "".join(name_parts)
     
     if len(name) < 10:
@@ -161,11 +159,9 @@ class CodeGenerator:
             if group_name not in groups: groups[group_name] = []
             groups[group_name].append(api)
 
-        # 1. Define Module-specific Structs (Quotations, Trading, etc.)
         for group in groups:
             output.append(f"#[allow(dead_code)]\npub struct {group}(pub(crate) KisClient);\n")
 
-        # 2. Implement Accessors on the top-level Stock/Overseas types
         target_type = "crate::endpoints::Stock" if module_name == "stock" else "crate::endpoints::Overseas"
         output.append(f"impl {target_type} {{")
         for group in groups:
@@ -173,7 +169,6 @@ class CodeGenerator:
             output.append(f"    pub fn {method_name}(&self) -> {group} {{ {group}(self.0.clone()) }}")
         output.append("}\n")
 
-        # 3. Implement Methods on the Group Structs
         for group, apis in groups.items():
             output.append("#[allow(non_snake_case)]")
             output.append(f"impl {group} {{")
