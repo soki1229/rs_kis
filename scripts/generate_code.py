@@ -11,12 +11,9 @@ OUTPUT_DIR = "crates/kis_api/src/generated"
 # --- Utility Functions ---
 
 def to_struct_name(api):
-    # 경로 전체를 활용하여 고유한 이름 생성
-    # /uapi/overseas-stock/v1/trading/order -> OverseasStockV1TradingOrder
-    endpoint = api.get('endpoint', '')
+    endpoint = api.get('accessUrl', '')
     parts = [p for p in endpoint.strip('/').split('/') if p != "uapi"]
     
-    # rs_kis_server 기대치에 정확히 맞춘 접두사 결정
     if "domestic-stock" in endpoint:
         prefix = "DomesticStock"
     elif "overseas-stock" in endpoint:
@@ -100,8 +97,16 @@ class CodeGenerator:
     def _write_models(self):
         output = ["#![allow(clippy::doc_lazy_continuation)]"]
         for api in self.spec:
-            for f in api.get('request', []): self.type_mapper.get_rust_type(f.get('name', ''))
-            for f in api.get('response', []): self.type_mapper.get_rust_type(f.get('name', ''))
+            # Map request/response from 'request' and 'response' keys if present
+            # but raw data has them in children/paramList... 
+            # (Assuming fetch_spec.py already normalized it to 'request'/'response' lists)
+            # If not, I need to check how they are stored.
+            req_fields = api.get('request', [])
+            if isinstance(req_fields, list):
+                for f in req_fields: self.type_mapper.get_rust_type(f.get('name', ''))
+            res_fields = api.get('response', [])
+            if isinstance(res_fields, list):
+                for f in res_fields: self.type_mapper.get_rust_type(f.get('name', ''))
         
         for imp in sorted(list(self.type_mapper.required_imports)):
             output.append(f"use {imp};")
@@ -150,7 +155,7 @@ class CodeGenerator:
 
         filtered_apis = []
         for api in self.spec:
-            ep = api.get('endpoint', '')
+            ep = api.get('accessUrl', '')
             if module_name == "stock":
                 if "domestic-stock" in ep or "domestic-futureoption" in ep:
                     filtered_apis.append(api)
@@ -160,7 +165,7 @@ class CodeGenerator:
         
         groups = {}
         for api in filtered_apis:
-            parts = api.get('endpoint', '').strip('/').split('/')
+            parts = api.get('accessUrl', '').strip('/').split('/')
             group_name = "Common"
             for p in parts:
                 if p in ["quotations", "trading", "ranking", "order", "account"]:
@@ -188,7 +193,7 @@ class CodeGenerator:
             output.append("#[allow(non_snake_case)]")
             output.append(f"impl {struct_name} {{")
             for api in apis:
-                endpoint = api.get('endpoint', '')
+                endpoint = api.get('accessUrl', '')
                 method_name = to_safe_snake(endpoint.split('/')[-1])
                 if method_name.startswith("r#"): method_name = method_name[2:]
                 
@@ -196,14 +201,14 @@ class CodeGenerator:
                 req_struct = f"{api['generated_struct']}Request" if isinstance(req_fields, list) and len(req_fields) > 0 else "()"
                 
                 output.append(format_doc(api.get('name', 'Unknown'), "    "))
-                output.append(f"    /// - TR_ID: Real={api.get('tr_id_real', '')} / VTS={api.get('tr_id_vts', '')}")
+                output.append(f"    /// - TR_ID: Real={api.get('realTrId', '')} / VTS={api.get('virtualTrId', '')}")
                 output.append(f"    /// - Endpoint: {endpoint}")
                 if api.get('description'): output.append(format_doc(api['description'], "    "))
                 
                 output.append(f"    pub async fn {method_name}(&self, req: {req_struct}) -> Result<serde_json::Value, KisError> {{")
                 output.append("        let tr_id = match self.0.env() {")
-                output.append(f'            crate::client::KisEnv::Real => "{api.get("tr_id_real", "")}",')
-                output.append(f'            crate::client::KisEnv::Vts => "{api.get("tr_id_vts", "")}",')
+                output.append(f'            crate::client::KisEnv::Real => "{api.get("realTrId", "")}",')
+                output.append(f'            crate::client::KisEnv::Vts => "{api.get("virtualTrId", "")}",')
                 output.append("        };")
                 method_call = "post" if api.get('method', 'POST') == "POST" else "get"
                 output.append(f'        self.0.{method_call}("{endpoint}", tr_id, req).await')

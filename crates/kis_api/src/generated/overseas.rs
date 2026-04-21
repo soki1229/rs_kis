@@ -3,4 +3,820 @@ use crate::client::KisClient;
 use crate::error::KisError;
 use crate::models::*;
 
-impl crate::endpoints::Overseas {}
+#[allow(dead_code)]
+pub struct OverseasCommon(pub(crate) KisClient);
+
+#[allow(dead_code)]
+pub struct OverseasTrading(pub(crate) KisClient);
+
+#[allow(dead_code)]
+pub struct OverseasQuotations(pub(crate) KisClient);
+
+#[allow(dead_code)]
+pub struct OverseasRanking(pub(crate) KisClient);
+
+impl crate::endpoints::Overseas {
+    pub fn common(&self) -> OverseasCommon {
+        OverseasCommon(self.0.clone())
+    }
+    pub fn trading(&self) -> OverseasTrading {
+        OverseasTrading(self.0.clone())
+    }
+    pub fn quotations(&self) -> OverseasQuotations {
+        OverseasQuotations(self.0.clone())
+    }
+    pub fn ranking(&self) -> OverseasRanking {
+        OverseasRanking(self.0.clone())
+    }
+}
+
+#[allow(non_snake_case)]
+impl OverseasCommon {
+    /// 접근토큰발급(P)[인증-001]
+    /// - TR_ID: Real= / VTS=
+    /// - Endpoint: /oauth2/tokenP
+    pub async fn token_p(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "",
+            crate::client::KisEnv::Vts => "",
+        };
+        self.0.post("/oauth2/tokenP", tr_id, req).await
+    }
+
+    /// 접근토큰폐기(P)[인증-002]
+    /// - TR_ID: Real=None / VTS=None
+    /// - Endpoint: /oauth2/revokeP
+    pub async fn revoke_p(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "None",
+            crate::client::KisEnv::Vts => "None",
+        };
+        self.0.post("/oauth2/revokeP", tr_id, req).await
+    }
+
+    /// Hashkey
+    /// - TR_ID: Real=None / VTS=None
+    /// - Endpoint: /uapi/hashkey
+    pub async fn hashkey(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "None",
+            crate::client::KisEnv::Vts => "None",
+        };
+        self.0.post("/uapi/hashkey", tr_id, req).await
+    }
+
+    /// 실시간 (웹소켓) 접속키 발급[실시간-000]
+    /// - TR_ID: Real=None / VTS=None
+    /// - Endpoint: /oauth2/Approval
+    pub async fn approval(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "None",
+            crate::client::KisEnv::Vts => "None",
+        };
+        self.0.post("/oauth2/Approval", tr_id, req).await
+    }
+}
+
+#[allow(non_snake_case)]
+impl OverseasTrading {
+    /// 해외주식 주문[v1_해외주식-001]
+    /// - TR_ID: Real=(미국매수) TTTT1002U  (미국매도) TTTT1006U (아시아 국가 하단 규격서 참고) / VTS=(미국매수) VTTT1002U  (미국매도) VTTT1001U  (아시아 국가 하단 규격서 참고)
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/order
+    /// [해외주식-001 v1] 해외주식 주문
+    pub async fn order(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                "(미국매수) TTTT1002U  (미국매도) TTTT1006U (아시아 국가 하단 규격서 참고)"
+            }
+            crate::client::KisEnv::Vts => {
+                "(미국매수) VTTT1002U  (미국매도) VTTT1001U  (아시아 국가 하단 규격서 참고)"
+            }
+        };
+        self.0
+            .post("/uapi/overseas-stock/v1/trading/order", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 정정취소주문[v1_해외주식-003]
+    /// - TR_ID: Real=(미국 정정·취소) TTTT1004U (아시아 국가 하단 규격서 참고) / VTS=(미국 정정·취소) VTTT1004U (아시아 국가 하단 규격서 참고)
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/order-rvsecncl
+    /// [해외주식-003 v1] 해외주식 정정취소주문
+    pub async fn order_rvsecncl(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                "(미국 정정·취소) TTTT1004U (아시아 국가 하단 규격서 참고)"
+            }
+            crate::client::KisEnv::Vts => {
+                "(미국 정정·취소) VTTT1004U (아시아 국가 하단 규격서 참고)"
+            }
+        };
+        self.0
+            .post("/uapi/overseas-stock/v1/trading/order-rvsecncl", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 예약주문접수[v1_해외주식-002]
+    /// - TR_ID: Real=(미국예약매수) TTTT3014U  (미국예약매도) TTTT3016U   (중국/홍콩/일본/베트남 예약주문) TTTS3013U / VTS=(미국예약매수) VTTT3014U  (미국예약매도) VTTT3016U   (중국/홍콩/일본/베트남 예약주문) VTTS3013U
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv
+    /// [해외주식-002 v1] 해외주식 예약주문접수
+    pub async fn order_resv(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "(미국예약매수) TTTT3014U  (미국예약매도) TTTT3016U   (중국/홍콩/일본/베트남 예약주문) TTTS3013U",
+            crate::client::KisEnv::Vts => "(미국예약매수) VTTT3014U  (미국예약매도) VTTT3016U   (중국/홍콩/일본/베트남 예약주문) VTTS3013U",
+        };
+        self.0
+            .post("/uapi/overseas-stock/v1/trading/order-resv", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 예약주문접수취소[v1_해외주식-004]
+    /// - TR_ID: Real=(미국 예약주문 취소접수) TTTT3017U (아시아국가 미제공) / VTS=(미국 예약주문 취소접수) VTTT3017U (아시아국가 미제공)
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv-ccnl
+    /// [해외주식-004 v1] 해외주식 예약주문접수취소
+    pub async fn order_resv_ccnl(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "(미국 예약주문 취소접수) TTTT3017U (아시아국가 미제공)",
+            crate::client::KisEnv::Vts => "(미국 예약주문 취소접수) VTTT3017U (아시아국가 미제공)",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-stock/v1/trading/order-resv-ccnl",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 매수가능금액조회[v1_해외주식-014]
+    /// - TR_ID: Real=TTTS3007R / VTS=VTTS3007R
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-psamount
+    /// [v1_해외주식-014]해외주식 매수가능금액조회
+    pub async fn inquire_psamount(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "TTTS3007R",
+            crate::client::KisEnv::Vts => "VTTS3007R",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-stock/v1/trading/inquire-psamount",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 미체결내역[v1_해외주식-005]
+    /// - TR_ID: Real=TTTS3018R / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-nccs
+    /// [해외주식-005 v1] 해외주식 미체결내역
+    pub async fn inquire_nccs(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "TTTS3018R",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post("/uapi/overseas-stock/v1/trading/inquire-nccs", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 잔고[v1_해외주식-006]
+    /// - TR_ID: Real=TTTS3012R / VTS=VTTS3012R
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-balance
+    /// [해외주식-006 v1] 해외주식 잔고
+    pub async fn inquire_balance(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "TTTS3012R",
+            crate::client::KisEnv::Vts => "VTTS3012R",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-stock/v1/trading/inquire-balance",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 주문체결내역[v1_해외주식-007]
+    /// - TR_ID: Real=TTTS3035R / VTS=VTTS3035R
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-ccnl
+    /// [해외주식-007 v1] 해외주식 주문체결내역
+    pub async fn inquire_ccnl(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "TTTS3035R",
+            crate::client::KisEnv::Vts => "VTTS3035R",
+        };
+        self.0
+            .post("/uapi/overseas-stock/v1/trading/inquire-ccnl", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 체결기준현재잔고[v1_해외주식-008]
+    /// - TR_ID: Real=CTRP6504R / VTS=VTRP6504R
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-present-balance
+    /// [해외주식-008 v1] 해외주식 체결기준현재잔고
+    pub async fn inquire_present_balance(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "CTRP6504R",
+            crate::client::KisEnv::Vts => "VTRP6504R",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-stock/v1/trading/inquire-present-balance",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 예약주문조회[v1_해외주식-013]
+    /// - TR_ID: Real=(미국) TTTT3039R (일본/중국/홍콩/베트남) TTTS3014R / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv-list
+    /// [v1_해외주식-013]해외주식 예약주문조회
+    pub async fn order_resv_list(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "(미국) TTTT3039R (일본/중국/홍콩/베트남) TTTS3014R",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-stock/v1/trading/order-resv-list",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 결제기준잔고 [해외주식-064]
+    /// - TR_ID: Real=CTRP6010R / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-paymt-stdr-balance
+    pub async fn inquire_paymt_stdr_balance(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "CTRP6010R",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-stock/v1/trading/inquire-paymt-stdr-balance",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 일별거래내역 [해외주식-063]
+    /// - TR_ID: Real=CTOS4001R / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-period-trans
+    pub async fn inquire_period_trans(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "CTOS4001R",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-stock/v1/trading/inquire-period-trans",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 기간손익[v1_해외주식-032]
+    /// - TR_ID: Real=TTTS3039R / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-period-profit
+    pub async fn inquire_period_profit(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "TTTS3039R",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-stock/v1/trading/inquire-period-profit",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외증거금 통화별조회 [해외주식-035]
+    /// - TR_ID: Real=TTTC2101R / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/foreign-margin
+    pub async fn foreign_margin(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "TTTC2101R",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post("/uapi/overseas-stock/v1/trading/foreign-margin", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 미국주간주문[v1_해외주식-026]
+    /// - TR_ID: Real=(주간매수) TTTS6036U (주간매도) TTTS6037U / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/daytime-order
+    pub async fn daytime_order(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "(주간매수) TTTS6036U (주간매도) TTTS6037U",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post("/uapi/overseas-stock/v1/trading/daytime-order", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 미국주간정정취소[v1_해외주식-027]
+    /// - TR_ID: Real=TTTS6038U / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/daytime-order-rvsecncl
+    pub async fn daytime_order_rvsecncl(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "TTTS6038U",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-stock/v1/trading/daytime-order-rvsecncl",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 지정가주문번호조회  [해외주식-071]
+    /// - TR_ID: Real=TTTS6058R / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/algo-ordno
+    pub async fn algo_ordno(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "TTTS6058R",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post("/uapi/overseas-stock/v1/trading/algo-ordno", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 지정가체결내역조회 [해외주식-070]
+    /// - TR_ID: Real=TTTS6059R / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/inquire-algo-ccnl
+    pub async fn inquire_algo_ccnl(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "TTTS6059R",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-stock/v1/trading/inquire-algo-ccnl",
+                tr_id,
+                req,
+            )
+            .await
+    }
+}
+
+#[allow(non_snake_case)]
+impl OverseasQuotations {
+    /// 해외주식 현재가상세[v1_해외주식-029]
+    /// - TR_ID: Real=HHDFS76200200 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-price/v1/quotations/price-detail
+    pub async fn price_detail(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76200200",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-price/v1/quotations/price-detail",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 현재가 호가 [해외주식-033]
+    /// - TR_ID: Real=HHDFS76200100 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-price/v1/quotations/inquire-asking-price
+    pub async fn inquire_asking_price(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76200100",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-price/v1/quotations/inquire-asking-price",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 현재체결가[v1_해외주식-009]
+    /// - TR_ID: Real=HHDFS00000300 / VTS=HHDFS00000300
+    /// - Endpoint: /uapi/overseas-price/v1/quotations/price
+    /// [해외주식-009 v1] 해외주식 현재체결가
+    pub async fn price(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS00000300",
+            crate::client::KisEnv::Vts => "HHDFS00000300",
+        };
+        self.0
+            .post("/uapi/overseas-price/v1/quotations/price", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 체결추이[해외주식-037]
+    /// - TR_ID: Real=HHDFS76200300 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-price/v1/quotations/inquire-ccnl
+    pub async fn inquire_ccnl(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76200300",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-price/v1/quotations/inquire-ccnl",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식분봉조회[v1_해외주식-030]
+    /// - TR_ID: Real=HHDFS76950200 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-price/v1/quotations/inquire-time-itemchartprice
+    pub async fn inquire_time_itemchartprice(
+        &self,
+        req: (),
+    ) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76950200",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-price/v1/quotations/inquire-time-itemchartprice",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외지수분봉조회[v1_해외주식-031]
+    /// - TR_ID: Real=FHKST03030200 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-price/v1/quotations/inquire-time-indexchartprice
+    pub async fn inquire_time_indexchartprice(
+        &self,
+        req: (),
+    ) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "FHKST03030200",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-price/v1/quotations/inquire-time-indexchartprice",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 기간별시세[v1_해외주식-010]
+    /// - TR_ID: Real=HHDFS76240000 / VTS=HHDFS76240000
+    /// - Endpoint: /uapi/overseas-price/v1/quotations/dailyprice
+    /// [해외주식-010 v1] 해외주식 기간별시세
+    pub async fn dailyprice(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76240000",
+            crate::client::KisEnv::Vts => "HHDFS76240000",
+        };
+        self.0
+            .post("/uapi/overseas-price/v1/quotations/dailyprice", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 종목/지수/환율기간별시세(일/주/월/년)[v1_해외주식-012]
+    /// - TR_ID: Real=FHKST03030100 / VTS=FHKST03030100
+    /// - Endpoint: /uapi/overseas-price/v1/quotations/inquire-daily-chartprice
+    /// [v1_해외주식-012] 해외지수/환율기간별시세(일/주/월/년)
+    pub async fn inquire_daily_chartprice(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "FHKST03030100",
+            crate::client::KisEnv::Vts => "FHKST03030100",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-price/v1/quotations/inquire-daily-chartprice",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식조건검색[v1_해외주식-015]
+    /// - TR_ID: Real=HHDFS76410000 / VTS=HHDFS76410000
+    /// - Endpoint: /uapi/overseas-price/v1/quotations/inquire-search
+    /// 해외주식조건검색[v1_해외주식-015]
+    pub async fn inquire_search(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76410000",
+            crate::client::KisEnv::Vts => "HHDFS76410000",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-price/v1/quotations/inquire-search",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외결제일자조회[해외주식-017]
+    /// - TR_ID: Real=CTOS5011R / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/quotations/countries-holiday
+    pub async fn countries_holiday(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "CTOS5011R",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-stock/v1/quotations/countries-holiday",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 상품기본정보[v1_해외주식-034]
+    /// - TR_ID: Real=CTPF1702R / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-price/v1/quotations/search-info
+    pub async fn search_info(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "CTPF1702R",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post("/uapi/overseas-price/v1/quotations/search-info", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 업종별시세[해외주식-048]
+    /// - TR_ID: Real=HHDFS76370000 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-price/v1/quotations/industry-theme
+    pub async fn industry_theme(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76370000",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-price/v1/quotations/industry-theme",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 업종별코드조회[해외주식-049]
+    /// - TR_ID: Real=HHDFS76370100 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-price/v1/quotations/industry-price
+    pub async fn industry_price(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76370100",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-price/v1/quotations/industry-price",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 복수종목 시세조회
+    /// - TR_ID: Real=HHDFS76220000  / VTS=미지원
+    /// - Endpoint: /uapi/overseas-price/v1/quotations/multprice
+    pub async fn multprice(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76220000 ",
+            crate::client::KisEnv::Vts => "미지원 ",
+        };
+        self.0
+            .post("/uapi/overseas-price/v1/quotations/multprice", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 기간별권리조회 [해외주식-052]
+    /// - TR_ID: Real=CTRGT011R / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-price/v1/quotations/period-rights
+    pub async fn period_rights(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "CTRGT011R",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-price/v1/quotations/period-rights",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외뉴스종합(제목) [해외주식-053]
+    /// - TR_ID: Real=HHPSTH60100C1 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-price/v1/quotations/news-title
+    pub async fn news_title(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHPSTH60100C1",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post("/uapi/overseas-price/v1/quotations/news-title", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 권리종합 [해외주식-050]
+    /// - TR_ID: Real=HHDFS78330900 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-price/v1/quotations/rights-by-ice
+    pub async fn rights_by_ice(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS78330900",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-price/v1/quotations/rights-by-ice",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 당사 해외주식담보대출 가능 종목 [해외주식-051]
+    /// - TR_ID: Real=CTLN4050R / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-price/v1/quotations/colable-by-company
+    pub async fn colable_by_company(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "CTLN4050R",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-price/v1/quotations/colable-by-company",
+                tr_id,
+                req,
+            )
+            .await
+    }
+
+    /// 해외속보(제목) [해외주식-055]
+    /// - TR_ID: Real=FHKST01011801 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-price/v1/quotations/brknews-title
+    pub async fn brknews_title(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "FHKST01011801",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post(
+                "/uapi/overseas-price/v1/quotations/brknews-title",
+                tr_id,
+                req,
+            )
+            .await
+    }
+}
+
+#[allow(non_snake_case)]
+impl OverseasRanking {
+    /// 해외주식 가격급등락[해외주식-038]
+    /// - TR_ID: Real=HHDFS76260000 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/ranking/price-fluct
+    pub async fn price_fluct(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76260000",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post("/uapi/overseas-stock/v1/ranking/price-fluct", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 거래량급증[해외주식-039]
+    /// - TR_ID: Real=HHDFS76270000 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/ranking/volume-surge
+    pub async fn volume_surge(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76270000",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post("/uapi/overseas-stock/v1/ranking/volume-surge", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 매수체결강도상위[해외주식-040]
+    /// - TR_ID: Real=HHDFS76280000 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/ranking/volume-power
+    pub async fn volume_power(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76280000",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post("/uapi/overseas-stock/v1/ranking/volume-power", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 상승율/하락율[해외주식-041]
+    /// - TR_ID: Real=HHDFS76290000 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/ranking/updown-rate
+    pub async fn updown_rate(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76290000",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post("/uapi/overseas-stock/v1/ranking/updown-rate", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 신고/신저가[해외주식-042]
+    /// - TR_ID: Real=HHDFS76300000 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/ranking/new-highlow
+    pub async fn new_highlow(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76300000",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post("/uapi/overseas-stock/v1/ranking/new-highlow", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 거래량순위[해외주식-043]
+    /// - TR_ID: Real=HHDFS76310010 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/ranking/trade-vol
+    pub async fn trade_vol(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76310010",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post("/uapi/overseas-stock/v1/ranking/trade-vol", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 거래대금순위[해외주식-044]
+    /// - TR_ID: Real=HHDFS76320010 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/ranking/trade-pbmn
+    pub async fn trade_pbmn(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76320010",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post("/uapi/overseas-stock/v1/ranking/trade-pbmn", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 거래증가율순위[해외주식-045]
+    /// - TR_ID: Real=HHDFS76330000 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/ranking/trade-growth
+    pub async fn trade_growth(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76330000",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post("/uapi/overseas-stock/v1/ranking/trade-growth", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 거래회전율순위[해외주식-046]
+    /// - TR_ID: Real=HHDFS76340000 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/ranking/trade-turnover
+    pub async fn trade_turnover(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76340000",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post("/uapi/overseas-stock/v1/ranking/trade-turnover", tr_id, req)
+            .await
+    }
+
+    /// 해외주식 시가총액순위[해외주식-047]
+    /// - TR_ID: Real=HHDFS76350100 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/ranking/market-cap
+    pub async fn market_cap(&self, req: ()) -> Result<serde_json::Value, KisError> {
+        let tr_id = match self.0.env() {
+            crate::client::KisEnv::Real => "HHDFS76350100",
+            crate::client::KisEnv::Vts => "모의투자 미지원",
+        };
+        self.0
+            .post("/uapi/overseas-stock/v1/ranking/market-cap", tr_id, req)
+            .await
+    }
+}
