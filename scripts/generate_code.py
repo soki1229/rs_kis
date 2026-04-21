@@ -5,7 +5,6 @@ import yaml
 import inflection
 
 # --- Constants ---
-SPEC_FILE = "crates/kis_api/kis-openapi.yaml"
 RAW_DATA_FILE = "crates/kis_api/kis-raw-data.json"
 OUTPUT_DIR = "crates/kis_api/src/generated"
 
@@ -17,20 +16,10 @@ def to_struct_name(api):
     endpoint = api.get('endpoint', '')
     parts = endpoint.strip('/').split('/')
     
-    # 카테고리 결정 (Stock / Overseas / Auth)
-    if "domestic-stock" in endpoint:
-        category = "Stock"
-    elif "domestic-futureoption" in endpoint:
-        category = "Futureoption"
-    elif "overseas" in endpoint:
-        category = "Overseas"
-    else:
-        category = "Auth"
-        
-    # 네임스페이스 및 기능 추출 (v1, v2 등 버전 포함하여 고유성 확보)
-    useful_parts = [p for p in parts if p not in ["uapi", "domestic-stock", "overseas-stock", "domestic-futureoption", "overseas-price"]]
+    # 불필요한 공통 접두사 'uapi'만 제거
+    useful_parts = [p for p in parts if p not in ["uapi"]]
     
-    name_parts = [category] + [inflection.camelize(p.replace('-', '_')) for p in useful_parts]
+    name_parts = [inflection.camelize(p.replace('-', '_')) for p in useful_parts]
     name = "".join(name_parts)
     
     if len(name) < 10:
@@ -72,19 +61,16 @@ class TypeMapper:
 
     def get_rust_type(self, field_name):
         field_name_lower = str(field_name).lower()
-        # 1. Check explicit overrides
         if field_name_lower in self.explicit:
             rtype, imp = self.explicit[field_name_lower]
             if imp: self.required_imports.add(imp)
             return rtype
         
-        # 2. Check pattern matching
         for pattern, rtype, imp in self.patterns:
             if pattern.fullmatch(field_name_lower):
                 if imp: self.required_imports.add(imp)
                 return rtype
         
-        # 3. Default
         return "String"
 
 # --- Generator ---
@@ -104,16 +90,9 @@ class CodeGenerator:
 
     def _write_models(self):
         output = ["#![allow(clippy::doc_lazy_continuation)]"]
-        # collect all required imports from type mapper
         for api in self.spec:
-            req_fields = api.get('request', [])
-            if isinstance(req_fields, list):
-                for f in req_fields:
-                    self.type_mapper.get_rust_type(f.get('name', ''))
-            res_fields = api.get('response', [])
-            if isinstance(res_fields, list):
-                for f in res_fields:
-                    self.type_mapper.get_rust_type(f.get('name', ''))
+            for f in api.get('request', []): self.type_mapper.get_rust_type(f.get('name', ''))
+            for f in api.get('response', []): self.type_mapper.get_rust_type(f.get('name', ''))
         
         for imp in sorted(list(self.type_mapper.required_imports)):
             output.append(f"use {imp};")
@@ -123,7 +102,6 @@ class CodeGenerator:
         seen_structs = set()
         for api in self.spec:
             struct_base = to_struct_name(api)
-            # Ensure uniqueness
             original_base = struct_base
             counter = 2
             while struct_base in seen_structs:
@@ -132,7 +110,6 @@ class CodeGenerator:
             seen_structs.add(struct_base)
             api['generated_struct'] = struct_base
 
-            # Request Struct
             req_fields = api.get('request', [])
             if isinstance(req_fields, list) and len(req_fields) > 0:
                 output.append(f"/// [{api.get('name', 'Unknown')}] 요청 구조체")
@@ -162,7 +139,6 @@ class CodeGenerator:
             ""
         ]
 
-        # Filter APIs for this module
         filtered_apis = []
         for api in self.spec:
             ep = api.get('endpoint', '')
@@ -173,7 +149,6 @@ class CodeGenerator:
                 if "overseas-stock" in ep or "overseas-price" in ep or "oauth2" in ep or "/uapi/hashkey" in ep:
                     filtered_apis.append(api)
         
-        # Group by Path Segments (Quotations, Trading, etc.)
         groups = {}
         for api in filtered_apis:
             parts = api.get('endpoint', '').strip('/').split('/')
@@ -185,14 +160,15 @@ class CodeGenerator:
             if group_name not in groups: groups[group_name] = []
             groups[group_name].append(api)
 
-        # Write Structs and Impls
         for group in groups:
             output.append(f"#[allow(dead_code)]\npub struct {group}(pub(crate) KisClient);\n")
 
         impl_target = "crate::endpoints::Stock" if module_name == "stock" else "crate::endpoints::Overseas"
         output.append(f"impl {impl_target} {{")
         for group in groups:
-            output.append(f"    pub fn {group.lower()}(&self) -> {group} {{ {group}(self.0.clone()) }}")
+            # Method names for groups should be lowercase snake_case
+            method_name = inflection.underscore(group)
+            output.append(f"    pub fn {method_name}(&self) -> {group} {{ {group}(self.0.clone()) }}")
         output.append("}\n")
 
         for group, apis in groups.items():
@@ -211,8 +187,7 @@ class CodeGenerator:
                 output.append(f"    /// - TR_ID: Real={api.get('tr_id_real', '')} / VTS={api.get('tr_id_vts', '')}")
                 output.append(f"    /// - Endpoint: {endpoint}")
                 output.append("    ///")
-                if api.get('description'):
-                    output.append(format_doc(api['description'], "    "))
+                if api.get('description'): output.append(format_doc(api['description'], "    "))
                 output.append("    ///")
                 output.append("    /// # Example (Scraped)")
                 if api.get('example_request'):
@@ -223,7 +198,7 @@ class CodeGenerator:
                 output.append(f'            crate::client::KisEnv::Real => "{api.get("tr_id_real", "")}",')
                 output.append(f'            crate::client::KisEnv::Vts => "{api.get("tr_id_vts", "")}",')
                 output.append("        };")
-                method_call = "post" if api.get('method') == "POST" else "get"
+                method_call = "post" if api.get('method', 'POST') == "POST" else "get"
                 output.append(f'        self.0.{method_call}("{endpoint}", tr_id, req).await')
                 output.append("    }\n")
             output.append("}\n")
@@ -238,4 +213,4 @@ class CodeGenerator:
 if __name__ == "__main__":
     generator = CodeGenerator()
     generator.generate()
-    print("[+] Structured SDK generated with Smart Type Mapping and Path-based Naming.")
+    print("[+] Structured SDK generated with Smart Type Mapping and Full Path Naming.")
