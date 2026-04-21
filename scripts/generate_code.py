@@ -14,12 +14,9 @@ def to_struct_name(api):
     # 경로 전체를 활용하여 고유한 이름 생성
     # /uapi/overseas-stock/v1/trading/order -> OverseasStockV1TradingOrder
     endpoint = api.get('endpoint', '')
-    parts = endpoint.strip('/').split('/')
+    parts = [p for p in endpoint.strip('/').split('/') if p != "uapi"]
     
-    # 불필요한 공통 접두사 'uapi'만 제거
-    useful_parts = [p for p in parts if p not in ["uapi"]]
-    
-    name_parts = [inflection.camelize(p.replace('-', '_')) for p in useful_parts]
+    name_parts = [inflection.camelize(p.replace('-', '_')) for p in parts]
     name = "".join(name_parts)
     
     if len(name) < 10:
@@ -49,7 +46,6 @@ class TypeMapper:
         with open(config_path, 'r') as f:
             self.config = yaml.safe_load(f)
         
-        # Compile regex patterns
         self.patterns = []
         for p in self.config.get('patterns', []):
             self.patterns.append((re.compile(p['pattern']), p['type'], p.get('import')))
@@ -166,7 +162,6 @@ class CodeGenerator:
         impl_target = "crate::endpoints::Stock" if module_name == "stock" else "crate::endpoints::Overseas"
         output.append(f"impl {impl_target} {{")
         for group in groups:
-            # Method names for groups should be lowercase snake_case
             method_name = inflection.underscore(group)
             output.append(f"    pub fn {method_name}(&self) -> {group} {{ {group}(self.0.clone()) }}")
         output.append("}\n")
