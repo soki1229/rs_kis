@@ -25,6 +25,8 @@ pub enum KisError {
     Lagged(u64),
     #[error("WebSocket stream closed")]
     StreamClosed,
+    #[error("이 API는 모의투자(VTS) 환경에서 지원되지 않습니다.")]
+    NotSupportedInVts,
 }
 
 #[derive(Deserialize, Debug)]

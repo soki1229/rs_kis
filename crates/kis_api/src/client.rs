@@ -191,6 +191,9 @@ impl KisClient {
         R: for<'de> Deserialize<'de> + Default,
         B: Serialize,
     {
+        if tr_id == "모의투자 미지원" {
+            return Err(KisError::NotSupportedInVts);
+        }
         let token = self.inner.access_token.read().await.clone();
         let url = format!("{}/{}", self.inner.base_url, path.trim_start_matches('/'));
 
@@ -215,6 +218,9 @@ impl KisClient {
         R: for<'de> Deserialize<'de> + Default,
         Q: Serialize,
     {
+        if tr_id == "모의투자 미지원" {
+            return Err(KisError::NotSupportedInVts);
+        }
         let token = self.inner.access_token.read().await.clone();
         let url = format!("{}/{}", self.inner.base_url, path.trim_start_matches('/'));
 
