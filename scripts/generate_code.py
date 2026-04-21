@@ -54,7 +54,7 @@ def _parse_params_recursive(data):
     if isinstance(data, dict):
         for k, v in data.items():
             params.append({
-                'name': k, # Original Case
+                'name': k,
                 'korean_name': k,
                 'type': 'String',
                 'required': 'N',
@@ -62,7 +62,7 @@ def _parse_params_recursive(data):
             })
             if isinstance(v, (dict, list)):
                 params.extend(_parse_params_recursive(v))
-            elif isinstance(v, str) and v.startswith('{'):
+            elif isinstance(v, str) and (v.startswith('{') or v.startswith('[')):
                 try:
                     params.extend(_parse_params_recursive(json.loads(v)))
                 except: pass
@@ -78,7 +78,8 @@ def _extract_params(api):
     req_example = api.get('reqExample')
     if req_example:
         try:
-            params.extend(_parse_params_recursive(json.loads(req_example)))
+            # reqExample can be a direct JSON or have whitespace
+            params.extend(_parse_params_recursive(json.loads(req_example.strip())))
         except: pass
 
     # Recursive children search
@@ -93,13 +94,13 @@ def _extract_params(api):
                     pvalue = param.get('value', '')
                     if pname and pname.lower() not in ['tr_id', 'custtype', 'content-type', 'authorization', 'appkey', 'appsecret']:
                         res.append({
-                            'name': pname, # Original Case
+                            'name': pname,
                             'korean_name': param.get('description', pname),
                             'type': 'String',
                             'required': 'Y' if param.get('required') else 'N',
                             'description': str(pvalue)
                         })
-                    if isinstance(pvalue, str) and pvalue.startswith('{'):
+                    if isinstance(pvalue, str) and (pvalue.startswith('{') or pvalue.startswith('[')):
                         try: res.extend(_parse_params_recursive(json.loads(pvalue)))
                         except: pass
                 if node.get('children'):
@@ -108,7 +109,7 @@ def _extract_params(api):
         params.extend(walk_children(children))
     except: pass
 
-    # Deduplicate by lowercase name to keep one variant but preserve original casing for rename
+    # Deduplicate by lowercase name
     seen = set()
     unique_params = []
     for p in params:
