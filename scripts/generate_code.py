@@ -62,7 +62,7 @@ def _parse_params_recursive(data):
             })
             if isinstance(v, (dict, list)):
                 params.extend(_parse_params_recursive(v))
-            elif isinstance(v, str) and (v.startswith('{') or v.startswith('[')):
+            elif isinstance(v, str) and (v.strip().startswith('{') or v.strip().startswith('[')):
                 try:
                     params.extend(_parse_params_recursive(json.loads(v)))
                 except: pass
@@ -78,7 +78,6 @@ def _extract_params(api):
     req_example = api.get('reqExample')
     if req_example:
         try:
-            # reqExample can be a direct JSON or have whitespace
             params.extend(_parse_params_recursive(json.loads(req_example.strip())))
         except: pass
 
@@ -100,7 +99,7 @@ def _extract_params(api):
                             'required': 'Y' if param.get('required') else 'N',
                             'description': str(pvalue)
                         })
-                    if isinstance(pvalue, str) and (pvalue.startswith('{') or pvalue.startswith('[')):
+                    if isinstance(pvalue, str) and (pvalue.strip().startswith('{') or pvalue.strip().startswith('[')):
                         try: res.extend(_parse_params_recursive(json.loads(pvalue)))
                         except: pass
                 if node.get('children'):

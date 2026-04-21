@@ -10945,6 +10945,78 @@ pub struct OverseasStockV1TradingOrderResvListRequest {
     /// jsonResponse (String, 선택)
     #[serde(rename = "jsonResponse")]
     pub json_response: String,
+    /// cncl_yn (String, 선택)
+    #[serde(rename = "cncl_yn")]
+    pub cncl_yn: String,
+    /// ft_ccld_qty (String, 선택)
+    #[serde(rename = "ft_ccld_qty")]
+    pub ft_ccld_qty: Decimal,
+    /// ft_ccld_unpr3 (String, 선택)
+    #[serde(rename = "ft_ccld_unpr3")]
+    pub ft_ccld_unpr3: Decimal,
+    /// ft_ord_qty (String, 선택)
+    #[serde(rename = "ft_ord_qty")]
+    pub ft_ord_qty: Decimal,
+    /// ft_ord_unpr3 (String, 선택)
+    #[serde(rename = "ft_ord_unpr3")]
+    pub ft_ord_unpr3: Decimal,
+    /// nprc_rson_text (String, 선택)
+    #[serde(rename = "nprc_rson_text")]
+    pub nprc_rson_text: String,
+    /// odno (String, 선택)
+    #[serde(rename = "odno")]
+    pub odno: String,
+    /// ord_dt (String, 선택)
+    #[serde(rename = "ord_dt")]
+    pub ord_dt: String,
+    /// ord_fwdg_tmd (String, 선택)
+    #[serde(rename = "ord_fwdg_tmd")]
+    pub ord_fwdg_tmd: String,
+    /// ord_gno_brno (String, 선택)
+    #[serde(rename = "ord_gno_brno")]
+    pub ord_gno_brno: String,
+    /// ord_rcit_tmd (String, 선택)
+    #[serde(rename = "ord_rcit_tmd")]
+    pub ord_rcit_tmd: String,
+    /// ord_stfno (String, 선택)
+    #[serde(rename = "ord_stfno")]
+    pub ord_stfno: String,
+    /// ovrs_excg_cd (String, 선택)
+    #[serde(rename = "ovrs_excg_cd")]
+    pub ovrs_excg_cd: String,
+    /// ovrs_rsvn_odno (String, 선택)
+    #[serde(rename = "ovrs_rsvn_odno")]
+    pub ovrs_rsvn_odno: String,
+    /// ovrs_rsvn_ord_stat_cd (String, 선택)
+    #[serde(rename = "ovrs_rsvn_ord_stat_cd")]
+    pub ovrs_rsvn_ord_stat_cd: String,
+    /// ovrs_rsvn_ord_stat_cd_name (String, 선택)
+    #[serde(rename = "ovrs_rsvn_ord_stat_cd_name")]
+    pub ovrs_rsvn_ord_stat_cd_name: String,
+    /// pdno (String, 선택)
+    #[serde(rename = "pdno")]
+    pub pdno: String,
+    /// prdt_name (String, 선택)
+    #[serde(rename = "prdt_name")]
+    pub prdt_name: String,
+    /// prdt_type_cd (String, 선택)
+    #[serde(rename = "prdt_type_cd")]
+    pub prdt_type_cd: String,
+    /// rsvn_ord_rcit_dt (String, 선택)
+    #[serde(rename = "rsvn_ord_rcit_dt")]
+    pub rsvn_ord_rcit_dt: String,
+    /// sll_buy_dvsn_cd (String, 선택)
+    #[serde(rename = "sll_buy_dvsn_cd")]
+    pub sll_buy_dvsn_cd: String,
+    /// sll_buy_dvsn_name (String, 선택)
+    #[serde(rename = "sll_buy_dvsn_name")]
+    pub sll_buy_dvsn_name: String,
+    /// tr_dvsn_name (String, 선택)
+    #[serde(rename = "tr_dvsn_name")]
+    pub tr_dvsn_name: String,
+    /// tr_mket_name (String, 선택)
+    #[serde(rename = "tr_mket_name")]
+    pub tr_mket_name: String,
     /// address (String, 선택)
     #[serde(rename = "address")]
     pub address: String,
