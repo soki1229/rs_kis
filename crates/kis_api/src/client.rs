@@ -19,8 +19,8 @@ struct Inner {
     app_key: String,
     app_secret: String,
     client: Client,
-    base_url: String,
     cache_path: Option<PathBuf>,
+    env: KisEnv,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -50,11 +50,6 @@ impl KisClient {
             .user_agent("rs_kis/0.2 (Zero Boilerplate)")
             .build()?;
 
-        let base_url = match env {
-            KisEnv::Vts => "https://openapivts.koreainvestment.com:29443".to_string(),
-            KisEnv::Real => "https://openapi.koreainvestment.com:8080".to_string(),
-        };
-
         let this = Self {
             inner: Arc::new(Inner {
                 access_token: RwLock::new(String::new()),
@@ -62,8 +57,8 @@ impl KisClient {
                 app_key: app_key.to_string(),
                 app_secret: app_secret.to_string(),
                 client,
-                base_url,
                 cache_path,
+                env,
             }),
         };
 
@@ -91,7 +86,11 @@ impl KisClient {
     }
 
     pub async fn refresh_token(&self) -> Result<(), KisError> {
-        let url = format!("{}/oauth2/tokenP", self.inner.base_url);
+        let base_url = match self.env() {
+            KisEnv::Real => "https://openapi.koreainvestment.com:9443",
+            KisEnv::Vts => "https://openapivts.koreainvestment.com:29443",
+        };
+        let url = format!("{}/oauth2/tokenP", base_url);
         let req = TokenRequest {
             grant_type: "client_credentials".to_string(),
             appkey: self.inner.app_key.clone(),
@@ -139,15 +138,15 @@ impl KisClient {
     }
 
     pub fn env(&self) -> KisEnv {
-        if self.inner.base_url.contains("openapivts") {
-            KisEnv::Vts
-        } else {
-            KisEnv::Real
-        }
+        self.inner.env
     }
 
     pub async fn approval_key(&self) -> Result<String, KisError> {
-        let url = format!("{}/oauth2/Approval", self.inner.base_url);
+        let base_url = match self.env() {
+            KisEnv::Real => "https://openapi.koreainvestment.com:9443",
+            KisEnv::Vts => "https://openapivts.koreainvestment.com:29443",
+        };
+        let url = format!("{}/oauth2/Approval", base_url);
         let req = serde_json::json!({
             "grant_type": "client_credentials",
             "appkey": self.inner.app_key,
@@ -186,7 +185,13 @@ impl KisClient {
         *self.inner.token_expires_at.lock().await
     }
 
-    pub async fn post<R, B>(&self, path: &str, tr_id: &str, body: B) -> Result<R, KisError>
+    pub async fn post<R, B>(
+        &self,
+        path: &str,
+        tr_id: &str,
+        base_url: &str,
+        body: B,
+    ) -> Result<R, KisError>
     where
         R: for<'de> Deserialize<'de> + Default,
         B: Serialize,
@@ -194,8 +199,14 @@ impl KisClient {
         if tr_id == "모의투자 미지원" {
             return Err(KisError::NotSupportedInVts);
         }
+        let env_label = match self.env() {
+            KisEnv::Real => "Real",
+            KisEnv::Vts => "VTS",
+        };
+        tracing::debug!(target: "kis_api", "[{}] POST {} (tr_id: {})", env_label, path, tr_id);
+
         let token = self.inner.access_token.read().await.clone();
-        let url = format!("{}/{}", self.inner.base_url, path.trim_start_matches('/'));
+        let url = format!("{}/{}", base_url, path.trim_start_matches('/'));
 
         let resp = self
             .inner
@@ -213,7 +224,13 @@ impl KisClient {
         ApiResponse::<R>::from_response(resp).await?.into_result()
     }
 
-    pub async fn get<R, Q>(&self, path: &str, tr_id: &str, query: Q) -> Result<R, KisError>
+    pub async fn get<R, Q>(
+        &self,
+        path: &str,
+        tr_id: &str,
+        base_url: &str,
+        query: Q,
+    ) -> Result<R, KisError>
     where
         R: for<'de> Deserialize<'de> + Default,
         Q: Serialize,
@@ -221,8 +238,14 @@ impl KisClient {
         if tr_id == "모의투자 미지원" {
             return Err(KisError::NotSupportedInVts);
         }
+        let env_label = match self.env() {
+            KisEnv::Real => "Real",
+            KisEnv::Vts => "VTS",
+        };
+        tracing::debug!(target: "kis_api", "[{}] GET {} (tr_id: {})", env_label, path, tr_id);
+
         let token = self.inner.access_token.read().await.clone();
-        let url = format!("{}/{}", self.inner.base_url, path.trim_start_matches('/'));
+        let url = format!("{}/{}", base_url, path.trim_start_matches('/'));
 
         let resp = self
             .inner

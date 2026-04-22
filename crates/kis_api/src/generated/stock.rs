@@ -1,4 +1,8 @@
-#![allow(clippy::doc_lazy_continuation, clippy::tabs_in_doc_comments)]
+#![allow(
+    clippy::doc_lazy_continuation,
+    clippy::tabs_in_doc_comments,
+    clippy::doc_markdown
+)]
 use crate::client::KisClient;
 use crate::error::KisError;
 use crate::models::*;
@@ -39,12 +43,23 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingOrderCashRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "(매도) TTTC0011U (매수) TTTC0012U",
-            crate::client::KisEnv::Vts => "(매도) VTTC0011U (매수) VTTC0012U",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => (
+                "(매도) TTTC0011U (매수) TTTC0012U",
+                "https://openapi.koreainvestment.com:9443",
+            ),
+            crate::client::KisEnv::Vts => (
+                "(매도) VTTC0011U (매수) VTTC0012U",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
-            .post("/uapi/domestic-stock/v1/trading/order-cash", tr_id, req)
+            .post(
+                "/uapi/domestic-stock/v1/trading/order-cash",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -55,12 +70,20 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingOrderCreditRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "(매도) TTTC0051U (매수) TTTC0052U",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => (
+                "(매도) TTTC0051U (매수) TTTC0052U",
+                "https://openapi.koreainvestment.com:9443",
+            ),
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .post("/uapi/domestic-stock/v1/trading/order-credit", tr_id, req)
+            .post(
+                "/uapi/domestic-stock/v1/trading/order-credit",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -71,12 +94,21 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingOrderRvsecnclRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "TTTC0013U",
-            crate::client::KisEnv::Vts => "VTTC0013U",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTC0013U", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => {
+                ("VTTC0013U", "https://openapivts.koreainvestment.com:29443")
+            }
         };
         self.0
-            .post("/uapi/domestic-stock/v1/trading/order-rvsecncl", tr_id, req)
+            .post(
+                "/uapi/domestic-stock/v1/trading/order-rvsecncl",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -87,14 +119,17 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingInquirePsblRvsecnclRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "TTTC0084R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTC0084R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/trading/inquire-psbl-rvsecncl",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -107,14 +142,21 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingInquireDailyCcldRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "(3개월이내) TTTC0081R (3개월이전) CTSC9215R",
-            crate::client::KisEnv::Vts => "(3개월이내) VTTC0081R (3개월이전) VTSC9215R",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => (
+                "(3개월이내) TTTC0081R (3개월이전) CTSC9215R",
+                "https://openapi.koreainvestment.com:9443",
+            ),
+            crate::client::KisEnv::Vts => (
+                "(3개월이내) VTTC0081R (3개월이전) VTSC9215R",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/trading/inquire-daily-ccld",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -127,14 +169,19 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingInquireBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "TTTC8434R",
-            crate::client::KisEnv::Vts => "VTTC8434R",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTC8434R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => {
+                ("VTTC8434R", "https://openapivts.koreainvestment.com:29443")
+            }
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/trading/inquire-balance",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -147,14 +194,19 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingInquirePsblOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "TTTC8908R",
-            crate::client::KisEnv::Vts => "VTTC8908R",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTC8908R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => {
+                ("VTTC8908R", "https://openapivts.koreainvestment.com:29443")
+            }
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/trading/inquire-psbl-order",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -167,14 +219,17 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingInquirePsblSellRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "TTTC8408R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTC8408R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/trading/inquire-psbl-sell",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -187,14 +242,17 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingInquireCreditPsamountRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "TTTC8909R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTC8909R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/trading/inquire-credit-psamount",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -207,12 +265,19 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingOrderResvRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "CTSC0008U",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("CTSC0008U", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .post("/uapi/domestic-stock/v1/trading/order-resv", tr_id, req)
+            .post(
+                "/uapi/domestic-stock/v1/trading/order-resv",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -223,14 +288,18 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingOrderResvRvsecnclRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "(예약취소) CTSC0009U (예약정정) CTSC0013U",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => (
+                "(예약취소) CTSC0009U (예약정정) CTSC0013U",
+                "https://openapi.koreainvestment.com:9443",
+            ),
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .post(
                 "/uapi/domestic-stock/v1/trading/order-resv-rvsecncl",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -243,14 +312,17 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingOrderResvCcnlRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "CTSC0004R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("CTSC0004R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/trading/order-resv-ccnl",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -263,14 +335,17 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingPensionInquirePresentBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "TTTC2202R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTC2202R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/trading/pension/inquire-present-balance",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -283,14 +358,18 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingPensionInquireDailyCcldRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "TTTC2201R(기존 KRX만 가능), TTTC2210R (KRX,NXT/SOR)",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => (
+                "TTTC2201R(기존 KRX만 가능), TTTC2210R (KRX,NXT/SOR)",
+                "https://openapi.koreainvestment.com:9443",
+            ),
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/trading/pension/inquire-daily-ccld",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -303,14 +382,17 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingPensionInquirePsblOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "TTTC0503R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTC0503R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/trading/pension/inquire-psbl-order",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -323,14 +405,17 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingPensionInquireDepositRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "TTTC0506R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTC0506R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/trading/pension/inquire-deposit",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -343,14 +428,17 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingPensionInquireBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "TTTC2208R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTC2208R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/trading/pension/inquire-balance",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -363,14 +451,17 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingInquireBalanceRlzPlRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "TTTC8494R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTC8494R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/trading/inquire-balance-rlz-pl",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -383,14 +474,17 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingInquireAccountBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "CTRP6548R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("CTRP6548R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/trading/inquire-account-balance",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -403,14 +497,17 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingInquirePeriodProfitRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "TTTC8708R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTC8708R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/trading/inquire-period-profit",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -423,14 +520,17 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingInquirePeriodTradeProfitRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "TTTC8715R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTC8715R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/trading/inquire-period-trade-profit",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -443,12 +543,19 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingIntgrMarginRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "TTTC0869R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTC0869R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/trading/intgr-margin", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/trading/intgr-margin",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -459,12 +566,19 @@ impl StockTrading {
         &self,
         req: DomesticStockV1TradingPeriodRightsRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "CTRGA011R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("CTRGA011R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/trading/period-rights", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/trading/period-rights",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -475,14 +589,23 @@ impl StockTrading {
         &self,
         req: DomesticFutureoptionV1TradingOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => {
-                "(주간 매수/매도) TTTO1101U (야간 매수/매도) (구) JTCE1001U (신) STTN1101U"
-            }
-            crate::client::KisEnv::Vts => "(주간 매수/매도) VTTO1101U (야간은 모의투자 미제공)",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => (
+                "(주간 매수/매도) TTTO1101U (야간 매수/매도) (구) JTCE1001U (신) STTN1101U",
+                "https://openapi.koreainvestment.com:9443",
+            ),
+            crate::client::KisEnv::Vts => (
+                "(주간 매수/매도) VTTO1101U (야간은 모의투자 미제공)",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
-            .post("/uapi/domestic-futureoption/v1/trading/order", tr_id, req)
+            .post(
+                "/uapi/domestic-futureoption/v1/trading/order",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -493,16 +616,21 @@ impl StockTrading {
         &self,
         req: DomesticFutureoptionV1TradingOrderRvsecnclRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => {
-                "(주간 정정/취소) TTTO1103U (야간 정정/취소) (구) JTCE1002U (신) STTN1103U"
-            }
-            crate::client::KisEnv::Vts => "(주간 정정/취소) VTTO1103U (야간은 모의투자 미제공)",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => (
+                "(주간 정정/취소) TTTO1103U (야간 정정/취소) (구) JTCE1002U (신) STTN1103U",
+                "https://openapi.koreainvestment.com:9443",
+            ),
+            crate::client::KisEnv::Vts => (
+                "(주간 정정/취소) VTTO1103U (야간은 모의투자 미제공)",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .post(
                 "/uapi/domestic-futureoption/v1/trading/order-rvsecncl",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -515,14 +643,19 @@ impl StockTrading {
         &self,
         req: DomesticFutureoptionV1TradingInquireCcnlRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "TTTO5201R",
-            crate::client::KisEnv::Vts => "VTTO5201R",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTO5201R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => {
+                ("VTTO5201R", "https://openapivts.koreainvestment.com:29443")
+            }
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/trading/inquire-ccnl",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -535,14 +668,19 @@ impl StockTrading {
         &self,
         req: DomesticFutureoptionV1TradingInquireBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "CTFO6118R",
-            crate::client::KisEnv::Vts => "VTFO6118R",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("CTFO6118R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => {
+                ("VTFO6118R", "https://openapivts.koreainvestment.com:29443")
+            }
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/trading/inquire-balance",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -555,14 +693,19 @@ impl StockTrading {
         &self,
         req: DomesticFutureoptionV1TradingInquirePsblOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "TTTO5105R",
-            crate::client::KisEnv::Vts => "VTTO5105R",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTO5105R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => {
+                ("VTTO5105R", "https://openapivts.koreainvestment.com:29443")
+            }
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/trading/inquire-psbl-order",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -575,14 +718,18 @@ impl StockTrading {
         &self,
         req: DomesticFutureoptionV1TradingInquireNgtCcnlRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "(구) JTCE5005R (신) STTN5201R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => (
+                "(구) JTCE5005R (신) STTN5201R",
+                "https://openapi.koreainvestment.com:9443",
+            ),
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/trading/inquire-ngt-ccnl",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -595,14 +742,18 @@ impl StockTrading {
         &self,
         req: DomesticFutureoptionV1TradingInquireNgtBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "(구) JTCE6001R (신) CTFN6118R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => (
+                "(구) JTCE6001R (신) CTFN6118R",
+                "https://openapi.koreainvestment.com:9443",
+            ),
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/trading/inquire-ngt-balance",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -615,14 +766,18 @@ impl StockTrading {
         &self,
         req: DomesticFutureoptionV1TradingInquirePsblNgtOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "(구) JTCE1004R (신) STTN5105R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => (
+                "(구) JTCE1004R (신) STTN5105R",
+                "https://openapi.koreainvestment.com:9443",
+            ),
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/trading/inquire-psbl-ngt-order",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -635,14 +790,18 @@ impl StockTrading {
         &self,
         req: DomesticFutureoptionV1TradingNgtMarginDetailRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "(구) JTCE6003R (신) CTFN7107R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => (
+                "(구) JTCE6003R (신) CTFN7107R",
+                "https://openapi.koreainvestment.com:9443",
+            ),
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/trading/ngt-margin-detail",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -655,14 +814,17 @@ impl StockTrading {
         &self,
         req: DomesticFutureoptionV1TradingInquireBalanceSettlementPlRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "CTFO6117R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("CTFO6117R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/trading/inquire-balance-settlement-pl",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -675,14 +837,17 @@ impl StockTrading {
         &self,
         req: DomesticFutureoptionV1TradingInquireDepositRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "CTRP6550R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("CTRP6550R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/trading/inquire-deposit",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -695,14 +860,17 @@ impl StockTrading {
         &self,
         req: DomesticFutureoptionV1TradingInquireBalanceValuationPlRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "CTFO6159R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("CTFO6159R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/trading/inquire-balance-valuation-pl",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -715,14 +883,17 @@ impl StockTrading {
         &self,
         req: DomesticFutureoptionV1TradingInquireCcnlBstimeRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "CTFO5139R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("CTFO5139R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/trading/inquire-ccnl-bstime",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -735,14 +906,17 @@ impl StockTrading {
         &self,
         req: DomesticFutureoptionV1TradingInquireDailyAmountFeeRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "CTFO6119R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("CTFO6119R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/trading/inquire-daily-amount-fee",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -758,14 +932,20 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquirePriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST01010100",
-            crate::client::KisEnv::Vts => "FHKST01010100",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST01010100", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => (
+                "FHKST01010100",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-price",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -778,14 +958,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquirePrice2Request,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01010000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01010000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-price-2",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -798,14 +981,20 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireCcnlRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST01010300",
-            crate::client::KisEnv::Vts => "FHKST01010300",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST01010300", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => (
+                "FHKST01010300",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-ccnl",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -818,14 +1007,20 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireDailyPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST01010400",
-            crate::client::KisEnv::Vts => "FHKST01010400",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST01010400", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => (
+                "FHKST01010400",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-daily-price",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -838,14 +1033,20 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireAskingPriceExpCcnRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST01010200",
-            crate::client::KisEnv::Vts => "FHKST01010200",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST01010200", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => (
+                "FHKST01010200",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-asking-price-exp-ccn",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -858,14 +1059,20 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireInvestorRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST01010900",
-            crate::client::KisEnv::Vts => "FHKST01010900",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST01010900", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => (
+                "FHKST01010900",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-investor",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -878,14 +1085,20 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireMemberRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST01010600",
-            crate::client::KisEnv::Vts => "FHKST01010600",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST01010600", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => (
+                "FHKST01010600",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-member",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -898,14 +1111,20 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireDailyItemchartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST03010100",
-            crate::client::KisEnv::Vts => "FHKST03010100",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST03010100", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => (
+                "FHKST03010100",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -918,14 +1137,20 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireTimeItemchartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST03010200",
-            crate::client::KisEnv::Vts => "FHKST03010200",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST03010200", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => (
+                "FHKST03010200",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-time-itemchartprice",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -938,14 +1163,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireTimeDailychartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST03010230",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST03010230", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-time-dailychartprice",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -958,14 +1186,20 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireTimeItemconclusionRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01060000",
-            crate::client::KisEnv::Vts => "FHPST01060000",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01060000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => (
+                "FHPST01060000",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-time-itemconclusion",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -978,14 +1212,20 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireDailyOvertimepriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST02320000",
-            crate::client::KisEnv::Vts => "FHPST02320000",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST02320000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => (
+                "FHPST02320000",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-daily-overtimeprice",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -998,14 +1238,20 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireTimeOvertimeconclusionRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST02310000",
-            crate::client::KisEnv::Vts => "FHPST02310000",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST02310000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => (
+                "FHPST02310000",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-time-overtimeconclusion",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1018,14 +1264,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireOvertimePriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST02300000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST02300000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-overtime-price",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1038,14 +1287,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireOvertimeAskingPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST02300400",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST02300400", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-overtime-asking-price",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1058,14 +1310,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsExpClosingPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST117300C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST117300C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/exp-closing-price",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1078,14 +1333,20 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireElwPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKEW15010000",
-            crate::client::KisEnv::Vts => "FHKEW15010000",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKEW15010000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => (
+                "FHKEW15010000",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-elw-price",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1098,14 +1359,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireIndexPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPUP02100000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPUP02100000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-index-price",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1118,14 +1382,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireIndexDailyPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPUP02120000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPUP02120000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-index-daily-price",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1138,14 +1405,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireIndexTickpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPUP02110100",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPUP02110100", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-index-tickprice",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1158,14 +1428,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireIndexTimepriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPUP02110200",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPUP02110200", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-index-timeprice",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1178,14 +1451,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireTimeIndexchartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKUP03500200",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKUP03500200", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-time-indexchartprice",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1198,14 +1474,20 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireDailyIndexchartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKUP03500100",
-            crate::client::KisEnv::Vts => "FHKUP03500100",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKUP03500100", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => (
+                "FHKUP03500100",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1218,14 +1500,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireIndexCategoryPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPUP02140000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPUP02140000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-index-category-price",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1238,14 +1523,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsExpIndexTrendRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01840000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01840000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/exp-index-trend",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1258,14 +1546,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsExpTotalIndexRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKUP11750000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKUP11750000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/exp-total-index",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1278,14 +1569,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireViStatusRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01390000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01390000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-vi-status",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1298,14 +1592,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsCompInterestRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST07020000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST07020000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/comp-interest",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1318,12 +1615,19 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsNewsTitleRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST01011800",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST01011800", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/quotations/news-title", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/quotations/news-title",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -1334,12 +1638,19 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsChkHolidayRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "CTCA0903R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("CTCA0903R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/quotations/chk-holiday", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/quotations/chk-holiday",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -1350,12 +1661,19 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsMarketTimeRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHMCM000002C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHMCM000002C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/quotations/market-time", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/quotations/market-time",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -1366,12 +1684,19 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsSearchInfoRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "CTPF1604R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("CTPF1604R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/quotations/search-info", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/quotations/search-info",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -1382,14 +1707,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsSearchStockInfoRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "CTPF1002R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("CTPF1002R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/search-stock-info",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1402,14 +1730,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsCreditByCompanyRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST04770000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST04770000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/credit-by-company",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1422,14 +1753,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsEstimatePerformRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHKST668300C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHKST668300C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/estimate-perform",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1442,14 +1776,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsLendableByCompanyRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "CTSC2702R",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("CTSC2702R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/lendable-by-company",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1462,14 +1799,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInvestOpinionRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST663300C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST663300C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/invest-opinion",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1482,14 +1822,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInvestOpbysecRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST663400C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST663400C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/invest-opbysec",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1502,14 +1845,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsPsearchTitleRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHKST03900300",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHKST03900300", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/psearch-title",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1522,14 +1868,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsPsearchResultRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHKST03900400",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHKST03900400", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/psearch-result",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1542,14 +1891,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsIntstockGrouplistRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHKCM113004C7",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHKCM113004C7", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/intstock-grouplist",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1562,14 +1914,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsIntstockMultpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST11300006",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST11300006", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/intstock-multprice",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1582,14 +1937,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsIntstockStocklistByGroupRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHKCM113004C6",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHKCM113004C6", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/intstock-stocklist-by-group",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1602,14 +1960,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsForeignInstitutionTotalRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPTJ04400000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPTJ04400000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/foreign-institution-total",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1622,14 +1983,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsFrgnmemTradeEstimateRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST644100C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST644100C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/frgnmem-trade-estimate",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1642,14 +2006,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInvestorTradeByStockDailyRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPTJ04160001",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPTJ04160001", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/investor-trade-by-stock-daily",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1662,14 +2029,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireInvestorTimeByMarketRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPTJ04030000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPTJ04030000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-investor-time-by-market",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1682,14 +2052,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireInvestorDailyByMarketRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPTJ04040000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPTJ04040000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-investor-daily-by-market",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1702,14 +2075,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsFrgnmemPchsTrendRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST644400C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST644400C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/frgnmem-pchs-trend",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1722,14 +2098,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsFrgnmemTradeTrendRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST04320000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST04320000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/frgnmem-trade-trend",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1742,14 +2121,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireMemberDailyRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST04540000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST04540000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-member-daily",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1762,14 +2144,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsProgramTradeByStockRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPPG04650101",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPPG04650101", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/program-trade-by-stock",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1782,14 +2167,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsProgramTradeByStockDailyRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPPG04650201",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPPG04650201", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/program-trade-by-stock-daily",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1802,14 +2190,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInvestorTrendEstimateRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHPTJ04160200",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHPTJ04160200", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/investor-trend-estimate",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1822,14 +2213,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInquireDailyTradeVolumeRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST03010800",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST03010800", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/inquire-daily-trade-volume",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1842,14 +2236,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsCompProgramTradeTodayRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPPG04600101",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPPG04600101", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/comp-program-trade-today",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1862,14 +2259,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsCompProgramTradeDailyRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPPG04600001",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPPG04600001", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/comp-program-trade-daily",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1882,14 +2282,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsInvestorProgramTradeTodayRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHPPG046600C1",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHPPG046600C1", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/investor-program-trade-today",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1902,14 +2305,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsDailyCreditBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST04760000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST04760000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/daily-credit-balance",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1922,14 +2328,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsExpPriceTrendRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01810000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01810000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/exp-price-trend",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1942,14 +2351,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsDailyShortSaleRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST04830000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST04830000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/daily-short-sale",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1962,14 +2374,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsTradprtByamtRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST111900C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST111900C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/tradprt-byamt",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -1982,12 +2397,19 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsMktfundsRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST649100C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST649100C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/quotations/mktfunds", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/quotations/mktfunds",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -1998,14 +2420,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsDailyLoanTransRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHPST074500C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHPST074500C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/daily-loan-trans",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2018,14 +2443,17 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsCaptureUplowpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST130000C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST130000C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/quotations/capture-uplowprice",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2038,12 +2466,19 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsPbarTratioRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01130000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01130000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/quotations/pbar-tratio", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/quotations/pbar-tratio",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2054,12 +2489,19 @@ impl StockQuotations {
         &self,
         req: DomesticStockV1QuotationsVolumeRankRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01710000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01710000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/quotations/volume-rank", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/quotations/volume-rank",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2070,14 +2512,17 @@ impl StockQuotations {
         &self,
         req: DomesticFutureoptionV1QuotationsMarginRateRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "TTTO6032R",
-            crate::client::KisEnv::Vts => "미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTO6032R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/quotations/margin-rate",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2090,14 +2535,20 @@ impl StockQuotations {
         &self,
         req: DomesticFutureoptionV1QuotationsInquirePriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHMIF10000000",
-            crate::client::KisEnv::Vts => "FHMIF10000000",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHMIF10000000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => (
+                "FHMIF10000000",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/quotations/inquire-price",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2110,14 +2561,20 @@ impl StockQuotations {
         &self,
         req: DomesticFutureoptionV1QuotationsInquireAskingPriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHMIF10010000",
-            crate::client::KisEnv::Vts => "FHMIF10010000",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHMIF10010000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => (
+                "FHMIF10010000",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/quotations/inquire-asking-price",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2130,14 +2587,20 @@ impl StockQuotations {
         &self,
         req: DomesticFutureoptionV1QuotationsInquireDailyFuopchartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKIF03020100",
-            crate::client::KisEnv::Vts => "FHKIF03020100",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKIF03020100", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => (
+                "FHKIF03020100",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/quotations/inquire-daily-fuopchartprice",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2150,14 +2613,17 @@ impl StockQuotations {
         &self,
         req: DomesticFutureoptionV1QuotationsInquireTimeFuopchartpriceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKIF03020200",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKIF03020200", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/quotations/inquire-time-fuopchartprice",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2170,14 +2636,17 @@ impl StockQuotations {
         &self,
         req: DomesticFutureoptionV1QuotationsDisplayBoardOptionListRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPIO056104C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPIO056104C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/quotations/display-board-option-list",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2190,14 +2659,17 @@ impl StockQuotations {
         &self,
         req: DomesticFutureoptionV1QuotationsDisplayBoardTopRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPIF05030000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPIF05030000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/quotations/display-board-top",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2210,14 +2682,17 @@ impl StockQuotations {
         &self,
         req: DomesticFutureoptionV1QuotationsDisplayBoardCallputRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPIF05030100",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPIF05030100", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/quotations/display-board-callput",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2230,14 +2705,17 @@ impl StockQuotations {
         &self,
         req: DomesticFutureoptionV1QuotationsDisplayBoardFuturesRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPIF05030200",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPIF05030200", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/quotations/display-board-futures",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2250,14 +2728,17 @@ impl StockQuotations {
         &self,
         req: DomesticFutureoptionV1QuotationsExpPriceTrendRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPIF05110100",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPIF05110100", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-futureoption/v1/quotations/exp-price-trend",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2273,12 +2754,19 @@ impl StockCommon {
         &self,
         req: DomesticStockV1FinanceBalanceSheetRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST66430100",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST66430100", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/finance/balance-sheet", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/finance/balance-sheet",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2289,14 +2777,17 @@ impl StockCommon {
         &self,
         req: DomesticStockV1FinanceIncomeStatementRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST66430200",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST66430200", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", ""),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/finance/income-statement",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2309,14 +2800,17 @@ impl StockCommon {
         &self,
         req: DomesticStockV1FinanceFinancialRatioRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST66430300",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST66430300", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/finance/financial-ratio",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2329,12 +2823,19 @@ impl StockCommon {
         &self,
         req: DomesticStockV1FinanceProfitRatioRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST66430400",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST66430400", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/finance/profit-ratio", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/finance/profit-ratio",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2345,14 +2846,17 @@ impl StockCommon {
         &self,
         req: DomesticStockV1FinanceOtherMajorRatiosRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST66430500",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST66430500", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/finance/other-major-ratios",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2365,14 +2869,17 @@ impl StockCommon {
         &self,
         req: DomesticStockV1FinanceStabilityRatioRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST66430600",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST66430600", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/finance/stability-ratio",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2385,12 +2892,19 @@ impl StockCommon {
         &self,
         req: DomesticStockV1FinanceGrowthRatioRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST66430800",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST66430800", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/finance/growth-ratio", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/finance/growth-ratio",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2401,12 +2915,19 @@ impl StockCommon {
         &self,
         req: DomesticStockV1KsdinfoDividendRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHKDB669102C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHKDB669102C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ksdinfo/dividend", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ksdinfo/dividend",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2417,12 +2938,19 @@ impl StockCommon {
         &self,
         req: DomesticStockV1KsdinfoPurreqRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHKDB669103C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHKDB669103C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ksdinfo/purreq", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ksdinfo/purreq",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2433,12 +2961,19 @@ impl StockCommon {
         &self,
         req: DomesticStockV1KsdinfoMergerSplitRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHKDB669104C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHKDB669104C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ksdinfo/merger-split", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ksdinfo/merger-split",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2449,12 +2984,19 @@ impl StockCommon {
         &self,
         req: DomesticStockV1KsdinfoRevSplitRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHKDB669105C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHKDB669105C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ksdinfo/rev-split", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ksdinfo/rev-split",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2465,12 +3007,19 @@ impl StockCommon {
         &self,
         req: DomesticStockV1KsdinfoCapDcrsRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHKDB669106C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHKDB669106C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ksdinfo/cap-dcrs", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ksdinfo/cap-dcrs",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2481,12 +3030,19 @@ impl StockCommon {
         &self,
         req: DomesticStockV1KsdinfoListInfoRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHKDB669107C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHKDB669107C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ksdinfo/list-info", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ksdinfo/list-info",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2497,12 +3053,19 @@ impl StockCommon {
         &self,
         req: DomesticStockV1KsdinfoPubOfferRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHKDB669108C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHKDB669108C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ksdinfo/pub-offer", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ksdinfo/pub-offer",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2513,12 +3076,19 @@ impl StockCommon {
         &self,
         req: DomesticStockV1KsdinfoForfeitRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHKDB669109C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHKDB669109C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ksdinfo/forfeit", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ksdinfo/forfeit",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2529,12 +3099,19 @@ impl StockCommon {
         &self,
         req: DomesticStockV1KsdinfoMandDepositRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHKDB669110C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHKDB669110C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ksdinfo/mand-deposit", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ksdinfo/mand-deposit",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2545,12 +3122,19 @@ impl StockCommon {
         &self,
         req: DomesticStockV1KsdinfoPaidinCapinRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHKDB669100C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHKDB669100C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ksdinfo/paidin-capin", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ksdinfo/paidin-capin",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2561,12 +3145,19 @@ impl StockCommon {
         &self,
         req: DomesticStockV1KsdinfoBonusIssueRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHKDB669101C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHKDB669101C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ksdinfo/bonus-issue", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ksdinfo/bonus-issue",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2577,12 +3168,19 @@ impl StockCommon {
         &self,
         req: DomesticStockV1KsdinfoSharehldMeetRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHKDB669111C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHKDB669111C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ksdinfo/sharehld-meet", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ksdinfo/sharehld-meet",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 }
@@ -2596,14 +3194,17 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingOvertimeExpTransFluctRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST11860000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST11860000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/ranking/overtime-exp-trans-fluct",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2616,12 +3217,19 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingFluctuationRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01700000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01700000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ranking/fluctuation", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ranking/fluctuation",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2632,12 +3240,19 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingQuoteBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01720000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01720000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ranking/quote-balance", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ranking/quote-balance",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2648,14 +3263,17 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingProfitAssetIndexRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01730000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01730000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/ranking/profit-asset-index",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2668,12 +3286,19 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingMarketCapRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01740000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01740000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ranking/market-cap", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ranking/market-cap",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2684,12 +3309,19 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingFinanceRatioRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01750000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01750000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ranking/finance-ratio", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ranking/finance-ratio",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2700,14 +3332,17 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingAfterHourBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01760000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01760000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/ranking/after-hour-balance",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2720,14 +3355,17 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingPreferDisparateRatioRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01770000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01770000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/ranking/prefer-disparate-ratio",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2740,12 +3378,19 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingDisparityRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01780000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01780000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ranking/disparity", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ranking/disparity",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2756,12 +3401,19 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingMarketValueRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01790000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01790000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ranking/market-value", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ranking/market-value",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2772,12 +3424,19 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingVolumePowerRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01680000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01680000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ranking/volume-power", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ranking/volume-power",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2788,14 +3447,17 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingTopInterestStockRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01800000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01800000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/ranking/top-interest-stock",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2808,14 +3470,17 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingExpTransUpdownRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01820000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01820000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/ranking/exp-trans-updown",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2828,14 +3493,17 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingTradedByCompanyRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01860000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01860000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/ranking/traded-by-company",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2848,14 +3516,17 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingNearNewHighlowRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST01870000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST01870000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/ranking/near-new-highlow",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2868,12 +3539,19 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingDividendRateRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHKDB13470100",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHKDB13470100", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ranking/dividend-rate", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ranking/dividend-rate",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2884,12 +3562,19 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingBulkTransNumRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST190900C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST190900C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ranking/bulk-trans-num", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ranking/bulk-trans-num",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2900,12 +3585,19 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingCreditBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHKST17010000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHKST17010000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ranking/credit-balance", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ranking/credit-balance",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2916,12 +3608,19 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingShortSaleRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST04820000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST04820000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ranking/short-sale", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ranking/short-sale",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 
@@ -2932,14 +3631,17 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingOvertimeFluctuationRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST02340000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST02340000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/ranking/overtime-fluctuation",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2952,14 +3654,17 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingOvertimeVolumeRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "FHPST02350000",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST02350000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(
                 "/uapi/domestic-stock/v1/ranking/overtime-volume",
                 tr_id,
+                base_url,
                 req,
             )
             .await
@@ -2972,12 +3677,19 @@ impl StockRanking {
         &self,
         req: DomesticStockV1RankingHtsTopViewRequest,
     ) -> Result<serde_json::Value, KisError> {
-        let tr_id = match self.0.env() {
-            crate::client::KisEnv::Real => "HHMCM000100C0",
-            crate::client::KisEnv::Vts => "모의투자 미지원",
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("HHMCM000100C0", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
-            .get("/uapi/domestic-stock/v1/ranking/hts-top-view", tr_id, req)
+            .get(
+                "/uapi/domestic-stock/v1/ranking/hts-top-view",
+                tr_id,
+                base_url,
+                req,
+            )
             .await
     }
 }
