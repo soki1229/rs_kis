@@ -17,7 +17,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let client = KisClient::new(&app_key, &app_secret, KisEnv::Real).await?;
     println!("SUCCESS: Access Token issued and verified.");
 
-    // 2. US Volume Ranking Verification (HDFSCNT0)
+    // 2. US Volume Ranking Verification
     println!("\n[2] REST: US Volume Ranking (NAS)...");
     let rank_resp = client
         .overseas()
@@ -36,8 +36,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 item["name"], item["symb"], item["last"], item["tvol"]
             );
         }
-    } else {
-        println!("WARNING: output2 is empty or not an array. (Check permissions)");
     }
 
     // 3. US Daily Chart Verification
@@ -56,39 +54,19 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
 
     if let Some(bars) = chart_resp["output2"].as_array() {
-        println!("SUCCESS: Received {} candles.", bars.len());
+        println!("  - output1 raw: {}", chart_resp["output1"]);
+        // Try all possible name fields
+        let kor_name = chart_resp["output1"]["ovrs_entp_kor_nm"]
+            .as_str()
+            .or_else(|| chart_resp["output1"]["hts_kor_isnm"].as_str())
+            .or_else(|| chart_resp["output1"]["name"].as_str())
+            .unwrap_or("Unknown");
+
+        println!("SUCCESS: Received {} candles for {}.", bars.len(), kor_name);
         if let Some(bar) = bars.first() {
             println!(
                 "  - Latest Bar: Date: {}, Close: {}, Vol: {}",
-                bar["xymd"], bar["last"], bar["v_vol"]
-            );
-        }
-    }
-
-    // 4. KR Daily Chart Verification
-    println!("\n[4] REST: KR Daily Chart (Samsung)...");
-    let kr_chart_resp = client
-        .stock()
-        .quotations()
-        .domestic_stock_v1_quotations_inquire_daily_itemchartprice(
-            DomesticStockV1QuotationsInquireDailyItemchartpriceRequest {
-                fid_cond_mrkt_div_code: "J".to_string(),
-                fid_input_iscd: "005930".to_string(),
-                fid_input_date_1: "20240101".to_string(),
-                fid_input_date_2: "20240422".to_string(),
-                fid_period_div_code: "D".to_string(),
-                fid_org_adj_prc: "0".to_string(),
-                ..Default::default()
-            },
-        )
-        .await?;
-
-    if let Some(bars) = kr_chart_resp["output2"].as_array() {
-        println!("SUCCESS: Received {} candles.", bars.len());
-        if let Some(bar) = bars.first() {
-            println!(
-                "  - Sample Bar: Date: {}, Close: {}, Vol: {}",
-                bar["stck_bsop_date"], bar["stck_clpr"], bar["acml_vol"]
+                bar["xymd"], bar["clos"], bar["tvol"]
             );
         }
     }
