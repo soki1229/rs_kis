@@ -1,6 +1,6 @@
 use crate::auth::{TokenRequest, TokenResponse};
 use crate::endpoints;
-use crate::error::{ApiResponse, KisError};
+use crate::error::{ApiResponseHeader, KisError};
 use chrono::{DateTime, Utc};
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
@@ -62,7 +62,6 @@ impl KisClient {
             }),
         };
 
-        // 1. 캐시 파일에서 로드 시도
         if let Some(path) = &this.inner.cache_path {
             if let Ok(cache_str) = std::fs::read_to_string(path) {
                 if let Ok(cache) = serde_json::from_str::<TokenCache>(&cache_str) {
@@ -104,12 +103,7 @@ impl KisClient {
             return Err(KisError::Auth(format!("HTTP {}: {}", status, text)));
         }
 
-        let body_text = resp.text().await?;
-        let resp_data: TokenResponse = match serde_json::from_str(&body_text) {
-            Ok(data) => data,
-            Err(e) => return Err(KisError::Auth(format!("Failed to parse token: {}", e))),
-        };
-
+        let resp_data: TokenResponse = resp.json().await?;
         let expires_at = Utc::now() + chrono::Duration::seconds(resp_data.expires_in as i64);
         {
             let mut token = self.inner.access_token.write().await;
@@ -154,15 +148,6 @@ impl KisClient {
         });
 
         let resp = self.inner.client.post(&url).json(&req).send().await?;
-        if !resp.status().is_success() {
-            let status = resp.status().as_u16();
-            let text = resp.text().await.unwrap_or_default();
-            return Err(KisError::Auth(format!(
-                "Approval key failed ({}): {}",
-                status, text
-            )));
-        }
-
         let data: serde_json::Value = resp.json().await?;
         data["approval_key"]
             .as_str()
@@ -199,9 +184,10 @@ impl KisClient {
         if tr_id == "모의투자 미지원" {
             return Err(KisError::NotSupportedInVts);
         }
-        let env_label = match self.env() {
-            KisEnv::Real => "Real",
-            KisEnv::Vts => "VTS",
+        let env_label = if self.env() == KisEnv::Real {
+            "Real"
+        } else {
+            "VTS"
         };
         tracing::debug!(target: "kis_api", "[{}] POST {} (tr_id: {})", env_label, path, tr_id);
 
@@ -221,7 +207,15 @@ impl KisClient {
             .send()
             .await?;
 
-        ApiResponse::<R>::from_response(resp).await?.into_result()
+        let full_body: serde_json::Value = resp.json().await?;
+        let header: ApiResponseHeader = serde_json::from_value(full_body.clone())?;
+
+        if header.is_success() {
+            // Success: Return the full JSON so the caller can pick output, output1, etc.
+            Ok(serde_json::from_value(full_body)?)
+        } else {
+            Err(header.to_error())
+        }
     }
 
     pub async fn get<R, Q>(
@@ -238,9 +232,10 @@ impl KisClient {
         if tr_id == "모의투자 미지원" {
             return Err(KisError::NotSupportedInVts);
         }
-        let env_label = match self.env() {
-            KisEnv::Real => "Real",
-            KisEnv::Vts => "VTS",
+        let env_label = if self.env() == KisEnv::Real {
+            "Real"
+        } else {
+            "VTS"
         };
         tracing::debug!(target: "kis_api", "[{}] GET {} (tr_id: {})", env_label, path, tr_id);
 
@@ -260,6 +255,13 @@ impl KisClient {
             .send()
             .await?;
 
-        ApiResponse::<R>::from_response(resp).await?.into_result()
+        let full_body: serde_json::Value = resp.json().await?;
+        let header: ApiResponseHeader = serde_json::from_value(full_body.clone())?;
+
+        if header.is_success() {
+            Ok(serde_json::from_value(full_body)?)
+        } else {
+            Err(header.to_error())
+        }
     }
 }

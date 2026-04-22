@@ -9,17 +9,13 @@ pub enum KisError {
         msg_cd: String,
         message: String,
     },
-    #[error("HTTP {status}: {message}")]
-    Http { status: u16, message: String },
-    #[error("Serde: {0}")]
-    Serde(#[from] serde_json::Error),
-    #[error("Reqwest: {0}")]
-    Reqwest(#[from] reqwest::Error),
-    #[error("IO: {0}")]
-    Io(#[from] std::io::Error),
-    #[error("Auth Error: {0}")]
+    #[error("인증 에러: {0}")]
     Auth(String),
-    #[error("WebSocket error: {0}")]
+    #[error("네트워크 에러: {0}")]
+    Network(#[from] reqwest::Error),
+    #[error("데이터 파싱 에러: {0}")]
+    Serialization(#[from] serde_json::Error),
+    #[error("WebSocket 에러: {0}")]
     WebSocket(String),
     #[error("Stream lagged by {0} messages")]
     Lagged(u64),
@@ -30,52 +26,22 @@ pub enum KisError {
 }
 
 #[derive(Deserialize, Debug)]
-pub struct ApiResponse<T> {
+pub struct ApiResponseHeader {
     pub rt_cd: String,
     pub msg_cd: String,
     pub msg1: String,
-    pub output: Option<T>,
 }
 
-impl<T> ApiResponse<T> {
-    pub async fn from_response(resp: reqwest::Response) -> Result<Self, KisError>
-    where
-        T: for<'de> serde::Deserialize<'de> + Default,
-    {
-        if !resp.status().is_success() {
-            let status = resp.status().as_u16();
-            let message = resp.text().await.unwrap_or_default();
-            return Err(KisError::Http { status, message });
-        }
-
-        let body_text = resp.text().await?;
-        serde_json::from_str(&body_text).map_err(|e| {
-            KisError::Auth(format!(
-                "Failed to parse API response: {}. Body: {}",
-                e, body_text
-            ))
-        })
+impl ApiResponseHeader {
+    pub fn is_success(&self) -> bool {
+        self.rt_cd == "0" || self.rt_cd == "7" // 7 is also success in some KIS APIs
     }
 
-    pub fn into_result(self) -> Result<T, KisError>
-    where
-        T: Default + serde::de::DeserializeOwned,
-    {
-        if self.rt_cd != "0" && self.rt_cd != "00" {
-            return Err(KisError::Api {
-                rt_cd: self.rt_cd,
-                msg_cd: self.msg_cd,
-                message: self.msg1,
-            });
-        }
-        match self.output {
-            Some(out) => Ok(out),
-            None => {
-                // rt_cd가 0인데 output이 없는 경우 (예: 주문 취소 성공 등)
-                // T의 기본값을 반환하거나 처리 로직이 필요함.
-                // 여기서는 안전하게 Deserialize를 시도하거나 Default를 반환.
-                Ok(T::default())
-            }
+    pub fn to_error(&self) -> KisError {
+        KisError::Api {
+            rt_cd: self.rt_cd.clone(),
+            msg_cd: self.msg_cd.clone(),
+            message: self.msg1.clone(),
         }
     }
 }
