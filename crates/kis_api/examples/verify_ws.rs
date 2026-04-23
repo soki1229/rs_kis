@@ -1,7 +1,8 @@
 use dotenvy::dotenv;
-use futures_util::StreamExt;
-use kis_api::{KisClient, KisEnv, SubscriptionKind};
+use futures_util::{SinkExt, StreamExt};
+use kis_api::{KisClient, KisEnv};
 use std::env;
+use tokio_tungstenite::{connect_async, tungstenite::protocol::Message};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -14,12 +15,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let approval_key = client.approval_key().await?;
     println!("Approval Key: {}", approval_key);
 
-    let ws_url = client.ws_url();
+    let ws_url = "ws://ops.koreainvestment.com:21000";
     println!("Connecting to: {}", ws_url);
 
-    let mut ws_stream = tokio_tungstenite::connect_async(ws_url).await?.0;
+    let (mut ws_stream, _) = connect_async(ws_url).await?;
+    println!("Connected.");
 
-    // Subscribe to NVDA (US Price)
+    // Subscribe to NVDA with CORRECT Real Key: DNAS + NVDA
     let sub_msg = serde_json::json!({
         "header": {
             "approval_key": approval_key,
@@ -30,37 +32,35 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         "body": {
             "input": {
                 "tr_id": "HDFSCNT0",
-                "tr_key": "NVDA"
+                "tr_key": "DNASNVDA"
             }
         }
     });
 
     ws_stream
-        .send(tokio_tungstenite::tungstenite::Message::Text(
-            sub_msg.to_string(),
-        ))
+        .send(Message::Text(sub_msg.to_string().into()))
         .await?;
-    println!("Subscribed to NVDA (HDFSCNT0)");
+    println!("Subscribed to NVDA (DNASNVDA)");
 
-    let mut count = 0;
-    while let Some(Ok(msg)) = ws_stream.next().await {
-        if let tokio_tungstenite::tungstenite::Message::Text(text) = msg {
-            println!("\n[WS RECEIVED] {}", text);
-            if text.starts_with('0') || text.starts_with('1') {
-                let parts: Vec<&str> = text.split('|').collect();
-                if parts.len() > 3 {
-                    let data = parts[3];
-                    let fields: Vec<&str> = data.split('^').collect();
-                    println!("  Parsed Fields Count: {}", fields.len());
-                    for (i, f) in fields.iter().enumerate() {
-                        println!("    [{}] {}", i, f);
+    println!("Waiting for ticks (10 seconds)...");
+    let timeout = tokio::time::sleep(std::time::Duration::from_secs(10));
+    tokio::pin!(timeout);
+
+    loop {
+        tokio::select! {
+            msg = ws_stream.next() => {
+                if let Some(Ok(Message::Text(text))) = msg {
+                    println!("\n[RAW WS DATA RECEIVED] {}", text);
+                    if text.contains('|') {
+                        println!("SUCCESS: Real-time data is arriving!");
+                        return Ok(());
                     }
                 }
-                count += 1;
             }
-        }
-        if count >= 3 {
-            break;
+            _ = &mut timeout => {
+                println!("TIMEOUT: No data received in 10 seconds. (Market might be quiet or keys issues)");
+                break;
+            }
         }
     }
 
