@@ -8078,3 +8078,1355 @@ pub struct TryitoutH0bicnt0Request {
     #[serde(rename = "tr_key")]
     pub tr_key: String,
 }
+
+/// [접근토큰발급(P)[인증-001]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct Oauth2TokenpResponse {}
+
+/// [접근토큰폐기(P)[인증-002]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct Oauth2RevokepResponse {}
+
+/// [Hashkey] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct HashkeyResponse {}
+
+/// [실시간 (웹소켓) 접속키 발급[실시간-000]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct Oauth2ApprovalResponse {}
+
+/// [주식주문(현금)[v1_국내주식-001]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingOrderCashResponse {}
+
+/// [주식주문(신용)[v1_국내주식-002]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingOrderCreditResponse {}
+
+/// [주식주문(정정취소)[v1_국내주식-003]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingOrderRvsecnclResponse {}
+
+/// [주식정정취소가능주문조회[v1_국내주식-004]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingInquirePsblRvsecnclResponse {}
+
+/// [주식일별주문체결조회[v1_국내주식-005]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingInquireDailyCcldResponse {}
+
+/// [주식잔고조회[v1_국내주식-006]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingInquireBalanceResponse {}
+
+/// [매수가능조회[v1_국내주식-007]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingInquirePsblOrderResponse {}
+
+/// [매도가능수량조회 [국내주식-165]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingInquirePsblSellResponse {}
+
+/// [신용매수가능조회[v1_국내주식-042]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingInquireCreditPsamountResponse {}
+
+/// [주식예약주문[v1_국내주식-017]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingOrderResvResponse {}
+
+/// [주식예약주문정정취소[v1_국내주식-018,019]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingOrderResvRvsecnclResponse {}
+
+/// [주식예약주문조회[v1_국내주식-020]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingOrderResvCcnlResponse {}
+
+/// [퇴직연금 체결기준잔고[v1_국내주식-032]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingPensionInquirePresentBalanceResponse {}
+
+/// [퇴직연금 미체결내역[v1_국내주식-033]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingPensionInquireDailyCcldResponse {}
+
+/// [퇴직연금 매수가능조회[v1_국내주식-034]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingPensionInquirePsblOrderResponse {}
+
+/// [퇴직연금 예수금조회[v1_국내주식-035]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingPensionInquireDepositResponse {}
+
+/// [퇴직연금 잔고조회[v1_국내주식-036]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingPensionInquireBalanceResponse {}
+
+/// [주식잔고조회_실현손익[v1_국내주식-041]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingInquireBalanceRlzPlResponse {}
+
+/// [투자계좌자산현황조회[v1_국내주식-048]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingInquireAccountBalanceResponse {}
+
+/// [기간별손익일별합산조회[v1_국내주식-052]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingInquirePeriodProfitResponse {}
+
+/// [기간별매매손익현황조회[v1_국내주식-060]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingInquirePeriodTradeProfitResponse {}
+
+/// [주식통합증거금 현황 [국내주식-191]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingIntgrMarginResponse {}
+
+/// [기간별계좌권리현황조회 [국내주식-211]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1TradingPeriodRightsResponse {}
+
+/// [주식현재가 시세[v1_국내주식-008]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquirePriceResponse {}
+
+/// [주식현재가 시세2[v1_국내주식-054]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquirePrice2Response {}
+
+/// [주식현재가 체결[v1_국내주식-009]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireCcnlResponse {}
+
+/// [주식현재가 일자별[v1_국내주식-010]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireDailyPriceResponse {}
+
+/// [주식현재가 호가/예상체결[v1_국내주식-011]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireAskingPriceExpCcnResponse {}
+
+/// [주식현재가 투자자[v1_국내주식-012]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireInvestorResponse {}
+
+/// [주식현재가 회원사[v1_국내주식-013]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireMemberResponse {}
+
+/// [국내주식기간별시세(일/주/월/년)[v1_국내주식-016]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireDailyItemchartpriceResponse {}
+
+/// [주식당일분봉조회[v1_국내주식-022]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireTimeItemchartpriceResponse {}
+
+/// [주식일별분봉조회 [국내주식-213]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireTimeDailychartpriceResponse {}
+
+/// [주식현재가 당일시간대별체결[v1_국내주식-023]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireTimeItemconclusionResponse {}
+
+/// [주식현재가 시간외일자별주가[v1_국내주식-026]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireDailyOvertimepriceResponse {}
+
+/// [주식현재가 시간외시간별체결[v1_국내주식-025]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireTimeOvertimeconclusionResponse {}
+
+/// [국내주식 시간외현재가[국내주식-076]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireOvertimePriceResponse {}
+
+/// [국내주식 시간외호가[국내주식-077]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireOvertimeAskingPriceResponse {}
+
+/// [국내주식 장마감 예상체결가[국내주식-120]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsExpClosingPriceResponse {}
+
+/// [ETF/ETN 현재가[v1_국내주식-068]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct EtfetnV1QuotationsInquirePriceResponse {}
+
+/// [ETF 구성종목시세[국내주식-073]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct EtfetnV1QuotationsInquireComponentStockPriceResponse {}
+
+/// [NAV 비교추이(종목)[v1_국내주식-069]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct EtfetnV1QuotationsNavComparisonTrendResponse {}
+
+/// [NAV 비교추이(일)[v1_국내주식-071]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct EtfetnV1QuotationsNavComparisonDailyTrendResponse {}
+
+/// [NAV 비교추이(분)[v1_국내주식-070]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct EtfetnV1QuotationsNavComparisonTimeTrendResponse {}
+
+/// [ELW 현재가 시세[v1_국내주식-014]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireElwPriceResponse {}
+
+/// [ELW 신규상장종목 [국내주식-181]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1QuotationsNewlyListedResponse {}
+
+/// [ELW 민감도 순위[국내주식-170]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1RankingSensitivityResponse {}
+
+/// [ELW 기초자산별 종목시세 [국내주식-186]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1QuotationsUdrlAssetPriceResponse {}
+
+/// [ELW 종목검색 [국내주식-166]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1QuotationsCondSearchResponse {}
+
+/// [ELW 당일급변종목[국내주식-171]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1RankingQuickChangeResponse {}
+
+/// [ELW 기초자산 목록조회 [국내주식-185]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1QuotationsUdrlAssetListResponse {}
+
+/// [ELW 비교대상종목조회 [국내주식-183]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1QuotationsCompareStocksResponse {}
+
+/// [ELW LP매매추이 [국내주식-182]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1QuotationsLpTradeTrendResponse {}
+
+/// [ELW 투자지표추이(체결) [국내주식-172]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1QuotationsIndicatorTrendCcnlResponse {}
+
+/// [ELW 투자지표추이(분별) [국내주식-174]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1QuotationsIndicatorTrendMinuteResponse {}
+
+/// [ELW 투자지표추이(일별) [국내주식-173]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1QuotationsIndicatorTrendDailyResponse {}
+
+/// [ELW 변동성 추이(틱) [국내주식-180]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1QuotationsVolatilityTrendTickResponse {}
+
+/// [ELW 변동성추이(체결) [국내주식-177]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1QuotationsVolatilityTrendCcnlResponse {}
+
+/// [ELW 변동성 추이(일별) [국내주식-178]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1QuotationsVolatilityTrendDailyResponse {}
+
+/// [ELW 민감도 추이(체결) [국내주식-175]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1QuotationsSensitivityTrendCcnlResponse {}
+
+/// [ELW 변동성 추이(분별) [국내주식-179]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1QuotationsVolatilityTrendMinuteResponse {}
+
+/// [ELW 민감도 추이(일별) [국내주식-176]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1QuotationsSensitivityTrendDailyResponse {}
+
+/// [ELW 만기예정/만기종목 [국내주식-184]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1QuotationsExpirationStocksResponse {}
+
+/// [ELW 지표순위[국내주식-169]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1RankingIndicatorResponse {}
+
+/// [ELW 상승률순위[국내주식-167]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1RankingUpdownRateResponse {}
+
+/// [ELW 거래량순위[국내주식-168]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct ElwV1RankingVolumeRankResponse {}
+
+/// [국내업종 현재지수[v1_국내주식-063]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireIndexPriceResponse {}
+
+/// [국내업종 일자별지수[v1_국내주식-065]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireIndexDailyPriceResponse {}
+
+/// [국내업종 시간별지수(초)[국내주식-064]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireIndexTickpriceResponse {}
+
+/// [국내업종 시간별지수(분)[국내주식-119]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireIndexTimepriceResponse {}
+
+/// [업종 분봉조회[v1_국내주식-045]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireTimeIndexchartpriceResponse {}
+
+/// [국내주식업종기간별시세(일/주/월/년)[v1_국내주식-021]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireDailyIndexchartpriceResponse {}
+
+/// [국내업종 구분별전체시세[v1_국내주식-066]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireIndexCategoryPriceResponse {}
+
+/// [국내주식 예상체결지수 추이[국내주식-121]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsExpIndexTrendResponse {}
+
+/// [국내주식 예상체결 전체지수[국내주식-122]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsExpTotalIndexResponse {}
+
+/// [변동성완화장치(VI) 현황 [v1_국내주식-055]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireViStatusResponse {}
+
+/// [금리 종합(국내채권/금리) [국내주식-155]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsCompInterestResponse {}
+
+/// [종합 시황/공시(제목) [국내주식-141]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsNewsTitleResponse {}
+
+/// [국내휴장일조회[국내주식-040]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsChkHolidayResponse {}
+
+/// [국내선물 영업일조회 [국내주식-160]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsMarketTimeResponse {}
+
+/// [상품기본조회[v1_국내주식-029]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsSearchInfoResponse {}
+
+/// [주식기본조회[v1_국내주식-067]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsSearchStockInfoResponse {}
+
+/// [국내주식 대차대조표[v1_국내주식-078]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1FinanceBalanceSheetResponse {}
+
+/// [국내주식 손익계산서[v1_국내주식-079]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1FinanceIncomeStatementResponse {}
+
+/// [국내주식 재무비율[v1_국내주식-080]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1FinanceFinancialRatioResponse {}
+
+/// [국내주식 수익성비율[v1_국내주식-081]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1FinanceProfitRatioResponse {}
+
+/// [국내주식 기타주요비율[v1_국내주식-082]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1FinanceOtherMajorRatiosResponse {}
+
+/// [국내주식 안정성비율[v1_국내주식-083]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1FinanceStabilityRatioResponse {}
+
+/// [국내주식 성장성비율[v1_국내주식-085]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1FinanceGrowthRatioResponse {}
+
+/// [국내주식 당사 신용가능종목[국내주식-111]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsCreditByCompanyResponse {}
+
+/// [예탁원정보(배당일정)[국내주식-145]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1KsdinfoDividendResponse {}
+
+/// [예탁원정보(주식매수청구일정)[국내주식-146]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1KsdinfoPurreqResponse {}
+
+/// [예탁원정보(합병/분할일정)[국내주식-147]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1KsdinfoMergerSplitResponse {}
+
+/// [예탁원정보(액면교체일정)[국내주식-148]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1KsdinfoRevSplitResponse {}
+
+/// [예탁원정보(자본감소일정)[국내주식-149]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1KsdinfoCapDcrsResponse {}
+
+/// [예탁원정보(상장정보일정)[국내주식-150]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1KsdinfoListInfoResponse {}
+
+/// [예탁원정보(공모주청약일정)[국내주식-151]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1KsdinfoPubOfferResponse {}
+
+/// [예탁원정보(실권주일정)[국내주식-152]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1KsdinfoForfeitResponse {}
+
+/// [예탁원정보(의무예치일정)[국내주식-153]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1KsdinfoMandDepositResponse {}
+
+/// [예탁원정보(유상증자일정) [국내주식-143]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1KsdinfoPaidinCapinResponse {}
+
+/// [예탁원정보(무상증자일정) [국내주식-144]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1KsdinfoBonusIssueResponse {}
+
+/// [예탁원정보(주주총회일정) [국내주식-154]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1KsdinfoSharehldMeetResponse {}
+
+/// [국내주식 종목추정실적 [국내주식-187]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsEstimatePerformResponse {}
+
+/// [당사 대주가능 종목 [국내주식-195]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsLendableByCompanyResponse {}
+
+/// [국내주식 종목투자의견 [국내주식-188]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInvestOpinionResponse {}
+
+/// [국내주식 증권사별 투자의견 [국내주식-189]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInvestOpbysecResponse {}
+
+/// [종목조건검색 목록조회[국내주식-038]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsPsearchTitleResponse {}
+
+/// [종목조건검색조회 [국내주식-039]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsPsearchResultResponse {}
+
+/// [관심종목 그룹조회 [국내주식-204]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsIntstockGrouplistResponse {}
+
+/// [관심종목(멀티종목) 시세조회 [국내주식-205]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsIntstockMultpriceResponse {}
+
+/// [관심종목 그룹별 종목조회 [국내주식-203]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsIntstockStocklistByGroupResponse {}
+
+/// [국내기관_외국인 매매종목가집계[국내주식-037]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsForeignInstitutionTotalResponse {}
+
+/// [외국계 매매종목 가집계 [국내주식-161]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsFrgnmemTradeEstimateResponse {}
+
+/// [종목별 투자자매매동향(일별)] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInvestorTradeByStockDailyResponse {}
+
+/// [시장별 투자자매매동향(시세)[v1_국내주식-074]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireInvestorTimeByMarketResponse {}
+
+/// [시장별 투자자매매동향(일별) [국내주식-075]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireInvestorDailyByMarketResponse {}
+
+/// [종목별 외국계 순매수추이 [국내주식-164]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsFrgnmemPchsTrendResponse {}
+
+/// [회원사 실시간 매매동향(틱) [국내주식-163]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsFrgnmemTradeTrendResponse {}
+
+/// [주식현재가 회원사 종목매매동향 [국내주식-197]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireMemberDailyResponse {}
+
+/// [종목별 프로그램매매추이(체결)[v1_국내주식-044]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsProgramTradeByStockResponse {}
+
+/// [종목별 프로그램매매추이(일별) [국내주식-113]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsProgramTradeByStockDailyResponse {}
+
+/// [종목별 외인기관 추정가집계[v1_국내주식-046]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInvestorTrendEstimateResponse {}
+
+/// [종목별일별매수매도체결량 [v1_국내주식-056]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInquireDailyTradeVolumeResponse {}
+
+/// [프로그램매매 종합현황(시간) [국내주식-114]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsCompProgramTradeTodayResponse {}
+
+/// [프로그램매매 종합현황(일별)[국내주식-115]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsCompProgramTradeDailyResponse {}
+
+/// [프로그램매매 투자자매매동향(당일) [국내주식-116]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsInvestorProgramTradeTodayResponse {}
+
+/// [국내주식 신용잔고 일별추이[국내주식-110]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsDailyCreditBalanceResponse {}
+
+/// [국내주식 예상체결가 추이[국내주식-118]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsExpPriceTrendResponse {}
+
+/// [국내주식 공매도 일별추이[국내주식-134]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsDailyShortSaleResponse {}
+
+/// [국내주식 시간외예상체결등락률 [국내주식-140]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingOvertimeExpTransFluctResponse {}
+
+/// [국내주식 체결금액별 매매비중 [국내주식-192]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsTradprtByamtResponse {}
+
+/// [국내 증시자금 종합 [국내주식-193]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsMktfundsResponse {}
+
+/// [종목별 일별 대차거래추이 [국내주식-135]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsDailyLoanTransResponse {}
+
+/// [국내주식 상하한가 포착 [국내주식-190]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsCaptureUplowpriceResponse {}
+
+/// [국내주식 매물대/거래비중 [국내주식-196]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsPbarTratioResponse {}
+
+/// [거래량순위[v1_국내주식-047]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1QuotationsVolumeRankResponse {}
+
+/// [국내주식 등락률 순위[v1_국내주식-088]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingFluctuationResponse {}
+
+/// [국내주식 호가잔량 순위[국내주식-089]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingQuoteBalanceResponse {}
+
+/// [국내주식 수익자산지표 순위[v1_국내주식-090]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingProfitAssetIndexResponse {}
+
+/// [국내주식 시가총액 상위[v1_국내주식-091]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingMarketCapResponse {}
+
+/// [국내주식 재무비율 순위[v1_국내주식-092]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingFinanceRatioResponse {}
+
+/// [국내주식 시간외잔량 순위[v1_국내주식-093]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingAfterHourBalanceResponse {}
+
+/// [국내주식 우선주/괴리율 상위[v1_국내주식-094]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingPreferDisparateRatioResponse {}
+
+/// [국내주식 이격도 순위[v1_국내주식-095]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingDisparityResponse {}
+
+/// [국내주식 시장가치 순위[v1_국내주식-096]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingMarketValueResponse {}
+
+/// [국내주식 체결강도 상위[v1_국내주식-101]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingVolumePowerResponse {}
+
+/// [국내주식 관심종목등록 상위[v1_국내주식-102]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingTopInterestStockResponse {}
+
+/// [국내주식 예상체결 상승/하락상위[v1_국내주식-103]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingExpTransUpdownResponse {}
+
+/// [국내주식 당사매매종목 상위[v1_국내주식-104]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingTradedByCompanyResponse {}
+
+/// [국내주식 신고/신저근접종목 상위[v1_국내주식-105]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingNearNewHighlowResponse {}
+
+/// [국내주식 배당률 상위[국내주식-106]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingDividendRateResponse {}
+
+/// [국내주식 대량체결건수 상위[국내주식-107]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingBulkTransNumResponse {}
+
+/// [국내주식 신용잔고 상위[국내주식-109]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingCreditBalanceResponse {}
+
+/// [국내주식 공매도 상위종목[국내주식-133]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingShortSaleResponse {}
+
+/// [국내주식 시간외등락율순위 [국내주식-138]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingOvertimeFluctuationResponse {}
+
+/// [국내주식 시간외거래량순위 [국내주식-139]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingOvertimeVolumeResponse {}
+
+/// [HTS조회상위20종목 [국내주식-214]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticStockV1RankingHtsTopViewResponse {}
+
+/// [국내주식 실시간체결가 (KRX) [실시간-003]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0stcnt0Response {}
+
+/// [국내주식 실시간호가 (KRX) [실시간-004]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0stasp0Response {}
+
+/// [국내주식 실시간체결통보 [실시간-005]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0stcni0Response {}
+
+/// [국내주식 실시간예상체결 (KRX) [실시간-041]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0stanc0Response {}
+
+/// [국내주식 실시간회원사 (KRX) [실시간-047]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0stmbc0Response {}
+
+/// [국내주식 실시간프로그램매매 (KRX) [실시간-048]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0stpgm0Response {}
+
+/// [국내주식 장운영정보 (KRX) [실시간-049]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0stmko0Response {}
+
+/// [국내주식 시간외 실시간호가 (KRX) [실시간-025]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0stoaa0Response {}
+
+/// [국내주식 시간외 실시간체결가 (KRX) [실시간-042]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0stoup0Response {}
+
+/// [국내주식 시간외 실시간예상체결 (KRX) [실시간-024]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0stoac0Response {}
+
+/// [국내지수 실시간체결 [실시간-026]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0upcnt0Response {}
+
+/// [국내지수 실시간예상체결 [실시간-027]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0upanc0Response {}
+
+/// [국내지수 실시간프로그램매매 [실시간-028]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0uppgm0Response {}
+
+/// [ELW 실시간호가 [실시간-062]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0ewasp0Response {}
+
+/// [ELW 실시간체결가 [실시간-061]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0ewcnt0Response {}
+
+/// [ELW 실시간예상체결 [실시간-063]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0ewanc0Response {}
+
+/// [국내ETF NAV추이 [실시간-051]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0stnav0Response {}
+
+/// [국내주식 실시간체결가 (통합)] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0uncnt0Response {}
+
+/// [국내주식 실시간호가 (통합)] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0unasp0Response {}
+
+/// [국내주식 실시간예상체결 (통합)] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0unanc0Response {}
+
+/// [국내주식 실시간회원사 (통합)] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0unmbc0Response {}
+
+/// [국내주식 실시간프로그램매매 (통합)] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0unpgm0Response {}
+
+/// [국내주식 장운영정보 (통합)] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0unmko0Response {}
+
+/// [국내주식 실시간체결가 (NXT)] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0nxcnt0Response {}
+
+/// [국내주식 실시간호가 (NXT)] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0nxasp0Response {}
+
+/// [국내주식 실시간예상체결 (NXT)] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0nxanc0Response {}
+
+/// [국내주식 실시간회원사 (NXT)] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0nxmbc0Response {}
+
+/// [국내주식 실시간프로그램매매 (NXT)] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0nxpgm0Response {}
+
+/// [국내주식 장운영정보 (NXT)] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0nxmko0Response {}
+
+/// [선물옵션 주문[v1_국내선물-001]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1TradingOrderResponse {}
+
+/// [선물옵션 정정취소주문[v1_국내선물-002]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1TradingOrderRvsecnclResponse {}
+
+/// [선물옵션 주문체결내역조회[v1_국내선물-003]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1TradingInquireCcnlResponse {}
+
+/// [선물옵션 잔고현황[v1_국내선물-004]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1TradingInquireBalanceResponse {}
+
+/// [선물옵션 주문가능[v1_국내선물-005]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1TradingInquirePsblOrderResponse {}
+
+/// [(야간)선물옵션 주문체결 내역조회 [국내선물-009]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1TradingInquireNgtCcnlResponse {}
+
+/// [(야간)선물옵션 잔고현황 [국내선물-010]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1TradingInquireNgtBalanceResponse {}
+
+/// [(야간)선물옵션 주문가능 조회 [국내선물-011]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1TradingInquirePsblNgtOrderResponse {}
+
+/// [(야간)선물옵션 증거금 상세 [국내선물-024]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1TradingNgtMarginDetailResponse {}
+
+/// [선물옵션 잔고정산손익내역[v1_국내선물-013]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1TradingInquireBalanceSettlementPlResponse {}
+
+/// [선물옵션 총자산현황[v1_국내선물-014]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1TradingInquireDepositResponse {}
+
+/// [선물옵션 잔고평가손익내역[v1_국내선물-015]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1TradingInquireBalanceValuationPlResponse {}
+
+/// [선물옵션 기준일체결내역[v1_국내선물-016]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1TradingInquireCcnlBstimeResponse {}
+
+/// [선물옵션기간약정수수료일별[v1_국내선물-017]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1TradingInquireDailyAmountFeeResponse {}
+
+/// [선물옵션 증거금률] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1QuotationsMarginRateResponse {}
+
+/// [선물옵션 시세[v1_국내선물-006]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1QuotationsInquirePriceResponse {}
+
+/// [선물옵션 시세호가[v1_국내선물-007]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1QuotationsInquireAskingPriceResponse {}
+
+/// [선물옵션기간별시세(일/주/월/년)[v1_국내선물-008]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1QuotationsInquireDailyFuopchartpriceResponse {}
+
+/// [선물옵션 분봉조회[v1_국내선물-012]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1QuotationsInquireTimeFuopchartpriceResponse {}
+
+/// [국내옵션전광판_옵션월물리스트[국내선물-020]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1QuotationsDisplayBoardOptionListResponse {}
+
+/// [국내선물 기초자산 시세[국내선물-021]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1QuotationsDisplayBoardTopResponse {}
+
+/// [국내옵션전광판_콜풋[국내선물-022]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1QuotationsDisplayBoardCallputResponse {}
+
+/// [국내옵션전광판_선물[국내선물-023]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1QuotationsDisplayBoardFuturesResponse {}
+
+/// [선물옵션 일중예상체결추이[국내선물-018]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticFutureoptionV1QuotationsExpPriceTrendResponse {}
+
+/// [지수선물 실시간호가[실시간-011]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0ifasp0Response {}
+
+/// [지수선물 실시간체결가[실시간-010]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0ifcnt0Response {}
+
+/// [지수옵션 실시간호가[실시간-015]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0ioasp0Response {}
+
+/// [지수옵션  실시간체결가[실시간-014]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0iocnt0Response {}
+
+/// [선물옵션 실시간체결통보[실시간-012]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0ifcni0Response {}
+
+/// [상품선물 실시간호가[실시간-023]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0cfasp0Response {}
+
+/// [상품선물 실시간체결가[실시간-022]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0cfcnt0Response {}
+
+/// [주식선물 실시간호가 [실시간-030]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0zfasp0Response {}
+
+/// [주식선물 실시간체결가 [실시간-029]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0zfcnt0Response {}
+
+/// [주식선물 실시간예상체결 [실시간-031]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0zfanc0Response {}
+
+/// [주식옵션 실시간호가 [실시간-045]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0zoasp0Response {}
+
+/// [주식옵션 실시간체결가 [실시간-044]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0zocnt0Response {}
+
+/// [주식옵션 실시간예상체결 [실시간-046]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0zoanc0Response {}
+
+/// [KRX야간옵션 실시간호가 [실시간-033]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0euasp0Response {}
+
+/// [KRX야간옵션 실시간체결가 [실시간-032]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0eucnt0Response {}
+
+/// [KRX야간옵션실시간예상체결 [실시간-034]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0euanc0Response {}
+
+/// [KRX야간옵션실시간체결통보 [실시간-067]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0eucni0Response {}
+
+/// [KRX야간선물 실시간호가 [실시간-065]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0mfasp0Response {}
+
+/// [KRX야간선물 실시간종목체결 [실시간-064]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0mfcnt0Response {}
+
+/// [KRX야간선물 실시간체결통보 [실시간-066]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0mfcni0Response {}
+
+/// [해외주식 주문[v1_해외주식-001]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1TradingOrderResponse {}
+
+/// [해외주식 정정취소주문[v1_해외주식-003]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1TradingOrderRvsecnclResponse {}
+
+/// [해외주식 예약주문접수[v1_해외주식-002]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1TradingOrderResvResponse {}
+
+/// [해외주식 예약주문접수취소[v1_해외주식-004]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1TradingOrderResvCcnlResponse {}
+
+/// [해외주식 매수가능금액조회[v1_해외주식-014]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1TradingInquirePsamountResponse {}
+
+/// [해외주식 미체결내역[v1_해외주식-005]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1TradingInquireNccsResponse {}
+
+/// [해외주식 잔고[v1_해외주식-006]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1TradingInquireBalanceResponse {}
+
+/// [해외주식 주문체결내역[v1_해외주식-007]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1TradingInquireCcnlResponse {}
+
+/// [해외주식 체결기준현재잔고[v1_해외주식-008]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1TradingInquirePresentBalanceResponse {}
+
+/// [해외주식 예약주문조회[v1_해외주식-013]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1TradingOrderResvListResponse {}
+
+/// [해외주식 결제기준잔고 [해외주식-064]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1TradingInquirePaymtStdrBalanceResponse {}
+
+/// [해외주식 일별거래내역 [해외주식-063]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1TradingInquirePeriodTransResponse {}
+
+/// [해외주식 기간손익[v1_해외주식-032]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1TradingInquirePeriodProfitResponse {}
+
+/// [해외증거금 통화별조회 [해외주식-035]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1TradingForeignMarginResponse {}
+
+/// [해외주식 미국주간주문[v1_해외주식-026]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1TradingDaytimeOrderResponse {}
+
+/// [해외주식 미국주간정정취소[v1_해외주식-027]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1TradingDaytimeOrderRvsecnclResponse {}
+
+/// [해외주식 지정가주문번호조회  [해외주식-071]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1TradingAlgoOrdnoResponse {}
+
+/// [해외주식 지정가체결내역조회 [해외주식-070]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1TradingInquireAlgoCcnlResponse {}
+
+/// [해외주식 현재가상세[v1_해외주식-029]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasPriceV1QuotationsPriceDetailResponse {}
+
+/// [해외주식 현재가 호가 [해외주식-033]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasPriceV1QuotationsInquireAskingPriceResponse {}
+
+/// [해외주식 현재체결가[v1_해외주식-009]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasPriceV1QuotationsPriceResponse {}
+
+/// [해외주식 체결추이[해외주식-037]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasPriceV1QuotationsInquireCcnlResponse {}
+
+/// [해외주식분봉조회[v1_해외주식-030]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasPriceV1QuotationsInquireTimeItemchartpriceResponse {}
+
+/// [해외지수분봉조회[v1_해외주식-031]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasPriceV1QuotationsInquireTimeIndexchartpriceResponse {}
+
+/// [해외주식 기간별시세[v1_해외주식-010]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasPriceV1QuotationsDailypriceResponse {}
+
+/// [해외주식 종목/지수/환율기간별시세(일/주/월/년)[v1_해외주식-012]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasPriceV1QuotationsInquireDailyChartpriceResponse {}
+
+/// [해외주식조건검색[v1_해외주식-015]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasPriceV1QuotationsInquireSearchResponse {}
+
+/// [해외결제일자조회[해외주식-017]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1QuotationsCountriesHolidayResponse {}
+
+/// [해외주식 상품기본정보[v1_해외주식-034]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasPriceV1QuotationsSearchInfoResponse {}
+
+/// [해외주식 업종별시세[해외주식-048]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasPriceV1QuotationsIndustryThemeResponse {}
+
+/// [해외주식 업종별코드조회[해외주식-049]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasPriceV1QuotationsIndustryPriceResponse {}
+
+/// [해외주식 복수종목 시세조회] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasPriceV1QuotationsMultpriceResponse {}
+
+/// [해외주식 가격급등락[해외주식-038]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1RankingPriceFluctResponse {}
+
+/// [해외주식 거래량급증[해외주식-039]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1RankingVolumeSurgeResponse {}
+
+/// [해외주식 매수체결강도상위[해외주식-040]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1RankingVolumePowerResponse {}
+
+/// [해외주식 상승율/하락율[해외주식-041]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1RankingUpdownRateResponse {}
+
+/// [해외주식 신고/신저가[해외주식-042]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1RankingNewHighlowResponse {}
+
+/// [해외주식 거래량순위[해외주식-043]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1RankingTradeVolResponse {}
+
+/// [해외주식 거래대금순위[해외주식-044]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1RankingTradePbmnResponse {}
+
+/// [해외주식 거래증가율순위[해외주식-045]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1RankingTradeGrowthResponse {}
+
+/// [해외주식 거래회전율순위[해외주식-046]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1RankingTradeTurnoverResponse {}
+
+/// [해외주식 시가총액순위[해외주식-047]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasStockV1RankingMarketCapResponse {}
+
+/// [해외주식 기간별권리조회 [해외주식-052]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasPriceV1QuotationsPeriodRightsResponse {}
+
+/// [해외뉴스종합(제목) [해외주식-053]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasPriceV1QuotationsNewsTitleResponse {}
+
+/// [해외주식 권리종합 [해외주식-050]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasPriceV1QuotationsRightsByIceResponse {}
+
+/// [당사 해외주식담보대출 가능 종목 [해외주식-051]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasPriceV1QuotationsColableByCompanyResponse {}
+
+/// [해외속보(제목) [해외주식-055]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasPriceV1QuotationsBrknewsTitleResponse {}
+
+/// [해외주식 실시간호가[실시간-021]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutHdfsasp0Response {}
+
+/// [해외주식 지연호가(아시아)[실시간-008]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutHdfsasp1Response {}
+
+/// [해외주식 실시간지연체결가[실시간-007]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutHdfscnt0Response {}
+
+/// [해외주식 실시간체결통보[실시간-009]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0gscni0Response {}
+
+/// [해외선물옵션 주문 [v1_해외선물-001]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1TradingOrderResponse {}
+
+/// [해외선물옵션 정정취소주문 [v1_해외선물-002, 003]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1TradingOrderRvsecnclResponse {}
+
+/// [해외선물옵션 당일주문내역조회 [v1_해외선물-004]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1TradingInquireCcldResponse {}
+
+/// [해외선물옵션 미결제내역조회(잔고) [v1_해외선물-005]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1TradingInquireUnpdResponse {}
+
+/// [해외선물옵션 주문가능조회 [v1_해외선물-006]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1TradingInquirePsamountResponse {}
+
+/// [해외선물옵션 기간계좌손익 일별[해외선물-010]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1TradingInquirePeriodCcldResponse {}
+
+/// [해외선물옵션 일별 체결내역[해외선물-011]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1TradingInquireDailyCcldResponse {}
+
+/// [해외선물옵션 예수금현황[해외선물-012]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1TradingInquireDepositResponse {}
+
+/// [해외선물옵션 일별 주문내역[해외선물-013]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1TradingInquireDailyOrderResponse {}
+
+/// [해외선물옵션 기간계좌거래내역[해외선물-014]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1TradingInquirePeriodTransResponse {}
+
+/// [해외선물옵션 증거금상세 [해외선물-032]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1TradingMarginDetailResponse {}
+
+/// [해외선물종목현재가 [v1_해외선물-009]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsInquirePriceResponse {}
+
+/// [해외선물종목상세 [v1_해외선물-008]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsStockDetailResponse {}
+
+/// [해외선물 호가 [해외선물-031]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsInquireAskingPriceResponse {}
+
+/// [해외선물 분봉조회[해외선물-016]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsInquireTimeFuturechartpriceResponse {}
+
+/// [해외선물 체결추이(틱)[해외선물-019]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsTickCcnlResponse {}
+
+/// [해외선물 체결추이(주간)[해외선물-017]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsWeeklyCcnlResponse {}
+
+/// [해외선물 체결추이(일간)[해외선물-018]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsDailyCcnlResponse {}
+
+/// [해외선물 체결추이(월간)[해외선물-020]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsMonthlyCcnlResponse {}
+
+/// [해외선물 상품기본정보 [해외선물-023]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsSearchContractDetailResponse {}
+
+/// [해외선물 미결제추이 [해외선물-029]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsInvestorUnpdTrendResponse {}
+
+/// [해외옵션종목현재가 [해외선물-035]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsOptPriceResponse {}
+
+/// [해외옵션종목상세 [해외선물-034]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsOptDetailResponse {}
+
+/// [해외옵션 호가 [해외선물-033]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsOptAskingPriceResponse {}
+
+/// [해외옵션 분봉조회 [해외선물-040]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsInquireTimeOptchartpriceResponse {}
+
+/// [해외옵션 체결추이(틱) [해외선물-038]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsOptTickCcnlResponse {}
+
+/// [해외옵션 체결추이(일간) [해외선물-037]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsOptDailyCcnlResponse {}
+
+/// [해외옵션 체결추이(주간) [해외선물-036]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsOptWeeklyCcnlResponse {}
+
+/// [해외옵션 체결추이(월간) [해외선물-039]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsOptMonthlyCcnlResponse {}
+
+/// [해외옵션 상품기본정보 [해외선물-041]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsSearchOptDetailResponse {}
+
+/// [해외선물옵션 장운영시간 [해외선물-030]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct OverseasFutureoptionV1QuotationsMarketTimeResponse {}
+
+/// [해외선물옵션 실시간체결가[실시간-017]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutHdfff020Response {}
+
+/// [해외선물옵션 실시간호가[실시간-018]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutHdfff010Response {}
+
+/// [해외선물옵션 실시간주문내역통보[실시간-019]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutHdfff1c0Response {}
+
+/// [해외선물옵션 실시간체결내역통보[실시간-020]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutHdfff2c0Response {}
+
+/// [장내채권 매수주문 [국내주식-124]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticBondV1TradingBuyResponse {}
+
+/// [장내채권 매도주문 [국내주식-123]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticBondV1TradingSellResponse {}
+
+/// [장내채권 정정취소주문 [국내주식-125]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticBondV1TradingOrderRvsecnclResponse {}
+
+/// [채권정정취소가능주문조회  [국내주식-126]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticBondV1TradingInquirePsblRvsecnclResponse {}
+
+/// [장내채권 주문체결내역 [국내주식-127]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticBondV1TradingInquireDailyCcldResponse {}
+
+/// [장내채권 잔고조회  [국내주식-198]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticBondV1TradingInquireBalanceResponse {}
+
+/// [장내채권 매수가능조회 [국내주식-199]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticBondV1TradingInquirePsblOrderResponse {}
+
+/// [장내채권현재가(호가) [국내주식-132]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticBondV1QuotationsInquireAskingPriceResponse {}
+
+/// [장내채권현재가(시세) [국내주식-200]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticBondV1QuotationsInquirePriceResponse {}
+
+/// [장내채권현재가(체결) [국내주식-201]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticBondV1QuotationsInquireCcnlResponse {}
+
+/// [장내채권현재가(일별) [국내주식-202]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticBondV1QuotationsInquireDailyPriceResponse {}
+
+/// [장내채권 기간별시세(일) [국내주식-159]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticBondV1QuotationsInquireDailyItemchartpriceResponse {}
+
+/// [장내채권 평균단가조회 [국내주식-158]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticBondV1QuotationsAvgUnitResponse {}
+
+/// [장내채권 발행정보[국내주식-156]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticBondV1QuotationsIssueInfoResponse {}
+
+/// [장내채권 기본조회 [국내주식-129]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct DomesticBondV1QuotationsSearchBondInfoResponse {}
+
+/// [일반채권 실시간체결가 [실시간-052]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0bjcnt0Response {}
+
+/// [일반채권 실시간호가 [실시간-053]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0bjasp0Response {}
+
+/// [채권지수 실시간체결가 [실시간-060]] 응답 구조체
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TryitoutH0bicnt0Response {}

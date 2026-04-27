@@ -42,7 +42,7 @@ impl OverseasCommon {
     pub async fn oauth2_token_p(
         &self,
         req: Oauth2TokenpRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<Oauth2TokenpResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => ("", "https://openapi.koreainvestment.com:9443"),
             crate::client::KisEnv::Vts => (
@@ -59,7 +59,7 @@ impl OverseasCommon {
     pub async fn oauth2_revoke_p(
         &self,
         req: Oauth2RevokepRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<Oauth2RevokepResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => ("", "https://openapi.koreainvestment.com:9443"),
             crate::client::KisEnv::Vts => (
@@ -73,7 +73,7 @@ impl OverseasCommon {
     /// Hashkey
     /// - TR_ID: Real= / VTS=모의투자 미지원
     /// - Endpoint: /uapi/hashkey
-    pub async fn hashkey(&self, req: HashkeyRequest) -> Result<serde_json::Value, KisError> {
+    pub async fn hashkey(&self, req: HashkeyRequest) -> Result<HashkeyResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => ("", "https://openapi.koreainvestment.com:9443"),
             crate::client::KisEnv::Vts => (
@@ -90,7 +90,7 @@ impl OverseasCommon {
     pub async fn oauth2_approval(
         &self,
         req: Oauth2ApprovalRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<Oauth2ApprovalResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => ("", "https://openapi.koreainvestment.com:9443"),
             crate::client::KisEnv::Vts => (
@@ -110,7 +110,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_order_buy(
         &self,
         req: OverseasStockV1TradingOrderRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingOrderResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTT1002U", "https://openapi.koreainvestment.com:9443")
@@ -135,7 +135,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_order_sell(
         &self,
         req: OverseasStockV1TradingOrderRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingOrderResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTT1006U", "https://openapi.koreainvestment.com:9443")
@@ -160,7 +160,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_order_rvsecncl(
         &self,
         req: OverseasStockV1TradingOrderRvsecnclRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingOrderRvsecnclResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTT1004U", "https://openapi.koreainvestment.com:9443")
@@ -185,7 +185,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_order_resv_us_buy_resv(
         &self,
         req: OverseasStockV1TradingOrderResvRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingOrderResvResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTT3014U", "https://openapi.koreainvestment.com:9443")
@@ -210,7 +210,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_order_resv_us_sell_resv(
         &self,
         req: OverseasStockV1TradingOrderResvRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingOrderResvResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTT3016U", "https://openapi.koreainvestment.com:9443")
@@ -235,7 +235,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_order_resv_asia_resv(
         &self,
         req: OverseasStockV1TradingOrderResvRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingOrderResvResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTS3013U", "https://openapi.koreainvestment.com:9443")
@@ -260,7 +260,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_order_resv_ccnl(
         &self,
         req: OverseasStockV1TradingOrderResvCcnlRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingOrderResvCcnlResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => (
                 "모의투자 미지원",
@@ -287,7 +287,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_inquire_psamount(
         &self,
         req: OverseasStockV1TradingInquirePsamountRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingInquirePsamountResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTS3007R", "https://openapi.koreainvestment.com:9443")
@@ -312,7 +312,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_inquire_nccs(
         &self,
         req: OverseasStockV1TradingInquireNccsRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingInquireNccsResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTS3018R", "https://openapi.koreainvestment.com:9443")
@@ -335,7 +335,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_inquire_balance(
         &self,
         req: OverseasStockV1TradingInquireBalanceRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingInquireBalanceResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTS3012R", "https://openapi.koreainvestment.com:9443")
@@ -360,7 +360,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_inquire_ccnl(
         &self,
         req: OverseasStockV1TradingInquireCcnlRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingInquireCcnlResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTS3035R", "https://openapi.koreainvestment.com:9443")
@@ -385,7 +385,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_inquire_present_balance(
         &self,
         req: OverseasStockV1TradingInquirePresentBalanceRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingInquirePresentBalanceResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("CTRP6504R", "https://openapi.koreainvestment.com:9443")
@@ -411,7 +411,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_order_resv_list_us(
         &self,
         req: OverseasStockV1TradingOrderResvListRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingOrderResvListResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTT3039R", "https://openapi.koreainvestment.com:9443")
@@ -434,7 +434,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_order_resv_list_asia(
         &self,
         req: OverseasStockV1TradingOrderResvListRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingOrderResvListResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTS3014R", "https://openapi.koreainvestment.com:9443")
@@ -457,7 +457,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_inquire_paymt_stdr_balance(
         &self,
         req: OverseasStockV1TradingInquirePaymtStdrBalanceRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingInquirePaymtStdrBalanceResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("CTRP6010R", "https://openapi.koreainvestment.com:9443")
@@ -480,7 +480,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_inquire_period_trans(
         &self,
         req: OverseasStockV1TradingInquirePeriodTransRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingInquirePeriodTransResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("CTOS4001R", "https://openapi.koreainvestment.com:9443")
@@ -503,7 +503,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_inquire_period_profit(
         &self,
         req: OverseasStockV1TradingInquirePeriodProfitRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingInquirePeriodProfitResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTS3039R", "https://openapi.koreainvestment.com:9443")
@@ -526,7 +526,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_foreign_margin(
         &self,
         req: OverseasStockV1TradingForeignMarginRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingForeignMarginResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTC2101R", "https://openapi.koreainvestment.com:9443")
@@ -549,7 +549,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_daytime_order_buy(
         &self,
         req: OverseasStockV1TradingDaytimeOrderRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingDaytimeOrderResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTS6036U", "https://openapi.koreainvestment.com:9443")
@@ -572,7 +572,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_daytime_order_sell(
         &self,
         req: OverseasStockV1TradingDaytimeOrderRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingDaytimeOrderResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTS6037U", "https://openapi.koreainvestment.com:9443")
@@ -595,7 +595,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_daytime_order_rvsecncl(
         &self,
         req: OverseasStockV1TradingDaytimeOrderRvsecnclRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingDaytimeOrderRvsecnclResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTS6038U", "https://openapi.koreainvestment.com:9443")
@@ -618,7 +618,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_algo_ordno(
         &self,
         req: OverseasStockV1TradingAlgoOrdnoRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingAlgoOrdnoResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTS6058R", "https://openapi.koreainvestment.com:9443")
@@ -641,7 +641,7 @@ impl OverseasTrading {
     pub async fn overseas_stock_v1_trading_inquire_algo_ccnl(
         &self,
         req: OverseasStockV1TradingInquireAlgoCcnlRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1TradingInquireAlgoCcnlResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("TTTS6059R", "https://openapi.koreainvestment.com:9443")
@@ -667,7 +667,7 @@ impl OverseasQuotations {
     pub async fn overseas_price_v1_quotations_price_detail(
         &self,
         req: OverseasPriceV1QuotationsPriceDetailRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasPriceV1QuotationsPriceDetailResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76200200", "https://openapi.koreainvestment.com:9443")
@@ -690,7 +690,7 @@ impl OverseasQuotations {
     pub async fn overseas_price_v1_quotations_inquire_asking_price(
         &self,
         req: OverseasPriceV1QuotationsInquireAskingPriceRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasPriceV1QuotationsInquireAskingPriceResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76200100", "https://openapi.koreainvestment.com:9443")
@@ -713,7 +713,7 @@ impl OverseasQuotations {
     pub async fn overseas_price_v1_quotations_price(
         &self,
         req: OverseasPriceV1QuotationsPriceRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasPriceV1QuotationsPriceResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS00000300", "https://openapi.koreainvestment.com:9443")
@@ -739,7 +739,7 @@ impl OverseasQuotations {
     pub async fn overseas_price_v1_quotations_inquire_ccnl(
         &self,
         req: OverseasPriceV1QuotationsInquireCcnlRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasPriceV1QuotationsInquireCcnlResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76200300", "https://openapi.koreainvestment.com:9443")
@@ -762,7 +762,7 @@ impl OverseasQuotations {
     pub async fn overseas_price_v1_quotations_inquire_time_itemchartprice(
         &self,
         req: OverseasPriceV1QuotationsInquireTimeItemchartpriceRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasPriceV1QuotationsInquireTimeItemchartpriceResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76950200", "https://openapi.koreainvestment.com:9443")
@@ -785,7 +785,7 @@ impl OverseasQuotations {
     pub async fn overseas_price_v1_quotations_inquire_time_indexchartprice(
         &self,
         req: OverseasPriceV1QuotationsInquireTimeIndexchartpriceRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasPriceV1QuotationsInquireTimeIndexchartpriceResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("FHKST03030200", "https://openapi.koreainvestment.com:9443")
@@ -808,7 +808,7 @@ impl OverseasQuotations {
     pub async fn overseas_price_v1_quotations_dailyprice(
         &self,
         req: OverseasPriceV1QuotationsDailypriceRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasPriceV1QuotationsDailypriceResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76240000", "https://openapi.koreainvestment.com:9443")
@@ -834,7 +834,7 @@ impl OverseasQuotations {
     pub async fn overseas_price_v1_quotations_inquire_daily_chartprice(
         &self,
         req: OverseasPriceV1QuotationsInquireDailyChartpriceRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasPriceV1QuotationsInquireDailyChartpriceResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("FHKST03030100", "https://openapi.koreainvestment.com:9443")
@@ -860,7 +860,7 @@ impl OverseasQuotations {
     pub async fn overseas_price_v1_quotations_inquire_search(
         &self,
         req: OverseasPriceV1QuotationsInquireSearchRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasPriceV1QuotationsInquireSearchResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76410000", "https://openapi.koreainvestment.com:9443")
@@ -886,7 +886,7 @@ impl OverseasQuotations {
     pub async fn overseas_stock_v1_quotations_countries_holiday(
         &self,
         req: OverseasStockV1QuotationsCountriesHolidayRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1QuotationsCountriesHolidayResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("CTOS5011R", "https://openapi.koreainvestment.com:9443")
@@ -909,7 +909,7 @@ impl OverseasQuotations {
     pub async fn overseas_price_v1_quotations_search_info(
         &self,
         req: OverseasPriceV1QuotationsSearchInfoRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasPriceV1QuotationsSearchInfoResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("CTPF1702R", "https://openapi.koreainvestment.com:9443")
@@ -932,7 +932,7 @@ impl OverseasQuotations {
     pub async fn overseas_price_v1_quotations_industry_theme(
         &self,
         req: OverseasPriceV1QuotationsIndustryThemeRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasPriceV1QuotationsIndustryThemeResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76370000", "https://openapi.koreainvestment.com:9443")
@@ -955,7 +955,7 @@ impl OverseasQuotations {
     pub async fn overseas_price_v1_quotations_industry_price(
         &self,
         req: OverseasPriceV1QuotationsIndustryPriceRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasPriceV1QuotationsIndustryPriceResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76370100", "https://openapi.koreainvestment.com:9443")
@@ -978,7 +978,7 @@ impl OverseasQuotations {
     pub async fn overseas_price_v1_quotations_multprice(
         &self,
         req: OverseasPriceV1QuotationsMultpriceRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasPriceV1QuotationsMultpriceResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76220000", "https://openapi.koreainvestment.com:9443")
@@ -1001,7 +1001,7 @@ impl OverseasQuotations {
     pub async fn overseas_price_v1_quotations_period_rights(
         &self,
         req: OverseasPriceV1QuotationsPeriodRightsRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasPriceV1QuotationsPeriodRightsResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("CTRGT011R", "https://openapi.koreainvestment.com:9443")
@@ -1024,7 +1024,7 @@ impl OverseasQuotations {
     pub async fn overseas_price_v1_quotations_news_title(
         &self,
         req: OverseasPriceV1QuotationsNewsTitleRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasPriceV1QuotationsNewsTitleResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHPSTH60100C1", "https://openapi.koreainvestment.com:9443")
@@ -1047,7 +1047,7 @@ impl OverseasQuotations {
     pub async fn overseas_price_v1_quotations_rights_by_ice(
         &self,
         req: OverseasPriceV1QuotationsRightsByIceRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasPriceV1QuotationsRightsByIceResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS78330900", "https://openapi.koreainvestment.com:9443")
@@ -1070,7 +1070,7 @@ impl OverseasQuotations {
     pub async fn overseas_price_v1_quotations_colable_by_company(
         &self,
         req: OverseasPriceV1QuotationsColableByCompanyRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasPriceV1QuotationsColableByCompanyResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("CTLN4050R", "https://openapi.koreainvestment.com:9443")
@@ -1093,7 +1093,7 @@ impl OverseasQuotations {
     pub async fn overseas_price_v1_quotations_brknews_title(
         &self,
         req: OverseasPriceV1QuotationsBrknewsTitleRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasPriceV1QuotationsBrknewsTitleResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("FHKST01011801", "https://openapi.koreainvestment.com:9443")
@@ -1119,7 +1119,7 @@ impl OverseasRanking {
     pub async fn overseas_stock_v1_ranking_price_fluct(
         &self,
         req: OverseasStockV1RankingPriceFluctRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1RankingPriceFluctResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76260000", "https://openapi.koreainvestment.com:9443")
@@ -1142,7 +1142,7 @@ impl OverseasRanking {
     pub async fn overseas_stock_v1_ranking_volume_surge(
         &self,
         req: OverseasStockV1RankingVolumeSurgeRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1RankingVolumeSurgeResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76270000", "https://openapi.koreainvestment.com:9443")
@@ -1165,7 +1165,7 @@ impl OverseasRanking {
     pub async fn overseas_stock_v1_ranking_volume_power(
         &self,
         req: OverseasStockV1RankingVolumePowerRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1RankingVolumePowerResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76280000", "https://openapi.koreainvestment.com:9443")
@@ -1188,7 +1188,7 @@ impl OverseasRanking {
     pub async fn overseas_stock_v1_ranking_updown_rate(
         &self,
         req: OverseasStockV1RankingUpdownRateRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1RankingUpdownRateResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76290000", "https://openapi.koreainvestment.com:9443")
@@ -1211,7 +1211,7 @@ impl OverseasRanking {
     pub async fn overseas_stock_v1_ranking_new_highlow(
         &self,
         req: OverseasStockV1RankingNewHighlowRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1RankingNewHighlowResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76300000", "https://openapi.koreainvestment.com:9443")
@@ -1234,7 +1234,7 @@ impl OverseasRanking {
     pub async fn overseas_stock_v1_ranking_trade_vol(
         &self,
         req: OverseasStockV1RankingTradeVolRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1RankingTradeVolResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76310010", "https://openapi.koreainvestment.com:9443")
@@ -1257,7 +1257,7 @@ impl OverseasRanking {
     pub async fn overseas_stock_v1_ranking_trade_pbmn(
         &self,
         req: OverseasStockV1RankingTradePbmnRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1RankingTradePbmnResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76320010", "https://openapi.koreainvestment.com:9443")
@@ -1280,7 +1280,7 @@ impl OverseasRanking {
     pub async fn overseas_stock_v1_ranking_trade_growth(
         &self,
         req: OverseasStockV1RankingTradeGrowthRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1RankingTradeGrowthResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76330000", "https://openapi.koreainvestment.com:9443")
@@ -1303,7 +1303,7 @@ impl OverseasRanking {
     pub async fn overseas_stock_v1_ranking_trade_turnover(
         &self,
         req: OverseasStockV1RankingTradeTurnoverRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1RankingTradeTurnoverResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76340000", "https://openapi.koreainvestment.com:9443")
@@ -1326,7 +1326,7 @@ impl OverseasRanking {
     pub async fn overseas_stock_v1_ranking_market_cap(
         &self,
         req: OverseasStockV1RankingMarketCapRequest,
-    ) -> Result<serde_json::Value, KisError> {
+    ) -> Result<OverseasStockV1RankingMarketCapResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
                 ("HHDFS76350100", "https://openapi.koreainvestment.com:9443")

@@ -51,33 +51,6 @@ def format_doc(text, indent=""):
     lines = text.strip().split('\n')
     return "\n".join([f"{indent}/// {line}" for line in lines])
 
-def _parse_params_recursive(data, seen_rust_names):
-    params = []
-    # Junk fields scraped from the portal's internal metadata — must not appear in API request structs
-    JUNK_FIELDS = {
-        'headerMap', 'methodList', 'contentTypeList', 'pathList',
-        'queryMap', 'formMap', 'jsonBody', 'jsonResponse', 'address',
-    }
-    if isinstance(data, dict):
-        for k, v in data.items():
-            if k and k not in JUNK_FIELDS:
-                rust_name = to_safe_snake(k)
-                if rust_name not in seen_rust_names:
-                    params.append({
-                        'name': k,
-                        'korean_name': k,
-                        'type': 'String',
-                        'required': 'N',
-                        'description': str(v)
-                    })
-                    seen_rust_names.add(rust_name)
-            if isinstance(v, (dict, list)):
-                params.extend(_parse_params_recursive(v, seen_rust_names))
-    elif isinstance(data, list):
-        for item in data:
-            params.extend(_parse_params_recursive(item, seen_rust_names))
-    return params
-
 def _extract_params(api):
     # Authoritative source: portal apiPropertys with bodyType='req_b' only.
     # reqExample and children are examples/metadata, not formal spec — excluded to prevent contamination.
@@ -104,6 +77,69 @@ def _extract_params(api):
                     })
                     seen_rust_names.add(rust_name)
     return params
+
+
+def _extract_response_groups(api):
+    """Parse res_b fields into output groups for response struct generation.
+
+    Returns (groups, output_types) where:
+      groups      = {'root': [...fields], 'output': [...fields], 'output1': [...], ...}
+      output_types = {'output': 'option'|'vec', 'output1': 'vec', ...}
+
+    Heuristic for array vs. object:
+      - Numbered outputs (output1, output2, ...) → Vec<T>
+      - Plain 'output' with pagination fields in root  → Vec<T>
+      - Plain 'output' without pagination fields       → Option<T>
+    """
+    OUTPUT_RE = re.compile(r'^output\d*$')
+    PAGINATION = {'ctx_area_fk100', 'ctx_area_nk100', 'ctx_area_fk200', 'ctx_area_nk200',
+                  'CTX_AREA_FK100', 'CTX_AREA_NK100', 'CTX_AREA_FK200', 'CTX_AREA_NK200'}
+    ROOT_ALWAYS = {'rt_cd', 'msg_cd', 'msg1'}
+
+    props = api.get('apiPropertys', [])
+    res_b = [p for p in props if p.get('bodyType') == 'res_b' and p.get('propertyCd')]
+
+    groups = {'root': []}
+    current = 'root'
+    has_pagination = False
+    seen_rust = {'root': set()}
+
+    for p in res_b:
+        name = p.get('propertyCd', '')
+        if not name:
+            continue
+        if OUTPUT_RE.match(name):
+            current = name
+            if current not in groups:
+                groups[current] = []
+                seen_rust[current] = set()
+        elif name in ROOT_ALWAYS or name in PAGINATION:
+            if name in PAGINATION:
+                has_pagination = True
+            rn = to_safe_snake(name)
+            if rn not in seen_rust['root']:
+                groups['root'].append(p)
+                seen_rust['root'].add(rn)
+        else:
+            if current not in groups:
+                groups[current] = []
+                seen_rust[current] = set()
+            rn = to_safe_snake(name)
+            if rn not in seen_rust[current]:
+                groups[current].append(p)
+                seen_rust[current].add(rn)
+
+    output_types = {}
+    for key in groups:
+        if key == 'root':
+            continue
+        numbered = bool(re.search(r'\d', key))
+        if numbered or has_pagination:
+            output_types[key] = 'vec'
+        else:
+            output_types[key] = 'option'
+
+    return groups, output_types
 
 
 def parse_compound_tr_id(tr_id_str):
@@ -306,6 +342,67 @@ class CodeGenerator:
                     output.append(f'    #[serde(rename = "{fname}")]')
                     output.append(f"    pub {rust_name}: {rtype},")
                 output.append("}\n")
+
+        # ── Response structs (res_b) ────────────────────────────────────────
+        seen_resp_structs = set()
+        for api in self.spec:
+            struct_base = api.get('generated_struct', '')
+            if not struct_base or struct_base in seen_resp_structs:
+                continue
+            seen_resp_structs.add(struct_base)
+
+            groups, output_types = _extract_response_groups(api)
+
+            # Inner structs for each output group
+            for group_key, fields in groups.items():
+                if group_key == 'root' or not fields:
+                    continue
+                suffix = to_standard_camel(group_key)  # Output / Output1 / Output2
+                inner_name = f"{struct_base}{suffix}Item"
+                output.append(f"/// [{api.get('name', '')}] {group_key} 항목")
+                output.append("#[derive(Serialize, Deserialize, Debug, Clone, Default)]")
+                output.append("#[allow(non_snake_case)]")
+                output.append(f"pub struct {inner_name} {{")
+                for p in fields:
+                    fname = p.get('propertyCd', '')
+                    if not fname:
+                        continue
+                    rust_name = to_safe_snake(fname)
+                    kname = (p.get('propertyNm') or fname).replace('\t', ' ')
+                    rtype = self.type_mapper.get_rust_type(fname)
+                    output.append(f"    /// {kname}")
+                    output.append(f'    #[serde(default, rename = "{fname}")]')
+                    output.append(f"    pub {rust_name}: {rtype},")
+                output.append("}\n")
+
+            # Top-level Response struct
+            resp_name = f"{struct_base}Response"
+            output.append(f"/// [{api.get('name', '')}] 응답 구조체")
+            output.append("#[derive(Serialize, Deserialize, Debug, Clone, Default)]")
+            output.append(f"pub struct {resp_name} {{")
+            for p in groups.get('root', []):
+                fname = p.get('propertyCd', '')
+                if not fname:
+                    continue
+                rust_name = to_safe_snake(fname)
+                kname = (p.get('propertyNm') or fname).replace('\t', ' ')
+                output.append(f"    /// {kname}")
+                output.append(f'    #[serde(default, rename = "{fname}")]')
+                output.append(f"    pub {rust_name}: String,")
+            for group_key in groups:
+                if group_key == 'root' or not groups[group_key]:
+                    continue
+                suffix = to_standard_camel(group_key)
+                inner_name = f"{struct_base}{suffix}Item"
+                otype = output_types.get(group_key, 'option')
+                if otype == 'vec':
+                    output.append(f'    #[serde(default)]')
+                    output.append(f"    pub {group_key}: Vec<{inner_name}>,")
+                else:
+                    output.append(f'    #[serde(default)]')
+                    output.append(f"    pub {group_key}: Option<{inner_name}>,")
+            output.append("}\n")
+
         with open(os.path.join(OUTPUT_DIR, "models.rs"), "w") as f:
             f.write("\n".join(output))
 
@@ -327,11 +424,12 @@ class CodeGenerator:
         vts_tr_safe = vts_tr if vts_tr else NOT_SUPPORTED
         real_domain = api.get('realDomain', '')
         vts_domain = api.get('virtualDomain', '')
+        resp_struct = f"{api['generated_struct']}Response"
 
         output.append(format_doc(api.get('name', 'Unknown'), "    "))
         output.append(f"    /// - TR_ID: Real={real_tr} / VTS={vts_tr_safe}")
         output.append(f"    /// - Endpoint: {endpoint}")
-        output.append(f"    pub async fn {method_name}(&self, req: {req_struct}) -> Result<serde_json::Value, KisError> {{")
+        output.append(f"    pub async fn {method_name}(&self, req: {req_struct}) -> Result<{resp_struct}, KisError> {{")
         output.append("        let (tr_id, base_url) = match self.0.env() {")
         output.append(f'            crate::client::KisEnv::Real => ("{real_tr}", "{real_domain}"),')
         output.append(f'            crate::client::KisEnv::Vts => ("{vts_tr_safe}", "{vts_domain}"),')
