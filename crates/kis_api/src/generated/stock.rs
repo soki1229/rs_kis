@@ -674,7 +674,7 @@ impl StockTrading {
     /// 선물옵션 주문[v1_국내선물-001]
     /// - TR_ID: Real=TTTO1101U / VTS=VTTO1101U
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/order
-    pub async fn domestic_futureoption_v1_trading_order_field(
+    pub async fn domestic_futureoption_v1_trading_order_day_order(
         &self,
         req: DomesticFutureoptionV1TradingOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
@@ -697,9 +697,9 @@ impl StockTrading {
     }
 
     /// 선물옵션 주문[v1_국내선물-001]
-    /// - TR_ID: Real=JTCE1001U / VTS=VTTO1101U
+    /// - TR_ID: Real=JTCE1001U / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/order
-    pub async fn domestic_futureoption_v1_trading_order_field(
+    pub async fn domestic_futureoption_v1_trading_order_legacy(
         &self,
         req: DomesticFutureoptionV1TradingOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
@@ -707,9 +707,10 @@ impl StockTrading {
             crate::client::KisEnv::Real => {
                 ("JTCE1001U", "https://openapi.koreainvestment.com:9443")
             }
-            crate::client::KisEnv::Vts => {
-                ("VTTO1101U", "https://openapivts.koreainvestment.com:29443")
-            }
+            crate::client::KisEnv::Vts => (
+                "모의투자 미지원",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .post(
@@ -722,9 +723,9 @@ impl StockTrading {
     }
 
     /// 선물옵션 주문[v1_국내선물-001]
-    /// - TR_ID: Real=STTN1101U / VTS=VTTO1101U
+    /// - TR_ID: Real=STTN1101U / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/order
-    pub async fn domestic_futureoption_v1_trading_order_field(
+    pub async fn domestic_futureoption_v1_trading_order_new(
         &self,
         req: DomesticFutureoptionV1TradingOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
@@ -732,9 +733,10 @@ impl StockTrading {
             crate::client::KisEnv::Real => {
                 ("STTN1101U", "https://openapi.koreainvestment.com:9443")
             }
-            crate::client::KisEnv::Vts => {
-                ("VTTO1101U", "https://openapivts.koreainvestment.com:29443")
-            }
+            crate::client::KisEnv::Vts => (
+                "모의투자 미지원",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .post(
@@ -749,7 +751,7 @@ impl StockTrading {
     /// 선물옵션 정정취소주문[v1_국내선물-002]
     /// - TR_ID: Real=TTTO1103U / VTS=VTTO1103U
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/order-rvsecncl
-    pub async fn domestic_futureoption_v1_trading_order_rvsecncl_field(
+    pub async fn domestic_futureoption_v1_trading_order_rvsecncl_day_modify(
         &self,
         req: DomesticFutureoptionV1TradingOrderRvsecnclRequest,
     ) -> Result<serde_json::Value, KisError> {
@@ -772,9 +774,9 @@ impl StockTrading {
     }
 
     /// 선물옵션 정정취소주문[v1_국내선물-002]
-    /// - TR_ID: Real=JTCE1002U / VTS=VTTO1103U
+    /// - TR_ID: Real=JTCE1002U / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/order-rvsecncl
-    pub async fn domestic_futureoption_v1_trading_order_rvsecncl_field(
+    pub async fn domestic_futureoption_v1_trading_order_rvsecncl_legacy(
         &self,
         req: DomesticFutureoptionV1TradingOrderRvsecnclRequest,
     ) -> Result<serde_json::Value, KisError> {
@@ -782,9 +784,10 @@ impl StockTrading {
             crate::client::KisEnv::Real => {
                 ("JTCE1002U", "https://openapi.koreainvestment.com:9443")
             }
-            crate::client::KisEnv::Vts => {
-                ("VTTO1103U", "https://openapivts.koreainvestment.com:29443")
-            }
+            crate::client::KisEnv::Vts => (
+                "모의투자 미지원",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .post(
@@ -797,9 +800,9 @@ impl StockTrading {
     }
 
     /// 선물옵션 정정취소주문[v1_국내선물-002]
-    /// - TR_ID: Real=STTN1103U / VTS=VTTO1103U
+    /// - TR_ID: Real=STTN1103U / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/order-rvsecncl
-    pub async fn domestic_futureoption_v1_trading_order_rvsecncl_field(
+    pub async fn domestic_futureoption_v1_trading_order_rvsecncl_new(
         &self,
         req: DomesticFutureoptionV1TradingOrderRvsecnclRequest,
     ) -> Result<serde_json::Value, KisError> {
@@ -807,9 +810,10 @@ impl StockTrading {
             crate::client::KisEnv::Real => {
                 ("STTN1103U", "https://openapi.koreainvestment.com:9443")
             }
-            crate::client::KisEnv::Vts => {
-                ("VTTO1103U", "https://openapivts.koreainvestment.com:29443")
-            }
+            crate::client::KisEnv::Vts => (
+                "모의투자 미지원",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0
             .post(
@@ -899,7 +903,7 @@ impl StockTrading {
     /// (야간)선물옵션 주문체결 내역조회 [국내선물-009]
     /// - TR_ID: Real=JTCE5005R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-ngt-ccnl
-    pub async fn domestic_futureoption_v1_trading_inquire_ngt_ccnl_field(
+    pub async fn domestic_futureoption_v1_trading_inquire_ngt_ccnl_legacy(
         &self,
         req: DomesticFutureoptionV1TradingInquireNgtCcnlRequest,
     ) -> Result<serde_json::Value, KisError> {
@@ -922,7 +926,7 @@ impl StockTrading {
     /// (야간)선물옵션 주문체결 내역조회 [국내선물-009]
     /// - TR_ID: Real=STTN5201R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-ngt-ccnl
-    pub async fn domestic_futureoption_v1_trading_inquire_ngt_ccnl_field(
+    pub async fn domestic_futureoption_v1_trading_inquire_ngt_ccnl_new(
         &self,
         req: DomesticFutureoptionV1TradingInquireNgtCcnlRequest,
     ) -> Result<serde_json::Value, KisError> {
@@ -945,7 +949,7 @@ impl StockTrading {
     /// (야간)선물옵션 잔고현황 [국내선물-010]
     /// - TR_ID: Real=JTCE6001R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-ngt-balance
-    pub async fn domestic_futureoption_v1_trading_inquire_ngt_balance_field(
+    pub async fn domestic_futureoption_v1_trading_inquire_ngt_balance_legacy(
         &self,
         req: DomesticFutureoptionV1TradingInquireNgtBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
@@ -968,7 +972,7 @@ impl StockTrading {
     /// (야간)선물옵션 잔고현황 [국내선물-010]
     /// - TR_ID: Real=CTFN6118R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-ngt-balance
-    pub async fn domestic_futureoption_v1_trading_inquire_ngt_balance_field(
+    pub async fn domestic_futureoption_v1_trading_inquire_ngt_balance_new(
         &self,
         req: DomesticFutureoptionV1TradingInquireNgtBalanceRequest,
     ) -> Result<serde_json::Value, KisError> {
@@ -991,7 +995,7 @@ impl StockTrading {
     /// (야간)선물옵션 주문가능 조회 [국내선물-011]
     /// - TR_ID: Real=JTCE1004R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-psbl-ngt-order
-    pub async fn domestic_futureoption_v1_trading_inquire_psbl_ngt_order_field(
+    pub async fn domestic_futureoption_v1_trading_inquire_psbl_ngt_order_legacy(
         &self,
         req: DomesticFutureoptionV1TradingInquirePsblNgtOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
@@ -1014,7 +1018,7 @@ impl StockTrading {
     /// (야간)선물옵션 주문가능 조회 [국내선물-011]
     /// - TR_ID: Real=STTN5105R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/inquire-psbl-ngt-order
-    pub async fn domestic_futureoption_v1_trading_inquire_psbl_ngt_order_field(
+    pub async fn domestic_futureoption_v1_trading_inquire_psbl_ngt_order_new(
         &self,
         req: DomesticFutureoptionV1TradingInquirePsblNgtOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
@@ -1037,7 +1041,7 @@ impl StockTrading {
     /// (야간)선물옵션 증거금 상세 [국내선물-024]
     /// - TR_ID: Real=JTCE6003R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/ngt-margin-detail
-    pub async fn domestic_futureoption_v1_trading_ngt_margin_detail_field(
+    pub async fn domestic_futureoption_v1_trading_ngt_margin_detail_legacy(
         &self,
         req: DomesticFutureoptionV1TradingNgtMarginDetailRequest,
     ) -> Result<serde_json::Value, KisError> {
@@ -1060,7 +1064,7 @@ impl StockTrading {
     /// (야간)선물옵션 증거금 상세 [국내선물-024]
     /// - TR_ID: Real=CTFN7107R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-futureoption/v1/trading/ngt-margin-detail
-    pub async fn domestic_futureoption_v1_trading_ngt_margin_detail_field(
+    pub async fn domestic_futureoption_v1_trading_ngt_margin_detail_new(
         &self,
         req: DomesticFutureoptionV1TradingNgtMarginDetailRequest,
     ) -> Result<serde_json::Value, KisError> {

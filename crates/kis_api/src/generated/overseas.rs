@@ -180,9 +180,9 @@ impl OverseasTrading {
     }
 
     /// 해외주식 예약주문접수[v1_해외주식-002]
-    /// - TR_ID: Real=TTTT3014U / VTS=VTTS3013U
+    /// - TR_ID: Real=TTTT3014U / VTS=VTTT3014U
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv
-    pub async fn overseas_stock_v1_trading_order_resv_field(
+    pub async fn overseas_stock_v1_trading_order_resv_us_buy_resv(
         &self,
         req: OverseasStockV1TradingOrderResvRequest,
     ) -> Result<serde_json::Value, KisError> {
@@ -191,7 +191,7 @@ impl OverseasTrading {
                 ("TTTT3014U", "https://openapi.koreainvestment.com:9443")
             }
             crate::client::KisEnv::Vts => {
-                ("VTTS3013U", "https://openapivts.koreainvestment.com:29443")
+                ("VTTT3014U", "https://openapivts.koreainvestment.com:29443")
             }
         };
         self.0
@@ -205,9 +205,9 @@ impl OverseasTrading {
     }
 
     /// 해외주식 예약주문접수[v1_해외주식-002]
-    /// - TR_ID: Real=TTTT3016U / VTS=VTTS3013U
+    /// - TR_ID: Real=TTTT3016U / VTS=VTTT3016U
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv
-    pub async fn overseas_stock_v1_trading_order_resv_field(
+    pub async fn overseas_stock_v1_trading_order_resv_us_sell_resv(
         &self,
         req: OverseasStockV1TradingOrderResvRequest,
     ) -> Result<serde_json::Value, KisError> {
@@ -216,7 +216,7 @@ impl OverseasTrading {
                 ("TTTT3016U", "https://openapi.koreainvestment.com:9443")
             }
             crate::client::KisEnv::Vts => {
-                ("VTTS3013U", "https://openapivts.koreainvestment.com:29443")
+                ("VTTT3016U", "https://openapivts.koreainvestment.com:29443")
             }
         };
         self.0
@@ -232,7 +232,7 @@ impl OverseasTrading {
     /// 해외주식 예약주문접수[v1_해외주식-002]
     /// - TR_ID: Real=TTTS3013U / VTS=VTTS3013U
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv
-    pub async fn overseas_stock_v1_trading_order_resv_field(
+    pub async fn overseas_stock_v1_trading_order_resv_asia_resv(
         &self,
         req: OverseasStockV1TradingOrderResvRequest,
     ) -> Result<serde_json::Value, KisError> {
@@ -408,7 +408,7 @@ impl OverseasTrading {
     /// 해외주식 예약주문조회[v1_해외주식-013]
     /// - TR_ID: Real=TTTT3039R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv-list
-    pub async fn overseas_stock_v1_trading_order_resv_list_field(
+    pub async fn overseas_stock_v1_trading_order_resv_list_us(
         &self,
         req: OverseasStockV1TradingOrderResvListRequest,
     ) -> Result<serde_json::Value, KisError> {
@@ -431,7 +431,7 @@ impl OverseasTrading {
     /// 해외주식 예약주문조회[v1_해외주식-013]
     /// - TR_ID: Real=TTTS3014R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv-list
-    pub async fn overseas_stock_v1_trading_order_resv_list_field(
+    pub async fn overseas_stock_v1_trading_order_resv_list_asia(
         &self,
         req: OverseasStockV1TradingOrderResvListRequest,
     ) -> Result<serde_json::Value, KisError> {

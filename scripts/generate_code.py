@@ -168,6 +168,24 @@ def parse_compound_tr_id(tr_id_str):
         "예약취소": "cancel_resv", "예약정정": "mod_resv",
         "정정": "modify", "취소": "cancel",
         "주간": "day", "야간": "night",
+        "구": "legacy", "신": "new",
+        "구버전": "legacy", "신버전": "new",
+        # 해외주식 지역 구분
+        "미국": "us",
+        "미국예약매수": "us_buy_resv",
+        "미국예약매도": "us_sell_resv",
+        "일본/중국/홍콩/베트남": "asia",
+        "중국/홍콩/일본/베트남 예약주문": "asia_resv",
+        "미국 예약주문 취소접수": "us_cancel_resv",
+        "미국 정정·취소": "us_modify_cancel",
+        # 선물옵션 주간/야간 매수매도 구분
+        "주간 매수/매도": "day_order",
+        "주간 정정/취소": "day_modify",
+        "야간 매수/매도": "night_order",
+        "야간 정정/취소": "night_modify",
+        # 아시아 국가 (정보 없음 처리)
+        "아시아국가 미제공": "asia_not_supported",
+        "아시아 국가 하단 규격서 참고": "asia_see_spec",
     }
 
     # Find (label) CODE pairs
