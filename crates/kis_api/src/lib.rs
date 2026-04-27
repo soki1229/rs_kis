@@ -2,6 +2,7 @@ pub mod auth;
 pub mod client;
 pub mod endpoints;
 pub mod error;
+pub mod event;
 pub mod generated;
 pub mod models;
 

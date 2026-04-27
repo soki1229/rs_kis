@@ -37,7 +37,7 @@ impl crate::endpoints::Overseas {
 #[allow(non_snake_case)]
 impl OverseasCommon {
     /// 접근토큰발급(P)[인증-001]
-    /// - TR_ID: Real= / VTS=
+    /// - TR_ID: Real= / VTS=모의투자 미지원
     /// - Endpoint: /oauth2/tokenP
     pub async fn oauth2_token_p(
         &self,
@@ -45,46 +45,58 @@ impl OverseasCommon {
     ) -> Result<serde_json::Value, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => ("", "https://openapi.koreainvestment.com:9443"),
-            crate::client::KisEnv::Vts => ("", "https://openapivts.koreainvestment.com:29443"),
+            crate::client::KisEnv::Vts => (
+                "모의투자 미지원",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0.post("/oauth2/tokenP", tr_id, base_url, req).await
     }
 
     /// 접근토큰폐기(P)[인증-002]
-    /// - TR_ID: Real=None / VTS=None
+    /// - TR_ID: Real= / VTS=모의투자 미지원
     /// - Endpoint: /oauth2/revokeP
     pub async fn oauth2_revoke_p(
         &self,
         req: Oauth2RevokepRequest,
     ) -> Result<serde_json::Value, KisError> {
         let (tr_id, base_url) = match self.0.env() {
-            crate::client::KisEnv::Real => ("None", "https://openapi.koreainvestment.com:9443"),
-            crate::client::KisEnv::Vts => ("None", "https://openapivts.koreainvestment.com:29443"),
+            crate::client::KisEnv::Real => ("", "https://openapi.koreainvestment.com:9443"),
+            crate::client::KisEnv::Vts => (
+                "모의투자 미지원",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0.post("/oauth2/revokeP", tr_id, base_url, req).await
     }
 
     /// Hashkey
-    /// - TR_ID: Real=None / VTS=None
+    /// - TR_ID: Real= / VTS=모의투자 미지원
     /// - Endpoint: /uapi/hashkey
     pub async fn hashkey(&self, req: HashkeyRequest) -> Result<serde_json::Value, KisError> {
         let (tr_id, base_url) = match self.0.env() {
-            crate::client::KisEnv::Real => ("None", "https://openapi.koreainvestment.com:9443"),
-            crate::client::KisEnv::Vts => ("None", "https://openapivts.koreainvestment.com:29443"),
+            crate::client::KisEnv::Real => ("", "https://openapi.koreainvestment.com:9443"),
+            crate::client::KisEnv::Vts => (
+                "모의투자 미지원",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0.post("/uapi/hashkey", tr_id, base_url, req).await
     }
 
     /// 실시간 (웹소켓) 접속키 발급[실시간-000]
-    /// - TR_ID: Real=None / VTS=None
+    /// - TR_ID: Real= / VTS=모의투자 미지원
     /// - Endpoint: /oauth2/Approval
     pub async fn oauth2_approval(
         &self,
         req: Oauth2ApprovalRequest,
     ) -> Result<serde_json::Value, KisError> {
         let (tr_id, base_url) = match self.0.env() {
-            crate::client::KisEnv::Real => ("None", "https://openapi.koreainvestment.com:9443"),
-            crate::client::KisEnv::Vts => ("None", "https://openapivts.koreainvestment.com:29443"),
+            crate::client::KisEnv::Real => ("", "https://openapi.koreainvestment.com:9443"),
+            crate::client::KisEnv::Vts => (
+                "모의투자 미지원",
+                "https://openapivts.koreainvestment.com:29443",
+            ),
         };
         self.0.post("/oauth2/Approval", tr_id, base_url, req).await
     }
@@ -93,21 +105,44 @@ impl OverseasCommon {
 #[allow(non_snake_case)]
 impl OverseasTrading {
     /// 해외주식 주문[v1_해외주식-001]
-    /// - TR_ID: Real=(미국매수) TTTT1002U  (미국매도) TTTT1006U (아시아 국가 하단 규격서 참고) / VTS=(미국매수) VTTT1002U  (미국매도) VTTT1001U  (아시아 국가 하단 규격서 참고)
+    /// - TR_ID: Real=TTTT1002U / VTS=VTTT1002U
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order
-    pub async fn overseas_stock_v1_trading_order(
+    pub async fn overseas_stock_v1_trading_order_buy(
         &self,
         req: OverseasStockV1TradingOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
         let (tr_id, base_url) = match self.0.env() {
-            crate::client::KisEnv::Real => (
-                "(미국매수) TTTT1002U  (미국매도) TTTT1006U (아시아 국가 하단 규격서 참고)",
-                "https://openapi.koreainvestment.com:9443",
-            ),
-            crate::client::KisEnv::Vts => (
-                "(미국매수) VTTT1002U  (미국매도) VTTT1001U  (아시아 국가 하단 규격서 참고)",
-                "https://openapivts.koreainvestment.com:29443",
-            ),
+            crate::client::KisEnv::Real => {
+                ("TTTT1002U", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => {
+                ("VTTT1002U", "https://openapivts.koreainvestment.com:29443")
+            }
+        };
+        self.0
+            .post(
+                "/uapi/overseas-stock/v1/trading/order",
+                tr_id,
+                base_url,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 주문[v1_해외주식-001]
+    /// - TR_ID: Real=TTTT1006U / VTS=VTTT1006U
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/order
+    pub async fn overseas_stock_v1_trading_order_sell(
+        &self,
+        req: OverseasStockV1TradingOrderRequest,
+    ) -> Result<serde_json::Value, KisError> {
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTT1006U", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => {
+                ("VTTT1006U", "https://openapivts.koreainvestment.com:29443")
+            }
         };
         self.0
             .post(
@@ -120,21 +155,19 @@ impl OverseasTrading {
     }
 
     /// 해외주식 정정취소주문[v1_해외주식-003]
-    /// - TR_ID: Real=(미국 정정·취소) TTTT1004U (아시아 국가 하단 규격서 참고) / VTS=(미국 정정·취소) VTTT1004U (아시아 국가 하단 규격서 참고)
+    /// - TR_ID: Real=TTTT1004U / VTS=VTTT1004U
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order-rvsecncl
     pub async fn overseas_stock_v1_trading_order_rvsecncl(
         &self,
         req: OverseasStockV1TradingOrderRvsecnclRequest,
     ) -> Result<serde_json::Value, KisError> {
         let (tr_id, base_url) = match self.0.env() {
-            crate::client::KisEnv::Real => (
-                "(미국 정정·취소) TTTT1004U (아시아 국가 하단 규격서 참고)",
-                "https://openapi.koreainvestment.com:9443",
-            ),
-            crate::client::KisEnv::Vts => (
-                "(미국 정정·취소) VTTT1004U (아시아 국가 하단 규격서 참고)",
-                "https://openapivts.koreainvestment.com:29443",
-            ),
+            crate::client::KisEnv::Real => {
+                ("TTTT1004U", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => {
+                ("VTTT1004U", "https://openapivts.koreainvestment.com:29443")
+            }
         };
         self.0
             .post(
@@ -147,15 +180,69 @@ impl OverseasTrading {
     }
 
     /// 해외주식 예약주문접수[v1_해외주식-002]
-    /// - TR_ID: Real=(미국예약매수) TTTT3014U  (미국예약매도) TTTT3016U   (중국/홍콩/일본/베트남 예약주문) TTTS3013U / VTS=(미국예약매수) VTTT3014U  (미국예약매도) VTTT3016U   (중국/홍콩/일본/베트남 예약주문) VTTS3013U
+    /// - TR_ID: Real=TTTT3014U / VTS=VTTS3013U
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv
-    pub async fn overseas_stock_v1_trading_order_resv(
+    pub async fn overseas_stock_v1_trading_order_resv_field(
         &self,
         req: OverseasStockV1TradingOrderResvRequest,
     ) -> Result<serde_json::Value, KisError> {
         let (tr_id, base_url) = match self.0.env() {
-            crate::client::KisEnv::Real => ("(미국예약매수) TTTT3014U  (미국예약매도) TTTT3016U   (중국/홍콩/일본/베트남 예약주문) TTTS3013U", "https://openapi.koreainvestment.com:9443"),
-            crate::client::KisEnv::Vts => ("(미국예약매수) VTTT3014U  (미국예약매도) VTTT3016U   (중국/홍콩/일본/베트남 예약주문) VTTS3013U", "https://openapivts.koreainvestment.com:29443"),
+            crate::client::KisEnv::Real => {
+                ("TTTT3014U", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => {
+                ("VTTS3013U", "https://openapivts.koreainvestment.com:29443")
+            }
+        };
+        self.0
+            .post(
+                "/uapi/overseas-stock/v1/trading/order-resv",
+                tr_id,
+                base_url,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 예약주문접수[v1_해외주식-002]
+    /// - TR_ID: Real=TTTT3016U / VTS=VTTS3013U
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv
+    pub async fn overseas_stock_v1_trading_order_resv_field(
+        &self,
+        req: OverseasStockV1TradingOrderResvRequest,
+    ) -> Result<serde_json::Value, KisError> {
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTT3016U", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => {
+                ("VTTS3013U", "https://openapivts.koreainvestment.com:29443")
+            }
+        };
+        self.0
+            .post(
+                "/uapi/overseas-stock/v1/trading/order-resv",
+                tr_id,
+                base_url,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 예약주문접수[v1_해외주식-002]
+    /// - TR_ID: Real=TTTS3013U / VTS=VTTS3013U
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv
+    pub async fn overseas_stock_v1_trading_order_resv_field(
+        &self,
+        req: OverseasStockV1TradingOrderResvRequest,
+    ) -> Result<serde_json::Value, KisError> {
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTS3013U", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => {
+                ("VTTS3013U", "https://openapivts.koreainvestment.com:29443")
+            }
         };
         self.0
             .post(
@@ -168,7 +255,7 @@ impl OverseasTrading {
     }
 
     /// 해외주식 예약주문접수취소[v1_해외주식-004]
-    /// - TR_ID: Real=(미국 예약주문 취소접수) TTTT3017U (아시아국가 미제공) / VTS=(미국 예약주문 취소접수) VTTT3017U (아시아국가 미제공)
+    /// - TR_ID: Real=모의투자 미지원 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv-ccnl
     pub async fn overseas_stock_v1_trading_order_resv_ccnl(
         &self,
@@ -176,11 +263,11 @@ impl OverseasTrading {
     ) -> Result<serde_json::Value, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => (
-                "(미국 예약주문 취소접수) TTTT3017U (아시아국가 미제공)",
+                "모의투자 미지원",
                 "https://openapi.koreainvestment.com:9443",
             ),
             crate::client::KisEnv::Vts => (
-                "(미국 예약주문 취소접수) VTTT3017U (아시아국가 미제공)",
+                "모의투자 미지원",
                 "https://openapivts.koreainvestment.com:29443",
             ),
         };
@@ -319,17 +406,39 @@ impl OverseasTrading {
     }
 
     /// 해외주식 예약주문조회[v1_해외주식-013]
-    /// - TR_ID: Real=(미국) TTTT3039R (일본/중국/홍콩/베트남) TTTS3014R / VTS=모의투자 미지원
+    /// - TR_ID: Real=TTTT3039R / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv-list
-    pub async fn overseas_stock_v1_trading_order_resv_list(
+    pub async fn overseas_stock_v1_trading_order_resv_list_field(
         &self,
         req: OverseasStockV1TradingOrderResvListRequest,
     ) -> Result<serde_json::Value, KisError> {
         let (tr_id, base_url) = match self.0.env() {
-            crate::client::KisEnv::Real => (
-                "(미국) TTTT3039R (일본/중국/홍콩/베트남) TTTS3014R",
-                "https://openapi.koreainvestment.com:9443",
-            ),
+            crate::client::KisEnv::Real => {
+                ("TTTT3039R", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
+        };
+        self.0
+            .get(
+                "/uapi/overseas-stock/v1/trading/order-resv-list",
+                tr_id,
+                base_url,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 예약주문조회[v1_해외주식-013]
+    /// - TR_ID: Real=TTTS3014R / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/order-resv-list
+    pub async fn overseas_stock_v1_trading_order_resv_list_field(
+        &self,
+        req: OverseasStockV1TradingOrderResvListRequest,
+    ) -> Result<serde_json::Value, KisError> {
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTS3014R", "https://openapi.koreainvestment.com:9443")
+            }
             crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
@@ -435,17 +544,39 @@ impl OverseasTrading {
     }
 
     /// 해외주식 미국주간주문[v1_해외주식-026]
-    /// - TR_ID: Real=(주간매수) TTTS6036U (주간매도) TTTS6037U / VTS=모의투자 미지원
+    /// - TR_ID: Real=TTTS6036U / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-stock/v1/trading/daytime-order
-    pub async fn overseas_stock_v1_trading_daytime_order(
+    pub async fn overseas_stock_v1_trading_daytime_order_buy(
         &self,
         req: OverseasStockV1TradingDaytimeOrderRequest,
     ) -> Result<serde_json::Value, KisError> {
         let (tr_id, base_url) = match self.0.env() {
-            crate::client::KisEnv::Real => (
-                "(주간매수) TTTS6036U (주간매도) TTTS6037U",
-                "https://openapi.koreainvestment.com:9443",
-            ),
+            crate::client::KisEnv::Real => {
+                ("TTTS6036U", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
+        };
+        self.0
+            .post(
+                "/uapi/overseas-stock/v1/trading/daytime-order",
+                tr_id,
+                base_url,
+                req,
+            )
+            .await
+    }
+
+    /// 해외주식 미국주간주문[v1_해외주식-026]
+    /// - TR_ID: Real=TTTS6037U / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/overseas-stock/v1/trading/daytime-order
+    pub async fn overseas_stock_v1_trading_daytime_order_sell(
+        &self,
+        req: OverseasStockV1TradingDaytimeOrderRequest,
+    ) -> Result<serde_json::Value, KisError> {
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("TTTS6037U", "https://openapi.koreainvestment.com:9443")
+            }
             crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
@@ -842,7 +973,7 @@ impl OverseasQuotations {
     }
 
     /// 해외주식 복수종목 시세조회
-    /// - TR_ID: Real=HHDFS76220000  / VTS=미지원
+    /// - TR_ID: Real=HHDFS76220000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/overseas-price/v1/quotations/multprice
     pub async fn overseas_price_v1_quotations_multprice(
         &self,
@@ -850,9 +981,9 @@ impl OverseasQuotations {
     ) -> Result<serde_json::Value, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => {
-                ("HHDFS76220000 ", "https://openapi.koreainvestment.com:9443")
+                ("HHDFS76220000", "https://openapi.koreainvestment.com:9443")
             }
-            crate::client::KisEnv::Vts => ("미지원 ", "모의투자 미지원"),
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
         };
         self.0
             .get(

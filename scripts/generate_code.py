@@ -11,39 +11,39 @@ OUTPUT_DIR = "crates/kis_api/src/generated"
 
 # --- Utility Functions ---
 
+def to_standard_camel(text):
+    if not text: return ""
+    # Standardize delimiters
+    text = text.replace('-', ' ').replace('_', ' ').replace('.', ' ')
+    # Camelize each part
+    parts = text.split()
+    return "".join([p.capitalize() for p in parts])
+
+def to_safe_snake(name):
+    if not name: return "field"
+    # Convert to snake_case but keep standard characters
+    # First, replace common problematic characters with underscore
+    name = name.replace('-', '_').replace('.', '_').replace(' ', '_').replace('~', '_').replace('…', '_')
+    # Remove any other non-alphanumeric/non-underscore characters
+    name = re.sub(r'[^a-zA-Z0-9_]', '', name)
+
+    s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+    name = re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+    # Cleanup consecutive underscores
+    name = re.sub(r'_+', '_', name).strip('_')
+    # Reserved keywords
+    if name in ['type', 'continue', 'break', 'match', 'as', 'loop', 'move', 'struct', 'enum', 'pub', 'mod', 'use', 'impl', 'trait', 'fn', 'let', 'mut', 'ref', 'dyn', 'where', 'for', 'crate', 'self', 'super']:
+        return f"r#{name}"
+    if not name: return "field"
+    if name[0].isdigit():
+        return f"v_{name}"
+    return name
+
 def to_struct_name(api):
     endpoint = api.get('accessUrl', '')
     parts = [p for p in endpoint.strip('/').split('/') if p != "uapi"]
-    
-    if "domestic-stock" in endpoint:
-        prefix = "DomesticStock"
-    elif "overseas-stock" in endpoint:
-        prefix = "OverseasStock"
-    elif "domestic-futureoption" in endpoint:
-        prefix = "DomesticFutureoption"
-    elif "overseas-price" in endpoint:
-        prefix = "OverseasPrice"
-    else:
-        prefix = "Auth"
-        
-    useful_parts = [p for p in parts if p not in ["domestic-stock", "overseas-stock", "domestic-futureoption", "overseas-price"]]
-    name_parts = [prefix] + [inflection.camelize(p.replace('-', '_')) for p in useful_parts]
-    name = "".join(name_parts)
-    
-    if len(name) < 10:
-        clean_name = re.sub(r'\(.*?\)', '', api.get('name', 'Unknown'))
-        clean_name = re.sub(r'[^\w\s]', '', clean_name)
-        name += inflection.camelize(inflection.underscore(clean_name.strip().replace(' ', '_')))
-        
-    return name
-
-def to_safe_snake(text):
-    snake = inflection.underscore(str(text).strip())
-    snake = re.sub(r'[^\w\s]', '', snake).replace(' ', '_')
-    snake = re.sub(r'_+', '_', snake)
-    if snake in ["type", "mod", "struct", "enum", "fn", "use", "loop", "match"]:
-        snake = f"r#{snake}"
-    return snake
+    # Join with spaces to use standard camelizer
+    return to_standard_camel(" ".join(parts))
 
 def format_doc(text, indent=""):
     if not text: return ""
@@ -51,115 +51,216 @@ def format_doc(text, indent=""):
     lines = text.strip().split('\n')
     return "\n".join([f"{indent}/// {line}" for line in lines])
 
-def _parse_params_recursive(data):
+def _parse_params_recursive(data, seen_rust_names):
     params = []
+    # Junk fields scraped from the portal's internal metadata — must not appear in API request structs
+    JUNK_FIELDS = {
+        'headerMap', 'methodList', 'contentTypeList', 'pathList',
+        'queryMap', 'formMap', 'jsonBody', 'jsonResponse', 'address',
+    }
     if isinstance(data, dict):
         for k, v in data.items():
-            params.append({
-                'name': k,
-                'korean_name': k,
-                'type': 'String',
-                'required': 'N',
-                'description': str(v)
-            })
+            if k and k not in JUNK_FIELDS:
+                rust_name = to_safe_snake(k)
+                if rust_name not in seen_rust_names:
+                    params.append({
+                        'name': k,
+                        'korean_name': k,
+                        'type': 'String',
+                        'required': 'N',
+                        'description': str(v)
+                    })
+                    seen_rust_names.add(rust_name)
             if isinstance(v, (dict, list)):
-                params.extend(_parse_params_recursive(v))
-            elif isinstance(v, str) and (v.strip().startswith('{') or v.strip().startswith('[')):
-                try:
-                    params.extend(_parse_params_recursive(json.loads(v)))
-                except: pass
+                params.extend(_parse_params_recursive(v, seen_rust_names))
     elif isinstance(data, list):
         for item in data:
-            params.extend(_parse_params_recursive(item))
+            params.extend(_parse_params_recursive(item, seen_rust_names))
     return params
 
 def _extract_params(api):
+    JUNK_FIELDS = {
+        'headerMap', 'methodList', 'contentTypeList', 'pathList',
+        'queryMap', 'formMap', 'jsonBody', 'jsonResponse', 'address',
+    }
     params = []
+    seen_rust_names = set()
     props = api.get('apiPropertys', [])
     for p in props:
         if p.get('bodyType') == 'req_b':
-            params.append({
-                'name': p.get('propertyCd'),
-                'korean_name': p.get('propertyNm', p.get('propertyCd')),
-                'type': 'String',
-                'required': p.get('requireYn', 'N'),
-                'description': p.get('description')
-            })
+            name = p.get('propertyCd')
+            if name and name not in JUNK_FIELDS:
+                rust_name = to_safe_snake(name)
+                if rust_name not in seen_rust_names:
+                    params.append({
+                        'name': name,
+                        'korean_name': p.get('propertyNm', name),
+                        'type': 'String',
+                        'required': p.get('requireYn', 'N'),
+                        'description': p.get('description')
+                    })
+                    seen_rust_names.add(rust_name)
     req_example = api.get('reqExample')
     if req_example:
-        try: params.extend(_parse_params_recursive(json.loads(req_example.strip())))
+        try:
+            params.extend(_parse_params_recursive(json.loads(req_example.strip()), seen_rust_names))
         except: pass
     children_data = api.get('children', '[]')
     try:
         children = json.loads(children_data) if isinstance(children_data, str) else children_data
-        def walk_children(nodes):
+        def walk_children(nodes, s):
             res = []
             for node in nodes:
                 for param in node.get('paramList', []):
                     pname = param.get('name')
                     pvalue = param.get('value', '')
-                    if pname and pname.lower() not in ['tr_id', 'custtype', 'content-type', 'authorization', 'appkey', 'appsecret']:
-                        res.append({
-                            'name': pname,
-                            'korean_name': param.get('description', pname),
-                            'type': 'String',
-                            'required': 'Y' if param.get('required') else 'N',
-                            'description': str(pvalue)
-                        })
-                    if isinstance(pvalue, str) and (pvalue.strip().startswith('{') or pvalue.strip().startswith('[')):
-                        try: res.extend(_parse_params_recursive(json.loads(pvalue)))
-                        except: pass
-                if node.get('children'):
-                    res.extend(walk_children(node.get('children')))
+                    if pname and pname not in JUNK_FIELDS:
+                        rust_name = to_safe_snake(pname)
+                        if rust_name not in s:
+                            res.append({
+                                'name': pname,
+                                'korean_name': pname,
+                                'type': 'String',
+                                'required': 'N',
+                                'description': f"Value: {pvalue}"
+                            })
+                            s.add(rust_name)
+                if 'children' in node:
+                    res.extend(walk_children(node['children'], s))
             return res
-        params.extend(walk_children(children))
+        params.extend(walk_children(children, seen_rust_names))
     except: pass
-    seen = set()
-    unique_params = []
-    for p in params:
-        pname_lower = p['name'].lower()
-        if pname_lower not in seen:
-            unique_params.append(p)
-            seen.add(pname_lower)
-    return unique_params
+    return params
 
-# --- Type Mapper ---
+
+def parse_compound_tr_id(tr_id_str):
+    """Parse a compound TR_ID string into a list of (label, code) tuples.
+
+    Examples
+    --------
+    "(매도) TTTC0011U (매수) TTTC0012U"
+        → [("sell", "TTTC0011U"), ("buy", "TTTC0012U")]
+    "(3개월이내) TTTC0081R (3개월이전) CTSC9215R"
+        → [("recent", "TTTC0081R"), ("old", "CTSC9215R")]
+    "(미국매수) TTTT1002U (미국매도) TTTT1006U ..."
+        → [("buy", "TTTT1002U"), ("sell", "TTTT1006U")]
+    "TTTC0013U"
+        → [("", "TTTC0013U")]
+    "모의투자 미지원" / "미지원"
+        → "모의투자 미지원"  (sentinel string)
+    None / ""
+        → ""
+    """
+    NOT_SUPPORTED = "모의투자 미지원"
+
+    if not tr_id_str:
+        return ""
+    s = tr_id_str.strip()
+    if s in ("모의투자 미지원", "미지원", "None", "없음"):
+        return NOT_SUPPORTED
+
+    # Label keyword → English suffix used in method names
+    LABEL_MAP = {
+        "매수": "buy", "매도": "sell",
+        "미국매수": "buy", "미국매도": "sell",
+        "주간매수": "buy", "주간매도": "sell",
+        "3개월이내": "recent", "3개월이전": "old",
+        "예약취소": "cancel_resv", "예약정정": "mod_resv",
+        "정정": "modify", "취소": "cancel",
+        "주간": "day", "야간": "night",
+    }
+
+    # Find (label) CODE pairs
+    pattern = r'\(([^)]+)\)\s*([A-Z][A-Z0-9]{5,})'
+    matches = re.findall(pattern, s)
+    if matches:
+        result = []
+        for label, code in matches:
+            label = label.strip()
+            suffix = LABEL_MAP.get(label, to_safe_snake(label))
+            result.append((suffix, code))
+        return result
+
+    # Single TR_ID (possibly with trailing noise)
+    codes = re.findall(r'[A-Z][A-Z0-9]{5,}', s)
+    if codes:
+        return [("", codes[0])]
+
+    return ""
+
 
 class TypeMapper:
-    def __init__(self, config_path):
-        with open(config_path, 'r') as f:
-            self.config = yaml.safe_load(f)
-        self.patterns = []
-        for p in self.config.get('patterns', []):
-            self.patterns.append((re.compile(p['pattern']), p['type'], p.get('import')))
-        self.explicit = {str(f['name']).lower(): (f['type'], f.get('import')) for f in self.config.get('fields', [])}
+    def __init__(self, yaml_path):
+        with open(yaml_path, 'r') as f:
+            self.mapping = yaml.safe_load(f) or {}
         self.required_imports = set()
+        # Pre-compile pattern rules
+        self._patterns = []
+        for rule in self.mapping.get('patterns', []):
+            try:
+                self._patterns.append((re.compile(rule['pattern']), rule['type']))
+            except re.error:
+                pass
+        # Field-level overrides: name → type
+        self._fields = {f['name']: f['type'] for f in self.mapping.get('fields', [])}
 
     def get_rust_type(self, field_name):
-        field_name_lower = str(field_name).lower()
-        if field_name_lower in self.explicit:
-            rtype, imp = self.explicit[field_name_lower]
-            if imp: self.required_imports.add(imp)
-            return rtype
-        for pattern, rtype, imp in self.patterns:
-            if pattern.fullmatch(field_name_lower):
-                if imp: self.required_imports.add(imp)
-                return rtype
-        return "String"
+        # 1. Explicit field override wins
+        if field_name in self._fields:
+            rtype = self._fields[field_name]
+        else:
+            # 2. Pattern matching (first match wins)
+            rtype = 'String'
+            for compiled, typ in self._patterns:
+                if compiled.match(field_name):
+                    rtype = typ
+                    break
+        if rtype == "Decimal":
+            self.required_imports.add("rust_decimal::Decimal")
+        return rtype
 
-# --- Generator ---
 
 class CodeGenerator:
     def __init__(self):
         with open(RAW_DATA_FILE, 'r') as f:
             raw_data = json.load(f)
+
+        # Load TR_ID overrides from overrides.yaml
+        overrides_path = "scripts/overrides.yaml"
+        self._tr_id_overrides = {}  # endpoint → {real, vts}
+        try:
+            with open(overrides_path, 'r') as f:
+                ov = yaml.safe_load(f) or {}
+            for entry in ov.get('tr_id_overrides', []):
+                ep = entry.get('endpoint', '')
+                self._tr_id_overrides[ep] = {
+                    'real': entry.get('real', ''),
+                    'vts': entry.get('vts', ''),
+                }
+        except FileNotFoundError:
+            pass
+
         self.spec = []
         for api in raw_data:
+            ep = api.get('accessUrl', '')
+            real_tr = api.get('realTrId', '') or ''
+            vts_tr = api.get('virtualTrId', '') or ''
+
+            # Apply TR_ID overrides from overrides.yaml
+            if ep in self._tr_id_overrides:
+                ov_entry = self._tr_id_overrides[ep]
+                if ov_entry.get('real'):
+                    real_tr = ov_entry['real']
+                if ov_entry.get('vts'):
+                    vts_tr = ov_entry['vts']
+
             self.spec.append({
                 'name': api.get('name'),
-                'accessUrl': api.get('accessUrl'),
-                'realTrId': api.get('realTrId', ''),
-                'virtualTrId': api.get('virtualTrId', ''),
+                'accessUrl': ep,
+                'realTrId': real_tr,
+                'virtualTrId': vts_tr,
+                'realDomain': api.get('realDomain', ''),
+                'virtualDomain': api.get('virtualDomain', ''),
                 'method': api.get('httpMethod', 'POST'),
                 'description': api.get('description', ''),
                 'request': _extract_params(api),
@@ -170,13 +271,14 @@ class CodeGenerator:
 
     def generate(self):
         self._write_models()
+        self._write_config_module()
         self._write_api_module("stock")
         self._write_api_module("overseas")
         self._write_mod_rs()
         self._run_fmt()
 
     def _write_models(self):
-        output = ["#![allow(clippy::doc_lazy_continuation, clippy::tabs_in_doc_comments)]"]
+        output = ["#![allow(clippy::doc_lazy_continuation, clippy::tabs_in_doc_comments, clippy::doc_markdown)]"]
         for api in self.spec:
             for f in api.get('request', []): self.type_mapper.get_rust_type(f.get('name', ''))
         for imp in sorted(list(self.type_mapper.required_imports)):
@@ -200,21 +302,55 @@ class CodeGenerator:
                 output.append("#[derive(Serialize, Deserialize, Debug, Clone, Default)]")
                 output.append("#[allow(non_snake_case)]")
                 output.append(f"pub struct {struct_base}Request {{")
+                struct_seen_rust_names = set()
                 for f in req_fields:
                     fname = f.get('name', 'unknown')
+                    rust_name = to_safe_snake(fname)
+                    if rust_name in struct_seen_rust_names: continue
+                    struct_seen_rust_names.add(rust_name)
                     rtype = self.type_mapper.get_rust_type(fname)
                     kname = f.get('korean_name', fname).replace('\t', ' ')
                     req_str = '필수' if f.get('required') == 'Y' else '선택'
                     output.append(f"    /// {kname} ({f.get('type', 'String')}, {req_str})")
                     output.append(f'    #[serde(rename = "{fname}")]')
-                    output.append(f"    pub {to_safe_snake(fname)}: {rtype},")
+                    output.append(f"    pub {rust_name}: {rtype},")
                 output.append("}\n")
         with open(os.path.join(OUTPUT_DIR, "models.rs"), "w") as f:
             f.write("\n".join(output))
 
+    def _write_config_module(self):
+        with open(RAW_DATA_FILE, 'r') as f:
+            raw_data = json.load(f)
+        output = ["// This file is generated from kis-openapi.yaml. Do not edit manually.", ""]
+        # Use .strip() and trust metadata for protocol
+        real_ws = next((api.get('realDomain', '').strip() for api in raw_data if api.get('apiType') == 'WEBSOCKET' and '21000' in api.get('realDomain', '')), "")
+        vts_ws = next((api.get('virtualDomain', '').strip() for api in raw_data if api.get('apiType') == 'WEBSOCKET' and '31000' in api.get('virtualDomain', '')), "")
+        output.append(f'pub const REAL_WS_URL: &str = "{real_ws}";')
+        output.append(f'pub const VTS_WS_URL: &str = "{vts_ws}";')
+        with open(os.path.join(OUTPUT_DIR, "config.rs"), "w") as f:
+            f.write("\n".join(output))
+
+    def _emit_method(self, output, api, method_name, real_tr, vts_tr, req_struct, method_call, endpoint):
+        """Emit a single async fn into `output`."""
+        NOT_SUPPORTED = "모의투자 미지원"
+        vts_tr_safe = vts_tr if vts_tr else NOT_SUPPORTED
+        real_domain = api.get('realDomain', '')
+        vts_domain = api.get('virtualDomain', '')
+
+        output.append(format_doc(api.get('name', 'Unknown'), "    "))
+        output.append(f"    /// - TR_ID: Real={real_tr} / VTS={vts_tr_safe}")
+        output.append(f"    /// - Endpoint: {endpoint}")
+        output.append(f"    pub async fn {method_name}(&self, req: {req_struct}) -> Result<serde_json::Value, KisError> {{")
+        output.append("        let (tr_id, base_url) = match self.0.env() {")
+        output.append(f'            crate::client::KisEnv::Real => ("{real_tr}", "{real_domain}"),')
+        output.append(f'            crate::client::KisEnv::Vts => ("{vts_tr_safe}", "{vts_domain}"),')
+        output.append("        };")
+        output.append(f'        self.0.{method_call}("{endpoint}", tr_id, base_url, req).await')
+        output.append("    }\n")
+
     def _write_api_module(self, module_name):
         output = [
-            "#![allow(clippy::doc_lazy_continuation, clippy::tabs_in_doc_comments)]",
+            "#![allow(clippy::doc_lazy_continuation, clippy::tabs_in_doc_comments, clippy::doc_markdown)]",
             "use crate::client::KisClient;",
             "use crate::error::KisError;",
             "use crate::models::*;",
@@ -233,7 +369,7 @@ class CodeGenerator:
             group_name = "Common"
             for p in parts:
                 if p in ["quotations", "trading", "ranking", "order", "account"]:
-                    group_name = inflection.camelize(p)
+                    group_name = to_standard_camel(p)
                     break
             if group_name not in groups: groups[group_name] = []
             groups[group_name].append(api)
@@ -245,9 +381,10 @@ class CodeGenerator:
         output.append(f"impl {target_endpoint_type} {{")
         for group in groups:
             struct_name = f"{module_prefix}{group}"
-            method_name = group.lower()
+            method_name = to_safe_snake(group)
             output.append(f"    pub fn {method_name}(&self) -> {struct_name} {{ {struct_name}(self.0.clone()) }}")
         output.append("}\n")
+
         for group, apis in groups.items():
             struct_name = f"{module_prefix}{group}"
             output.append("#[allow(non_snake_case)]")
@@ -255,20 +392,45 @@ class CodeGenerator:
             for api in apis:
                 endpoint = api.get('accessUrl', '')
                 parts = [p for p in endpoint.strip('/').split('/') if p != "uapi"]
-                method_name = to_safe_snake("_".join(parts))
-                if method_name.startswith("r#"): method_name = method_name[2:]
+                base_method_name = to_safe_snake("_".join(parts))
+                if base_method_name.startswith("r#"): base_method_name = base_method_name[2:]
                 req_struct = f"{api['generated_struct']}Request" if api.get('request') else "()"
-                output.append(format_doc(api.get('name', 'Unknown'), "    "))
-                output.append(f"    /// - TR_ID: Real={api.get('realTrId', '')} / VTS={api.get('virtualTrId', '')}")
-                output.append(f"    /// - Endpoint: {endpoint}")
-                output.append(f"    pub async fn {method_name}(&self, req: {req_struct}) -> Result<serde_json::Value, KisError> {{")
-                output.append("        let tr_id = match self.0.env() {")
-                output.append(f'            crate::client::KisEnv::Real => "{api.get("realTrId", "")}",')
-                output.append(f'            crate::client::KisEnv::Vts => "{api.get("virtualTrId", "")}",')
-                output.append("        };")
                 method_call = "post" if api.get('method', 'POST') == "POST" else "get"
-                output.append(f'        self.0.{method_call}("{endpoint}", tr_id, req).await')
-                output.append("    }\n")
+
+                real_variants = parse_compound_tr_id(api.get('realTrId', '') or '')
+                vts_variants  = parse_compound_tr_id(api.get('virtualTrId', '') or '')
+
+                NOT_SUPPORTED = "모의투자 미지원"
+
+                # Both simple (single TR_ID each)
+                if isinstance(real_variants, list) and len(real_variants) == 1 and real_variants[0][0] == "":
+                    real_tr = real_variants[0][1]
+                    vts_tr  = vts_variants[0][1] if isinstance(vts_variants, list) and vts_variants else (vts_variants if isinstance(vts_variants, str) else NOT_SUPPORTED)
+                    self._emit_method(output, api, base_method_name, real_tr, vts_tr, req_struct, method_call, endpoint)
+
+                # Compound on real side → emit one method per variant
+                elif isinstance(real_variants, list) and len(real_variants) > 1:
+                    # Build vts lookup by suffix
+                    vts_by_suffix = {}
+                    if isinstance(vts_variants, list):
+                        for suffix, code in vts_variants:
+                            vts_by_suffix[suffix] = code
+                    elif isinstance(vts_variants, str):
+                        # Single sentinel or simple code — apply to all variants
+                        for suffix, _ in real_variants:
+                            vts_by_suffix[suffix] = vts_variants
+
+                    for suffix, real_tr in real_variants:
+                        variant_method = f"{base_method_name}_{suffix}" if suffix else base_method_name
+                        vts_tr = vts_by_suffix.get(suffix, NOT_SUPPORTED)
+                        self._emit_method(output, api, variant_method, real_tr, vts_tr, req_struct, method_call, endpoint)
+
+                else:
+                    # Fallback: emit as-is (e.g., real is not-supported string)
+                    real_tr = real_variants if isinstance(real_variants, str) else NOT_SUPPORTED
+                    vts_tr  = vts_variants  if isinstance(vts_variants,  str) else NOT_SUPPORTED
+                    self._emit_method(output, api, base_method_name, real_tr, vts_tr, req_struct, method_call, endpoint)
+
             output.append("}\n")
         with open(os.path.join(OUTPUT_DIR, f"{module_name}.rs"), "w") as f:
             f.write("\n".join(output))
