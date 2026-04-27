@@ -79,9 +79,12 @@ def _parse_params_recursive(data, seen_rust_names):
     return params
 
 def _extract_params(api):
+    # Authoritative source: portal apiPropertys with bodyType='req_b' only.
+    # reqExample and children are examples/metadata, not formal spec — excluded to prevent contamination.
     JUNK_FIELDS = {
         'headerMap', 'methodList', 'contentTypeList', 'pathList',
         'queryMap', 'formMap', 'jsonBody', 'jsonResponse', 'address',
+        'enabled', 'byAppKey', 'refreshTimeUnit', 'requestLimit',
     }
     params = []
     seen_rust_names = set()
@@ -100,36 +103,6 @@ def _extract_params(api):
                         'description': p.get('description')
                     })
                     seen_rust_names.add(rust_name)
-    req_example = api.get('reqExample')
-    if req_example:
-        try:
-            params.extend(_parse_params_recursive(json.loads(req_example.strip()), seen_rust_names))
-        except: pass
-    children_data = api.get('children', '[]')
-    try:
-        children = json.loads(children_data) if isinstance(children_data, str) else children_data
-        def walk_children(nodes, s):
-            res = []
-            for node in nodes:
-                for param in node.get('paramList', []):
-                    pname = param.get('name')
-                    pvalue = param.get('value', '')
-                    if pname and pname not in JUNK_FIELDS:
-                        rust_name = to_safe_snake(pname)
-                        if rust_name not in s:
-                            res.append({
-                                'name': pname,
-                                'korean_name': pname,
-                                'type': 'String',
-                                'required': 'N',
-                                'description': f"Value: {pvalue}"
-                            })
-                            s.add(rust_name)
-                if 'children' in node:
-                    res.extend(walk_children(node['children'], s))
-            return res
-        params.extend(walk_children(children, seen_rust_names))
-    except: pass
     return params
 
 
