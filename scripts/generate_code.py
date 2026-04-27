@@ -90,11 +90,21 @@ def _extract_response_groups(api):
       - Numbered outputs (output1, output2, ...) → Vec<T>
       - Plain 'output' with pagination fields in root  → Vec<T>
       - Plain 'output' without pagination fields       → Option<T>
+      - Endpoints in FORCE_VEC_OUTPUT → output always Vec<T>
     """
-    OUTPUT_RE = re.compile(r'^output\d*$')
+    OUTPUT_RE = re.compile(r'^output\d*$', re.IGNORECASE)
     PAGINATION = {'ctx_area_fk100', 'ctx_area_nk100', 'ctx_area_fk200', 'ctx_area_nk200',
                   'CTX_AREA_FK100', 'CTX_AREA_NK100', 'CTX_AREA_FK200', 'CTX_AREA_NK200'}
     ROOT_ALWAYS = {'rt_cd', 'msg_cd', 'msg1'}
+    FORCE_VEC_OUTPUT = {
+        '/uapi/domestic-stock/v1/trading/inquire-psbl-rvsecncl',
+        '/uapi/domestic-stock/v1/quotations/chk-holiday',
+        '/uapi/domestic-stock/v1/quotations/volume-rank',
+        '/uapi/overseas-stock/v1/quotations/countries-holiday',
+    }
+
+    endpoint = api.get('accessUrl', '')
+    force_vec = endpoint in FORCE_VEC_OUTPUT
 
     props = api.get('apiPropertys', [])
     res_b = [p for p in props if p.get('bodyType') == 'res_b' and p.get('propertyCd')]
@@ -109,7 +119,7 @@ def _extract_response_groups(api):
         if not name:
             continue
         if OUTPUT_RE.match(name):
-            current = name
+            current = name.lower()  # normalize: 'Output' → 'output'
             if current not in groups:
                 groups[current] = []
                 seen_rust[current] = set()
@@ -134,7 +144,7 @@ def _extract_response_groups(api):
         if key == 'root':
             continue
         numbered = bool(re.search(r'\d', key))
-        if numbered or has_pagination:
+        if numbered or has_pagination or force_vec:
             output_types[key] = 'vec'
         else:
             output_types[key] = 'option'
@@ -281,6 +291,7 @@ class CodeGenerator:
                 if ov_entry.get('vts'):
                     vts_tr = ov_entry['vts']
 
+            resp_groups, resp_output_types = _extract_response_groups(api)
             self.spec.append({
                 'name': api.get('name'),
                 'accessUrl': ep,
@@ -291,7 +302,8 @@ class CodeGenerator:
                 'method': api.get('httpMethod', 'POST'),
                 'description': api.get('description', ''),
                 'request': _extract_params(api),
-                'response': []
+                'resp_groups': resp_groups,
+                'resp_output_types': resp_output_types,
             })
         self.type_mapper = TypeMapper("scripts/type_map.yaml")
         os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -351,7 +363,8 @@ class CodeGenerator:
                 continue
             seen_resp_structs.add(struct_base)
 
-            groups, output_types = _extract_response_groups(api)
+            groups = api.get('resp_groups', {'root': []})
+            output_types = api.get('resp_output_types', {})
 
             # Inner structs for each output group
             for group_key, fields in groups.items():
