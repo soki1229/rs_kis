@@ -130,7 +130,7 @@ impl OverseasTrading {
     }
 
     /// 해외주식 주문[v1_해외주식-001]
-    /// - TR_ID: Real=TTTT1006U / VTS=VTTT1006U
+    /// - TR_ID: Real=TTTT1006U / VTS=VTTT1001U
     /// - Endpoint: /uapi/overseas-stock/v1/trading/order
     pub async fn overseas_stock_v1_trading_order_sell(
         &self,
@@ -141,7 +141,7 @@ impl OverseasTrading {
                 ("TTTT1006U", "https://openapi.koreainvestment.com:9443")
             }
             crate::client::KisEnv::Vts => {
-                ("VTTT1006U", "https://openapivts.koreainvestment.com:29443")
+                ("VTTT1001U", "https://openapivts.koreainvestment.com:29443")
             }
         };
         self.0

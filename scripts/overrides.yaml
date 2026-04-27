@@ -35,11 +35,13 @@ tr_id_overrides:
     vts:  "(3개월이내) VTTC0081R (3개월이전) VTSC9215R"
 
   # --- 해외주식 주문 ---
-  # 포털 VTS 오류: VTTT1001U → 공식 샘플 VTTT1006U 로 수정
-  # 공식 샘플: TTTT1002U(미국매수) TTTT1006U(미국매도) / VTTT1002U(미국매수) VTTT1006U(미국매도)
+  # 실전: TTTT1002U(매수) TTTT1006U(매도)
+  # VTS:  VTTT1002U(매수) VTTT1001U(매도) ← 포털 원본이 맞음
+  # 주의: 이전에 VTTT1006U로 잘못 override했으나, 실제 VTS API 호출로 검증 결과
+  #       VTTT1001U → "모의투자 장시작전" (정상), VTTT1006U → "해당업무 미제공" (오류)
   - endpoint: "/uapi/overseas-stock/v1/trading/order"
     real: "(미국매수) TTTT1002U (미국매도) TTTT1006U"
-    vts:  "(미국매수) VTTT1002U (미국매도) VTTT1006U"
+    vts:  "(미국매수) VTTT1002U (미국매도) VTTT1001U"
 
   # 포털: "(미국 정정·취소) TTTT1004U ..." / "(미국 정정·취소) VTTT1004U ..."
   # 공식 샘플 확인: TTTT1004U / VTTT1004U
