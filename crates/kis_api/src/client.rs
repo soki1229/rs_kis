@@ -304,6 +304,8 @@ fn normalize_empty_obj_to_arr(v: serde_json::Value) -> serde_json::Value {
         serde_json::Value::Array(arr) => {
             serde_json::Value::Array(arr.into_iter().map(normalize_empty_obj_to_arr).collect())
         }
+        // KIS API가 숫자 필드를 " 0.00" 처럼 공백 포함 문자열로 반환하는 경우 trim
+        serde_json::Value::String(s) => serde_json::Value::String(s.trim().to_string()),
         other => other,
     }
 }
