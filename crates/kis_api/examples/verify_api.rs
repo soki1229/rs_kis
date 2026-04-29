@@ -11,7 +11,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("--- Initializing Real Client ---");
     let client = KisClient::new(&app_key, &app_secret, KisEnv::Real).await?;
 
-    // 1. Test US Volume Ranking (NAS) - 실제 종목 리스트 출력
+    // 1. Test US Volume Ranking (NAS)
     println!("\n--- Testing US Volume Ranking (NAS) ---");
     let rank_resp = client
         .overseas()
@@ -22,26 +22,23 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         })
         .await?;
 
-    let output = &rank_resp["output"];
-    if let Some(items) = output.as_array() {
+    let items = &rank_resp.output2;
+    if !items.is_empty() {
         println!("SUCCESS: Received {} symbols", items.len());
         for (i, item) in items.iter().take(5).enumerate() {
             println!(
-                "  [Rank {}] Code: {:?}, Name: {:?}, Vol: {:?}",
+                "  [Rank {}] Code: {}, Name: {}, Vol: {}",
                 i + 1,
-                item["symb"],
-                item["hts_kor_isnm"],
-                item["accum_vol"]
+                item.symb,
+                item.name,
+                item.tvol,
             );
         }
     } else {
-        println!(
-            "FAILED: Output is not an array. Full response: {}",
-            rank_resp
-        );
+        println!("FAILED: Output is empty. msg: {}", rank_resp.msg1);
     }
 
-    // 2. Test US Daily Chart (NVDA) - 실제 캔들 데이터 출력
+    // 2. Test US Daily Chart (NVDA)
     println!("\n--- Testing US Daily Chart (NVDA) ---");
     let chart_resp = client
         .overseas()
@@ -56,20 +53,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         })
         .await?;
 
-    let bars = &chart_resp["output2"];
-    if let Some(items) = bars.as_array() {
-        println!("SUCCESS: Received {} bars", items.len());
-        if let Some(first) = items.first() {
+    let bars = &chart_resp.output2;
+    if !bars.is_empty() {
+        println!("SUCCESS: Received {} bars", bars.len());
+        if let Some(first) = bars.first() {
             println!(
-                "  [Latest Bar] Date: {:?}, Close: {:?}, Vol: {:?}",
-                first["xymd"], first["close"], first["v_vol"]
+                "  [Latest Bar] Date: {}, Close: {}, Vol: {}",
+                first.xymd, first.clos, first.tvol,
             );
         }
     } else {
-        println!(
-            "FAILED: Output2 is not an array. Full response: {}",
-            chart_resp
-        );
+        println!("FAILED: Output2 is empty. msg: {}", chart_resp.msg1);
     }
 
     Ok(())

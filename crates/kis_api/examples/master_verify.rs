@@ -28,12 +28,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         })
         .await?;
 
-    if let Some(items) = rank_resp["output2"].as_array() {
+    let items = &rank_resp.output2;
+    if !items.is_empty() {
         println!("SUCCESS: Received {} symbols.", items.len());
         if let Some(item) = items.first() {
             println!(
                 "  - Sample Data: Rank 1: {} ({}), Last: {}, Vol: {}",
-                item["name"], item["symb"], item["last"], item["tvol"]
+                item.name, item.symb, item.last, item.tvol,
             );
         }
     }
@@ -53,20 +54,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         })
         .await?;
 
-    if let Some(bars) = chart_resp["output2"].as_array() {
-        println!("  - output1 raw: {}", chart_resp["output1"]);
-        // Try all possible name fields
-        let kor_name = chart_resp["output1"]["ovrs_entp_kor_nm"]
-            .as_str()
-            .or_else(|| chart_resp["output1"]["hts_kor_isnm"].as_str())
-            .or_else(|| chart_resp["output1"]["name"].as_str())
-            .unwrap_or("Unknown");
-
-        println!("SUCCESS: Received {} candles for {}.", bars.len(), kor_name);
+    let bars = &chart_resp.output2;
+    if !bars.is_empty() {
+        println!("SUCCESS: Received {} candles.", bars.len());
         if let Some(bar) = bars.first() {
             println!(
                 "  - Latest Bar: Date: {}, Close: {}, Vol: {}",
-                bar["xymd"], bar["clos"], bar["tvol"]
+                bar.xymd, bar.clos, bar.tvol,
             );
         }
     }
