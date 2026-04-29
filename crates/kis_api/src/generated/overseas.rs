@@ -390,10 +390,9 @@ impl OverseasTrading {
             crate::client::KisEnv::Real => {
                 ("CTRP6504R", "https://openapi.koreainvestment.com:9443")
             }
-            crate::client::KisEnv::Vts => (
-                "VTRP6504R",
-                "https://openapivts.koreainvestment.com:29443",
-            ),
+            crate::client::KisEnv::Vts => {
+                ("VTRP6504R", "https://openapivts.koreainvestment.com:29443")
+            }
         };
         self.0
             .get(

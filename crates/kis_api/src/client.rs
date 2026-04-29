@@ -212,7 +212,9 @@ impl KisClient {
 
         if header.is_success() {
             // Success: Return the full JSON so the caller can pick output, output1, etc.
-            Ok(serde_json::from_value(normalize_empty_obj_to_arr(full_body))?)
+            Ok(serde_json::from_value(normalize_empty_obj_to_arr(
+                full_body,
+            ))?)
         } else {
             Err(header.to_error())
         }
@@ -259,7 +261,9 @@ impl KisClient {
         let header: ApiResponseHeader = serde_json::from_value(full_body.clone())?;
 
         if header.is_success() {
-            Ok(serde_json::from_value(normalize_empty_obj_to_arr(full_body))?)
+            Ok(serde_json::from_value(normalize_empty_obj_to_arr(
+                full_body,
+            ))?)
         } else {
             Err(header.to_error())
         }
