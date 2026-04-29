@@ -212,7 +212,7 @@ impl KisClient {
 
         if header.is_success() {
             // Success: Return the full JSON so the caller can pick output, output1, etc.
-            Ok(serde_json::from_value(full_body)?)
+            Ok(serde_json::from_value(normalize_empty_obj_to_arr(full_body))?)
         } else {
             Err(header.to_error())
         }
@@ -259,9 +259,25 @@ impl KisClient {
         let header: ApiResponseHeader = serde_json::from_value(full_body.clone())?;
 
         if header.is_success() {
-            Ok(serde_json::from_value(full_body)?)
+            Ok(serde_json::from_value(normalize_empty_obj_to_arr(full_body))?)
         } else {
             Err(header.to_error())
         }
+    }
+}
+
+/// KIS API 퀴크: 빈 배열을 `[]` 대신 `{}` 로 반환하는 경우 정규화.
+fn normalize_empty_obj_to_arr(v: serde_json::Value) -> serde_json::Value {
+    match v {
+        serde_json::Value::Object(map) if map.is_empty() => serde_json::Value::Array(vec![]),
+        serde_json::Value::Object(map) => serde_json::Value::Object(
+            map.into_iter()
+                .map(|(k, v)| (k, normalize_empty_obj_to_arr(v)))
+                .collect(),
+        ),
+        serde_json::Value::Array(arr) => {
+            serde_json::Value::Array(arr.into_iter().map(normalize_empty_obj_to_arr).collect())
+        }
+        other => other,
     }
 }

@@ -392,7 +392,7 @@ impl OverseasTrading {
             }
             crate::client::KisEnv::Vts => (
                 "VTRP6504R",
-                "https://openapivts.koreainvestment.com:29443    (output3만 이용 가능)",
+                "https://openapivts.koreainvestment.com:29443",
             ),
         };
         self.0
