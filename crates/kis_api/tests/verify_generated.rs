@@ -27,7 +27,6 @@ async fn test_domestic_quotation_interface() {
     let req = DomesticStockV1QuotationsInquirePriceRequest {
         fid_cond_mrkt_div_code: "J".to_string(),
         fid_input_iscd: "005930".to_string(),
-        ..Default::default()
     };
 
     // This should compile if SDK generation and module mapping are correct
