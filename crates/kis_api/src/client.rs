@@ -270,15 +270,37 @@ impl KisClient {
     }
 }
 
-/// KIS API 퀴크: 빈 배열을 `[]` 대신 `{}` 로 반환하는 경우 정규화.
+/// KIS API 응답 정규화:
+/// - `output*` 키 값이 `{}` (빈 객체) → `[]`
+/// - `output*` 키 값이 `{...}` (단일 객체) → `[{...}]`
+/// - 나머지는 재귀적으로 동일 처리
+///
+/// KIS API가 배열 대신 단일 객체 또는 빈 객체를 반환하는 두 가지 quirk를 모두 처리한다.
 fn normalize_empty_obj_to_arr(v: serde_json::Value) -> serde_json::Value {
     match v {
-        serde_json::Value::Object(map) if map.is_empty() => serde_json::Value::Array(vec![]),
-        serde_json::Value::Object(map) => serde_json::Value::Object(
-            map.into_iter()
-                .map(|(k, v)| (k, normalize_empty_obj_to_arr(v)))
-                .collect(),
-        ),
+        serde_json::Value::Object(map) => {
+            let converted = map
+                .into_iter()
+                .map(|(k, v)| {
+                    let v = if k.starts_with("output") {
+                        match v {
+                            serde_json::Value::Object(inner) => {
+                                if inner.is_empty() {
+                                    serde_json::Value::Array(vec![])
+                                } else {
+                                    serde_json::Value::Array(vec![serde_json::Value::Object(inner)])
+                                }
+                            }
+                            other => normalize_empty_obj_to_arr(other),
+                        }
+                    } else {
+                        normalize_empty_obj_to_arr(v)
+                    };
+                    (k, v)
+                })
+                .collect();
+            serde_json::Value::Object(converted)
+        }
         serde_json::Value::Array(arr) => {
             serde_json::Value::Array(arr.into_iter().map(normalize_empty_obj_to_arr).collect())
         }
