@@ -1,0 +1,50 @@
+# Manual patches for incorrect portal data
+# 모든 값은 포털 원본(kis-raw-data.json)에 근거하며, GitHub 샘플 등 외부 출처에 의존하지 않는다.
+# 오버라이드 필요성은 반드시 실제 VTS API 호출로 검증 후 기재한다.
+apis:
+  - endpoint: "/uapi/domestic-stock/v1/trading/order-cash"
+    name: "주식주문(현금)"
+    patch:
+      description: "국내주식 현금 주문을 수행하는 API입니다. (매수/매도)"
+
+# Global replacements in descriptions
+replacements:
+  - search: "appkey"
+    replace: "`app_key`"
+  - search: "appsecret"
+    replace: "`app_secret`"
+
+# TR_ID overrides
+# 목적: 포털 복합 표시 문자열을 파싱하여 단일/분리 메서드로 생성
+# 검증: 모든 TR_ID는 VTS 실호출로 확인됨 (vts_api_test.py)
+tr_id_overrides:
+
+  # --- 국내주식 주문 ---
+  # 포털 원본: "(매도) TTTC0011U (매수) TTTC0012U" / "(매도) VTTC0011U (매수) VTTC0012U"
+  # VTS 검증: VTTC0011U(매도) rt_cd=1 장종료, VTTC0012U(매수) rt_cd=1 장종료 → 정상
+  - endpoint: "/uapi/domestic-stock/v1/trading/order-cash"
+    real: "(매도) TTTC0011U (매수) TTTC0012U"
+    vts:  "(매도) VTTC0011U (매수) VTTC0012U"
+
+  # 포털 원본: "(3개월이내) TTTC0081R (3개월이전) CTSC9215R" / "(3개월이내) VTTC0081R (3개월이전) VTSC9215R"
+  # VTS 검증: VTTC0081R(3개월이내) rt_cd=0, VTSC9215R(3개월이전) rt_cd=0 → 정상
+  - endpoint: "/uapi/domestic-stock/v1/trading/inquire-daily-ccld"
+    real: "(3개월이내) TTTC0081R (3개월이전) CTSC9215R"
+    vts:  "(3개월이내) VTTC0081R (3개월이전) VTSC9215R"
+
+  # --- 해외주식 주문 ---
+  # 포털 원본: "(미국매수) TTTT1002U  (미국매도) TTTT1006U (아시아 국가 하단 규격서 참고)"
+  #            "(미국매수) VTTT1002U  (미국매도) VTTT1001U  (아시아 국가 하단 규격서 참고)"
+  # 오버라이드 목적: 후미 노이즈 "(아시아 국가 하단 규격서 참고)" 제거, 포털 TR_ID 값 그대로 유지
+  # VTS 검증: VTTT1002U(매수) rt_cd=1 장시작전, VTTT1001U(매도) rt_cd=1 장시작전 → 정상
+  - endpoint: "/uapi/overseas-stock/v1/trading/order"
+    real: "(미국매수) TTTT1002U (미국매도) TTTT1006U"
+    vts:  "(미국매수) VTTT1002U (미국매도) VTTT1001U"
+
+  # 포털 원본: "(미국 정정·취소) TTTT1004U (아시아 국가 하단 규격서 참고)"
+  #            "(미국 정정·취소) VTTT1004U (아시아 국가 하단 규격서 참고)"
+  # 오버라이드 목적: 실질적으로 단일 TR_ID이므로 단순화 (suffix 없이 order_rvsecncl 메서드명 유지)
+  # VTS 검증: VTTT1004U rt_cd=0 정상 (미체결 취소 가능 환경 기준)
+  - endpoint: "/uapi/overseas-stock/v1/trading/order-rvsecncl"
+    real: "TTTT1004U"
+    vts:  "VTTT1004U"

@@ -4,48 +4,19 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-# HTTP
-reqwest = { version = "0.12", features = ["json"] }
-# WebSocket
-tokio-tungstenite = { version = "0.24" }
-# Async runtime
+reqwest = { version = "0.11", features = ["json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
 tokio = { version = "1", features = ["full"] }
-futures = "0.3"
-futures-util = "0.3"
-# Serialization
-serde = { version = "1", features = ["derive"] }
-serde_json = "1"
-# Error handling
-thiserror = "2"
-# Async traits
 async-trait = "0.1"
-# Date/time (KST timezone support)
 chrono = { version = "0.4", features = ["serde"] }
-# Decimal arithmetic (no f64 for prices)
-rust_decimal = { version = "1", features = ["serde-with-str"] }
-rust_decimal_macros = "1"
-# File path expansion (token cache)
-shellexpand = "3"
-# HTTP types
-http = "1"
-# Logging
-log = "0.4"
-# Cancellation token
-tokio-util = { version = "0.7", features = ["rt"] }
-# Random jitter for reconnection backoff
-rand = "0.8"
-
-[features]
-test-utils = []
+rust_decimal = { version = "1.32", features = ["serde-float"] }
+rust_decimal_macros = "1.32"
+thiserror = "1.0"
+tracing = "0.1"
+dotenvy = "0.15"
+tokio-tungstenite = "0.29.0"
+futures-util = "0.3.32"
 
 [dev-dependencies]
-dotenvy = "0.15"
-tokio = { version = "1", features = ["full"] }
-
-[[test]]
-name = "integration_overseas"
-path = "tests/integration/order.rs"
-
-[[test]]
-name = "integration_domestic"
-path = "tests/integration/domestic_order.rs"
+tokio = { version = "1", features = ["full", "test-util"] }
