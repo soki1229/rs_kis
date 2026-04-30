@@ -31006,8 +31006,9 @@ pub struct OverseasStockV1TradingInquirePsamountResponse {
     /// 응답메세지
     #[serde(default, rename = "msg1")]
     pub msg1: String,
+    /// normalize_empty_obj_to_arr이 output 단일 객체를 [객체]로 변환하므로 Vec 사용
     #[serde(default)]
-    pub output: Option<OverseasStockV1TradingInquirePsamountOutputItem>,
+    pub output: Vec<OverseasStockV1TradingInquirePsamountOutputItem>,
 }
 
 /// [해외주식 미체결내역[v1_해외주식-005]] output 항목
