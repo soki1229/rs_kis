@@ -31216,6 +31216,12 @@ pub struct OverseasStockV1TradingInquireBalanceOutput2Item {
     /// 외화매수금액합계2
     #[serde(default, rename = "frcr_buy_amt_smtl2")]
     pub frcr_buy_amt_smtl2: String,
+    /// 외화예수금금액2 (TR_CRCY_CD="USD" 지정 시 반환 — 주요 잔고 필드)
+    #[serde(default, rename = "frcr_dncl_amt_2")]
+    pub frcr_dncl_amt_2: String,
+    /// 주문가능외화금액 (TR_CRCY_CD="USD" 지정 시 반환)
+    #[serde(default, rename = "ord_psbl_frcr_amt")]
+    pub ord_psbl_frcr_amt: String,
 }
 
 /// [해외주식 잔고[v1_해외주식-006]] 응답 구조체
