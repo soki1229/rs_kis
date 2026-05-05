@@ -38,16 +38,6 @@ pub struct Oauth2RevokepRequest {
     pub token: String,
 }
 
-/// [Hashkey] 요청 구조체
-
-#[derive(Serialize, Deserialize, Debug, Clone, Default)]
-#[allow(non_snake_case)]
-pub struct HashkeyRequest {
-    /// 요청값 (String, 필수)
-    #[serde(rename = "JsonBody")]
-    pub json_body: String,
-}
-
 /// [실시간 (웹소켓) 접속키 발급[실시간-000]] 요청 구조체
 
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
@@ -3053,12 +3043,12 @@ pub struct DomesticStockV1QuotationsFrgnmemPchsTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsFrgnmemTradeTrendRequest {
-    /// 화면분류코드 (String, 필수)
-    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
-    pub fid_cond_scr_div_code: String,
     /// FID 조건 시장 분류 코드 (String, 필수)
     #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
     pub fid_cond_mrkt_div_code: String,
+    /// 화면분류코드 (String, 필수)
+    #[serde(rename = "FID_COND_SCR_DIV_CODE")]
+    pub fid_cond_scr_div_code: String,
     /// 종목코드 (String, 필수)
     #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
@@ -3440,9 +3430,6 @@ pub struct DomesticStockV1QuotationsVolumeRankRequest {
     /// 거래량 수 (String, 필수)
     #[serde(rename = "FID_VOL_CNT")]
     pub fid_vol_cnt: String,
-    /// 입력 날짜1 (String, 필수)
-    #[serde(rename = "FID_INPUT_DATE_1")]
-    pub fid_input_date_1: String,
 }
 
 /// [국내주식 등락률 순위[v1_국내주식-088]] 요청 구조체
@@ -8105,17 +8092,6 @@ pub struct Oauth2RevokepResponse {
     /// 응답메세지
     #[serde(default, rename = "message")]
     pub message: String,
-}
-
-/// [Hashkey] 응답 구조체
-#[derive(Serialize, Deserialize, Debug, Clone, Default)]
-pub struct HashkeyResponse {
-    /// 요청값
-    #[serde(default, rename = "JsonBody")]
-    pub json_body: String,
-    /// 해쉬키
-    #[serde(default, rename = "HASH")]
-    pub hash: String,
 }
 
 /// [실시간 (웹소켓) 접속키 발급[실시간-000]] 응답 구조체
