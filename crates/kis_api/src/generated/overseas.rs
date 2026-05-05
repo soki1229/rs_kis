@@ -70,10 +70,13 @@ impl OverseasCommon {
         self.0.post("/oauth2/revokeP", tr_id, base_url, req).await
     }
 
-    /// Hashkey
+    /// 실시간 (웹소켓) 접속키 발급[실시간-000]
     /// - TR_ID: Real= / VTS=모의투자 미지원
-    /// - Endpoint: /uapi/hashkey
-    pub async fn hashkey(&self, req: HashkeyRequest) -> Result<HashkeyResponse, KisError> {
+    /// - Endpoint: /oauth2/Approval
+    pub async fn oauth2_approval(
+        &self,
+        req: Oauth2ApprovalRequest,
+    ) -> Result<Oauth2ApprovalResponse, KisError> {
         let (tr_id, base_url) = match self.0.env() {
             crate::client::KisEnv::Real => ("", "https://openapi.koreainvestment.com:9443"),
             crate::client::KisEnv::Vts => (
@@ -81,7 +84,7 @@ impl OverseasCommon {
                 "https://openapivts.koreainvestment.com:29443",
             ),
         };
-        self.0.post("/uapi/hashkey", tr_id, base_url, req).await
+        self.0.post("/oauth2/Approval", tr_id, base_url, req).await
     }
 }
 

@@ -2368,6 +2368,29 @@ impl StockQuotations {
             .await
     }
 
+    /// 회원사 실시간 매매동향(틱) [국내주식-163]
+    /// - TR_ID: Real=FHPST04320000 / VTS=모의투자 미지원
+    /// - Endpoint: /uapi/domestic-stock/v1/quotations/frgnmem-trade-trend
+    pub async fn domestic_stock_v1_quotations_frgnmem_trade_trend(
+        &self,
+        req: DomesticStockV1QuotationsFrgnmemTradeTrendRequest,
+    ) -> Result<DomesticStockV1QuotationsFrgnmemTradeTrendResponse, KisError> {
+        let (tr_id, base_url) = match self.0.env() {
+            crate::client::KisEnv::Real => {
+                ("FHPST04320000", "https://openapi.koreainvestment.com:9443")
+            }
+            crate::client::KisEnv::Vts => ("모의투자 미지원", "모의투자 미지원"),
+        };
+        self.0
+            .get(
+                "/uapi/domestic-stock/v1/quotations/frgnmem-trade-trend",
+                tr_id,
+                base_url,
+                req,
+            )
+            .await
+    }
+
     /// 주식현재가 회원사 종목매매동향 [국내주식-197]
     /// - TR_ID: Real=FHPST04540000 / VTS=모의투자 미지원
     /// - Endpoint: /uapi/domestic-stock/v1/quotations/inquire-member-daily
