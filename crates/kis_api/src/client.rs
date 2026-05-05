@@ -131,6 +131,22 @@ impl KisClient {
         endpoints::Overseas(self.clone())
     }
 
+    pub fn overseas_future_option(&self) -> endpoints::OverseasFutureOption {
+        endpoints::OverseasFutureOption(self.clone())
+    }
+
+    pub fn domestic_bond(&self) -> endpoints::DomesticBond {
+        endpoints::DomesticBond(self.clone())
+    }
+
+    pub fn etfetn(&self) -> endpoints::EtfEtn {
+        endpoints::EtfEtn(self.clone())
+    }
+
+    pub fn elw(&self) -> endpoints::Elw {
+        endpoints::Elw(self.clone())
+    }
+
     pub fn env(&self) -> KisEnv {
         self.inner.env
     }

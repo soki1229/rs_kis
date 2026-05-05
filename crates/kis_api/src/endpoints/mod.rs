@@ -4,6 +4,11 @@ use crate::client::KisClient;
 pub struct Stock(pub(crate) KisClient);
 #[allow(dead_code)]
 pub struct Overseas(pub(crate) KisClient);
-
-// src/lib.rs에서 pub mod generated로 선언됨
-// src/generated/stock.rs와 overseas.rs가 이 구조체들에 대해 impl을 수행함
+#[allow(dead_code)]
+pub struct OverseasFutureOption(pub(crate) KisClient);
+#[allow(dead_code)]
+pub struct DomesticBond(pub(crate) KisClient);
+#[allow(dead_code)]
+pub struct EtfEtn(pub(crate) KisClient);
+#[allow(dead_code)]
+pub struct Elw(pub(crate) KisClient);

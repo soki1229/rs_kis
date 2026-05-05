@@ -7,6 +7,6 @@ pub mod generated;
 pub mod models;
 
 pub use client::{KisClient, KisEnv};
-pub use endpoints::{Overseas, Stock};
+pub use endpoints::{DomesticBond, Elw, EtfEtn, Overseas, OverseasFutureOption, Stock};
 pub use error::KisError;
 pub use models::*;

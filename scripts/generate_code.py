@@ -1,9 +1,8 @@
 import json
 import os
 import re
-import yaml
-import inflection
 import subprocess
+import yaml
 
 # --- Constants ---
 RAW_DATA_FILE = "crates/kis_api/kis-raw-data.json"
@@ -295,6 +294,7 @@ class CodeGenerator:
             self.spec.append({
                 'name': api.get('name'),
                 'accessUrl': ep,
+                'apiType': api.get('apiType', 'REST'),
                 'realTrId': real_tr,
                 'virtualTrId': vts_tr,
                 'realDomain': api.get('realDomain', ''),
@@ -313,6 +313,10 @@ class CodeGenerator:
         self._write_config_module()
         self._write_api_module("stock")
         self._write_api_module("overseas")
+        self._write_api_module("overseas_future_option")
+        self._write_api_module("domestic_bond")
+        self._write_api_module("etfetn")
+        self._write_api_module("elw")
         self._write_mod_rs()
         self._run_fmt()
 
@@ -458,12 +462,29 @@ class CodeGenerator:
             "use crate::models::*;",
             ""
         ]
+        MODULE_FILTERS = {
+            "stock":                  lambda ep: "domestic-stock" in ep or "domestic-futureoption" in ep,
+            "overseas":               lambda ep: "overseas-stock" in ep or "overseas-price" in ep or "oauth2" in ep or "/uapi/hashkey" in ep,
+            "overseas_future_option": lambda ep: "overseas-futureoption" in ep,
+            "domestic_bond":          lambda ep: "domestic-bond" in ep,
+            "etfetn":                 lambda ep: "/etfetn/" in ep,
+            "elw":                    lambda ep: "/elw/" in ep,
+        }
+        MODULE_PREFIX = {
+            "stock":                  "Stock",
+            "overseas":               "Overseas",
+            "overseas_future_option": "OverseasFutureOption",
+            "domestic_bond":          "DomesticBond",
+            "etfetn":                 "EtfEtn",
+            "elw":                    "Elw",
+        }
         filtered_apis = []
+        api_filter = MODULE_FILTERS.get(module_name)
         for api in self.spec:
             ep = api.get('accessUrl', '')
-            if module_name == "stock" and ("domestic-stock" in ep or "domestic-futureoption" in ep):
-                filtered_apis.append(api)
-            elif module_name == "overseas" and ("overseas-stock" in ep or "overseas-price" in ep or "oauth2" in ep or "/uapi/hashkey" in ep):
+            if api.get('apiType') == 'WEBSOCKET':
+                continue
+            if api_filter and api_filter(ep):
                 filtered_apis.append(api)
         groups = {}
         for api in filtered_apis:
@@ -475,7 +496,7 @@ class CodeGenerator:
                     break
             if group_name not in groups: groups[group_name] = []
             groups[group_name].append(api)
-        module_prefix = "Stock" if module_name == "stock" else "Overseas"
+        module_prefix = MODULE_PREFIX[module_name]
         for group in groups:
             struct_name = f"{module_prefix}{group}"
             output.append(f"#[allow(dead_code)]\npub struct {struct_name}(pub(crate) KisClient);\n")
@@ -538,8 +559,9 @@ class CodeGenerator:
             f.write("\n".join(output))
 
     def _write_mod_rs(self):
+        modules = ["config", "domestic_bond", "elw", "etfetn", "models", "overseas", "overseas_future_option", "stock"]
         with open(os.path.join(OUTPUT_DIR, "mod.rs"), "w") as f:
-            f.write("pub mod config;\npub mod models;\npub mod overseas;\npub mod stock;\n")
+            f.write("\n".join(f"pub mod {m};" for m in modules) + "\n")
 
     def _run_fmt(self):
         try:

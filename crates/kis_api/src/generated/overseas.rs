@@ -83,23 +83,6 @@ impl OverseasCommon {
         };
         self.0.post("/uapi/hashkey", tr_id, base_url, req).await
     }
-
-    /// 실시간 (웹소켓) 접속키 발급[실시간-000]
-    /// - TR_ID: Real= / VTS=모의투자 미지원
-    /// - Endpoint: /oauth2/Approval
-    pub async fn oauth2_approval(
-        &self,
-        req: Oauth2ApprovalRequest,
-    ) -> Result<Oauth2ApprovalResponse, KisError> {
-        let (tr_id, base_url) = match self.0.env() {
-            crate::client::KisEnv::Real => ("", "https://openapi.koreainvestment.com:9443"),
-            crate::client::KisEnv::Vts => (
-                "모의투자 미지원",
-                "https://openapivts.koreainvestment.com:29443",
-            ),
-        };
-        self.0.post("/oauth2/Approval", tr_id, base_url, req).await
-    }
 }
 
 #[allow(non_snake_case)]
@@ -390,9 +373,10 @@ impl OverseasTrading {
             crate::client::KisEnv::Real => {
                 ("CTRP6504R", "https://openapi.koreainvestment.com:9443")
             }
-            crate::client::KisEnv::Vts => {
-                ("VTRP6504R", "https://openapivts.koreainvestment.com:29443")
-            }
+            crate::client::KisEnv::Vts => (
+                "VTRP6504R",
+                "https://openapivts.koreainvestment.com:29443    (output3만 이용 가능)",
+            ),
         };
         self.0
             .get(
