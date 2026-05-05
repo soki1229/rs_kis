@@ -8,6 +8,9 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -44,6 +47,9 @@ jobs:
       - name: Format Generated Code
         run: cargo fmt --all
 
+      - name: Verify Format
+        run: cargo fmt --all --check
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
@@ -52,13 +58,12 @@ jobs:
           committer: GitHub <noreply@github.com>
           author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           branch: chore/sync-kis-api
-          title: "🤖 Auto-Update KIS API Specification"
+          title: "chore: auto-update KIS API specification"
           body: |
             ## KIS API Spec Sync Report
             - KIS API Portal에서 최신 명세를 가져왔습니다.
-            - `kis-openapi.yaml`이 업데이트되었습니다.
             - `src/generated/` 내의 Rust 코드가 재생성되었습니다.
-            - `cargo fmt`가 적용되었습니다.
+            - `cargo fmt --all` 적용 및 `--check` 검증 완료.
           labels: |
             automation
             codegen
