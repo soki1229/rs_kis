@@ -287,18 +287,24 @@ impl KisClient {
 }
 
 /// KIS API 응답 정규화:
-/// - `output*` 키 값이 `{}` (빈 객체) → `[]`
-/// - `output*` 키 값이 `{...}` (단일 객체) → `[{...}]`
+/// - `output1`/`output2`/… (숫자 suffix) 값이 `{}` → `[]`, `{item}` → `[{item}]`
+/// - bare `output` (suffix 없음)는 `Option<T>` 단일 항목이므로 변환하지 않음
 /// - 나머지는 재귀적으로 동일 처리
 ///
-/// KIS API가 배열 대신 단일 객체 또는 빈 객체를 반환하는 두 가지 quirk를 모두 처리한다.
+/// KIS API가 배열 필드(output1/2/3)에 단일 객체 또는 빈 객체를 반환하는 quirk를 처리한다.
+/// bare `output`은 단일 항목(Option<T>)이므로 객체 그대로 유지해야 역직렬화가 가능하다.
 fn normalize_empty_obj_to_arr(v: serde_json::Value) -> serde_json::Value {
     match v {
         serde_json::Value::Object(map) => {
             let converted = map
                 .into_iter()
                 .map(|(k, v)| {
-                    let v = if k.starts_with("output") {
+                    // output1, output2, output3 등 숫자 suffix가 있는 키만 배열 정규화
+                    // bare "output"은 Option<T> 단일 항목이므로 변환 제외
+                    let is_array_output = k.starts_with("output")
+                        && k.len() > "output".len()
+                        && k["output".len()..].starts_with(|c: char| c.is_ascii_digit());
+                    let v = if is_array_output {
                         match v {
                             serde_json::Value::Object(inner) => {
                                 if inner.is_empty() {
