@@ -3043,12 +3043,12 @@ pub struct DomesticStockV1QuotationsFrgnmemPchsTrendRequest {
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct DomesticStockV1QuotationsFrgnmemTradeTrendRequest {
-    /// FID 조건 시장 분류 코드 (String, 필수)
-    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
-    pub fid_cond_mrkt_div_code: String,
     /// 화면분류코드 (String, 필수)
     #[serde(rename = "FID_COND_SCR_DIV_CODE")]
     pub fid_cond_scr_div_code: String,
+    /// FID 조건 시장 분류 코드 (String, 필수)
+    #[serde(rename = "FID_COND_MRKT_DIV_CODE")]
+    pub fid_cond_mrkt_div_code: String,
     /// 종목코드 (String, 필수)
     #[serde(rename = "FID_INPUT_ISCD")]
     pub fid_input_iscd: String,
