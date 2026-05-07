@@ -139,7 +139,7 @@ apis:
     2021-12-29 11:22:33
 
     0.0.0.0'
-  example: "국내주식주문(현금) API 입니다. \n\n※ TTC0802U(현금매수) 사용하셔서 미수매수 가능합니다. 단, 거래하시는 계좌가\
+  example: "국내주식주문(현금) API 입니다. \n\n※ TTC0012U(현금매수) 사용하셔서 미수매수 가능합니다. 단, 거래하시는 계좌가\
     \ 증거금40%계좌로 신청이 되어있어야 가능합니다. \n※ 신용매수는 별도의 API가 준비되어 있습니다.\n\n※ ORD_QTY(주문수량),\
     \ ORD_UNPR(주문단가) 등을 String으로 전달해야 함에 유의 부탁드립니다.\n\n※ ORD_UNPR(주문단가)가 없는 주문은 상한가로\
     \ 주문금액을 선정하고 이후 체결이되면 체결금액로 정산됩니다.\n\n※ POST API의 경우 BODY값의 key값들을 대문자로 작성하셔야\
@@ -27002,9 +27002,9 @@ apis:
     \ 다운로드 후\n     Github의 헤더정보(https://github.com/koreainvestment/open-trading-api/blob/main/stocks_info/해외선물정보.h)를\
     \ 참고하여 해석\n\n- 소수점 계산 시, ffcode.mst(해외선물종목마스터 파일)의 sCalcDesz(계산 소수점) 값 참고\n  EX)\
     \ ffcode.mst 파일의 sCalcDesz(계산 소수점) 값\n       품목코드 6A 계산소수점 -4 → 시세 6882.5 수신 시\
-    \ 0.68825 로 해석\n       품목코드 GC 계산소수점 -1 → 시세 19225 수신 시 1922.5 로 해석.\n\t   \n\
-    ※ 모의투자는 실전투자계좌를 활용하여 조회 부탁드립니다.\n\n※ CME, SGX 거래소 API시세는 유료시세로 HTS/MTS에서 유료가입\
-    \ 후 익일부터 시세 이용 가능합니다.\n포럼 > FAQ > 해외선물옵션 API 유료시세 신청방법(CME, SGX 거래소)"
+    \ 0.68825 로 해석\n       품목코드 GC 계산소수점 -1 → 시세 19225 수신 시 1922.5 로 해석.\n\t   \n\n\
+    ※ CME, SGX 거래소 API시세는 유료시세로 HTS/MTS에서 유료가입 후 익일부터 시세 이용 가능합니다.\n포럼 > FAQ > 해외선물옵션\
+    \ API 유료시세 신청방법(CME, SGX 거래소)"
   method: GET
   endpoint: /uapi/overseas-futureoption/v1/quotations/stock-detail
   real_tr_id: HHDFC55010100
